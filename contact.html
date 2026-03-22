@@ -911,7 +911,7 @@
       <div class="contact-grid">
         <div class="card contact-form-card">
           <h3>Send a Message</h3>
-          <form id="contactForm" onsubmit="handleContactSubmit(event)">
+          <form id="contactForm">
             <div class="form-group">
               <label class="form-label" for="fullName">Full Name</label>
               <input class="form-input" type="text" id="fullName" name="fullName" required>
@@ -1369,6 +1369,14 @@ async function handleContactSubmit(event) {
     console.error('Form submission error:', result.error);
   }
 }
+
+// Attach form listener after DOM and scripts are ready
+document.addEventListener('DOMContentLoaded', function() {
+  const form = document.getElementById('contactForm');
+  if (form) {
+    form.addEventListener('submit', handleContactSubmit);
+  }
+});
 
 // Theme change tracking
 function trackThemeChange(themeName) {
