@@ -357,6 +357,16 @@
       font-weight: 400;
       color: var(--text);
       text-decoration: none;
+      white-space: nowrap;
+    }
+
+    @media (max-width: 400px) {
+      .logo-text {
+        font-size: 14px;
+      }
+      .logo {
+        height: 24px;
+      }
     }
 
     .nav-links {
@@ -483,6 +493,12 @@
 
       .navbar {
         padding: 0 24px;
+      }
+
+      .logo {
+        max-width: 50vw;
+        height: auto !important;
+        width: auto;
       }
 
       .section {
@@ -656,10 +672,12 @@
       font-weight: 300;
       font-style: italic;
       color: var(--muted);
-      margin: 0 0 48px 0;
+      margin: 0 auto 48px auto;
       opacity: 0;
       animation: fadeInUp 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.9s forwards;
       max-width: 600px;
+      text-align: center;
+      width: 100%;
     }
 
     .jazz-bars:hover .bar {
@@ -985,8 +1003,8 @@
 </head>
 <body class="t1">
   <nav class="navbar">
-    <a href="/" class="logo-text">
-      <img src="/2516_logo_horizontal_dark_web.png" data-dark="/2516_logo_horizontal_dark_web.png" data-light="/2516_logo_horizontal_light_web.png" alt="2516 Technologies" class="logo" style="height:36px; width:auto;">
+    <a href="/" class="logo-link">
+      <img src="2516_logo_horizontal_dark_web.png" data-dark="2516_logo_horizontal_dark_web.png" data-light="2516_logo_horizontal_light_web.png" alt="2516 Technologies" class="logo" style="height:auto; width:auto;">
     </a>
     <div class="nav-links">
       <a href="index.html" class="nav-link active">Home</a>
@@ -1023,23 +1041,27 @@
         </div>
         
         <h1 class="brand-name">
-          <span class="char" style="animation-delay:0.65s">2</span>
-          <span class="char" style="animation-delay:0.70s">5</span>
-          <span class="char" style="animation-delay:0.75s">1</span>
-          <span class="char" style="animation-delay:0.80s">6</span>
+          <span style="white-space:nowrap; display:inline-block;">
+            <span class="char" style="animation-delay:0.65s">2</span>
+            <span class="char" style="animation-delay:0.70s">5</span>
+            <span class="char" style="animation-delay:0.75s">1</span>
+            <span class="char" style="animation-delay:0.80s">6</span>
+          </span>
           <span class="char char-space"></span>
-          <span class="char" style="animation-delay:0.90s">T</span>
-          <span class="char" style="animation-delay:0.94s">E</span>
-          <span class="char" style="animation-delay:0.98s">C</span>
-          <span class="char" style="animation-delay:1.02s">H</span>
-          <span class="char" style="animation-delay:1.06s">N</span>
-          <span class="char" style="animation-delay:1.10s">O</span>
-          <span class="char" style="animation-delay:1.14s">L</span>
-          <span class="char" style="animation-delay:1.18s">O</span>
-          <span class="char" style="animation-delay:1.22s">G</span>
-          <span class="char" style="animation-delay:1.26s">I</span>
-          <span class="char" style="animation-delay:1.30s">E</span>
-          <span class="char" style="animation-delay:1.34s">S</span>
+          <span style="white-space:nowrap; display:inline-block;">
+            <span class="char" style="animation-delay:0.90s">T</span>
+            <span class="char" style="animation-delay:0.94s">E</span>
+            <span class="char" style="animation-delay:0.98s">C</span>
+            <span class="char" style="animation-delay:1.02s">H</span>
+            <span class="char" style="animation-delay:1.06s">N</span>
+            <span class="char" style="animation-delay:1.10s">O</span>
+            <span class="char" style="animation-delay:1.14s">L</span>
+            <span class="char" style="animation-delay:1.18s">O</span>
+            <span class="char" style="animation-delay:1.22s">G</span>
+            <span class="char" style="animation-delay:1.26s">I</span>
+            <span class="char" style="animation-delay:1.30s">E</span>
+            <span class="char" style="animation-delay:1.34s">S</span>
+          </span>
         </h1>
         <p class="brand-tagline">AI Readiness and Data Transformations</p>
         
