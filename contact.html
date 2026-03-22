@@ -953,7 +953,7 @@
               <textarea class="form-textarea" id="message" name="message" rows="4"></textarea>
             </div>
             <button type="submit" class="btn btn-primary" data-track="Submit Contact Form" style="width: 100%; justify-content: center; margin-top: 8px;">Send Message</button>
-            <p class="form-note">Or email directly: <a href="/cdn-cgi/l/email-protection#0b666a79604b393e3a3d7f6e6863656467646c626e7825686466"><span class="__cf_email__" data-cfemail="d8b5b9aab398eaede9eeacbdbbb0b6b7b4b7bfb1bdabf6bbb7b5">[email&#160;protected]</span></a></p>
+            <p class="form-note">Or email directly: <a href="/cdn-cgi/l/email-protection#442925362f04767175723021272c2a2b282b232d21376a272b29"><span class="__cf_email__" data-cfemail="ff929e8d94bfcdcacec98b9a9c979190939098969a8cd19c9092">[email&#160;protected]</span></a></p>
           </form>
           <div class="form-success" id="formSuccess">
             <span class="check-icon">&#10003;</span>
@@ -984,7 +984,7 @@
 
           <div class="card calendly-placeholder">
             <p>Prefer to book directly?</p>
-            <a href="https://calendly.com/mark-2516technologies" target="_blank" class="btn btn-ghost" style="margin-top: 12px;">Schedule on Calendly</a>
+            <a href="#" class="btn btn-ghost" style="margin-top: 12px;">Schedule on Calendly</a>
           </div>
         </div>
       </div>
@@ -1103,12 +1103,10 @@
       };
       
       // Track form start
-      if (window.SupabaseConnector) {
-        window.SupabaseConnector.trackEvent('form_start', 'Contact Form');
-      }
+      trackEvent('form_start', 'Contact Form');
       
       // Submit to Supabase
-      const result = await window.SupabaseConnector.submitContactForm(formData);
+      const result = await submitContactForm(formData);
       
       if (result.success) {
         // Show success message
