@@ -1083,34 +1083,6 @@
       }
     }
 
-    // Contact form submission handler
-    async function handleContactSubmit(event) {
-      event.preventDefault();
-      
-      const formData = {
-        fullName: document.getElementById('fullName').value,
-        email: document.getElementById('email').value,
-        company: document.getElementById('company').value,
-        service: document.getElementById('service').value,
-        industry: document.getElementById('industry').value,
-        otherIndustry: document.getElementById('otherIndustry')?.value || null,
-        message: document.getElementById('message').value
-      };
-      
-      // Submit to Supabase
-      const result = await submitContactForm(formData);
-      
-      if (result.success) {
-        // Show success message
-        document.getElementById('contactForm').style.display = 'none';
-        document.getElementById('formSuccess').style.display = 'block';
-      } else {
-        // Show error message
-        alert('There was an error submitting your form. Please try again or email mark@2516technologies.com directly.');
-        console.error('Form submission error:', result.error);
-      }
-    }
-
     const savedTheme = localStorage.getItem('theme') || 't1';
     setTheme(savedTheme);
   </script>
@@ -1371,6 +1343,31 @@ function trackOnePagerView(onePagerName) {
   trackEvent('onepager_view', onePagerName, {
     onepager: onePagerName
   });
+}
+
+// Contact form submission handler
+async function handleContactSubmit(event) {
+  event.preventDefault();
+  
+  const formData = {
+    fullName: document.getElementById('fullName').value,
+    email: document.getElementById('email').value,
+    company: document.getElementById('company').value,
+    service: document.getElementById('service').value,
+    industry: document.getElementById('industry').value,
+    otherIndustry: document.getElementById('otherIndustry')?.value || null,
+    message: document.getElementById('message').value
+  };
+  
+  const result = await submitContactForm(formData);
+  
+  if (result.success) {
+    document.getElementById('contactForm').style.display = 'none';
+    document.getElementById('formSuccess').style.display = 'block';
+  } else {
+    alert('There was an error submitting your form. Please try again or email mark@2516technologies.com directly.');
+    console.error('Form submission error:', result.error);
+  }
 }
 
 // Theme change tracking
