@@ -1097,9 +1097,6 @@
         message: document.getElementById('message').value
       };
       
-      // Track form start
-      trackEvent('form_start', 'Contact Form');
-      
       // Submit to Supabase
       const result = await submitContactForm(formData);
       
