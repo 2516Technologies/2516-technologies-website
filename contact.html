@@ -1,0 +1,1389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact - 2516 Technologies</title>
+  <link rel="icon" type="image/png" href="/public/2516_icon_light_512.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body.t1 {
+      --bg: #F0F5FF;
+      --card: #FFFFFF;
+      --input: #F0F5FF;
+      --border: rgba(30, 80, 180, 0.15);
+      --text: #0D1B3E;
+      --muted: #5A7AB0;
+      --gold: #1B4FD8;
+      --gold-light: #4A7FFF;
+      --glow: rgba(27, 79, 216, 0.08);
+    }
+
+    body.t2 {
+      --bg: #0A1628;
+      --card: #0F2144;
+      --input: #0A1628;
+      --border: rgba(74, 127, 255, 0.2);
+      --text: #E8F0FF;
+      --muted: #6A9FD8;
+      --gold: #4A7FFF;
+      --gold-light: #7AAFFF;
+      --glow: rgba(74, 127, 255, 0.1);
+    }
+
+    body.t3 {
+      --bg: #FFFFFF;
+      --card: #F7FAFF;
+      --input: #FFFFFF;
+      --border: rgba(30, 80, 180, 0.12);
+      --text: #0D1B3E;
+      --muted: #6A8AB8;
+      --gold: #1B4FD8;
+      --gold-light: #3A6FEF;
+      --glow: rgba(27, 79, 216, 0.05);
+    }
+
+    body.t4 {
+      --bg: #1B4FD8;
+      --card: #1440B8;
+      --input: #1B4FD8;
+      --border: rgba(255, 255, 255, 0.18);
+      --text: #FFFFFF;
+      --muted: rgba(255, 255, 255, 0.65);
+      --gold: #FFFFFF;
+      --gold-light: #E8F0FF;
+      --glow: rgba(255, 255, 255, 0.08);
+    }
+
+    body.t5 {
+      --bg: #1C1C1B;
+      --card: #2A2A29;
+      --input: #343433;
+      --border: rgba(200, 169, 81, 0.18);
+      --text: #E8EDF5;
+      --muted: #7A8BA8;
+      --gold: #C8A951;
+      --gold-light: #E4CC7A;
+      --glow: rgba(200, 169, 81, 0.06);
+    }
+
+    body {
+      overflow-x: hidden;
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+      min-height: 100vh;
+    }
+
+    .theme-switcher {
+      position: fixed;
+      top: 80px;
+      right: 16px;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 40px;
+      padding: 3px 6px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+      transition: all 0.3s ease;
+    }
+
+    .theme-switcher.hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-10px);
+    }
+
+    .theme-toggle-trigger {
+      position: fixed;
+      top: 80px;
+      right: 16px;
+      z-index: 50;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--card);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .theme-toggle-trigger:hover {
+      transform: scale(1.08);
+      border-color: var(--gold);
+    }
+
+    .theme-toggle-trigger.active {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .theme-label {
+      font-size: 9px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 500;
+      margin-right: 4px;
+      transition: color 0.3s ease;
+    }
+
+    .theme-btn {
+      width: 18px;
+      height: 18px;
+      min-width: 18px;
+      min-height: 18px;
+      max-width: 18px;
+      max-height: 18px;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: transform 0.15s ease, border-color 0.3s ease;
+      padding: 0;
+      background: none;
+      flex-shrink: 0;
+    }
+
+    .theme-btn:hover {
+      transform: scale(1.15);
+    }
+
+    .theme-btn.active {
+      border-color: var(--gold);
+      transform: scale(1.15);
+    }
+
+    .theme-btn-t1 {
+      background: linear-gradient(135deg, #F0F5FF 0% 50%, #1B4FD8 50% 100%);
+      background-size: 100% 100%;
+    }
+
+    .theme-btn-t2 {
+      background: linear-gradient(135deg, #0A1628 0% 50%, #4A7FFF 50% 100%);
+      background-size: 100% 100%;
+    }
+
+    .theme-btn-t3 {
+      background: linear-gradient(135deg, #FFFFFF 0% 50%, #1B4FD8 50% 100%);
+      background-size: 100% 100%;
+    }
+
+    .theme-btn-t4 {
+      background: linear-gradient(135deg, #1B4FD8 0% 50%, #FFFFFF 50% 100%);
+      background-size: 100% 100%;
+    }
+
+    .theme-btn-t5 {
+      background: linear-gradient(135deg, #1C1C1B 0% 50%, #C8A951 50% 100%);
+      background-size: 100% 100%;
+    }
+
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(28px, 5vw, 52px);
+      font-weight: 300;
+      line-height: 1.2;
+    }
+
+    h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(22px, 4vw, 38px);
+      font-weight: 400;
+      line-height: 1.3;
+    }
+
+    h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 400;
+    }
+
+    h1 em,
+    h2 em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    p {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      line-height: 1.75;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .eyebrow {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: block;
+      margin-bottom: 12px;
+    }
+
+    .section h2,
+    .section-sm h2 {
+      margin-bottom: 16px;
+    }
+
+    .section h2 + p,
+    .section-sm h2 + p,
+    .section h1 + p {
+      margin-bottom: 40px;
+    }
+
+    .btn {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      padding: 14px 32px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: var(--gold);
+      color: #fff;
+    }
+
+    body.t4 .btn-primary {
+      color: #1440B8;
+      background: #fff;
+    }
+
+    body.t5 .btn-primary {
+      color: #1C1C1B;
+    }
+
+    .btn-primary:hover {
+      background: var(--gold-light);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--gold);
+      color: var(--text);
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 40px;
+      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.06);
+      transition: background 0.3s, border-color 0.3s;
+    }
+
+    .section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 96px 24px;
+    }
+
+    .centered {
+      text-align: center;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      height: 64px;
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      transition: background 0.3s, border-color 0.3s;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 32px;
+    }
+
+    .logo {
+      height: 32px;
+      width: auto;
+    }
+
+    .logo-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-weight: 400;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      align-items: center;
+    }
+
+    .nav-link {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s ease;
+      position: relative;
+    }
+
+    .nav-link:hover {
+      color: var(--gold);
+    }
+
+    .nav-link.active {
+      color: var(--gold);
+      border-bottom: 1px solid var(--gold);
+      padding-bottom: 2px;
+    }
+
+    .nav-cta {
+      margin-left: 16px;
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+    }
+
+    .hamburger-line {
+      width: 20px;
+      height: 2px;
+      background: var(--text);
+      transition: all 0.3s;
+    }
+
+    .hamburger.active .hamburger-line:nth-child(1) {
+      transform: rotate(45deg) translate(7px, 7px);
+    }
+
+    .hamburger.active .hamburger-line:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.active .hamburger-line:nth-child(3) {
+      transform: rotate(-45deg) translate(7px, -7px);
+    }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 64px;
+      left: 0;
+      right: 0;
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 24px;
+      flex-direction: column;
+      gap: 0;
+      z-index: 999;
+      max-height: calc(100vh - 64px);
+      overflow-y: auto;
+    }
+
+    .mobile-menu.open {
+      display: flex;
+    }
+
+    .mobile-menu .nav-link {
+      padding: 12px 0;
+      display: flex;
+      align-items: center;
+      height: 40px;
+    }
+
+    .mobile-menu .nav-cta {
+      margin-left: 0;
+      margin-top: 8px;
+    }
+
+    .mobile-menu .btn {
+      width: 100%;
+      justify-content: center;
+    }
+
+    * {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .btn,
+    .nav-link,
+    .footer-link,
+    .footer-email {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .nav-link {
+      min-height: 44px;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+
+      .navbar {
+        padding: 0 24px;
+      }
+
+      .section {
+        padding: 64px 20px;
+      }
+
+      .contact-grid {
+        grid-template-columns: 1fr !important;
+        gap: 40px;
+      }
+
+      .contact-hero {
+        padding: 80px 20px 40px;
+        text-align: center;
+      }
+
+      .contact-hero h1,
+      .contact-hero p {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .card {
+        padding: 28px 20px;
+        margin: 0 auto;
+        text-align: center;
+      }
+
+      .form-group {
+        text-align: left;
+      }
+
+      .expect-section {
+        padding: 0 !important;
+        text-align: center !important;
+        max-width: 320px !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        width: auto !important;
+        box-sizing: border-box !important;
+      }
+
+      .expect-section h3 {
+        text-align: center;
+        margin-bottom: 32px;
+      }
+
+      .steps {
+        text-align: left;
+        width: 100%;
+      }
+
+      .step {
+        width: 100%;
+        text-align: center;
+      }
+
+      .step-number {
+        text-align: center;
+        display: block;
+      }
+
+      .step-title,
+      .step-desc {
+        text-align: center;
+        display: block;
+      }
+
+      .calendly-link {
+        text-align: center;
+      }
+    }
+
+
+    @media (max-width: 480px) {
+      .contact-grid {
+        gap: 32px;
+      }
+
+      .form-input,
+      .form-select,
+      .form-textarea {
+        font-size: 16px;
+      }
+
+      .btn {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .card {
+        max-width: 100%;
+      }
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .contact-hero {
+      padding: 120px 24px 64px;
+      max-width: 1100px;
+      margin: 0 auto;
+      opacity: 0;
+      transform: translateY(24px);
+      animation: fadeInUp 0.6s ease-out forwards;
+    }
+
+    .contact-hero h1 {
+      margin-bottom: 24px;
+    }
+
+    .contact-hero p {
+      max-width: 520px;
+      font-size: clamp(15px, 2.5vw, 17px);
+      line-height: 1.8;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 55% 45%;
+      gap: 64px;
+      align-items: start;
+    }
+
+    .form-label {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-input,
+    .form-select,
+    .form-textarea {
+      width: 100%;
+      background: var(--input);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 14px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .form-input:hover,
+    .form-select:hover,
+    .form-textarea:hover {
+      border-color: var(--muted);
+    }
+
+    .form-input:focus,
+    .form-select:focus,
+    .form-textarea:focus {
+      border-color: var(--gold);
+      outline: none;
+    }
+
+    .form-select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236A8AB8' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 36px;
+      cursor: pointer;
+    }
+
+    .form-textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .form-note {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 12px;
+      text-align: center;
+    }
+
+    .form-note a {
+      color: var(--gold);
+      text-decoration: none;
+    }
+
+    .form-note a:hover {
+      opacity: 0.8;
+    }
+
+    .contact-form-card h3 {
+      margin-bottom: 28px;
+    }
+
+    .expect-section h3 {
+      margin-bottom: 28px;
+    }
+
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .step-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 36px;
+      font-weight: 300;
+      color: var(--gold);
+      line-height: 1;
+      display: block;
+    }
+
+    .step-title {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text);
+      margin-top: 4px;
+      display: block;
+    }
+
+    .step-desc {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-top: 4px;
+      display: block;
+    }
+
+    .calendly-placeholder {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+      text-align: center;
+      margin-top: 40px;
+      transition: background 0.3s, border-color 0.3s;
+    }
+
+    .calendly-placeholder p {
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .calendly-placeholder .btn {
+      margin-top: 12px;
+    }
+
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: 40px 0;
+    }
+
+    .form-success.visible {
+      display: block;
+    }
+
+    .form-success .check-icon {
+      font-size: 48px;
+      color: var(--gold);
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .form-success h3 {
+      margin-bottom: 8px;
+    }
+
+    @media (max-width: 480px) {
+      .section {
+        padding: 48px 16px;
+      }
+
+      .card {
+        padding: 28px;
+      }
+
+      .btn-row {
+        flex-direction: column;
+      }
+
+      .btn-row .btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 420px) {
+      h1 {
+        font-size: 28px;
+      }
+
+      h2 {
+        font-size: 22px;
+      }
+    }
+
+    .bottom-cta-section {
+      background: var(--card);
+      border-top: 1px solid var(--border);
+      padding: 96px 24px;
+      text-align: center;
+    }
+
+    .bottom-cta-section .inner {
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .bottom-cta-section p.muted {
+      margin: 20px auto 40px;
+      max-width: 520px;
+      line-height: 1.8;
+    }
+
+    .bottom-cta-section .btn-row {
+      justify-content: center;
+    }
+
+    .footer {
+      background: var(--card);
+      border-top: 1px solid var(--border);
+      padding: 24px 32px;
+    }
+
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-logo {
+      display: block;
+      text-decoration: none;
+    }
+
+    .footer-logo img {
+      height: 36px;
+      width: auto;
+      display: block;
+    }
+
+    .footer-tagline {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px;
+      color: var(--muted);
+      font-style: italic;
+    }
+
+    @media (max-width: 640px) {
+      .footer-inner {
+        flex-direction: row;
+        gap: 12px;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .footer-logo img {
+        height: 28px;
+      }
+
+      .footer-tagline {
+        font-size: 11px;
+        white-space: nowrap;
+      }
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+
+  </style>
+  <!-- Supabase Client Library -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body class="t1">
+  <nav class="navbar">
+    <a href="/" class="logo-text">
+      <img src="/2516_logo_horizontal_dark_web.png" data-dark="/2516_logo_horizontal_dark_web.png" data-light="/2516_logo_horizontal_light_web.png" alt="2516 Technologies" class="logo" style="height:36px; width:auto;">
+    </a>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="about.html" class="nav-link">About</a>
+      <a href="services.html" class="nav-link">Services</a>
+      <a href="process.html" class="nav-link">Process</a>
+      <a href="contact.html" class="nav-link active">Contact</a>
+      <a href="assessment.html" class="btn btn-primary nav-cta">Take the Assessment</a>
+    </div>
+    <button class="hamburger" aria-label="Toggle menu">
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+    </button>
+  </nav>
+
+  <div class="mobile-menu">
+    <a href="index.html" class="nav-link">Home</a>
+    <a href="about.html" class="nav-link">About</a>
+    <a href="services.html" class="nav-link">Services</a>
+    <a href="process.html" class="nav-link">Process</a>
+    <a href="contact.html" class="nav-link active">Contact</a>
+    <a href="assessment.html" class="btn btn-primary nav-cta">Take the Assessment</a>
+  </div>
+
+  <main>
+    <section class="contact-hero">
+      <span class="eyebrow">Get In Touch</span>
+      <h1>Let's talk about <em>your data.</em></h1>
+      <p class="muted">Every engagement starts with a conversation. Tell us where you are, and we'll tell you what we see.</p>
+    </section>
+
+    <section class="section" style="padding-top: 0;">
+      <div class="contact-grid">
+        <div class="card contact-form-card">
+          <h3>Send a Message</h3>
+          <form id="contactForm" onsubmit="handleContactSubmit(event)">
+            <div class="form-group">
+              <label class="form-label" for="fullName">Full Name</label>
+              <input class="form-input" type="text" id="fullName" name="fullName" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="email">Email</label>
+              <input class="form-input" type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="company">Company</label>
+              <input class="form-input" type="text" id="company" name="company">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="service">Service Interest (Optional)</label>
+              <select class="form-select" id="service" name="service">
+                <option value="" disabled selected>Select a service</option>
+                <option value="data-infrastructure">Data Infrastructure Modernization</option>
+                <option value="ai-readiness">AI Readiness & Implementation</option>
+                <option value="compliance">Compliance & Audit Readiness</option>
+                <option value="analytics">Analytics Strategy & Transformation</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="industry">Industry</label>
+              <select class="form-select" id="industry" name="industry" onchange="toggleOtherIndustry()">
+                <option value="" disabled selected>Select your industry</option>
+                <option value="pharma">Pharma/Biotech</option>
+                <option value="defense">Defense/Government</option>
+                <option value="financial">Financial Services</option>
+                <option value="other">Other Industry</option>
+              </select>
+            </div>
+            <div class="form-group" id="otherIndustryGroup" style="display: none;">
+              <label class="form-label" for="otherIndustry">Please Specify</label>
+              <input class="form-input" type="text" id="otherIndustry" name="otherIndustry" placeholder="Enter your industry">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="message">Message</label>
+              <textarea class="form-textarea" id="message" name="message" rows="4"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary" data-track="Submit Contact Form" style="width: 100%; justify-content: center; margin-top: 8px;">Send Message</button>
+            <p class="form-note">Or email directly: <a href="/cdn-cgi/l/email-protection#0b666a79604b393e3a3d7f6e6863656467646c626e7825686466"><span class="__cf_email__" data-cfemail="d8b5b9aab398eaede9eeacbdbbb0b6b7b4b7bfb1bdabf6bbb7b5">[email&#160;protected]</span></a></p>
+          </form>
+          <div class="form-success" id="formSuccess">
+            <span class="check-icon">&#10003;</span>
+            <h3>Message Sent</h3>
+            <p class="muted">We'll be in touch within one business day.</p>
+          </div>
+        </div>
+
+        <div class="expect-section">
+          <h3>What to Expect</h3>
+          <div class="steps">
+            <div class="step">
+              <span class="step-number">01</span>
+              <span class="step-title">We review your message</span>
+              <span class="step-desc">Usually within one business day.</span>
+            </div>
+            <div class="step">
+              <span class="step-number">02</span>
+              <span class="step-title">Intro call — 30 minutes</span>
+              <span class="step-desc">No pitch. We listen first.</span>
+            </div>
+            <div class="step">
+              <span class="step-number">03</span>
+              <span class="step-title">We tell you what we see</span>
+              <span class="step-desc">Honest assessment of where you stand and what we'd recommend.</span>
+            </div>
+          </div>
+
+          <div class="card calendly-placeholder">
+            <p>Prefer to book directly?</p>
+            <a href="https://calendly.com/mark-2516technologies" target="_blank" class="btn btn-ghost" style="margin-top: 12px;">Schedule on Calendly</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+    <footer class="footer">
+    <div class="footer-inner">
+      <a href="index.html" class="footer-logo"><img src="/2516_logo_horizontal_dark_web.png" data-dark="/2516_logo_horizontal_dark_web.png" data-light="/2516_logo_horizontal_light_web.png" alt="2516 Technologies" style="height:36px; width:auto;"></a>
+      <span class="footer-tagline">AI is Jazz</span>
+    </div>
+  </footer>
+
+  <button class="theme-toggle-trigger" aria-label="Toggle theme options">🎨</button>
+
+  <div class="theme-switcher hidden">
+    <span class="theme-label">Theme</span>
+    <button class="theme-btn theme-btn-t1 active" data-theme="t1" aria-label="Light Blue Theme"></button>
+    <button class="theme-btn theme-btn-t2" data-theme="t2" aria-label="Dark Blue Theme"></button>
+    <button class="theme-btn theme-btn-t3" data-theme="t3" aria-label="Clean White Theme"></button>
+    <button class="theme-btn theme-btn-t4" data-theme="t4" aria-label="Bold Blue Theme"></button>
+    <button class="theme-btn theme-btn-t5" data-theme="t5" aria-label="Dark Gold Theme"></button>
+  </div>
+
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    const themeButtons = document.querySelectorAll('.theme-btn');
+    const body = document.body;
+    const logos = document.querySelectorAll('img[data-dark][data-light]');
+    const hamburger = document.querySelector('.hamburger');
+    const mobileMenu = document.querySelector('.mobile-menu');
+    const themeSwitcher = document.querySelector('.theme-switcher');
+    const themeToggleTrigger = document.querySelector('.theme-toggle-trigger');
+    const contactForm = document.getElementById('contactForm');
+    const formSuccess = document.getElementById('formSuccess');
+
+    function updateLogo(theme) {
+      const isDarkTheme = ['t2', 't4', 't5'].includes(theme);
+      logos.forEach(logo => {
+        logo.src = isDarkTheme ? logo.dataset.light : logo.dataset.dark;
+      });
+    }
+
+    function setTheme(theme) {
+      body.className = theme;
+      localStorage.setItem('theme', theme);
+
+      themeButtons.forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.theme === theme);
+      });
+
+      updateLogo(theme);
+    }
+
+    themeButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        setTheme(btn.dataset.theme);
+      });
+    });
+
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      mobileMenu.classList.toggle('open');
+    });
+
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        hamburger.classList.remove('active');
+        mobileMenu.classList.remove('open');
+      });
+    });
+
+    // Theme toggle functionality
+    themeToggleTrigger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      themeSwitcher.classList.toggle('hidden');
+      themeToggleTrigger.classList.toggle('active');
+    });
+
+    // Close theme switcher when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!themeSwitcher.contains(e.target) && !themeToggleTrigger.contains(e.target)) {
+        themeSwitcher.classList.add('hidden');
+        themeToggleTrigger.classList.remove('active');
+      }
+    });
+
+    contactForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      contactForm.style.display = 'none';
+      formSuccess.classList.add('visible');
+    });
+
+
+    function toggleOtherIndustry() {
+      const industry = document.getElementById('industry').value;
+      const otherGroup = document.getElementById('otherIndustryGroup');
+      if (industry === 'other') {
+        otherGroup.style.display = 'block';
+      } else {
+        otherGroup.style.display = 'none';
+      }
+    }
+
+    // Contact form submission handler
+    async function handleContactSubmit(event) {
+      event.preventDefault();
+      
+      const formData = {
+        fullName: document.getElementById('fullName').value,
+        email: document.getElementById('email').value,
+        company: document.getElementById('company').value,
+        service: document.getElementById('service').value,
+        industry: document.getElementById('industry').value,
+        otherIndustry: document.getElementById('otherIndustry')?.value || null,
+        message: document.getElementById('message').value
+      };
+      
+      // Track form start
+      if (window.SupabaseConnector) {
+        window.SupabaseConnector.trackEvent('form_start', 'Contact Form');
+      }
+      
+      // Submit to Supabase
+      const result = await window.SupabaseConnector.submitContactForm(formData);
+      
+      if (result.success) {
+        // Show success message
+        document.getElementById('contactForm').style.display = 'none';
+        document.getElementById('formSuccess').style.display = 'block';
+      } else {
+        // Show error message
+        alert('There was an error submitting your form. Please try again or email mark@2516technologies.com directly.');
+        console.error('Form submission error:', result.error);
+      }
+    }
+
+    const savedTheme = localStorage.getItem('theme') || 't1';
+    setTheme(savedTheme);
+  </script>
+<!-- PASTE THIS ENTIRE BLOCK RIGHT BEFORE </body> IN EACH HTML FILE -->
+<!-- Replace the existing <script src="/supabase-connector.js"></script> line -->
+
+<script>
+// ============================================================================
+// 2516 TECHNOLOGIES - INLINE SUPABASE CONNECTOR
+// ============================================================================
+
+// CONFIGURATION
+const SUPABASE_URL = 'https://kgfmwlpqyxrvlitzjrml.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtnZm13bHBxeXhydmxpdHpqcm1sIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg4NDQ3NTMsImV4cCI6MjA4NDQyMDc1M30.MR0zZeRdglsSrbK8jxmZL6fx79Ca4WEangbr7OARbMU';
+
+// Initialize Supabase client
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+// Session tracking
+function getOrCreateSessionId() {
+  let sessionId = sessionStorage.getItem('session_id');
+  if (!sessionId) {
+    sessionId = 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    sessionStorage.setItem('session_id', sessionId);
+  }
+  return sessionId;
+}
+
+function getOrCreateUserId() {
+  let userId = localStorage.getItem('user_id');
+  if (!userId) {
+    userId = 'user_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    localStorage.setItem('user_id', userId);
+  }
+  return userId;
+}
+
+// Get IP address
+async function getIPAddress() {
+  try {
+    const response = await fetch('https://api.ipify.org?format=json');
+    const data = await response.json();
+    return data.ip;
+  } catch (error) {
+    console.log('Could not fetch IP address');
+    return null;
+  }
+}
+
+// Get user context
+function getUserContext() {
+  // Return context with user tracking
+  return {
+    user_agent: navigator.userAgent,
+    referrer: document.referrer || null,
+    page_url: window.location.href,
+    ip_address: null,
+    session_id: getOrCreateSessionId(),
+    user_id: getOrCreateUserId()
+  };
+}
+
+// Track events
+async function trackEvent(eventType, eventName, eventData = {}) {
+  try {
+    const context = getUserContext();
+    
+    // Insert event first (without waiting for IP)
+    const { data, error } = await supabaseClient
+      .from('analytics_events')
+      .insert({
+        event_type: eventType,
+        event_name: eventName,
+        event_data: eventData,
+        ...context
+      })
+      .select();
+    
+    if (error) {
+      console.error('Analytics tracking error:', error);
+      return;
+    }
+    
+    // Fetch IP in background and update the record
+    if (data && data[0]) {
+      getIPAddress().then(ip => {
+        if (ip) {
+          supabaseClient
+            .from('analytics_events')
+            .update({ ip_address: ip })
+            .eq('id', data[0].id)
+            .then(() => {});
+        }
+      }).catch(() => {});
+    }
+  } catch (err) {
+    console.error('Analytics error:', err);
+  }
+}
+
+// Track page view on load
+window.addEventListener('load', () => {
+  trackEvent('page_view', document.title, {
+    path: window.location.pathname
+  });
+});
+
+// Track time on page
+let pageLoadTime = Date.now();
+window.addEventListener('beforeunload', () => {
+  const timeOnPage = Math.round((Date.now() - pageLoadTime) / 1000);
+  trackEvent('time_on_page', document.title, {
+    duration_seconds: timeOnPage,
+    path: window.location.pathname
+  });
+});
+
+// Track scroll depth
+let maxScrollDepth = 0;
+window.addEventListener('scroll', () => {
+  const scrollDepth = Math.round((window.scrollY + window.innerHeight) / document.body.scrollHeight * 100);
+  if (scrollDepth > maxScrollDepth) {
+    maxScrollDepth = scrollDepth;
+    if (scrollDepth >= 25 && scrollDepth < 50) {
+      trackEvent('scroll_depth', '25%', { depth: 25, path: window.location.pathname });
+    } else if (scrollDepth >= 50 && scrollDepth < 75) {
+      trackEvent('scroll_depth', '50%', { depth: 50, path: window.location.pathname });
+    } else if (scrollDepth >= 75 && scrollDepth < 90) {
+      trackEvent('scroll_depth', '75%', { depth: 75, path: window.location.pathname });
+    } else if (scrollDepth >= 90) {
+      trackEvent('scroll_depth', '90%', { depth: 90, path: window.location.pathname });
+    }
+  }
+});
+
+// Track button clicks
+document.addEventListener('click', (e) => {
+  const button = e.target.closest('[data-track]');
+  if (button) {
+    trackEvent('button_click', button.dataset.track, {
+      button_text: button.textContent,
+      button_href: button.href || null
+    });
+  }
+});
+
+// Contact form submission
+async function submitContactForm(formData) {
+  try {
+    const context = getUserContext();
+    
+    const { data, error } = await supabaseClient
+      .from('contact_submissions')
+      .insert({
+        full_name: formData.fullName,
+        email: formData.email,
+        company: formData.company || null,
+        service_interest: formData.service || null,
+        industry: formData.industry,
+        other_industry: formData.otherIndustry || null,
+        message: formData.message || null,
+        // Only include fields that exist in contact_submissions
+        user_agent: context.user_agent,
+        referrer: context.referrer,
+        page_url: context.page_url,
+        ip_address: context.ip_address,
+        status: 'new'
+      })
+      .select();
+    
+    if (error) throw error;
+    
+    trackEvent('form_submit', 'Contact Form', {
+      industry: formData.industry,
+      service: formData.service || 'not_specified'
+    });
+    
+    return { success: true, data };
+  } catch (error) {
+    console.error('Contact form submission error:', error);
+    return { success: false, error };
+  }
+}
+
+// Assessment form submission
+async function submitAssessmentForm(formData) {
+  try {
+    const context = getUserContext();
+    
+    let finalScore = 0;
+    let scoreCategory = 'Not Completed';
+    
+    if (formData.answers && Array.isArray(formData.answers)) {
+      finalScore = formData.answers.reduce((sum, answer) => sum + (answer || 0), 0);
+      
+      if (finalScore >= 45) scoreCategory = 'Advanced';
+      else if (finalScore >= 35) scoreCategory = 'High';
+      else if (finalScore >= 25) scoreCategory = 'Medium';
+      else scoreCategory = 'Low';
+    }
+    
+    const { data, error } = await supabaseClient
+      .from('assessment_submissions')
+      .insert({
+        name: formData.name,
+        email: formData.email,
+        company: formData.company,
+        industry: formData.industry,
+        other_industry: formData.otherIndustry || null,
+        
+        q1_answer: formData.answers?.[0]?.toString() || null,
+        q2_answer: formData.answers?.[1]?.toString() || null,
+        q3_answer: formData.answers?.[2]?.toString() || null,
+        q4_answer: formData.answers?.[3]?.toString() || null,
+        q5_answer: formData.answers?.[4]?.toString() || null,
+        q6_answer: formData.answers?.[5]?.toString() || null,
+        q7_answer: formData.answers?.[6]?.toString() || null,
+        q8_answer: formData.answers?.[7]?.toString() || null,
+        q9_answer: formData.answers?.[8]?.toString() || null,
+        q10_answer: formData.answers?.[9]?.toString() || null,
+        
+        final_score: finalScore,
+        score_category: scoreCategory,
+        
+        assessment_data: {
+          answers: formData.answers || [],
+          questions: formData.questions || [],
+          score: finalScore,
+          category: scoreCategory
+        },
+        
+        // Only include fields that exist in assessment_submissions
+        user_agent: context.user_agent,
+        referrer: context.referrer,
+        page_url: context.page_url,
+        ip_address: context.ip_address,
+        status: 'new'
+      })
+      .select();
+    
+    if (error) throw error;
+    
+    trackEvent('form_submit', 'Assessment Form', {
+      industry: formData.industry,
+      score: finalScore,
+      category: scoreCategory
+    });
+    
+    return { success: true, data, score: finalScore, category: scoreCategory };
+  } catch (error) {
+    console.error('Assessment form submission error:', error);
+    return { success: false, error };
+  }
+}
+
+// One-pager tracking
+function trackOnePagerView(onePagerName) {
+  trackEvent('onepager_view', onePagerName, {
+    onepager: onePagerName
+  });
+}
+
+// Theme change tracking
+function trackThemeChange(themeName) {
+  trackEvent('theme_change', themeName, {
+    the
