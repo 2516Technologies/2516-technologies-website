@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="color-scheme" content="light">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Delivery Options — Orr Group Proposal</title>
+<link rel="stylesheet" href="../../assets/theme.css">
+<style>
+  .hero-section { padding:60px 0 56px; }
+  .option-block { margin-bottom:48px; border-radius:20px; border:1px solid var(--border-subtle); overflow:hidden; }
+  .option-block.recommended { border-color:rgba(37,99,235,0.4); }
+  .option-header { padding:28px 32px; display:flex; align-items:flex-start; justify-content:space-between; gap:24px; background:var(--bg-card); flex-wrap:wrap; }
+  .option-header-left {}
+  .option-num { font-family:var(--font-mono); font-size:var(--text-xs); letter-spacing:0.16em; text-transform:uppercase; color:var(--text-muted); margin-bottom:8px; }
+  .option-title { font-family:var(--font-display); font-size:26px; font-weight:400; color:var(--text-primary); margin-bottom:6px; }
+  .option-subtitle { font-size:var(--text-sm); color:var(--text-muted); max-width:480px; line-height:1.5; }
+  .option-header-right { text-align:right; flex-shrink:0; }
+  .option-price-label { font-family:var(--font-mono); font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:var(--text-muted); margin-bottom:6px; }
+  .option-price { font-family:var(--font-display); font-size:28px; color:var(--text-primary); }
+  .option-price.accent { color:var(--accent-primary); }
+  .option-price-note { font-size:11px; color:var(--text-muted); margin-top:3px; }
+  .rec-strip { background:var(--accent-primary); padding:8px 32px; display:flex; align-items:center; gap:10px; }
+  .rec-strip span { font-family:var(--font-mono); font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:#fff; }
+  .option-body { padding:32px; display:grid; grid-template-columns:1fr 1fr; gap:32px; }
+  .option-section-title { font-family:var(--font-mono); font-size:var(--text-xs); letter-spacing:0.14em; text-transform:uppercase; color:var(--text-muted); margin-bottom:16px; }
+  .option-text { font-size:var(--text-base); color:var(--text-secondary); line-height:1.8; }
+  .option-text strong { color:var(--text-primary); font-weight:600; }
+  .option-text p { margin-bottom:14px; }
+  .option-text p:last-child { margin-bottom:0; }
+  .pros-cons { display:flex; flex-direction:column; gap:10px; }
+  .pro-item, .con-item, .risk-item { display:flex; gap:10px; align-items:flex-start; font-size:var(--text-sm); color:var(--text-secondary); line-height:1.55; padding:10px 14px; border-radius:8px; }
+  .pro-item { background:rgba(45,198,83,0.06); border:1px solid rgba(45,198,83,0.15); }
+  .con-item { background:rgba(244,162,97,0.06); border:1px solid rgba(244,162,97,0.15); }
+  .risk-item { background:rgba(244,97,97,0.06); border:1px solid rgba(244,97,97,0.15); }
+  .pro-icon { color:var(--accent-green); font-size:13px; flex-shrink:0; margin-top:1px; }
+  .con-icon { color:var(--accent-coral); font-size:13px; flex-shrink:0; margin-top:1px; }
+  .risk-icon { color:#f46161; font-size:13px; flex-shrink:0; margin-top:1px; }
+  .mitigation-section { padding:0 32px 32px; border-top:1px solid var(--border-subtle); padding-top:24px; }
+  .mitigation-title { font-family:var(--font-mono); font-size:var(--text-xs); letter-spacing:0.14em; text-transform:uppercase; color:var(--text-muted); margin-bottom:14px; }
+  .mitigation-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+  .mitigation-item { background:var(--bg-card); border:1px solid var(--border-subtle); border-radius:10px; padding:14px; }
+  .mit-label { font-family:var(--font-mono); font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:var(--accent-primary); margin-bottom:5px; }
+  .mit-text { font-size:12px; color:var(--text-secondary); line-height:1.55; }
+  .rec-box { background:linear-gradient(135deg,rgba(37,99,235,0.10),rgba(45,198,83,0.05)); border:1px solid rgba(37,99,235,0.25); border-radius:16px; padding:32px 36px; margin:48px 0; }
+  .rec-box h3 { font-family:var(--font-display); font-size:22px; font-weight:400; color:var(--text-primary); margin-bottom:14px; }
+  .rec-box h3 em { font-style:italic; color:var(--accent-secondary); }
+  .rec-box p { font-size:var(--text-base); color:var(--text-secondary); line-height:1.8; margin-bottom:14px; }
+  .rec-box p:last-child { margin-bottom:0; }
+  .rec-box strong { color:var(--text-primary); font-weight:600; }
+  @media(max-width:768px) { .option-body{grid-template-columns:1fr} .option-header{flex-direction:column} .option-header-right{text-align:left} .mitigation-grid{grid-template-columns:1fr} }
+</style>
+</head>
+<body style="background-color:#f5f7fa;color:#0d1b2a;">
+<div class="bg-layer"></div>
+<div class="grid-overlay"></div>
+<div class="page-wrapper">
+
+  <section class="hero-section">
+    <div class="eyebrow anim-slide-right">Delivery Options</div>
+    <h1 class="display-lg anim-fade-up delay-2">Three ways to work<br>together — one <em>clear recommendation.</em></h1>
+    <p class="body-lg anim-fade-up delay-3" style="max-width:660px;">
+      Every option is built on the same robust AWS foundation. What differs is ownership, support structure,
+      and how the financial relationship evolves over time. Choose based on your risk tolerance, growth ambitions,
+      and how you want to think about this platform in five years.
+    </p>
+  </section>
+
+  <!-- Option 1 -->
+  <div class="option-block anim-fade-up delay-1">
+    <div class="option-header">
+      <div class="option-header-left">
+        <div class="option-num">Option 01</div>
+        <div class="option-title">Build, Deliver & Train</div>
+        <div class="option-subtitle">Full ownership transfer. 2516 builds and hands over. Orr Group owns and operates independently post-delivery.</div>
+      </div>
+      <div class="option-header-right">
+        <div class="option-price-label">One-time investment</div>
+        <div class="option-price">$38,000</div>
+        <div class="option-price-note">Build + documentation + training sessions</div>
+      </div>
+    </div>
+    <div class="option-body">
+      <div>
+        <div class="option-section-title">How it works</div>
+        <div class="option-text">
+          <p>2516 designs, builds, and deploys the full Phase 1 platform. At handover, you receive the complete codebase, deployment documentation, runbooks for common operations, and three structured training sessions — one for administrators, one for end users, and one technical session for whoever manages the platform internally.</p>
+          <p><strong>After handover, Orr Group owns the platform outright.</strong> You manage your own AWS account, your own deployments, and your own ongoing development. 2516 is available for future work on a separate engagement basis, but has no ongoing obligation.</p>
+          <p>This option is best suited for organizations that have internal technical capability — or plan to hire it — and want complete control over their platform without any ongoing vendor relationship.</p>
+        </div>
+      </div>
+      <div>
+        <div class="option-section-title">Pros, cons & risks</div>
+        <div class="pros-cons">
+          <div class="pro-item"><span class="pro-icon">✓</span>Lowest total cost if platform needs minimal changes</div>
+          <div class="pro-item"><span class="pro-icon">✓</span>Complete ownership — no ongoing vendor dependency</div>
+          <div class="pro-item"><span class="pro-icon">✓</span>Clean engagement with defined scope and end date</div>
+          <div class="con-item"><span class="con-icon">–</span>Full IT burden falls on Orr Group immediately at handover</div>
+          <div class="con-item"><span class="con-icon">–</span>Training value erodes as staff turns over</div>
+          <div class="con-item"><span class="con-icon">–</span>Platform IP transfers — 2516 can't reuse or iterate on it</div>
+          <div class="risk-item"><span class="risk-icon">⚠</span>No support path for critical incidents without a separate contract</div>
+        </div>
+      </div>
+    </div>
+    <div class="mitigation-section">
+      <div class="mitigation-title">Risk mitigations included in contract</div>
+      <div class="mitigation-grid">
+        <div class="mitigation-item"><div class="mit-label">90-day window</div><div class="mit-text">Post-launch support window included at no extra cost. Critical bugs fixed during this period.</div></div>
+        <div class="mitigation-item"><div class="mit-label">Source code escrow</div><div class="mit-text">Full codebase delivered to Orr Group in a private GitHub repository on day one of Phase 1.</div></div>
+        <div class="mitigation-item"><div class="mit-label">Retainer option</div><div class="mit-text">Annual maintenance retainer available at $1,500/mo if you want ongoing 2516 support after the window.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Option 2 -->
+  <div class="option-block anim-fade-up delay-2">
+    <div class="option-header">
+      <div class="option-header-left">
+        <div class="option-num">Option 02</div>
+        <div class="option-title">Build, Deliver & Hourly Support</div>
+        <div class="option-subtitle">Full ownership transfer with 2516 available on-call for troubleshooting, enhancements, and incident response.</div>
+      </div>
+      <div class="option-header-right">
+        <div class="option-price-label">One-time + ongoing</div>
+        <div class="option-price">$33,000</div>
+        <div class="option-price-note">Build fee + $175/hr support + AWS pass-through</div>
+      </div>
+    </div>
+    <div class="option-body">
+      <div>
+        <div class="option-section-title">How it works</div>
+        <div class="option-text">
+          <p>Same build quality as Option 1, but with a slightly lower upfront fee in exchange for a continuing hourly engagement. After handover, 2516 remains available at $175/hour for troubleshooting, feature requests, third-party integrations, and incident response. AWS costs are passed through at cost.</p>
+          <p><strong>You own the platform. You control the roadmap.</strong> But when something breaks or you want a new feature, 2516 is a phone call away — billing only for actual hours worked. No monthly minimum, no retainer.</p>
+          <p>This option works well when Orr Group wants ownership without wanting to be fully responsible for all technical decisions. It keeps 2516 involved without a long-term commitment on either side.</p>
+        </div>
+      </div>
+      <div>
+        <div class="option-section-title">Pros, cons & risks</div>
+        <div class="pros-cons">
+          <div class="pro-item"><span class="pro-icon">✓</span>Lower upfront cost than Option 1</div>
+          <div class="pro-item"><span class="pro-icon">✓</span>2516 expertise available without a full retainer</div>
+          <div class="pro-item"><span class="pro-icon">✓</span>Pay only when you need support</div>
+          <div class="con-item"><span class="con-icon">–</span>Support costs can spike unpredictably during incidents</div>
+          <div class="con-item"><span class="con-icon">–</span>No guaranteed response time without SLA in place</div>
+          <div class="con-item"><span class="con-icon">–</span>AWS costs become Orr Group's responsibility and variable</div>
+          <div class="risk-item"><span class="risk-icon">⚠</span>Without a monthly cap, a bad month could mean $5K–$10K in unexpected support hours</div>
+        </div>
+      </div>
+    </div>
+    <div class="mitigation-section">
+      <div class="mitigation-title">Risk mitigations included in contract</div>
+      <div class="mitigation-grid">
+        <div class="mitigation-item"><div class="mit-label">Monthly cap</div><div class="mit-text">Not-to-exceed clause of 10 hours/month unless explicitly approved in writing for that billing period.</div></div>
+        <div class="mitigation-item"><div class="mit-label">Response SLA</div><div class="mit-text">Critical incidents (platform down): 4-hour response. Standard requests: next business day. Defined in contract.</div></div>
+        <div class="mitigation-item"><div class="mit-label">AWS budget alerts</div><div class="mit-text">AWS cost alerts configured at 80% and 100% of monthly budget. No surprise bills.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Option 3 — Recommended -->
+  <div class="option-block recommended anim-fade-up delay-3">
+    <div class="rec-strip">
+      <span>★ 2516 Recommendation</span>
+      <span style="opacity:0.6;">— Best outcome for Orr Group and 2516 long-term</span>
+    </div>
+    <div class="option-header">
+      <div class="option-header-left">
+        <div class="option-num">Option 03</div>
+        <div class="option-title">Licensed SaaS + Retainer</div>
+        <div class="option-subtitle">2516 builds, owns, and operates. Orr Group licenses access and scales freely without IT burden.</div>
+      </div>
+      <div class="option-header-right">
+        <div class="option-price-label">Onboarding + recurring</div>
+        <div class="option-price accent">$20,000</div>
+        <div class="option-price-note">+ $14/user/mo + $3,000/mo retainer</div>
+      </div>
+    </div>
+    <div class="option-body">
+      <div>
+        <div class="option-section-title">How it works</div>
+        <div class="option-text">
+          <p>2516 builds the platform and retains ownership of the IP. Orr Group licenses access on a per-user monthly basis. The retainer covers all AWS infrastructure management, SLA-backed uptime, ongoing maintenance, and platform updates. AWS costs are absorbed by 2516 — Orr Group never receives an AWS bill.</p>
+          <p><strong>Orr Group gets a fully managed, always-current platform with no internal IT burden.</strong> 2516 handles incidents, deploys updates, manages database scaling, and monitors uptime. When something breaks at 2am, 2516 fixes it — not Orr Group's staff.</p>
+          <p>At 1,000 users, this generates approximately $168,000/year in license revenue plus $36,000/year in retainer revenue — a strong recurring income stream for 2516, and a predictable, all-inclusive monthly cost for Orr Group. The economics work well for both sides.</p>
+          <p><strong>Data portability is guaranteed in the contract.</strong> If Orr Group ever wants to exit the relationship, they receive a full data export in standard formats and 180 days of transition support. No lock-in without recourse.</p>
+        </div>
+      </div>
+      <div>
+        <div class="option-section-title">Pros, cons & risks</div>
+        <div class="pros-cons">
+          <div class="pro-item"><span class="pro-icon">★</span>No internal IT burden — 2516 manages everything</div>
+          <div class="pro-item"><span class="pro-icon">★</span>SLA-backed uptime — incidents are 2516's problem</div>
+          <div class="pro-item"><span class="pro-icon">★</span>Always on the latest platform version automatically</div>
+          <div class="pro-item"><span class="pro-icon">★</span>AWS costs included — no variable infrastructure bills</div>
+          <div class="pro-item"><span class="pro-icon">★</span>Scales cleanly — add users without renegotiating scope</div>
+          <div class="con-item"><span class="con-icon">–</span>Higher total cost in Year 1 vs. one-off options</div>
+          <div class="con-item"><span class="con-icon">–</span>2516 retains IP — Orr Group holds a license, not ownership</div>
+          <div class="risk-item"><span class="risk-icon">⚠</span>Vendor dependency — mitigated by data portability clause and 180-day exit support</div>
+        </div>
+      </div>
+    </div>
+    <div class="mitigation-section">
+      <div class="mitigation-title">Risk mitigations included in contract</div>
+      <div class="mitigation-grid">
+        <div class="mitigation-item"><div class="mit-label">Data portability</div><div class="mit-text">Full data export in standard formats (CSV, JSON) guaranteed within 30 days of termination request.</div></div>
+        <div class="mitigation-item"><div class="mit-label">180-day exit support</div><div class="mit-text">6 months of transition support if Orr Group elects to exit — includes migration assistance and documentation.</div></div>
+        <div class="mitigation-item"><div class="mit-label">Rate-lock provision</div><div class="mit-text">Per-user license rate locked for 24 months. Any increase after renewal capped at 5% annually.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recommendation box -->
+  <div class="rec-box anim-fade-up">
+    <h3>Why <em>Option 3</em> is the right call</h3>
+    <p>The total cost of ownership over three years tells the real story. Under Options 1 and 2, Orr Group absorbs AWS infrastructure costs, internal IT staffing, platform maintenance, annual security reviews, and the cost of re-engaging 2516 every time a new feature is needed. Those costs are real, recurring, and easy to underestimate.</p>
+    <p>Under Option 3, all of that is included in the retainer. <strong>On a risk-adjusted 3-year basis, Option 3 is frequently competitive with Option 1 and cheaper than Option 2.</strong> The Year 1 investment looks higher on paper — but the actual total cost of operating the platform independently is rarely as low as it appears.</p>
+    <p>There's also a strategic argument: <strong>Orr Group's core competency is nonprofit AI consulting, not platform operations.</strong> Every hour CJ's team spends managing AWS, debugging deployments, or chasing 2516 for hourly support is an hour not spent serving clients, developing the product vision, or growing the business. Option 3 keeps Orr Group in its zone of genius.</p>
+  </div>
+
+</div>
+<footer class="site-footer">
+  <div class="footer-brand">Prepared by <strong>2516 Technologies</strong> · mark@2516technologies.com</div>
+  <div class="footer-tagline">AI is Jazz.</div>
+  <nav class="footer-nav"><a href="orr-why-2516.html">← Why 2516</a><a href="orr-investment.html">Investment →</a></nav>
+</footer>
+<script src="nav-orr.js"></script>
+</body>
+</html>

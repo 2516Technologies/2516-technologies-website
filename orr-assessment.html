@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="color-scheme" content="light">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Infrastructure Assessment — Orr Group Proposal</title>
+<link rel="stylesheet" href="../../assets/theme.css">
+<style>
+  .hero-section { padding:60px 0 56px; }
+  .finding-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:20px; margin:48px 0; }
+  .finding-card { background:var(--bg-card); border:1px solid var(--border-subtle); border-radius:16px; padding:24px; }
+  .finding-card.critical { border-color:rgba(244,97,97,0.3); background:rgba(244,97,97,0.04); }
+  .finding-card.warning  { border-color:rgba(244,162,97,0.3); background:rgba(244,162,97,0.04); }
+  .finding-card.positive { border-color:rgba(45,198,83,0.3);  background:rgba(45,198,83,0.04); }
+  .finding-label { font-family:var(--font-mono); font-size:10px; letter-spacing:0.14em; text-transform:uppercase; margin-bottom:10px; display:flex; align-items:center; gap:8px; }
+  .label-critical { color:#f46161; }
+  .label-warning  { color:var(--accent-coral); }
+  .label-positive { color:var(--accent-green); }
+  .finding-title { font-family:var(--font-display); font-size:18px; font-weight:400; color:var(--text-primary); margin-bottom:8px; }
+  .finding-body { font-size:var(--text-sm); color:var(--text-secondary); line-height:1.7; }
+  .finding-impact { margin-top:12px; padding:10px 14px; border-radius:8px; font-size:11px; line-height:1.5; }
+  .impact-critical { background:rgba(244,97,97,0.08); color:#f46161; }
+  .impact-warning  { background:rgba(244,162,97,0.08); color:var(--accent-coral); }
+  .impact-positive { background:rgba(45,198,83,0.08); color:var(--accent-green); }
+
+  .scale-wall { background:linear-gradient(135deg,rgba(244,97,97,0.06),rgba(244,162,97,0.04)); border:1px solid rgba(244,97,97,0.2); border-left:3px solid #f46161; border-radius:4px 16px 16px 4px; padding:32px 36px; margin:48px 0; }
+  .scale-wall h3 { font-family:var(--font-display); font-size:22px; font-weight:400; color:var(--text-primary); margin-bottom:14px; }
+  .scale-wall p { font-size:var(--text-base); color:var(--text-secondary); line-height:1.8; margin-bottom:14px; }
+  .scale-wall p:last-child { margin-bottom:0; }
+  .scale-wall strong { color:var(--text-primary); font-weight:600; }
+
+  .limit-table { width:100%; border-collapse:collapse; margin-top:24px; }
+  .limit-table th { font-family:var(--font-mono); font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:var(--text-muted); padding:10px 16px; text-align:left; border-bottom:1px solid var(--border-subtle); }
+  .limit-table td { padding:12px 16px; font-size:var(--text-sm); color:var(--text-secondary); border-bottom:1px solid var(--border-subtle); vertical-align:top; line-height:1.6; }
+  .limit-table tr:last-child td { border-bottom:none; }
+  .limit-table tr:hover td { background:var(--bg-card); }
+  .td-feature { color:var(--text-primary); font-weight:500; }
+  .td-now { color:var(--accent-coral); }
+  .td-needs { color:var(--accent-green); }
+
+  .what-works { background:linear-gradient(135deg,rgba(45,198,83,0.08),rgba(37,99,235,0.05)); border:1px solid rgba(45,198,83,0.2); border-radius:16px; padding:32px 36px; margin:48px 0; }
+  .what-works h3 { font-family:var(--font-display); font-size:22px; font-weight:400; color:var(--text-primary); margin-bottom:14px; }
+  .what-works p { font-size:var(--text-base); color:var(--text-secondary); line-height:1.8; margin-bottom:14px; }
+  .what-works p:last-child { margin-bottom:0; }
+  .what-works strong { color:var(--text-primary); font-weight:600; }
+
+  .path-forward { margin:48px 0; }
+  .path-steps { display:flex; flex-direction:column; gap:16px; margin-top:24px; }
+  .path-step { display:flex; gap:20px; align-items:flex-start; padding:22px 24px; background:var(--bg-card); border:1px solid var(--border-subtle); border-radius:14px; }
+  .step-num { width:32px; height:32px; border-radius:50%; background:rgba(37,99,235,0.15); border:1px solid rgba(37,99,235,0.3); display:flex; align-items:center; justify-content:center; font-family:var(--font-mono); font-size:12px; color:var(--accent-primary); flex-shrink:0; }
+  .step-content h4 { font-family:var(--font-display); font-size:17px; font-weight:400; color:var(--text-primary); margin-bottom:6px; }
+  .step-content p { font-size:var(--text-sm); color:var(--text-secondary); line-height:1.65; }
+
+  @media(max-width:768px) { .finding-grid{grid-template-columns:1fr} }
+</style>
+</head>
+<body style="background-color:#f5f7fa;color:#0d1b2a;">
+<div class="bg-layer"></div>
+<div class="grid-overlay"></div>
+<div class="page-wrapper">
+
+  <section class="hero-section">
+    <div class="eyebrow anim-slide-right">Infrastructure Assessment</div>
+    <h1 class="display-lg anim-fade-up delay-2">What you've built,<br>what it can do — and<br><em>what it can't.</em></h1>
+    <p class="body-lg anim-fade-up delay-3" style="max-width:660px;">
+      The prototype you and Ari built has done exactly what a prototype should: proven the concept,
+      validated the vision, and given us something concrete to build from. Here's an honest assessment
+      of where it stands today — and what needs to change to support 1,000+ users.
+    </p>
+  </section>
+
+  <div class="section-label anim-fade-up">Assessment findings</div>
+  <div class="finding-grid anim-fade-up delay-1">
+
+    <div class="finding-card critical">
+      <div class="finding-label label-critical">⚠ Critical — rebuild required</div>
+      <div class="finding-title">No structured data layer</div>
+      <div class="finding-body">The prototype appears to store data in flat JSON files rather than a relational database. This is common in rapid prototypes — JSON is fast to work with and requires no database setup. But it means every user's data is essentially a text file, with no ability to query across users, run aggregations, or build any analytics on top of it.</div>
+      <div class="finding-impact impact-critical">Cannot support concurrent users, analytics, AI training, or any future feature that requires querying across the dataset.</div>
+    </div>
+
+    <div class="finding-card critical">
+      <div class="finding-label label-critical">⚠ Critical — rebuild required</div>
+      <div class="finding-title">CRM has no real backend</div>
+      <div class="finding-body">The native CRM built into the prototype is a significant piece of UX work — the interface exists and functions in demo. But without a proper database backend, the CRM data isn't persisted reliably, can't scale across thousands of user records, and has no audit trail. It's a frontend without a foundation.</div>
+      <div class="finding-impact impact-critical">Any data entered into the current CRM cannot be safely migrated or relied upon at scale. A backend rebuild is not optional.</div>
+    </div>
+
+    <div class="finding-card warning">
+      <div class="finding-label label-warning">⚡ Risk — needs architecture decision</div>
+      <div class="finding-title">Node.js runtime — unconfirmed structure</div>
+      <div class="finding-body">The prototype is likely running on Node.js, which is a perfectly capable runtime for this type of application. However, without reviewing the actual codebase, the architecture is unclear — it may be a single monolithic file, an Express app, or something built with a no-code tool that generates Node. The structure matters for what can be reused vs. rebuilt.</div>
+      <div class="finding-impact impact-warning">Upload the prototype file so 2516 can do a full code review before the proposal is finalized. This directly affects Phase 1 timeline and cost.</div>
+    </div>
+
+    <div class="finding-card warning">
+      <div class="finding-label label-warning">⚡ Risk — needs resolution</div>
+      <div class="finding-title">No mobile-first design</div>
+      <div class="finding-body">Based on the description of the prototype, it was built to demonstrate the concept rather than optimize for mobile. For a platform targeting small nonprofit staff — who frequently work from phones — a desktop-first or desktop-only UI is a significant barrier to adoption. Mobile is not a nice-to-have; it's the primary use case.</div>
+      <div class="finding-impact impact-warning">Phase 1 will rebuild the UI mobile-first from the ground up, preserving the design intent while making every surface work on a 375px screen.</div>
+    </div>
+
+    <div class="finding-card warning">
+      <div class="finding-label label-warning">⚡ Risk — plan required</div>
+      <div class="finding-title">No authentication or multi-tenancy</div>
+      <div class="finding-body">A prototype typically has minimal or no authentication — often a hardcoded password or no login at all. For a subscription platform serving 1,000+ organizations, multi-tenant architecture is essential: each organization's data must be completely isolated from every other organization's data. This requires a purpose-built auth and tenancy system.</div>
+      <div class="finding-impact impact-warning">2516 will implement AWS Cognito for authentication and row-level security in Aurora for tenant isolation. No user data can ever cross organizational boundaries.</div>
+    </div>
+
+    <div class="finding-card positive">
+      <div class="finding-label label-positive">✓ Strong — preserve and build from</div>
+      <div class="finding-title">Claude API integration works</div>
+      <div class="finding-body">The core AI interaction — using Claude's API to power the virtual consultant and chatbot experience — has been validated in the prototype. The prompt architecture and conversation patterns you and Ari developed are real, tested, and carry value. This is the hardest part to validate, and you've already done it.</div>
+      <div class="finding-impact impact-positive">The Claude API integration and prompt engineering from the prototype will inform Phase 2's RAG chatbot design. The concept is proven — now we give it infrastructure.</div>
+    </div>
+
+    <div class="finding-card positive">
+      <div class="finding-label label-positive">✓ Strong — preserve and build from</div>
+      <div class="finding-title">UX vision is clear and differentiated</div>
+      <div class="finding-body">The prototype demonstrates a clear vision for what the product should feel like — the CRM interface, the virtual consultant interaction model, and the overall flow reflect genuine product thinking. That vision is the most valuable output of the prototype phase and it translates directly into the design brief for Phase 1.</div>
+      <div class="finding-impact impact-positive">2516 will present three visual design directions based on the prototype's UX intent before any code is written. You approve the direction before development begins.</div>
+    </div>
+
+    <div class="finding-card positive">
+      <div class="finding-label label-positive">✓ Opportunity — use it wisely</div>
+      <div class="finding-title">You have a working demo</div>
+      <div class="finding-body">Most platforms at this stage have nothing to show. You have a functioning prototype that communicates the vision to stakeholders, investors, and early clients. That's a real asset for the RFP process, early sales conversations, and board presentations — even before the production platform is built.</div>
+      <div class="finding-impact impact-positive">Use the prototype for demos while Phase 1 is built. Never deploy it to real users — but use it to generate revenue conversations and validate subscription interest before launch.</div>
+    </div>
+
+  </div>
+
+  <div class="scale-wall anim-fade-up">
+    <h3>The scaling wall — why this matters for 1,000 users</h3>
+    <p>Flat JSON storage works fine for one or two users testing a concept. It begins to fail somewhere between 10 and 50 users, and it collapses entirely at scale. Here's specifically what happens as you grow:</p>
+    <table class="limit-table">
+      <tr><th>Feature / Requirement</th><th>Current state</th><th>What 1,000 users needs</th></tr>
+      <tr><td class="td-feature">User data storage</td><td class="td-now">Flat JSON files — one per user or session</td><td class="td-needs">Relational database with indexed tables, foreign keys, and query support</td></tr>
+      <tr><td class="td-feature">Concurrent users</td><td class="td-now">File read/write conflicts at any meaningful concurrency</td><td class="td-needs">Connection-pooled database that handles hundreds of simultaneous queries</td></tr>
+      <tr><td class="td-feature">Analytics & reporting</td><td class="td-now">Impossible — no way to query across JSON files</td><td class="td-needs">SQL queries across normalized tables; behavior tracking; dashboards</td></tr>
+      <tr><td class="td-feature">AI model training (Year 2)</td><td class="td-now">Nothing to train on — unstructured, non-queryable data</td><td class="td-needs">12+ months of clean, labeled, structured interaction data</td></tr>
+      <tr><td class="td-feature">Subscription billing</td><td class="td-now">No billing infrastructure exists</td><td class="td-needs">Stripe integration tied to user records in the database</td></tr>
+      <tr><td class="td-feature">Data security / tenant isolation</td><td class="td-now">No separation between user data</td><td class="td-needs">Row-level security ensuring Org A can never see Org B's data</td></tr>
+      <tr><td class="td-feature">Audit trail</td><td class="td-now">No logging or activity history</td><td class="td-needs">Timestamped event log for every user action — required for compliance</td></tr>
+    </table>
+  </div>
+
+  <div class="what-works anim-fade-up">
+    <h3>What we're keeping — and why</h3>
+    <p>This is not a "throw everything out" situation. The prototype did its job: it validated the concept,
+    proved the Claude API integration works, and produced a UX vision that drives the Phase 1 design brief.
+    <strong>None of that work is wasted.</strong> The rebuild is about giving a proven idea the infrastructure
+    it deserves — not starting from scratch.</p>
+    <p>Think of it this way: the prototype is the architectural sketch. Phase 1 is the structural engineering.
+    The vision stays the same. The foundation changes underneath it so that everything you want to build in
+    Years 2 and 3 is actually possible.</p>
+  </div>
+
+  <div class="path-forward anim-fade-up">
+    <div class="section-label">The path forward</div>
+    <div class="path-steps">
+      <div class="path-step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h4>Code review of the prototype</h4>
+          <p>Once the prototype file is shared, 2516 conducts a full technical review — confirming the runtime, mapping what can be reused (prompt logic, UX patterns), and documenting exactly what needs rebuilding. This informs the final Phase 1 scope and timeline before any contract is signed.</p>
+        </div>
+      </div>
+      <div class="path-step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h4>Three design directions presented before development begins</h4>
+          <p>Based on the prototype's UX intent and the clean/professional direction discussed, 2516 presents three distinct visual interpretations. CJ approves one direction — or a blend — before any production code is written. You control what it looks like.</p>
+        </div>
+      </div>
+      <div class="path-step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h4>Phase 1 builds the foundation</h4>
+          <p>Proper data architecture, mobile-first UI, CRM rebuilt on Aurora, email/text notifications, auth, and subscription billing. Every milestone is demoed and approved before the next phase begins. Nothing ships to real users until it's ready.</p>
+        </div>
+      </div>
+      <div class="path-step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <h4>AI features in Phase 2 — after the foundation is solid</h4>
+          <p>The virtual consultant, interactive avatar, and Claude-powered chatbot are Phase 2. They require Phase 1's data layer, user session infrastructure, and stable platform to function correctly. Skipping ahead risks delivering exactly what CJ is most concerned about: something that doesn't work.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<footer class="site-footer">
+  <div class="footer-brand">Prepared by <strong>2516 Technologies</strong> · mark@2516technologies.com</div>
+  <div class="footer-tagline">AI is Jazz.</div>
+  <nav class="footer-nav"><a href="orr-opportunity.html">← Opportunity</a><a href="orr-architecture.html">Architecture →</a></nav>
+</footer>
+<script src="nav-orr.js"></script>
+</body>
+</html>

@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="color-scheme" content="light">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Investment — Orr Group Proposal</title>
+<link rel="stylesheet" href="../../assets/theme.css">
+<style>
+  .hero-section { padding:60px 0 48px; }
+
+  /* ── Context banner ── */
+  .context-banner {
+    background:linear-gradient(135deg,rgba(94,96,206,0.08),rgba(37,99,235,0.05));
+    border:1px solid rgba(94,96,206,0.2);
+    border-radius:16px; padding:32px 36px; margin-bottom:56px;
+  }
+  .context-banner h3 {
+    font-family:var(--font-display); font-size:20px; font-weight:400;
+    color:var(--text-primary); margin-bottom:14px;
+  }
+  .context-banner h3 em { font-style:italic; color:var(--accent-secondary); }
+  .context-banner p {
+    font-size:var(--text-base); color:var(--text-secondary);
+    line-height:1.8; margin-bottom:14px;
+  }
+  .context-banner p:last-child { margin-bottom:0; }
+  .context-banner strong { color:var(--text-primary); font-weight:600; }
+  .market-row {
+    display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:24px;
+  }
+  .market-item {
+    background:var(--bg-card); border:1px solid var(--border-subtle);
+    border-radius:12px; padding:18px; text-align:center;
+  }
+  .market-label {
+    font-family:var(--font-mono); font-size:10px; letter-spacing:0.12em;
+    text-transform:uppercase; color:var(--text-muted); margin-bottom:8px;
+  }
+  .market-value {
+    font-family:var(--font-display); font-size:22px; font-weight:400;
+    color:var(--text-primary);
+  }
+  .market-value.accent { color:var(--accent-primary); }
+  .market-value.floor { color:var(--accent-coral); }
+  .market-note { font-size:11px; color:var(--text-muted); margin-top:4px; line-height:1.4; }
+
+  /* ── Option blocks ── */
+  .option-block {
+    border:1px solid var(--border-subtle); border-radius:20px;
+    overflow:hidden; margin-bottom:40px;
+  }
+  .option-block.recommended { border-color:rgba(37,99,235,0.4); }
+
+  .rec-strip {
+    background:var(--accent-primary); padding:9px 32px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .rec-strip span {
+    font-family:var(--font-mono); font-size:10px;
+    letter-spacing:0.14em; text-transform:uppercase; color:#fff;
+  }
+
+  .option-header {
+    padding:28px 32px; background:var(--bg-card);
+    display:flex; justify-content:space-between; align-items:flex-start;
+    gap:24px; flex-wrap:wrap;
+  }
+  .option-num {
+    font-family:var(--font-mono); font-size:var(--text-xs);
+    letter-spacing:0.16em; text-transform:uppercase; color:var(--text-muted); margin-bottom:8px;
+  }
+  .option-title {
+    font-family:var(--font-display); font-size:26px; font-weight:400;
+    color:var(--text-primary); margin-bottom:6px;
+  }
+  .option-tagline {
+    font-size:var(--text-sm); color:var(--text-muted);
+    max-width:500px; line-height:1.5;
+  }
+  .option-price-col { text-align:right; flex-shrink:0; }
+  .price-label {
+    font-family:var(--font-mono); font-size:10px; letter-spacing:0.12em;
+    text-transform:uppercase; color:var(--text-muted); margin-bottom:6px;
+  }
+  .price-main {
+    font-family:var(--font-display); font-size:30px;
+    color:var(--text-primary); line-height:1.1;
+  }
+  .price-main.accent { color:var(--accent-primary); }
+  .price-sub {
+    font-size:var(--text-sm); color:var(--text-secondary); margin-top:4px;
+  }
+  .price-note { font-size:11px; color:var(--text-muted); margin-top:3px; font-style:italic; }
+
+  /* ── Option body ── */
+  .option-body { padding:32px; }
+
+  .body-section { margin-bottom:32px; }
+  .body-section:last-child { margin-bottom:0; }
+  .body-section-title {
+    font-family:var(--font-mono); font-size:var(--text-xs);
+    letter-spacing:0.14em; text-transform:uppercase;
+    color:var(--text-muted); margin-bottom:16px;
+    display:flex; align-items:center; gap:12px;
+  }
+  .body-section-title::after {
+    content:''; flex:1; height:1px;
+    background:linear-gradient(90deg,var(--border-subtle),transparent);
+  }
+
+  .scope-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .scope-item {
+    background:var(--bg-card); border:1px solid var(--border-subtle);
+    border-radius:12px; padding:18px;
+  }
+  .scope-phase {
+    font-family:var(--font-mono); font-size:10px; letter-spacing:0.1em;
+    text-transform:uppercase; margin-bottom:6px;
+  }
+  .scope-phase.p1a { color:var(--accent-primary); }
+  .scope-phase.p1b { color:var(--accent-purple); }
+  .scope-title {
+    font-family:var(--font-display); font-size:16px; font-weight:400;
+    color:var(--text-primary); margin-bottom:6px;
+  }
+  .scope-timeline {
+    font-family:var(--font-mono); font-size:10px; color:var(--text-muted); margin-bottom:10px;
+  }
+  .scope-list { display:flex; flex-direction:column; gap:6px; }
+  .scope-list li {
+    font-size:12px; color:var(--text-secondary); line-height:1.5;
+    display:flex; gap:8px; align-items:flex-start;
+  }
+  .scope-list li::before {
+    content:'→'; font-size:10px; color:var(--accent-primary);
+    flex-shrink:0; margin-top:2px;
+  }
+
+  .payment-table { width:100%; border-collapse:collapse; margin-top:4px; }
+  .payment-table th {
+    font-family:var(--font-mono); font-size:10px; letter-spacing:0.1em;
+    text-transform:uppercase; color:var(--text-muted); padding:8px 14px;
+    text-align:left; border-bottom:1px solid var(--border-subtle);
+    background:var(--bg-card);
+  }
+  .payment-table td {
+    padding:12px 14px; font-size:var(--text-sm); color:var(--text-secondary);
+    border-bottom:1px solid var(--border-subtle); line-height:1.5; vertical-align:top;
+  }
+  .payment-table tr:last-child td { border-bottom:none; }
+  .payment-table tr:hover td { background:var(--bg-card); }
+  .td-label { color:var(--text-primary); font-weight:500; white-space:nowrap; }
+  .td-amount { font-family:var(--font-display); font-size:18px; color:var(--accent-primary); white-space:nowrap; }
+  .td-when { color:var(--text-muted); font-size:12px; }
+
+  .inclusions-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; }
+  .inclusion-item {
+    display:flex; gap:10px; align-items:flex-start;
+    padding:10px 14px; background:var(--bg-card);
+    border:1px solid var(--border-subtle); border-radius:8px;
+    font-size:var(--text-sm); color:var(--text-secondary); line-height:1.5;
+  }
+  .inc-check {
+    width:18px; height:18px; border-radius:50%; flex-shrink:0; margin-top:1px;
+    display:flex; align-items:center; justify-content:center; font-size:10px;
+  }
+  .inc-yes { background:rgba(45,198,83,0.15); color:var(--accent-green); border:1px solid rgba(45,198,83,0.3); }
+  .inc-star { background:rgba(37,99,235,0.15); color:var(--accent-primary); border:1px solid rgba(37,99,235,0.3); }
+  .inc-no  { background:var(--bg-input); color:var(--text-muted); border:1px solid var(--border-subtle); }
+
+  .not-included {
+    background:rgba(244,162,97,0.06); border:1px solid rgba(244,162,97,0.2);
+    border-radius:10px; padding:16px 18px; margin-top:12px;
+  }
+  .not-included-label {
+    font-family:var(--font-mono); font-size:10px; letter-spacing:0.12em;
+    text-transform:uppercase; color:var(--accent-coral); margin-bottom:8px;
+  }
+  .not-included p { font-size:var(--text-sm); color:var(--text-secondary); line-height:1.65; }
+
+  .guardrails { display:flex; flex-direction:column; gap:10px; }
+  .guardrail {
+    display:flex; gap:12px; align-items:flex-start;
+    padding:12px 16px; background:var(--bg-card);
+    border:1px solid var(--border-subtle); border-radius:8px;
+  }
+  .guardrail-icon { font-size:16px; flex-shrink:0; margin-top:1px; }
+  .guardrail-title { font-size:var(--text-sm); font-weight:600; color:var(--text-primary); margin-bottom:3px; }
+  .guardrail-body { font-size:12px; color:var(--text-secondary); line-height:1.55; }
+
+  .saas-breakdown {
+    display:grid; grid-template-columns:repeat(3,1fr); gap:1px;
+    background:var(--border-subtle); border:1px solid var(--border-subtle);
+    border-radius:14px; overflow:hidden; margin-bottom:16px;
+  }
+  .saas-item { background:var(--bg-primary); padding:22px 18px; transition:background 0.2s; }
+  .saas-item:hover { background:var(--bg-card); }
+  .saas-item-label {
+    font-family:var(--font-mono); font-size:10px; letter-spacing:0.1em;
+    text-transform:uppercase; color:var(--text-muted); margin-bottom:8px;
+  }
+  .saas-item-price {
+    font-family:var(--font-display); font-size:24px; font-weight:400;
+    color:var(--accent-primary); margin-bottom:4px;
+  }
+  .saas-item-note { font-size:11px; color:var(--text-muted); line-height:1.5; }
+
+  .year1-calc {
+    background:var(--bg-card); border:1px solid var(--border-subtle);
+    border-radius:12px; padding:20px 24px;
+  }
+  .calc-row {
+    display:flex; justify-content:space-between; align-items:baseline;
+    padding:8px 0; border-bottom:1px solid var(--border-subtle);
+    gap:16px;
+  }
+  .calc-row:last-child { border-bottom:none; font-weight:600; }
+  .calc-label { font-size:var(--text-sm); color:var(--text-secondary); }
+  .calc-amount { font-family:var(--font-display); font-size:18px; color:var(--text-primary); }
+  .calc-amount.accent { color:var(--accent-primary); }
+  .calc-amount.total { color:var(--accent-primary); font-size:22px; }
+
+  .phase2-note {
+    background:rgba(94,96,206,0.06); border:1px solid rgba(94,96,206,0.2);
+    border-radius:12px; padding:20px 24px; margin-top:16px;
+  }
+  .phase2-note p { font-size:var(--text-sm); color:var(--text-secondary); line-height:1.7; }
+  .phase2-note strong { color:var(--text-primary); font-weight:600; }
+
+  /* ── What you get in every option ── */
+  .universal-section { margin:48px 0; }
+  .universal-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-top:20px; }
+  .universal-item {
+    background:var(--bg-card); border:1px solid var(--border-subtle);
+    border-radius:14px; padding:20px; text-align:center; transition:background 0.2s;
+  }
+  .universal-item:hover { background:var(--bg-card-hover); }
+  .universal-icon { font-size:24px; margin-bottom:10px; }
+  .universal-title {
+    font-family:var(--font-display); font-size:14px; font-weight:400;
+    color:var(--text-primary); margin-bottom:6px;
+  }
+  .universal-body { font-size:11px; color:var(--text-muted); line-height:1.55; }
+
+  /* ── Phased delivery guarantee ── */
+  .phased-box {
+    background:linear-gradient(135deg,rgba(37,99,235,0.08),rgba(45,198,83,0.05));
+    border:1px solid rgba(37,99,235,0.2); border-radius:16px;
+    padding:32px 36px; margin:48px 0;
+    display:grid; grid-template-columns:auto 1fr; gap:24px; align-items:start;
+  }
+  .phased-icon { font-size:40px; }
+  .phased-box h3 {
+    font-family:var(--font-display); font-size:20px; font-weight:400;
+    color:var(--text-primary); margin-bottom:10px;
+  }
+  .phased-box h3 em { font-style:italic; color:var(--accent-secondary); }
+  .phased-box p { font-size:var(--text-base); color:var(--text-secondary); line-height:1.8; }
+  .phased-box p strong { color:var(--text-primary); font-weight:600; }
+
+  /* ── CTA ── */
+  .cta-row {
+    background:var(--bg-secondary); border:1px solid var(--border-default);
+    border-radius:16px; padding:36px; display:flex;
+    align-items:center; justify-content:space-between;
+    gap:32px; flex-wrap:wrap; margin:48px 0;
+  }
+  .cta-row h3 { font-family:var(--font-display); font-size:22px; font-weight:400; margin-bottom:8px; }
+  .cta-row p { font-size:var(--text-sm); color:var(--text-secondary); line-height:1.65; max-width:500px; }
+  .cta-row .actions { display:flex; gap:12px; flex-wrap:wrap; flex-shrink:0; }
+
+  @media(max-width:900px) {
+    .market-row { grid-template-columns:1fr; }
+    .scope-grid { grid-template-columns:1fr; }
+    .saas-breakdown { grid-template-columns:1fr; }
+    .universal-grid { grid-template-columns:repeat(2,1fr); }
+    .phased-box { grid-template-columns:1fr; }
+    .option-header { flex-direction:column; }
+    .option-price-col { text-align:left; }
+    .inclusions-grid { grid-template-columns:1fr; }
+    .cta-row { flex-direction:column; align-items:flex-start; }
+  }
+  @media(max-width:600px) {
+    .universal-grid { grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body style="background-color:#f5f7fa;color:#0d1b2a;">
+<div class="bg-layer"></div>
+<div class="grid-overlay"></div>
+<div class="page-wrapper">
+
+  <!-- Hero -->
+  <section class="hero-section">
+    <div class="eyebrow anim-slide-right">Investment</div>
+    <h1 class="display-lg anim-fade-up delay-2">What this costs,<br>what it includes, and<br><em>why the numbers are what they are.</em></h1>
+    <p class="body-lg anim-fade-up delay-3" style="max-width:660px;">
+      This page is intentionally detailed. You should understand exactly what you're paying for,
+      what's included, what's not, and how 2516 arrived at these numbers. No vague ranges.
+      No hidden costs. No surprises.
+    </p>
+  </section>
+
+  <!-- Market context -->
+  <div class="context-banner anim-fade-up delay-1">
+    <h3>First: what this build is actually <em>worth</em> at market rate</h3>
+    <p>This platform requires one person to simultaneously act as cloud architect, senior full-stack developer,
+    DevOps engineer, data engineer, and product lead — for 4+ months of serious, sustained work.
+    In the market, that scope is typically handled by a 3–5 person team or a senior fractional CTO plus contractors.
+    The pricing below reflects a meaningful discount from what you would pay anyone else for equivalent capability
+    and accountability.</p>
+    <p><strong>This is important context — not a negotiating tactic.</strong> Understanding where these numbers come from
+    helps you evaluate what you're getting, make an informed comparison to other proposals you receive,
+    and have a clear conversation about scope if anything changes.</p>
+    <div class="market-row">
+      <div class="market-item">
+        <div class="market-label">Market rate (agency or equivalent solo)</div>
+        <div class="market-value">$90K – $140K</div>
+        <div class="market-note">What a stranger client would pay for this exact scope</div>
+      </div>
+      <div class="market-item">
+        <div class="market-label">2516 rate for this engagement</div>
+        <div class="market-value accent">$75,000</div>
+        <div class="market-note">~25–30% below market — a real and intentional discount</div>
+      </div>
+      <div class="market-item">
+        <div class="market-label">Absolute floor (scope-protected)</div>
+        <div class="market-value floor">$50,000</div>
+        <div class="market-note">The minimum at which the scope can be delivered sustainably</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Option 1 -->
+  <div class="option-block anim-fade-up delay-1">
+    <div class="option-header">
+      <div>
+        <div class="option-num">Option 01</div>
+        <div class="option-title">Build, Deliver & Train</div>
+        <div class="option-tagline">2516 builds the full platform and hands it over. Orr Group owns the codebase, the AWS account, and all IP. 2516's involvement ends at delivery unless separately engaged.</div>
+      </div>
+      <div class="option-price-col">
+        <div class="price-label">Total investment</div>
+        <div class="price-main">$75,000</div>
+        <div class="price-sub">One-time. No ongoing fees. Full build + docs + training.</div>
+        <div class="price-note">Split into two milestone payments</div>
+      </div>
+    </div>
+    <div class="option-body">
+
+      <div class="body-section">
+        <div class="body-section-title">Exactly what's being built</div>
+        <div class="scope-grid">
+          <div class="scope-item">
+            <div class="scope-phase p1a">Phase 1A — Infrastructure & Foundation</div>
+            <div class="scope-title">The backbone</div>
+            <div class="scope-timeline">Weeks 1–8 (est.)</div>
+            <ul class="scope-list">
+              <li>AWS environment setup (VPC, IAM, environments)</li>
+              <li>Aurora PostgreSQL Serverless v2 — database schema, indexes, RLS policies</li>
+              <li>Amazon S3 — file storage with presigned URL access</li>
+              <li>AWS Lambda + API Gateway — serverless API layer</li>
+              <li>Amazon Cognito — user auth, roles, MFA support</li>
+              <li>Multi-tenant architecture — row-level security enforced at DB level</li>
+              <li>Stripe integration — subscription billing, plan management, webhooks</li>
+              <li>CI/CD pipeline — GitHub Actions → automated test + deploy</li>
+              <li>Full audit trail — every user action timestamped and logged</li>
+            </ul>
+          </div>
+          <div class="scope-item">
+            <div class="scope-phase p1b">Phase 1B — Product & Interface</div>
+            <div class="scope-title">The platform</div>
+            <div class="scope-timeline">Weeks 6–16 (est., overlaps with 1A)</div>
+            <ul class="scope-list">
+              <li>Mobile-first React/Next.js frontend — designed for 375px screens first</li>
+              <li>CRM module — contact management, organization records, interaction history</li>
+              <li>User dashboard — onboarding flow, progress tracking, account management</li>
+              <li>Email notifications via Amazon SES — transactional + workflow-triggered</li>
+              <li>SMS notifications via Amazon SNS — high-priority alerts and reminders</li>
+              <li>Admin panel — user management, subscription oversight, platform analytics</li>
+              <li>QA and cross-device testing — phones, tablets, desktop browsers</li>
+              <li>Staging and production deployment</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="body-section">
+        <div class="body-section-title">Payment schedule</div>
+        <table class="payment-table">
+          <tr>
+            <th>Milestone</th>
+            <th>Amount</th>
+            <th>When</th>
+            <th>What triggers it</th>
+          </tr>
+          <tr>
+            <td class="td-label">Contract signing</td>
+            <td class="td-amount">$37,500</td>
+            <td class="td-when">Day 1</td>
+            <td>Signed contract. Work begins immediately.</td>
+          </tr>
+          <tr>
+            <td class="td-label">Beta launch</td>
+            <td class="td-amount">$37,500</td>
+            <td class="td-when">~Month 4</td>
+            <td>Platform deployed to staging, approved by CJ, and live for beta users.</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="body-section">
+        <div class="body-section-title">What's included</div>
+        <div class="inclusions-grid">
+          <div class="inclusion-item"><div class="inc-check inc-yes">✓</div>Full Phase 1A + 1B build as scoped above</div>
+          <div class="inclusion-item"><div class="inc-check inc-yes">✓</div>Complete technical documentation and runbooks</div>
+          <div class="inclusion-item"><div class="inc-check inc-yes">✓</div>Architecture diagrams and deployment guides</div>
+          <div class="inclusion-item"><div class="inc-check inc-yes">✓</div>3 training sessions (admin, end-user, technical)</div>
+          <div class="inclusion-item"><div class="inc-check inc-yes">✓</div>Private GitHub repo — full codebase delivered day 1</div>
+          <div class="inclusion-item"><div class="inc-check inc-yes">✓</div>90-day post-launch bug fix window at no additional cost</div>
+          <div class="inclusion-item"><div class="inc-check inc-yes">✓</div>Weekly progress updates throughout the build</div>
+          <div class="inclusion-item"><div class="inc-check inc-yes">✓</div>Monthly milestone demos — your approval required to proceed</div>
+        </div>
+        <div class="not-included">
+          <div class="not-included-label">Not included in this price</div>
+          <p>AWS infrastructure costs (billed directly to Orr Group's AWS account — est. $400–$600/mo at launch).
+          Phase 2 AI features (virtual consultant, chatbot, avatar) — separate contract.
+          Any feature requests or scope additions after contract signing — change orders billed at $175/hr.
+          Ongoing support after the 90-day window — available as a separate retainer.</p>
+        </div>
+      </div>
+
+      <div class="body-section">
+        <div class="body-section-title">Non-negotiable guardrails — in the contract</div>
+        <div class="guardrails">
+          <div class="guardrail">
+            <div class="guardrail-icon">📋</div>
+            <div><div class="guardrail-title">Scope is defined and fixed at signing</div>
+            <div class="guardrail-body">The scope above is what's being built. If Orr Group requests additions after the contract is signed, they are priced separately as change orders at $175/hr. This protects both parties — you know exactly what you're getting, and 2516 can deliver it sustainably.</div></div>
+          </div>
+          <div class="guardrail">
+            <div class="guardrail-icon">🔄</div>
+            <div><div class="guardrail-title">Revisions are defined, not unlimited</div>
+            <div class="guardrail-body">Each milestone includes one round of feedback and revisions. Additional revision rounds are available at $175/hr. This is standard for professional software development — unlimited revisions create incentives that hurt quality and timeline.</div></div>
+          </div>
+          <div class="guardrail">
+            <div class="guardrail-icon">📱</div>
+            <div><div class="guardrail-title">Phase 2 is a separate contract</div>
+            <div class="guardrail-body">The virtual consultant, chatbot, interactive avatar, and AI features are Phase 2. They are not part of this contract. They require Phase 1 to be stable before they can be built correctly. Phase 2 pricing will be proposed separately after Phase 1 beta launch.</div></div>
+          </div>
+          <div class="guardrail">
+            <div class="guardrail-icon">⏰</div>
+            <div><div class="guardrail-title">2516 is not on-call 24/7</div>
+            <div class="guardrail-body">During the build, 2516 responds to questions within one business day. Critical bugs during the 90-day post-launch window are addressed within 48 hours. After the window, a separate support retainer is available. This engagement is a build project, not a managed service.</div></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Option 2 -->
+  <div class="option-block anim-fade-up delay-2">
+    <div class="option-header">
+      <div>
+        <div class="option-num">Option 02</div>
+        <div class="option-title">Build, Deliver & Hourly Support</div>
+        <div class="option-tagline">Lower upfront fee than Option 1. Includes basic monthly reports and a Slack support channel. You own the platform and manage AWS directly. All pass-through costs, security maintenance, and staff turnover are your responsibility unless separately engaged at $175/hr.</div>
+      </div>
+      <div class="option-price-col">
+        <div class="price-label">Build fee + ongoing</div>
+        <div class="price-main">$60,000</div>
+        <div class="price-sub">One-time build fee + $175/hr when engaged</div>
+        <div class="price-note">+ AWS costs passed through at cost</div>
+      </div>
+    </div>
+    <div class="option-body">
+
+      <div class="body-section">
+        <div class="body-section-title">What's different from Option 1</div>
+        <p class="body-md"><strong>Option 2 costs $15,000 less upfront than Option 1</strong> because it does not include the full documentation package or the three staff training sessions — you receive a basic handover instead. The build quality and scope are identical. The difference is what you walk away with at delivery, and what support structure exists afterward.</p><p class="body-md" style="margin-top:14px;"><strong>What Option 2 includes that Option 1 does not:</strong> a basic monthly report (automated uptime and error summary, no analysis) and a shared Slack channel for support questions with a 48-hour response SLA. These are lightweight compared to Option 3's full performance reports and same-day dedicated channel — but they give you a direct line to 2516 without a full retainer.</p><p class="body-md" style="margin-top:14px;"><strong>Your responsibilities under Option 2 — clearly stated:</strong>
+        Under Option 1, 2516's involvement ends at the 90-day window unless you separately engage.
+        Under Option 2, 2516 remains available on-call — billing only for hours actually worked.
+        No monthly minimum. No retainer. You pay when you need support, and only then.</p>
+        </p>
+        <div style="background:rgba(244,162,97,0.06);border:1px solid rgba(244,162,97,0.2);border-radius:12px;padding:20px 24px;margin:16px 0;">
+          <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent-coral);margin-bottom:14px;">Your responsibilities — Options 1 & 2</div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="display:flex;gap:12px;align-items:flex-start;font-size:var(--text-sm);color:var(--text-secondary);line-height:1.6;">
+              <span style="color:var(--accent-coral);font-size:13px;flex-shrink:0;margin-top:1px;">→</span>
+              <div><strong style="color:var(--text-primary);">AWS pass-through costs</strong> — billed directly to your AWS account. Estimated $400–$900/month at 1,000 users. These costs are variable and scale with usage. Spikes during high-traffic periods are your responsibility to monitor and manage. 2516 will advise on cost optimization at $175/hr if requested.</div>
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start;font-size:var(--text-sm);color:var(--text-secondary);line-height:1.6;">
+              <span style="color:var(--accent-coral);font-size:13px;flex-shrink:0;margin-top:1px;">→</span>
+              <div><strong style="color:var(--text-primary);">Staff turnover and retraining</strong> — when staff who were trained on the platform leave, the cost of onboarding replacements falls on Orr Group. 2516 can provide additional training sessions at $175/hr, but this is not included in either option's base price.</div>
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start;font-size:var(--text-sm);color:var(--text-secondary);line-height:1.6;">
+              <span style="color:var(--accent-coral);font-size:13px;flex-shrink:0;margin-top:1px;">→</span>
+              <div><strong style="color:var(--text-primary);">All security maintenance</strong> — dependency updates, vulnerability patching, SSL certificate renewal, and security incident response are Orr Group's responsibility after the 90-day window. 2516 does not proactively monitor or patch your platform under Options 1 or 2. If a security issue arises, 2516 can address it at $175/hr. There is no proactive security monitoring and no upgrade alerts.</div>
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start;font-size:var(--text-sm);color:var(--text-secondary);line-height:1.6;">
+              <span style="color:var(--accent-coral);font-size:13px;flex-shrink:0;margin-top:1px;">→</span>
+              <div><strong style="color:var(--text-primary);">Platform modernization</strong> — when AWS releases better services, when the Claude model used in Phase 2 is superseded, or when your tech stack becomes outdated, identifying and acting on those changes is your responsibility. 2516 does not proactively monitor your platform or recommend upgrades under Options 1 or 2.</div>
+            </div>
+          </div>
+        </div>
+        <p class="body-md" style="margin-top:14px;">
+        <strong>Important:</strong> AWS infrastructure costs are your responsibility and billed directly
+        to your AWS account. At launch with 1,000 users, expect $400–$900/month depending on usage.
+        This can spike unpredictably during high-traffic periods — plan accordingly.</p>
+      </div>
+
+      <div class="body-section">
+        <div class="body-section-title">Payment schedule</div>
+        <table class="payment-table">
+          <tr><th>Milestone</th><th>Amount</th><th>When</th><th>What triggers it</th></tr>
+          <tr>
+            <td class="td-label">Contract signing</td>
+            <td class="td-amount">$30,000</td>
+            <td class="td-when">Day 1</td>
+            <td>Signed contract. Work begins immediately.</td>
+          </tr>
+          <tr>
+            <td class="td-label">Beta launch</td>
+            <td class="td-amount">$30,000</td>
+            <td class="td-when">~Month 4</td>
+            <td>Platform deployed, approved by CJ, live for beta users.</td>
+          </tr>
+          <tr>
+            <td class="td-label">Ongoing support</td>
+            <td class="td-amount">$175/hr</td>
+            <td class="td-when">As needed</td>
+            <td>Invoiced monthly for actual hours worked. 10-hour monthly cap unless approved.</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="body-section">
+        <div class="body-section-title">What's included vs. Option 1</div>
+        <div class="inclusions-grid">
+          <div class="inclusion-item"><div class="inc-check inc-yes">✓</div>Full Phase 1A + 1B build — identical scope to Option 1</div>
+          <div class="inclusion-item"><div class="inc-check inc-yes">✓</div>Basic handover documentation</div>
+          <div class="inclusion-item"><div class="inc-check inc-yes">✓</div>Private GitHub repo delivered at kickoff</div>
+          <div class="inclusion-item"><div class="inc-check inc-yes">✓</div>90-day post-launch bug fix window</div>
+          <div class="inclusion-item"><div class="inc-check inc-yes">✓</div>On-call support at $175/hr after window</div>
+          <div class="inclusion-item"><div class="inc-check inc-yes">✓</div>Basic monthly report — automated uptime and error summary</div>
+          <div class="inclusion-item"><div class="inc-check inc-yes">✓</div>Shared Slack channel — 48-hour response SLA</div>
+          <div class="inclusion-item"><div class="inc-check inc-no">–</div>No full training package (basic handover only)</div>
+          <div class="inclusion-item"><div class="inc-check inc-no">–</div>No AWS infra management (your responsibility)</div>
+          <div class="inclusion-item"><div class="inc-check inc-no">–</div>No proactive security monitoring</div>
+          <div class="inclusion-item"><div class="inc-check inc-no">–</div>No upgrade recommendations or roadmap reviews</div>
+        </div>
+        <div class="not-included">
+          <div class="not-included-label">The variable cost risk — plan for it</div>
+          <p>Under Option 2, a bad month could mean $1,500–$5,000+ in unexpected support hours if an incident occurs or a feature request comes in. The 10-hour monthly cap in the contract protects against the worst case — but variable costs require Orr Group to manage the platform actively and make decisions about when to engage 2516 vs. handle issues internally.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Option 3 — Recommended -->
+  <div class="option-block recommended anim-fade-up delay-3">
+    <div class="rec-strip">
+      <span>★ 2516 Recommendation</span>
+      <span style="opacity:0.6;margin-left:8px;">— Best outcome for Orr Group and 2516 over the long term</span>
+    </div>
+    <div class="option-header">
+      <div>
+        <div class="option-num">Option 03</div>
+        <div class="option-title">Licensed SaaS + Retainer</div>
+        <div class="option-tagline">2516 builds, owns, and operates the platform. Orr Group licenses access per user per month. 2516 handles all infrastructure, maintenance, updates, and incidents. No internal IT burden.</div>
+      </div>
+      <div class="option-price-col">
+        <div class="price-label">Onboarding (one-time)</div>
+        <div class="price-main accent">$20,000</div>
+        <div class="price-sub">+ $14/user/mo + $3,000/mo retainer</div>
+        <div class="price-note">AWS costs included in retainer — no separate bill</div>
+      </div>
+    </div>
+    <div class="option-body">
+
+      <div class="body-section">
+        <div class="body-section-title">Monthly recurring breakdown at 1,000 users</div>
+        <div class="saas-breakdown">
+          <div class="saas-item">
+            <div class="saas-item-label">Per-user license</div>
+            <div class="saas-item-price">$14,000/mo</div>
+            <div class="saas-item-note">$14 × 1,000 users. Scales linearly as you grow. Rate locked for 24 months.</div>
+          </div>
+          <div class="saas-item">
+            <div class="saas-item-label">Base retainer</div>
+            <div class="saas-item-price">$3,000/mo</div>
+            <div class="saas-item-note">Covers AWS infrastructure, SLA support, monitoring, maintenance, Astrato dashboard licensing, monthly reports, proactive upgrade recommendations, annual roadmap review, and dedicated Slack channel. All-inclusive.</div>
+          </div>
+          <div class="saas-item">
+            <div class="saas-item-label">Total monthly</div>
+            <div class="saas-item-price">$17,000/mo</div>
+            <div class="saas-item-note">All-inclusive. No AWS bill. No surprise invoices. One number every month.</div>
+          </div>
+        </div>
+
+        <div class="year1-calc">
+          <div class="calc-row">
+            <span class="calc-label">Onboarding fee (one-time, Month 1)</span>
+            <span class="calc-amount">$20,000</span>
+          </div>
+          <div class="calc-row">
+            <span class="calc-label">Monthly recurring × 12 months</span>
+            <span class="calc-amount">$204,000</span>
+          </div>
+          <div class="calc-row">
+            <span class="calc-label" style="font-weight:600;color:var(--text-primary);">Year 1 total investment</span>
+            <span class="calc-amount total">$224,000</span>
+          </div>
+        </div>
+
+        <div class="phase2-note">
+          <p><strong>Note on Phase 2 (AI features):</strong> The virtual consultant, Claude-powered chatbot,
+          and interactive avatar are Phase 2. Under Option 3, Phase 2 development is priced separately and
+          will be proposed once Phase 1 is live and stable — typically at a reduced rate given the existing
+          relationship. Phase 2 does not change the monthly license or retainer rate.</p>
+        </div>
+      </div>
+
+      <div class="body-section">
+        <div class="body-section-title">Payment schedule</div>
+        <table class="payment-table">
+          <tr><th>Item</th><th>Amount</th><th>When</th><th>Notes</th></tr>
+          <tr>
+            <td class="td-label">Onboarding fee</td>
+            <td class="td-amount">$20,000</td>
+            <td class="td-when">Split: 50% at signing, 50% at beta launch</td>
+            <td>Covers implementation, setup, configuration, and beta launch.</td>
+          </tr>
+          <tr>
+            <td class="td-label">Monthly license + retainer</td>
+            <td class="td-amount">$17,000/mo</td>
+            <td class="td-when">Begins at platform go-live</td>
+            <td>Billed monthly. Pro-rated for partial months. Scales with user count.</td>
+          </tr>
+          <tr>
+            <td class="td-label">Rate at 500 users</td>
+            <td class="td-amount">$10,000/mo</td>
+            <td class="td-when">During ramp-up</td>
+            <td>$14 × 500 + $3,000 retainer. No minimum user commitment required.</td>
+          </tr>
+          <tr>
+            <td class="td-label">Rate at 2,000 users</td>
+            <td class="td-amount">$31,000/mo</td>
+            <td class="td-when">At scale</td>
+            <td>$14 × 2,000 + $3,000 retainer. Infrastructure scales automatically.</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="body-section">
+        <div class="body-section-title">What's included in the retainer — in plain language</div>
+        <div class="inclusions-grid">
+          <div class="inclusion-item"><div class="inc-check inc-star">★</div>All AWS infrastructure costs — no separate bill ever</div>
+          <div class="inclusion-item"><div class="inc-check inc-star">★</div>SLA: critical incidents responded to within 4 hours</div>
+          <div class="inclusion-item"><div class="inc-check inc-star">★</div>Platform always on the latest version — updates deployed automatically</div>
+          <div class="inclusion-item"><div class="inc-check inc-star">★</div>Database backups, monitoring, and security patching</div>
+          <div class="inclusion-item"><div class="inc-check inc-star">★</div>Monthly platform health report — uptime, error rates, performance</div>
+          <div class="inclusion-item" style="border-color:rgba(37,99,235,0.3);background:rgba(37,99,235,0.06);grid-column:1/-1"><div class="inc-check inc-star">★</div><strong style="color:var(--text-primary);">Live Astrato executive & marketing dashboard</strong> — a real-time web-based dashboard accessible to Orr Group leadership at any time, no login to AWS required. Includes three views: (1) Executive KPIs — active users, subscription revenue, churn rate, MoM growth; (2) Marketing intelligence — acquisition channels, conversion rates, campaign performance, engagement trends; (3) Platform health — uptime, API response times, error rates, infrastructure cost trends. Astrato licensing included in the $3,000/mo retainer at no additional cost.</div>
+          <div class="inclusion-item"><div class="inc-check inc-star">★</div>Up to 5 hours/month of minor enhancement work included</div>
+          <div class="inclusion-item"><div class="inc-check inc-star">★</div>Data portability — full export available anytime on request</div>
+          <div class="inclusion-item"><div class="inc-check inc-star">★</div>180-day transition support if you ever want to exit</div>
+          <div class="inclusion-item" style="border-color:rgba(233,196,106,0.3);background:rgba(233,196,106,0.06);grid-column:1/-1"><div class="inc-check inc-star" style="background:rgba(233,196,106,0.2);color:#c99a3a;border-color:rgba(233,196,106,0.4);">★</div><strong style="color:var(--text-primary);">Monthly performance reports</strong> — user engagement metrics, feature adoption rates, subscription trends, and platform health scoring. Delivered as a formatted report every month.</div>
+          <div class="inclusion-item" style="border-color:rgba(233,196,106,0.3);background:rgba(233,196,106,0.06);grid-column:1/-1"><div class="inc-check inc-star" style="background:rgba(233,196,106,0.2);color:#c99a3a;border-color:rgba(233,196,106,0.4);">★</div><strong style="color:var(--text-primary);">Proactive upgrade recommendations</strong> — when AWS releases a better service, Anthropic updates the Claude model, a security vulnerability emerges, or a new tool could meaningfully improve the platform, 2516 flags it in writing with a recommendation. You are never the last to know.</div>
+          <div class="inclusion-item" style="border-color:rgba(233,196,106,0.3);background:rgba(233,196,106,0.06);grid-column:1/-1"><div class="inc-check inc-star" style="background:rgba(233,196,106,0.2);color:#c99a3a;border-color:rgba(233,196,106,0.4);">★</div><strong style="color:var(--text-primary);">Annual platform roadmap review</strong> — a dedicated 1-hour strategic session each year to align the platform's development direction with where Orr Group is heading. New features, Phase 3 planning, market expansion — discussed with the person who built it.</div>
+          <div class="inclusion-item" style="border-color:rgba(233,196,106,0.3);background:rgba(233,196,106,0.06);grid-column:1/-1"><div class="inc-check inc-star" style="background:rgba(233,196,106,0.2);color:#c99a3a;border-color:rgba(233,196,106,0.4);">★</div><strong style="color:var(--text-primary);">Dedicated Slack channel</strong> — direct access to 2516 with same-day responses during business hours. No support tickets, no waiting in a queue. A real person who built your platform responds when you have a question.</div>
+        </div>
+        <div class="not-included">
+          <div class="not-included-label">What the retainer does not cover</div>
+          <p>Major new features or Phase 2 development (priced separately). More than 5 hours/month of enhancement work (billed at $175/hr for overage, approved in advance). Third-party tool licensing fees (e.g., if a specific integration requires a paid API). Any work explicitly outside the platform scope agreed at contract signing.</p>
+          <p style="margin-top:10px;"><strong style="color:var(--text-primary);">Cybersecurity health checks available as a post-launch add-on</strong> — quarterly vulnerability assessments, dependency audits, and written findings reports are available after the platform has launched and stabilized. Pricing on request. Not included in the base retainer.</p>
+        </div>
+      </div>
+
+      <div class="body-section">
+        <div class="body-section-title">Contract protections for Orr Group</div>
+        <div class="guardrails">
+          <div class="guardrail">
+            <div class="guardrail-icon">🔐</div>
+            <div><div class="guardrail-title">Data portability guaranteed</div>
+            <div class="guardrail-body">At any time, Orr Group can request a full data export in standard formats (CSV, JSON, SQL). Delivered within 30 days of request. Your data is always yours — 2516 is the operator, not the owner of your user data.</div></div>
+          </div>
+          <div class="guardrail">
+            <div class="guardrail-icon">📅</div>
+            <div><div class="guardrail-title">180-day exit with transition support</div>
+            <div class="guardrail-body">If Orr Group terminates the agreement, 2516 provides 6 months of transition support — including migration assistance to a new provider or self-hosting, full documentation handover, and technical Q&A. You are never stranded.</div></div>
+          </div>
+          <div class="guardrail">
+            <div class="guardrail-icon">🔒</div>
+            <div><div class="guardrail-title">Rate locked for 24 months</div>
+            <div class="guardrail-body">The $14/user license rate and $3,000/month retainer are locked for the first 24 months from go-live. Any increase at renewal is capped at 5% annually. No surprise rate hikes.</div></div>
+          </div>
+          <div class="guardrail">
+            <div class="guardrail-icon">🛡️</div>
+            <div><div class="guardrail-title">No AI training on Orr Group data</div>
+            <div class="guardrail-body">User data collected through the platform is never used to train or fine-tune AI models. The Claude API processes queries in real time and does not retain data. Orr Group's user data remains private and is used only to operate the platform.</div></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Universal inclusions -->
+  <section class="universal-section anim-fade-up">
+    <div class="section-label">In every option, regardless of which you choose</div>
+    <div class="universal-grid">
+      <div class="universal-item">
+        <div class="universal-icon">📱</div>
+        <div class="universal-title">Mobile-first design</div>
+        <div class="universal-body">Built for phones first. Every surface works on a 375px screen. Not adapted — designed.</div>
+      </div>
+      <div class="universal-item">
+        <div class="universal-icon">🏗️</div>
+        <div class="universal-title">AWS production infrastructure</div>
+        <div class="universal-body">Aurora, S3, Lambda, Step Functions, Cognito. Production-grade from day one.</div>
+      </div>
+      <div class="universal-item">
+        <div class="universal-icon">🔒</div>
+        <div class="universal-title">Security & tenant isolation</div>
+        <div class="universal-body">Row-level security. No org can see another's data. Full audit trail. Data encrypted at rest and in transit.</div>
+      </div>
+      <div class="universal-item">
+        <div class="universal-icon">📊</div>
+        <div class="universal-title">Future-ready data layer</div>
+        <div class="universal-body">Schema designed for analytics, AI training, and integrations. Everything on the roadmap is possible without a rebuild.</div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Why Option 3 is different -->
+  <div style="background:linear-gradient(135deg,rgba(233,196,106,0.08),rgba(37,99,235,0.05));border:1px solid rgba(233,196,106,0.25);border-radius:16px;padding:32px 36px;margin:0 0 48px;" class="anim-fade-up">
+    <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:#c99a3a;margin-bottom:16px;">★ What Options 1 & 2 cannot offer — ever</div>
+    <p style="font-size:var(--text-base);color:var(--text-secondary);line-height:1.8;margin-bottom:14px;">Options 1 and 2 are one-time builds. Once 2516 hands over the code, your platform is frozen in time — it will not improve unless you pay for more development. Security vulnerabilities will accumulate. The Claude model powering your chatbot will become outdated. AWS will release better services that your platform won't use. You won't know about any of it until something breaks or a client asks why a competitor's tool is faster.</p>
+    <p style="font-size:var(--text-base);color:var(--text-secondary);line-height:1.8;margin-bottom:0;"><strong style="color:var(--text-primary);">Option 3 is different because 2516 has a stake in your platform's success.</strong> The monthly reports, proactive upgrade recommendations, annual roadmap reviews, and dedicated Slack access aren't perks — they're the reason the platform stays excellent over time. A platform that gets better every quarter retains users. A platform that stagnates loses them. That difference, compounded over three years at 1,000+ users, is worth far more than the gap in upfront cost.</p>
+  </div>
+  <!-- Phased delivery guarantee -->
+  <div class="phased-box anim-fade-up">
+    <div class="phased-icon">🛡️</div>
+    <div>
+      <h3>The phased delivery guarantee — <em>nothing ships until it's ready.</em></h3>
+      <p>Every engagement follows a milestone-based delivery model. Phase 1A is built, reviewed, and approved before Phase 1B begins. The full platform is tested and approved before beta launch. <strong>You never see something that doesn't work because 2516 doesn't demo something that doesn't work.</strong> Your approval is required at every milestone checkpoint before development proceeds to the next phase. You control the pace and the standard.</p>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-row anim-fade-up">
+    <div>
+      <h3>Questions? Let's talk through them.</h3>
+      <p>If anything on this page is unclear, if you want to discuss the phase split structure, or if you'd like the full 3-year TCO Excel model with risk-adjusted analysis across all three options, reach out directly. The Friday deadline is close — a 30-minute call this week is all it takes to get aligned.</p>
+    </div>
+    <div class="actions">
+      <a href="mailto:mark@2516technologies.com?subject=Investment Questions — Orr Group&body=Hi Mark,%0D%0A%0D%0AI have some questions about the investment page and would like to schedule a call.%0D%0A%0D%0ACJ" class="btn-primary">Schedule a Call →</a>
+      <a href="mailto:mark@2516technologies.com?subject=Full Cost Model — Orr Group" class="btn-secondary">Request Full Excel Model</a>
+    </div>
+  </div>
+
+</div>
+<footer class="site-footer">
+  <div class="footer-brand">Prepared by <strong>2516 Technologies</strong> · mark@2516technologies.com</div>
+  <div class="footer-tagline">AI is Jazz.</div>
+  <nav class="footer-nav">
+    <a href="orr-delivery.html">← Delivery Options</a>
+    <a href="orr-next-steps.html">Next Steps →</a>
+  </nav>
+</footer>
+<script src="nav-orr.js"></script>
+</body>
+</html>

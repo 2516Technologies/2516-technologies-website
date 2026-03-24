@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="color-scheme" content="light">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Next Steps — Orr Group Proposal</title>
+<link rel="stylesheet" href="../../assets/theme.css">
+<style>
+  .hero-section { padding:60px 0 56px; }
+  .steps-timeline { display:flex; flex-direction:column; gap:0; margin:48px 0 64px; position:relative; }
+  .steps-timeline::before { content:''; position:absolute; left:20px; top:24px; bottom:24px; width:1px; background:linear-gradient(to bottom,var(--accent-primary),rgba(37,99,235,0.1)); }
+  .timeline-step { display:flex; gap:24px; align-items:flex-start; padding:0 0 32px; position:relative; }
+  .timeline-step:last-child { padding-bottom:0; }
+  .step-dot { width:40px; height:40px; border-radius:50%; background:rgba(37,99,235,0.15); border:2px solid var(--accent-primary); display:flex; align-items:center; justify-content:center; font-family:var(--font-mono); font-size:13px; color:var(--accent-primary); flex-shrink:0; position:relative; z-index:1; }
+  .step-content { flex:1; padding-top:8px; }
+  .step-timing { font-family:var(--font-mono); font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:var(--accent-primary); margin-bottom:6px; }
+  .step-title { font-family:var(--font-display); font-size:20px; font-weight:400; color:var(--text-primary); margin-bottom:10px; }
+  .step-body { font-size:var(--text-base); color:var(--text-secondary); line-height:1.75; }
+  .step-body strong { color:var(--text-primary); font-weight:600; }
+  .step-deliverable { margin-top:12px; display:flex; flex-wrap:wrap; gap:8px; }
+
+  .cta-section { background:linear-gradient(135deg,rgba(37,99,235,0.10),rgba(94,96,206,0.07)); border:1px solid rgba(37,99,235,0.25); border-radius:20px; padding:48px; text-align:center; margin:48px 0; }
+  .cta-section h2 { font-family:var(--font-display); font-size:clamp(28px,4vw,42px); font-weight:400; color:var(--text-primary); margin-bottom:20px; line-height:1.15; }
+  .cta-section h2 em { font-style:italic; color:var(--accent-secondary); }
+  .cta-section p { font-size:var(--text-md); color:var(--text-secondary); line-height:1.75; max-width:580px; margin:0 auto 36px; }
+  .cta-section p strong { color:var(--text-primary); font-weight:600; }
+  .cta-actions { display:flex; justify-content:center; flex-wrap:wrap; gap:14px; }
+  .cta-email { font-family:var(--font-mono); font-size:var(--text-sm); color:var(--text-muted); margin-top:20px; }
+  .cta-email a { color:var(--accent-primary); }
+
+  .deadline-banner { background:linear-gradient(135deg,rgba(244,162,97,0.10),rgba(233,196,106,0.06)); border:1px solid rgba(244,162,97,0.25); border-radius:14px; padding:24px 28px; margin-bottom:48px; display:flex; align-items:center; gap:20px; flex-wrap:wrap; }
+  .deadline-icon { font-size:32px; flex-shrink:0; }
+  .deadline-text h3 { font-family:var(--font-display); font-size:18px; font-weight:400; color:var(--text-primary); margin-bottom:6px; }
+  .deadline-text p { font-size:var(--text-sm); color:var(--text-secondary); line-height:1.6; }
+  .deadline-text strong { color:var(--accent-coral); font-weight:600; }
+
+  .what-you-get { margin:48px 0; }
+  .get-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:24px; }
+  .get-item { background:var(--bg-card); border:1px solid var(--border-subtle); border-radius:14px; padding:22px; }
+  .get-icon { font-size:24px; margin-bottom:12px; }
+  .get-title { font-family:var(--font-display); font-size:16px; font-weight:400; color:var(--text-primary); margin-bottom:8px; }
+  .get-body { font-size:var(--text-sm); color:var(--text-secondary); line-height:1.6; }
+
+  .closing { max-width:680px; margin:48px 0; }
+  .closing p { font-size:var(--text-base); color:var(--text-secondary); line-height:1.85; margin-bottom:18px; }
+  .closing p:last-child { margin-bottom:0; }
+  .closing strong { color:var(--text-primary); font-weight:600; }
+  .closing em { font-style:italic; color:var(--accent-secondary); }
+
+  @media(max-width:768px) { .get-grid{grid-template-columns:1fr} .cta-section{padding:32px 24px} }
+</style>
+</head>
+<body style="background-color:#f5f7fa;color:#0d1b2a;">
+<div class="bg-layer"></div>
+<div class="grid-overlay"></div>
+<div class="page-wrapper">
+
+  <section class="hero-section">
+    <div class="eyebrow anim-slide-right">Next Steps</div>
+    <h1 class="display-lg anim-fade-up delay-2">Ready when<br><em>you are.</em></h1>
+    <p class="body-lg anim-fade-up delay-3" style="max-width:620px;">
+      This proposal outlines everything needed to make a decision. Here's exactly what happens next — from the
+      conversation this week to the day your first 1,000 users log in.
+    </p>
+  </section>
+
+  <!-- Deadline -->
+  <div class="deadline-banner anim-fade-up">
+    <div class="deadline-icon">📅</div>
+    <div class="deadline-text">
+      <h3>RFP deadline: Friday, March 27, 2026</h3>
+      <p>2516 Technologies has submitted this proposal ahead of the deadline. <strong>To proceed, reach out before Friday</strong> so we can schedule a call, answer any questions, and confirm the engagement structure before the decision is made. The cost model Excel is available on request.</p>
+    </div>
+  </div>
+
+  <!-- Timeline -->
+  <div class="section-label anim-fade-up">From decision to launch</div>
+  <div class="steps-timeline anim-fade-up delay-1">
+
+    <div class="timeline-step">
+      <div class="step-dot">1</div>
+      <div class="step-content">
+        <div class="step-timing">This week</div>
+        <div class="step-title">Kickoff call — 45 minutes</div>
+        <div class="step-body">We confirm the engagement structure (Option 1, 2, or 3), align on Phase 1 scope, and you share the prototype file for the code review. No obligation — this call is to make sure we're completely aligned before any contract is signed. Questions, adjustments, and honest conversation about timeline and budget happen here.</div>
+        <div class="step-deliverable">
+          <span class="tag accent">45-min video call</span>
+          <span class="tag">Scope confirmation</span>
+          <span class="tag">Prototype file review</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-step">
+      <div class="step-dot">2</div>
+      <div class="step-content">
+        <div class="step-timing">Week 1–2</div>
+        <div class="step-title">Code review + three design directions</div>
+        <div class="step-body">2516 reviews the prototype codebase and delivers a written technical assessment — what can be reused, what needs rebuilding, and a confirmed Phase 1 timeline. Simultaneously, three distinct visual design directions are presented based on the prototype's UX intent. <strong>You approve one direction before any production code is written.</strong> You control what it looks like.</div>
+        <div class="step-deliverable">
+          <span class="tag accent">Technical assessment doc</span>
+          <span class="tag accent">3 design mockups</span>
+          <span class="tag">Final timeline + contract</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-step">
+      <div class="step-dot">3</div>
+      <div class="step-content">
+        <div class="step-timing">Months 1–4</div>
+        <div class="step-title">Phase 1 — Foundation build</div>
+        <div class="step-body">AWS infrastructure setup, mobile-first UI, CRM rebuilt on Aurora, email/text notifications, authentication, multi-tenancy, and subscription billing. Weekly progress updates. Monthly milestone demos — you see the platform working at each stage before the next begins. <strong>Nothing ships to real users until you've signed off.</strong></div>
+        <div class="step-deliverable">
+          <span class="tag accent">Weekly updates</span>
+          <span class="tag accent">Monthly milestone demos</span>
+          <span class="tag">Your approval required to proceed</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-step">
+      <div class="step-dot">4</div>
+      <div class="step-content">
+        <div class="step-timing">Month 4</div>
+        <div class="step-title">Beta launch — real users, controlled rollout</div>
+        <div class="step-body">Phase 1 platform goes live for a controlled beta group — 50–100 early adopters from Orr Group's network. This is real usage, real feedback, and a real stress test of the infrastructure. Issues are fixed in real time. The beta is the proof point before full launch — and the moment you can start generating subscription revenue.</div>
+        <div class="step-deliverable">
+          <span class="tag accent">50–100 beta users</span>
+          <span class="tag">Real subscription revenue begins</span>
+          <span class="tag">Feedback loop established</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-step">
+      <div class="step-dot">5</div>
+      <div class="step-content">
+        <div class="step-timing">Months 5–8</div>
+        <div class="step-title">Phase 2 — Intelligence layer</div>
+        <div class="step-body">Claude-powered virtual consultant, RAG chatbot, interactive avatar integration, and document Q&A. Built on top of the stable Phase 1 foundation. By this point, you have 4 months of real user data informing exactly what the AI features need to answer. The chatbot is better because Phase 1 existed first.</div>
+        <div class="step-deliverable">
+          <span class="tag accent">Virtual consultant live</span>
+          <span class="tag accent">Chatbot deployed</span>
+          <span class="tag">Full platform feature-complete</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-step">
+      <div class="step-dot">6</div>
+      <div class="step-content">
+        <div class="step-timing">Month 8+</div>
+        <div class="step-title">Full launch — 1,000+ users</div>
+        <div class="step-body">Platform is fully featured, battle-tested, and running on production infrastructure. Orr Group markets to the full target audience. 2516 monitors, maintains, and continues building under the agreed delivery structure. The platform that started as a prototype is now a real business.</div>
+        <div class="step-deliverable">
+          <span class="tag accent">Full market launch</span>
+          <span class="tag">Ongoing operations per chosen delivery model</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- What you get -->
+  <section class="what-you-get anim-fade-up">
+    <div class="section-label">What's included in this proposal</div>
+    <div class="get-grid">
+      <div class="get-item">
+        <div class="get-icon">🌐</div>
+        <div class="get-title">This proposal website</div>
+        <div class="get-body">The URL you're reading right now. Share it with your board, your team, or your advisors. It's live, mobile-responsive, and yours to reference anytime.</div>
+      </div>
+      <div class="get-item">
+        <div class="get-icon">📊</div>
+        <div class="get-title">Full cost model (on request)</div>
+        <div class="get-body">Detailed Excel with AWS infrastructure costs, 3-year TCO analysis across all three delivery options, chatbot cost modeling, and sensitivity tables. Available immediately on request.</div>
+      </div>
+      <div class="get-item">
+        <div class="get-icon">🗺️</div>
+        <div class="get-title">Strategic roadmap</div>
+        <div class="get-body">The full 4-phase roadmap showing exactly how Phase 1 unlocks Phase 2, Phase 3, and the Year 2+ capabilities — including custom AI model training and behavior analytics.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="cta-section anim-fade-up">
+    <h2>Let's build something<br>the sector has <em>never had before.</em></h2>
+    <p>The gap in the market is real. The vision is clear. The infrastructure to deliver it reliably —
+    at scale, on mobile, with the Orr Group name behind it — is exactly what 2516 Technologies builds.
+    <strong>One conversation this week is all it takes to get started.</strong></p>
+    <div class="cta-actions">
+      <a href="mailto:mark@2516technologies.com?subject=Let's talk — Orr Group Platform&body=Hi Mark,%0D%0A%0D%0AI've reviewed the proposal and would like to schedule a call to discuss next steps.%0D%0A%0D%0ACJ" class="btn-primary">Schedule a Call →</a>
+      <a href="mailto:mark@2516technologies.com?subject=Full Cost Model Request — Orr Group" class="btn-secondary">Request Full Cost Model</a>
+    </div>
+    <div class="cta-email">Or reach out directly: <a href="mailto:mark@2516technologies.com">mark@2516technologies.com</a></div>
+  </div>
+
+  <!-- Closing -->
+  <div class="closing anim-fade-up">
+    <p>A note on the friend rate: this proposal reflects a genuine discount from 2516's standard engagement pricing because I believe in what Orr Group is building and I want to be the one who builds it. The rates here are transparent — I've told you what market rate is, and I'm offering you something better. That discount is a gift, not the floor. What it's not is a signal that the work is worth less. The platform you're building is important, and it deserves to be built right.</p>
+    <p><em>AI is Jazz</em> — the data structure is like the chord progression: it has to be right before the improvisation can be beautiful. Phase 1 is the ii–V–I. Everything you're imagining for Orr Group's platform is the solo on top of it.</p>
+    <p><strong>— Mark, 2516 Technologies</strong></p>
+  </div>
+
+</div>
+<footer class="site-footer">
+  <div class="footer-brand">Prepared by <strong>2516 Technologies</strong> · mark@2516technologies.com</div>
+  <div class="footer-tagline">AI is Jazz.</div>
+  <nav class="footer-nav"><a href="orr-investment.html">← Investment</a><a href="orr-index.html">Back to Home</a></nav>
+</footer>
+<script src="nav-orr.js"></script>
+</body>
+</html>
