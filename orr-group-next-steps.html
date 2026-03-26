@@ -47,14 +47,14 @@
     .section h2+p, .section h1+p { margin-bottom:40px; }
 
     /* NAV */
-    .navbar { position:sticky; top:0; z-index:100; height:64px; background:var(--card); border-bottom:1px solid var(--border); transition:background 0.3s,border-color 0.3s; display:flex; justify-content:space-between; align-items:center; padding:0 32px; }
+    .navbar { position:sticky; top:0; z-index:100; height:64px; background:var(--card); border-bottom:1px solid var(--border); transition:background 0.3s,border-color 0.3s; display:flex; justify-content:space-between; align-items:center; padding:0 24px; gap:16px; }
     .logo { height:32px; width:auto; }
-    .nav-links { display:flex; gap:28px; align-items:center; }
-    .nav-link { font-family:'DM Sans',sans-serif; font-size:13px; font-weight:500; letter-spacing:0.05em; color:var(--muted); text-decoration:none; transition:color 0.2s ease; min-height:44px; display:inline-flex; align-items:center; }
+    .nav-links { display:flex; gap:16px; align-items:center; flex:1; justify-content:center; overflow:hidden; }
+    .nav-link { font-family:'DM Sans',sans-serif; font-size:12px; font-weight:500; letter-spacing:0.03em; color:var(--muted); text-decoration:none; transition:color 0.2s ease; min-height:44px; display:inline-flex; align-items:center; white-space:nowrap; }
     .nav-link:hover { color:var(--gold); }
     .nav-link.active { color:var(--gold); border-bottom:1px solid var(--gold); padding-bottom:2px; }
     .nav-cta { margin-left:8px; }
-    .nav-badge { font-family:'DM Sans',sans-serif; font-size:10px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); padding:0 12px; border-left:1px solid var(--border); white-space:nowrap; }
+    .nav-badge { font-family:'DM Sans',sans-serif; font-size:10px; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted); padding:4px 10px; border:1px solid var(--border); border-radius:20px; white-space:nowrap; flex-shrink:0; margin-left:8px; }
 
     .hamburger { display:none; flex-direction:column; gap:5px; background:none; border:none; cursor:pointer; padding:8px; }
     .hamburger-line { width:20px; height:2px; background:var(--text); transition:all 0.3s; }
@@ -227,9 +227,9 @@
 <body class="t1">
   <nav class="navbar">
     <a href="orr-group-index.html">
-      <img src="/public/2516_logo_horizontal_dark_web.png"
-           data-dark="/public/2516_logo_horizontal_dark_web.png"
-           data-light="/public/2516_logo_horizontal_light_web.png"
+      <img src="/2516_logo_horizontal_dark_web.png"
+           data-dark="/2516_logo_horizontal_dark_web.png"
+           data-light="/2516_logo_horizontal_light_web.png"
            alt="2516 Technologies" class="logo" style="height:32px;width:auto;">
     </a>
     <div class="nav-links">
@@ -360,9 +360,9 @@
   <footer class="footer">
     <div class="footer-inner">
       <a href="orr-group-index.html" class="footer-logo">
-        <img src="/public/2516_logo_horizontal_dark_web.png"
-             data-dark="/public/2516_logo_horizontal_dark_web.png"
-             data-light="/public/2516_logo_horizontal_light_web.png"
+        <img src="/2516_logo_horizontal_dark_web.png"
+             data-dark="/2516_logo_horizontal_dark_web.png"
+             data-light="/2516_logo_horizontal_light_web.png"
              alt="2516 Technologies" style="height:32px;width:auto;">
       </a>
       <div class="footer-nav">
