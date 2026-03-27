@@ -1,1096 +1,1096 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>About - 2516 Technologies</title>
-  <link rel="icon" type="image/png" href="/public/2516_icon_light_512.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body.t1 {
-      --bg: #F0F5FF;
-      --card: #FFFFFF;
-      --input: #F0F5FF;
-      --border: rgba(30, 80, 180, 0.15);
-      --text: #0D1B3E;
-      --muted: #5A7AB0;
-      --gold: #1B4FD8;
-      --gold-light: #4A7FFF;
-      --glow: rgba(27, 79, 216, 0.08);
-    }
-
-    body.t2 {
-      --bg: #0A1628;
-      --card: #0F2144;
-      --input: #0A1628;
-      --border: rgba(74, 127, 255, 0.2);
-      --text: #E8F0FF;
-      --muted: #6A9FD8;
-      --gold: #4A7FFF;
-      --gold-light: #7AAFFF;
-      --glow: rgba(74, 127, 255, 0.1);
-    }
-
-    body.t3 {
-      --bg: #FFFFFF;
-      --card: #F7FAFF;
-      --input: #FFFFFF;
-      --border: rgba(30, 80, 180, 0.12);
-      --text: #0D1B3E;
-      --muted: #6A8AB8;
-      --gold: #1B4FD8;
-      --gold-light: #3A6FEF;
-      --glow: rgba(27, 79, 216, 0.05);
-    }
-
-    body.t4 {
-      --bg: #1B4FD8;
-      --card: #1440B8;
-      --input: #1B4FD8;
-      --border: rgba(255, 255, 255, 0.18);
-      --text: #FFFFFF;
-      --muted: rgba(255, 255, 255, 0.65);
-      --gold: #FFFFFF;
-      --gold-light: #E8F0FF;
-      --glow: rgba(255, 255, 255, 0.08);
-    }
-
-    body.t5 {
-      --bg: #1C1C1B;
-      --card: #2A2A29;
-      --input: #343433;
-      --border: rgba(200, 169, 81, 0.18);
-      --text: #E8EDF5;
-      --muted: #7A8BA8;
-      --gold: #C8A951;
-      --gold-light: #E4CC7A;
-      --glow: rgba(200, 169, 81, 0.06);
-    }
-
-    body {
-      overflow-x: hidden;
-      font-family: 'DM Sans', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-      transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-      min-height: 100vh;
-    }
-
-    .theme-switcher {
-      position: fixed;
-      top: 80px;
-      right: 16px;
-      z-index: 50;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 40px;
-      padding: 3px 6px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
-      transition: all 0.3s ease;
-    }
-
-    .theme-switcher.hidden {
-      opacity: 0;
-      pointer-events: none;
-      transform: translateY(-10px);
-    }
-
-    .theme-toggle-trigger {
-      position: fixed;
-      top: 80px;
-      right: 16px;
-      z-index: 50;
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      background: var(--card);
-      border: 1px solid var(--border);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 16px;
-      transition: all 0.2s ease;
-      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-    }
-
-    .theme-toggle-trigger:hover {
-      transform: scale(1.08);
-      border-color: var(--gold);
-    }
-
-    .theme-toggle-trigger.active {
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    .theme-label {
-      font-size: 9px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--muted);
-      font-weight: 500;
-      margin-right: 4px;
-      transition: color 0.3s ease;
-    }
-
-    .theme-btn {
-      width: 18px;
-      height: 18px;
-      min-width: 18px;
-      min-height: 18px;
-      max-width: 18px;
-      max-height: 18px;
-      border-radius: 50%;
-      border: 2px solid transparent;
-      cursor: pointer;
-      transition: transform 0.15s ease, border-color 0.3s ease;
-      padding: 0;
-      background: none;
-      flex-shrink: 0;
-    }
-
-    .theme-btn:hover {
-      transform: scale(1.15);
-    }
-
-    .theme-btn.active {
-      border-color: var(--gold);
-      transform: scale(1.15);
-    }
-
-    .theme-btn-t1 {
-      background: linear-gradient(135deg, #F0F5FF 0% 50%, #1B4FD8 50% 100%);
-      background-size: 100% 100%;
-    }
-
-    .theme-btn-t2 {
-      background: linear-gradient(135deg, #0A1628 0% 50%, #4A7FFF 50% 100%);
-      background-size: 100% 100%;
-    }
-
-    .theme-btn-t3 {
-      background: linear-gradient(135deg, #FFFFFF 0% 50%, #1B4FD8 50% 100%);
-      background-size: 100% 100%;
-    }
-
-    .theme-btn-t4 {
-      background: linear-gradient(135deg, #1B4FD8 0% 50%, #FFFFFF 50% 100%);
-      background-size: 100% 100%;
-    }
-
-    .theme-btn-t5 {
-      background: linear-gradient(135deg, #1C1C1B 0% 50%, #C8A951 50% 100%);
-      background-size: 100% 100%;
-    }
-
-    h1 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(28px, 5vw, 52px);
-      font-weight: 300;
-      line-height: 1.2;
-    }
-
-    h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(22px, 4vw, 38px);
-      font-weight: 400;
-      line-height: 1.3;
-    }
-
-    h3 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 22px;
-      font-weight: 400;
-    }
-
-    h1 em,
-    h2 em {
-      font-style: italic;
-      color: var(--gold);
-    }
-
-    p {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 15px;
-      line-height: 1.75;
-    }
-
-    .muted {
-      color: var(--muted);
-    }
-
-    .eyebrow {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--gold);
-      display: block;
-      margin-bottom: 12px;
-    }
-
-    .section h2,
-    .section-sm h2 {
-      margin-bottom: 16px;
-    }
-
-    .section h2 + p,
-    .section-sm h2 + p,
-    .section h1 + p {
-      margin-bottom: 40px;
-    }
-
-    .btn {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 13px;
-      font-weight: 500;
-      letter-spacing: 0.06em;
-      padding: 14px 32px;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      border: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      text-decoration: none;
-    }
-
-    .btn-primary {
-      background: var(--gold);
-      color: #fff;
-    }
-
-    body.t4 .btn-primary {
-      color: #1440B8;
-      background: #fff;
-    }
-
-    body.t5 .btn-primary {
-      color: #1C1C1B;
-    }
-
-    .btn-primary:hover {
-      background: var(--gold-light);
-      transform: translateY(-1px);
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-    }
-
-    .btn-ghost {
-      background: transparent;
-      border: 1px solid var(--border);
-      color: var(--muted);
-    }
-
-    .btn-ghost:hover {
-      border-color: var(--gold);
-      color: var(--text);
-    }
-
-    .card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 40px;
-      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.06);
-      transition: background 0.3s, border-color 0.3s;
-    }
-
-    .section {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 96px 24px;
-    }
-
-    .centered {
-      text-align: center;
-    }
-
-    .btn-row {
-      display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-
-    .navbar {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      height: 64px;
-      background: var(--card);
-      border-bottom: 1px solid var(--border);
-      transition: background 0.3s, border-color 0.3s;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0 32px;
-    }
-
-    .logo {
-      height: 32px;
-      width: auto;
-    }
-
-    .logo-text {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 20px;
-      font-weight: 400;
-      color: var(--text);
-      text-decoration: none;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 32px;
-      align-items: center;
-    }
-
-    .nav-link {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 13px;
-      font-weight: 500;
-      letter-spacing: 0.05em;
-      color: var(--muted);
-      text-decoration: none;
-      transition: color 0.2s ease;
-      position: relative;
-    }
-
-    .nav-link:hover {
-      color: var(--gold);
-    }
-
-    .nav-link.active {
-      color: var(--gold);
-      border-bottom: 1px solid var(--gold);
-      padding-bottom: 2px;
-    }
-
-    .nav-cta {
-      margin-left: 16px;
-    }
-
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      gap: 5px;
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 8px;
-    }
-
-    .hamburger-line {
-      width: 20px;
-      height: 2px;
-      background: var(--text);
-      transition: all 0.3s;
-    }
-
-    .hamburger.active .hamburger-line:nth-child(1) {
-      transform: rotate(45deg) translate(7px, 7px);
-    }
-
-    .hamburger.active .hamburger-line:nth-child(2) {
-      opacity: 0;
-    }
-
-    .hamburger.active .hamburger-line:nth-child(3) {
-      transform: rotate(-45deg) translate(7px, -7px);
-    }
-
-    .mobile-menu {
-      display: none;
-      position: fixed;
-      top: 64px;
-      left: 0;
-      right: 0;
-      background: var(--card);
-      border-bottom: 1px solid var(--border);
-      padding: 16px 24px;
-      flex-direction: column;
-      gap: 0;
-      z-index: 999;
-      max-height: calc(100vh - 64px);
-      overflow-y: auto;
-    }
-
-    .mobile-menu.open {
-      display: flex;
-    }
-
-    .mobile-menu .nav-link {
-      padding: 12px 0;
-      display: block;
-      height: 40px;
-      display: flex;
-      align-items: center;
-    }
-
-    .mobile-menu .nav-cta {
-      margin-left: 0;
-      margin-top: 8px;
-    }
-
-    .mobile-menu .btn {
-      width: 100%;
-      justify-content: center;
-    }
-
-    * {
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    .btn,
-    .nav-link,
-    .footer-link,
-    .footer-email {
-      min-height: 44px;
-      display: inline-flex;
-      align-items: center;
-    }
-
-    .nav-link {
-      min-height: 44px;
-    }
-
-    @media (max-width: 768px) {
-      .nav-links {
-        display: none;
-      }
-
-      .hamburger {
-        display: flex;
-      }
-
-      .navbar {
-        padding: 0 24px;
-      }
-
-      .section {
-        padding: 64px 20px;
-      }
-
-      .origin-grid {
-        grid-template-columns: 1fr;
-        gap: 40px;
-      }
-
-      .about-hero {
-        padding: 60px 20px 48px;
-      }
-
-      .philosophy-band {
-        padding: 64px 20px;
-      }
-
-      .jazz-section {
-        padding: 48px 24px;
-        text-align: center;
-      }
-
-      .jazz-section p {
-        text-align: center;
-        margin-left: auto;
-        margin-right: auto;
-      }
-
-      .chord-grid {
-        justify-items: center;
-        margin-left: auto;
-        margin-right: auto;
-        grid-template-columns: repeat(4, 1fr);
-        max-width: 100%;
-        padding: 0 20px;
-      }
-
-      .chord {
-        margin: 0 auto;
-        text-align: center;
-      }
-
-      .chord-number {
-        text-align: center;
-        display: block;
-      }
-
-      .chord-label,
-      .chord-desc {
-        text-align: center;
-        display: block;
-      }
-    }
-
-    .about-hero {
-      position: relative;
-      overflow: hidden;
-      padding: 80px 24px 64px;
-      text-align: center;
-    }
-
-    .about-hero::before {
-      content: '';
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      z-index: 0;
-      pointer-events: none;
-      background: radial-gradient(ellipse 70% 50% at 50% 0%, var(--glow) 0%, transparent 70%);
-    }
-
-    .about-hero-content {
-      position: relative;
-      z-index: 1;
-      max-width: 760px;
-      margin: 0 auto;
-      opacity: 0;
-      transform: translateY(24px);
-      animation: fadeInUp 0.6s ease-out forwards;
-    }
-
-    @keyframes fadeInUp {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .about-hero-content h1 {
-      margin-bottom: 24px;
-    }
-
-    .about-hero-content p {
-      font-size: clamp(15px, 2.5vw, 17px);
-      max-width: 600px;
-      line-height: 1.8;
-      margin: 0 auto;
-    }
-
-    .origin-grid {
-      display: grid;
-      grid-template-columns: 60% 40%;
-      gap: 64px;
-      align-items: start;
-    }
-
-    .origin-text p {
-      margin-bottom: 20px;
-      line-height: 1.8;
-    }
-
-    .origin-text p:last-child {
-      margin-bottom: 0;
-    }
-
-    .origin-text h2 {
-      margin-bottom: 24px;
-    }
-
-    .quote-card {
-      cursor: default;
-    }
-
-    .quote-card:hover {
-      transform: none;
-      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.06);
-    }
-
-    .quote-card blockquote {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 22px;
-      font-style: italic;
-      font-weight: 300;
-      line-height: 1.6;
-      color: var(--text);
-    }
-
-    .quote-card cite {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 13px;
-      color: var(--muted);
-      font-style: normal;
-      display: block;
-      margin-top: 20px;
-    }
-
-    .philosophy-band {
-      background: var(--card);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      padding: 80px 24px;
-    }
-
-    .philosophy-inner {
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
-    .philosophy-inner .eyebrow {
-      text-align: center;
-    }
-
-    .philosophy-inner h2 {
-      text-align: center;
-    }
-
-    .philosophy-intro {
-      text-align: center;
-      max-width: 600px;
-      margin: 16px auto 56px;
-      line-height: 1.8;
-    }
-
-    .chord-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 24px;
-    }
-
-    .chord-number {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 48px;
-      font-weight: 300;
-      color: var(--gold);
-      line-height: 1;
-      display: block;
-    }
-
-    .chord-label {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 11px;
-      color: var(--muted);
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      display: block;
-      margin: 4px 0 12px;
-    }
-
-    .chord-desc {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 14px;
-      color: var(--text);
-      line-height: 1.7;
-    }
-
-    @media (max-width: 640px) {
-      .chord-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (max-width: 480px) {
-      .section {
-        padding: 48px 16px;
-      }
-
-      .card {
-        padding: 28px;
-      }
-
-      .btn-row {
-        flex-direction: column;
-      }
-
-      .btn-row .btn {
-        width: 100%;
-        justify-content: center;
-      }
-
-      .bottom-cta-section {
-        padding: 64px 16px;
-      }
-
-      .philosophy-band {
-        padding: 48px 16px;
-      }
-    }
-
-    @media (max-width: 420px) {
-      .chord-grid {
-        grid-template-columns: 1fr;
-      }
-
-      h1 {
-        font-size: 28px;
-      }
-
-      h2 {
-        font-size: 22px;
-      }
-    }
-
-    .credential-badges {
-      display: flex;
-      gap: 16px;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin: 40px 0;
-    }
-
-    .credential-badge {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 40px;
-      padding: 10px 24px;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text);
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .credentials-stat-grid {
-      max-width: 700px;
-      margin: 56px auto 0;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 32px;
-    }
-
-    .credentials-stat-number {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(32px, 4vw, 44px);
-      font-weight: 300;
-      color: var(--gold);
-      line-height: 1;
-      display: block;
-    }
-
-    .credentials-stat-label {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 13px;
-      color: var(--muted);
-      display: block;
-      margin-top: 8px;
-    }
-
-    .credentials-closing {
-      max-width: 540px;
-      margin: 48px auto 0;
-      font-size: 15px;
-      line-height: 1.8;
-    }
-
-    .credentials-actions {
-      justify-content: center;
-      margin-top: 40px;
-    }
-
-    @media (max-width: 480px) {
-      .credentials-stat-grid {
-        grid-template-columns: 1fr;
-        gap: 24px;
-      }
-
-      .credentials-actions {
-        flex-direction: column;
-      }
-
-      .credentials-actions .btn {
-        width: 100%;
-        justify-content: center;
-      }
-    }
-
-    .bottom-cta-section {
-      background: var(--card);
-      border-top: 1px solid var(--border);
-      padding: 96px 24px;
-      text-align: center;
-    }
-
-    .bottom-cta-section .inner {
-      max-width: 640px;
-      margin: 0 auto;
-    }
-
-    .bottom-cta-section p.muted {
-      margin: 20px auto 40px;
-      max-width: 520px;
-      line-height: 1.8;
-    }
-
-    .bottom-cta-section .btn-row {
-      justify-content: center;
-    }
-
-    .footer {
-      background: var(--card);
-      border-top: 1px solid var(--border);
-      padding: 24px 32px;
-    }
-
-    .footer-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .footer-logo {
-      display: block;
-      text-decoration: none;
-    }
-
-    .footer-logo img {
-      height: 36px;
-      width: auto;
-      display: block;
-    }
-
-    .footer-tagline {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 12px;
-      color: var(--muted);
-      font-style: italic;
-    }
-
-    @media (max-width: 640px) {
-      .footer-inner {
-        flex-direction: row;
-        gap: 12px;
-        align-items: center;
-        justify-content: space-between;
-      }
-
-      .footer-logo img {
-        height: 28px;
-      }
-
-      .footer-tagline {
-        font-size: 11px;
-        white-space: nowrap;
-      }
-    }
-
-    img {
-      max-width: 100%;
-      height: auto;
-    }
-
-  </style>
-  <!-- Supabase Client Library -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>About - 2516 Technologies</title>
+ <link rel="icon" type="image/png" href="/public/2516_icon_light_512.png">
+ <link rel="preconnect" href="https://fonts.googleapis.com">
+ <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+ <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+ <style>
+ * {
+ margin: 0;
+ padding: 0;
+ box-sizing: border-box;
+ }
+
+ body.t1 {
+ --bg: #F0F5FF;
+ --card: #FFFFFF;
+ --input: #F0F5FF;
+ --border: rgba(30, 80, 180, 0.15);
+ --text: #0D1B3E;
+ --muted: #5A7AB0;
+ --gold: #1B4FD8;
+ --gold-light: #4A7FFF;
+ --glow: rgba(27, 79, 216, 0.08);
+ }
+
+ body.t2 {
+ --bg: #0A1628;
+ --card: #0F2144;
+ --input: #0A1628;
+ --border: rgba(74, 127, 255, 0.2);
+ --text: #E8F0FF;
+ --muted: #6A9FD8;
+ --gold: #4A7FFF;
+ --gold-light: #7AAFFF;
+ --glow: rgba(74, 127, 255, 0.1);
+ }
+
+ body.t3 {
+ --bg: #FFFFFF;
+ --card: #F7FAFF;
+ --input: #FFFFFF;
+ --border: rgba(30, 80, 180, 0.12);
+ --text: #0D1B3E;
+ --muted: #6A8AB8;
+ --gold: #1B4FD8;
+ --gold-light: #3A6FEF;
+ --glow: rgba(27, 79, 216, 0.05);
+ }
+
+ body.t4 {
+ --bg: #1B4FD8;
+ --card: #1440B8;
+ --input: #1B4FD8;
+ --border: rgba(255, 255, 255, 0.18);
+ --text: #FFFFFF;
+ --muted: rgba(255, 255, 255, 0.65);
+ --gold: #FFFFFF;
+ --gold-light: #E8F0FF;
+ --glow: rgba(255, 255, 255, 0.08);
+ }
+
+ body.t5 {
+ --bg: #1C1C1B;
+ --card: #2A2A29;
+ --input: #343433;
+ --border: rgba(200, 169, 81, 0.18);
+ --text: #E8EDF5;
+ --muted: #7A8BA8;
+ --gold: #C8A951;
+ --gold-light: #E4CC7A;
+ --glow: rgba(200, 169, 81, 0.06);
+ }
+
+ body {
+ overflow-x: hidden;
+ font-family: 'DM Sans', sans-serif;
+ background: var(--bg);
+ color: var(--text);
+ line-height: 1.6;
+ transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+ min-height: 100vh;
+ }
+
+ .theme-switcher {
+ position: fixed;
+ top: 80px;
+ right: 16px;
+ z-index: 50;
+ display: flex;
+ align-items: center;
+ gap: 6px;
+ background: var(--card);
+ border: 1px solid var(--border);
+ border-radius: 40px;
+ padding: 3px 6px;
+ box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+ transition: all 0.3s ease;
+ }
+
+ .theme-switcher.hidden {
+ opacity: 0;
+ pointer-events: none;
+ transform: translateY(-10px);
+ }
+
+ .theme-toggle-trigger {
+ position: fixed;
+ top: 80px;
+ right: 16px;
+ z-index: 50;
+ width: 36px;
+ height: 36px;
+ border-radius: 50%;
+ background: var(--card);
+ border: 1px solid var(--border);
+ cursor: pointer;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ font-size: 16px;
+ transition: all 0.2s ease;
+ box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+ }
+
+ .theme-toggle-trigger:hover {
+ transform: scale(1.08);
+ border-color: var(--gold);
+ }
+
+ .theme-toggle-trigger.active {
+ opacity: 0;
+ pointer-events: none;
+ }
+
+ .theme-label {
+ font-size: 9px;
+ letter-spacing: 0.1em;
+ text-transform: uppercase;
+ color: var(--muted);
+ font-weight: 500;
+ margin-right: 4px;
+ transition: color 0.3s ease;
+ }
+
+ .theme-btn {
+ width: 18px;
+ height: 18px;
+ min-width: 18px;
+ min-height: 18px;
+ max-width: 18px;
+ max-height: 18px;
+ border-radius: 50%;
+ border: 2px solid transparent;
+ cursor: pointer;
+ transition: transform 0.15s ease, border-color 0.3s ease;
+ padding: 0;
+ background: none;
+ flex-shrink: 0;
+ }
+
+ .theme-btn:hover {
+ transform: scale(1.15);
+ }
+
+ .theme-btn.active {
+ border-color: var(--gold);
+ transform: scale(1.15);
+ }
+
+ .theme-btn-t1 {
+ background: linear-gradient(135deg, #F0F5FF 0% 50%, #1B4FD8 50% 100%);
+ background-size: 100% 100%;
+ }
+
+ .theme-btn-t2 {
+ background: linear-gradient(135deg, #0A1628 0% 50%, #4A7FFF 50% 100%);
+ background-size: 100% 100%;
+ }
+
+ .theme-btn-t3 {
+ background: linear-gradient(135deg, #FFFFFF 0% 50%, #1B4FD8 50% 100%);
+ background-size: 100% 100%;
+ }
+
+ .theme-btn-t4 {
+ background: linear-gradient(135deg, #1B4FD8 0% 50%, #FFFFFF 50% 100%);
+ background-size: 100% 100%;
+ }
+
+ .theme-btn-t5 {
+ background: linear-gradient(135deg, #1C1C1B 0% 50%, #C8A951 50% 100%);
+ background-size: 100% 100%;
+ }
+
+ h1 {
+ font-family: 'Cormorant Garamond', serif;
+ font-size: clamp(28px, 5vw, 52px);
+ font-weight: 300;
+ line-height: 1.2;
+ }
+
+ h2 {
+ font-family: 'Cormorant Garamond', serif;
+ font-size: clamp(22px, 4vw, 38px);
+ font-weight: 400;
+ line-height: 1.3;
+ }
+
+ h3 {
+ font-family: 'Cormorant Garamond', serif;
+ font-size: 22px;
+ font-weight: 400;
+ }
+
+ h1 em,
+ h2 em {
+ font-style: italic;
+ color: var(--gold);
+ }
+
+ p {
+ font-family: 'DM Sans', sans-serif;
+ font-size: 15px;
+ line-height: 1.75;
+ }
+
+ .muted {
+ color: var(--muted);
+ }
+
+ .eyebrow {
+ font-family: 'DM Sans', sans-serif;
+ font-size: 11px;
+ font-weight: 500;
+ letter-spacing: 0.18em;
+ text-transform: uppercase;
+ color: var(--gold);
+ display: block;
+ margin-bottom: 12px;
+ }
+
+ .section h2,
+ .section-sm h2 {
+ margin-bottom: 16px;
+ }
+
+ .section h2 + p,
+ .section-sm h2 + p,
+ .section h1 + p {
+ margin-bottom: 40px;
+ }
+
+ .btn {
+ font-family: 'DM Sans', sans-serif;
+ font-size: 13px;
+ font-weight: 500;
+ letter-spacing: 0.06em;
+ padding: 14px 32px;
+ border-radius: 8px;
+ cursor: pointer;
+ transition: all 0.2s ease;
+ border: none;
+ display: inline-flex;
+ align-items: center;
+ gap: 8px;
+ text-decoration: none;
+ }
+
+ .btn-primary {
+ background: var(--gold);
+ color: #fff;
+ }
+
+ body.t4 .btn-primary {
+ color: #1440B8;
+ background: #fff;
+ }
+
+ body.t5 .btn-primary {
+ color: #1C1C1B;
+ }
+
+ .btn-primary:hover {
+ background: var(--gold-light);
+ transform: translateY(-1px);
+ box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+ }
+
+ .btn-ghost {
+ background: transparent;
+ border: 1px solid var(--border);
+ color: var(--muted);
+ }
+
+ .btn-ghost:hover {
+ border-color: var(--gold);
+ color: var(--text);
+ }
+
+ .card {
+ background: var(--card);
+ border: 1px solid var(--border);
+ border-radius: 16px;
+ padding: 40px;
+ box-shadow: 0 8px 40px rgba(0, 0, 0, 0.06);
+ transition: background 0.3s, border-color 0.3s;
+ }
+
+ .section {
+ max-width: 1100px;
+ margin: 0 auto;
+ padding: 96px 24px;
+ }
+
+ .centered {
+ text-align: center;
+ }
+
+ .btn-row {
+ display: flex;
+ gap: 16px;
+ flex-wrap: wrap;
+ }
+
+ .navbar {
+ position: sticky;
+ top: 0;
+ z-index: 100;
+ height: 64px;
+ background: var(--card);
+ border-bottom: 1px solid var(--border);
+ transition: background 0.3s, border-color 0.3s;
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ padding: 0 32px;
+ }
+
+ .logo {
+ height: 32px;
+ width: auto;
+ }
+
+ .logo-text {
+ font-family: 'Cormorant Garamond', serif;
+ font-size: 20px;
+ font-weight: 400;
+ color: var(--text);
+ text-decoration: none;
+ }
+
+ .nav-links {
+ display: flex;
+ gap: 32px;
+ align-items: center;
+ }
+
+ .nav-link {
+ font-family: 'DM Sans', sans-serif;
+ font-size: 13px;
+ font-weight: 500;
+ letter-spacing: 0.05em;
+ color: var(--muted);
+ text-decoration: none;
+ transition: color 0.2s ease;
+ position: relative;
+ }
+
+ .nav-link:hover {
+ color: var(--gold);
+ }
+
+ .nav-link.active {
+ color: var(--gold);
+ border-bottom: 1px solid var(--gold);
+ padding-bottom: 2px;
+ }
+
+ .nav-cta {
+ margin-left: 16px;
+ }
+
+ .hamburger {
+ display: none;
+ flex-direction: column;
+ gap: 5px;
+ background: none;
+ border: none;
+ cursor: pointer;
+ padding: 8px;
+ }
+
+ .hamburger-line {
+ width: 20px;
+ height: 2px;
+ background: var(--text);
+ transition: all 0.3s;
+ }
+
+ .hamburger.active .hamburger-line:nth-child(1) {
+ transform: rotate(45deg) translate(7px, 7px);
+ }
+
+ .hamburger.active .hamburger-line:nth-child(2) {
+ opacity: 0;
+ }
+
+ .hamburger.active .hamburger-line:nth-child(3) {
+ transform: rotate(-45deg) translate(7px, -7px);
+ }
+
+ .mobile-menu {
+ display: none;
+ position: fixed;
+ top: 64px;
+ left: 0;
+ right: 0;
+ background: var(--card);
+ border-bottom: 1px solid var(--border);
+ padding: 16px 24px;
+ flex-direction: column;
+ gap: 0;
+ z-index: 999;
+ max-height: calc(100vh - 64px);
+ overflow-y: auto;
+ }
+
+ .mobile-menu.open {
+ display: flex;
+ }
+
+ .mobile-menu .nav-link {
+ padding: 12px 0;
+ display: block;
+ height: 40px;
+ display: flex;
+ align-items: center;
+ }
+
+ .mobile-menu .nav-cta {
+ margin-left: 0;
+ margin-top: 8px;
+ }
+
+ .mobile-menu .btn {
+ width: 100%;
+ justify-content: center;
+ }
+
+ * {
+ -webkit-tap-highlight-color: transparent;
+ }
+
+ .btn,
+ .nav-link,
+ .footer-link,
+ .footer-email {
+ min-height: 44px;
+ display: inline-flex;
+ align-items: center;
+ }
+
+ .nav-link {
+ min-height: 44px;
+ }
+
+ @media (max-width: 768px) {
+ .nav-links {
+ display: none;
+ }
+
+ .hamburger {
+ display: flex;
+ }
+
+ .navbar {
+ padding: 0 24px;
+ }
+
+ .section {
+ padding: 64px 20px;
+ }
+
+ .origin-grid {
+ grid-template-columns: 1fr;
+ gap: 40px;
+ }
+
+ .about-hero {
+ padding: 60px 20px 48px;
+ }
+
+ .philosophy-band {
+ padding: 64px 20px;
+ }
+
+ .jazz-section {
+ padding: 48px 24px;
+ text-align: center;
+ }
+
+ .jazz-section p {
+ text-align: center;
+ margin-left: auto;
+ margin-right: auto;
+ }
+
+ .chord-grid {
+ justify-items: center;
+ margin-left: auto;
+ margin-right: auto;
+ grid-template-columns: repeat(4, 1fr);
+ max-width: 100%;
+ padding: 0 20px;
+ }
+
+ .chord {
+ margin: 0 auto;
+ text-align: center;
+ }
+
+ .chord-number {
+ text-align: center;
+ display: block;
+ }
+
+ .chord-label,
+ .chord-desc {
+ text-align: center;
+ display: block;
+ }
+ }
+
+ .about-hero {
+ position: relative;
+ overflow: hidden;
+ padding: 80px 24px 64px;
+ text-align: center;
+ }
+
+ .about-hero::before {
+ content: '';
+ position: fixed;
+ top: 0;
+ left: 0;
+ right: 0;
+ bottom: 0;
+ z-index: 0;
+ pointer-events: none;
+ background: radial-gradient(ellipse 70% 50% at 50% 0%, var(--glow) 0%, transparent 70%);
+ }
+
+ .about-hero-content {
+ position: relative;
+ z-index: 1;
+ max-width: 760px;
+ margin: 0 auto;
+ opacity: 0;
+ transform: translateY(24px);
+ animation: fadeInUp 0.6s ease-out forwards;
+ }
+
+ @keyframes fadeInUp {
+ to {
+ opacity: 1;
+ transform: translateY(0);
+ }
+ }
+
+ .about-hero-content h1 {
+ margin-bottom: 24px;
+ }
+
+ .about-hero-content p {
+ font-size: clamp(15px, 2.5vw, 17px);
+ max-width: 600px;
+ line-height: 1.8;
+ margin: 0 auto;
+ }
+
+ .origin-grid {
+ display: grid;
+ grid-template-columns: 60% 40%;
+ gap: 64px;
+ align-items: start;
+ }
+
+ .origin-text p {
+ margin-bottom: 20px;
+ line-height: 1.8;
+ }
+
+ .origin-text p:last-child {
+ margin-bottom: 0;
+ }
+
+ .origin-text h2 {
+ margin-bottom: 24px;
+ }
+
+ .quote-card {
+ cursor: default;
+ }
+
+ .quote-card:hover {
+ transform: none;
+ box-shadow: 0 8px 40px rgba(0, 0, 0, 0.06);
+ }
+
+ .quote-card blockquote {
+ font-family: 'Cormorant Garamond', serif;
+ font-size: 22px;
+ font-style: italic;
+ font-weight: 300;
+ line-height: 1.6;
+ color: var(--text);
+ }
+
+ .quote-card cite {
+ font-family: 'DM Sans', sans-serif;
+ font-size: 13px;
+ color: var(--muted);
+ font-style: normal;
+ display: block;
+ margin-top: 20px;
+ }
+
+ .philosophy-band {
+ background: var(--card);
+ border-top: 1px solid var(--border);
+ border-bottom: 1px solid var(--border);
+ padding: 80px 24px;
+ }
+
+ .philosophy-inner {
+ max-width: 900px;
+ margin: 0 auto;
+ }
+
+ .philosophy-inner .eyebrow {
+ text-align: center;
+ }
+
+ .philosophy-inner h2 {
+ text-align: center;
+ }
+
+ .philosophy-intro {
+ text-align: center;
+ max-width: 600px;
+ margin: 16px auto 56px;
+ line-height: 1.8;
+ }
+
+ .chord-grid {
+ display: grid;
+ grid-template-columns: repeat(4, 1fr);
+ gap: 24px;
+ }
+
+ .chord-number {
+ font-family: 'Cormorant Garamond', serif;
+ font-size: 48px;
+ font-weight: 300;
+ color: var(--gold);
+ line-height: 1;
+ display: block;
+ }
+
+ .chord-label {
+ font-family: 'DM Sans', sans-serif;
+ font-size: 11px;
+ color: var(--muted);
+ letter-spacing: 0.14em;
+ text-transform: uppercase;
+ display: block;
+ margin: 4px 0 12px;
+ }
+
+ .chord-desc {
+ font-family: 'DM Sans', sans-serif;
+ font-size: 14px;
+ color: var(--text);
+ line-height: 1.7;
+ }
+
+ @media (max-width: 640px) {
+ .chord-grid {
+ grid-template-columns: repeat(2, 1fr);
+ }
+ }
+
+ @media (max-width: 480px) {
+ .section {
+ padding: 48px 16px;
+ }
+
+ .card {
+ padding: 28px;
+ }
+
+ .btn-row {
+ flex-direction: column;
+ }
+
+ .btn-row .btn {
+ width: 100%;
+ justify-content: center;
+ }
+
+ .bottom-cta-section {
+ padding: 64px 16px;
+ }
+
+ .philosophy-band {
+ padding: 48px 16px;
+ }
+ }
+
+ @media (max-width: 420px) {
+ .chord-grid {
+ grid-template-columns: 1fr;
+ }
+
+ h1 {
+ font-size: 28px;
+ }
+
+ h2 {
+ font-size: 22px;
+ }
+ }
+
+ .credential-badges {
+ display: flex;
+ gap: 16px;
+ justify-content: center;
+ flex-wrap: wrap;
+ margin: 40px 0;
+ }
+
+ .credential-badge {
+ background: var(--card);
+ border: 1px solid var(--border);
+ border-radius: 40px;
+ padding: 10px 24px;
+ font-family: 'DM Sans', sans-serif;
+ font-size: 13px;
+ font-weight: 500;
+ color: var(--text);
+ display: inline-flex;
+ align-items: center;
+ gap: 10px;
+ }
+
+ .credentials-stat-grid {
+ max-width: 700px;
+ margin: 56px auto 0;
+ display: grid;
+ grid-template-columns: repeat(3, 1fr);
+ gap: 32px;
+ }
+
+ .credentials-stat-number {
+ font-family: 'Cormorant Garamond', serif;
+ font-size: clamp(32px, 4vw, 44px);
+ font-weight: 300;
+ color: var(--gold);
+ line-height: 1;
+ display: block;
+ }
+
+ .credentials-stat-label {
+ font-family: 'DM Sans', sans-serif;
+ font-size: 13px;
+ color: var(--muted);
+ display: block;
+ margin-top: 8px;
+ }
+
+ .credentials-closing {
+ max-width: 540px;
+ margin: 48px auto 0;
+ font-size: 15px;
+ line-height: 1.8;
+ }
+
+ .credentials-actions {
+ justify-content: center;
+ margin-top: 40px;
+ }
+
+ @media (max-width: 480px) {
+ .credentials-stat-grid {
+ grid-template-columns: 1fr;
+ gap: 24px;
+ }
+
+ .credentials-actions {
+ flex-direction: column;
+ }
+
+ .credentials-actions .btn {
+ width: 100%;
+ justify-content: center;
+ }
+ }
+
+ .bottom-cta-section {
+ background: var(--card);
+ border-top: 1px solid var(--border);
+ padding: 96px 24px;
+ text-align: center;
+ }
+
+ .bottom-cta-section .inner {
+ max-width: 640px;
+ margin: 0 auto;
+ }
+
+ .bottom-cta-section p.muted {
+ margin: 20px auto 40px;
+ max-width: 520px;
+ line-height: 1.8;
+ }
+
+ .bottom-cta-section .btn-row {
+ justify-content: center;
+ }
+
+ .footer {
+ background: var(--card);
+ border-top: 1px solid var(--border);
+ padding: 24px 32px;
+ }
+
+ .footer-inner {
+ max-width: 1100px;
+ margin: 0 auto;
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ }
+
+ .footer-logo {
+ display: block;
+ text-decoration: none;
+ }
+
+ .footer-logo img {
+ height: 36px;
+ width: auto;
+ display: block;
+ }
+
+ .footer-tagline {
+ font-family: 'DM Sans', sans-serif;
+ font-size: 12px;
+ color: var(--muted);
+ font-style: italic;
+ }
+
+ @media (max-width: 640px) {
+ .footer-inner {
+ flex-direction: row;
+ gap: 12px;
+ align-items: center;
+ justify-content: space-between;
+ }
+
+ .footer-logo img {
+ height: 28px;
+ }
+
+ .footer-tagline {
+ font-size: 11px;
+ white-space: nowrap;
+ }
+ }
+
+ img {
+ max-width: 100%;
+ height: auto;
+ }
+
+ </style>
+ <!-- Supabase Client Library -->
+ <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body class="t1">
-  <nav class="navbar">
-    <a href="/" class="logo-text">
-      <img src="/2516_logo_horizontal_dark_web.png" data-dark="/2516_logo_horizontal_dark_web.png" data-light="/2516_logo_horizontal_light_web.png" alt="2516 Technologies" class="logo" style="height:36px; width:auto;">
-    </a>
-    <div class="nav-links">
-      <a href="index.html" class="nav-link">Home</a>
-      <a href="about.html" class="nav-link active">About</a>
-      <a href="services.html" class="nav-link">Services</a>
-      <a href="process.html" class="nav-link">Process</a>
-      <a href="contact.html" class="nav-link">Contact</a>
-      <a href="assessment.html" class="btn btn-primary nav-cta">Take the Assessment</a>
-    </div>
-    <button class="hamburger" aria-label="Toggle menu">
-      <span class="hamburger-line"></span>
-      <span class="hamburger-line"></span>
-      <span class="hamburger-line"></span>
-    </button>
-  </nav>
+ <nav class="navbar">
+ <a href="/" class="logo-text">
+ <img src="/2516_logo_horizontal_dark_web.png" data-dark="/2516_logo_horizontal_dark_web.png" data-light="/2516_logo_horizontal_light_web.png" alt="2516 Technologies" class="logo" style="height:36px; width:auto;">
+ </a>
+ <div class="nav-links">
+ <a href="index.html" class="nav-link">Home</a>
+ <a href="about.html" class="nav-link active">About</a>
+ <a href="services.html" class="nav-link">Services</a>
+ <a href="process.html" class="nav-link">Process</a>
+ <a href="contact.html" class="nav-link">Contact</a>
+ <a href="assessment.html" class="btn btn-primary nav-cta">Take the Assessment</a>
+ </div>
+ <button class="hamburger" aria-label="Toggle menu">
+ <span class="hamburger-line"></span>
+ <span class="hamburger-line"></span>
+ <span class="hamburger-line"></span>
+ </button>
+ </nav>
 
-  <div class="mobile-menu">
-    <a href="index.html" class="nav-link">Home</a>
-    <a href="about.html" class="nav-link active">About</a>
-    <a href="services.html" class="nav-link">Services</a>
-    <a href="process.html" class="nav-link">Process</a>
-    <a href="contact.html" class="nav-link">Contact</a>
-    <a href="assessment.html" class="btn btn-primary nav-cta">Take the Assessment</a>
-  </div>
+ <div class="mobile-menu">
+ <a href="index.html" class="nav-link">Home</a>
+ <a href="about.html" class="nav-link active">About</a>
+ <a href="services.html" class="nav-link">Services</a>
+ <a href="process.html" class="nav-link">Process</a>
+ <a href="contact.html" class="nav-link">Contact</a>
+ <a href="assessment.html" class="btn btn-primary nav-cta">Take the Assessment</a>
+ </div>
 
-  <main>
-    <section class="about-hero">
-      <div class="about-hero-content">
-        
-        <h1>Built where <em>data failure isn't an option</em></h1>
-        <p class="muted">
-          We came up in FDA labs, DoD audits, and SOX-regulated financials.
-          We know what it takes to build data infrastructure that survives scrutiny.
-        </p>
-      </div>
-    </section>
+ <main>
+ <section class="about-hero">
+ <div class="about-hero-content">
+ 
+ <h1>Built where <em>data failure isn't an option</em></h1>
+ <p class="muted">
+ We came up in FDA labs, DoD audits, and SOX-regulated financials.
+ We know what it takes to build data infrastructure that survives scrutiny.
+ </p>
+ </div>
+ </section>
 
-    <section class="section" style="text-align: center;">
-      <div class="origin-grid" style="display: block;">
-        <div class="origin-text" style="text-align: center; max-width: 720px; margin: 0 auto;">
-          <h2>The vendor problem is real.</h2>
-          <p>
-            Most AI companies are selling solutions in search of problems. In regulated industries, that's not just inefficient, it's dangerous. 2516 Technologies was built on a different premise: data infrastructure first, compliance by design, AI is earned not bolted on or by brute force.
-          </p>
-          <p style="margin-top: 32px;">
-            We work exclusively in high-stakes environments because that's where we came from. We've seen what happens when data fails under pressure. We build so it doesn't.
-          </p>
-        </div>
-      </div>
-    </section>
+ <section class="section" style="text-align: center;">
+ <div class="origin-grid" style="display: block;">
+ <div class="origin-text" style="text-align: center; max-width: 720px; margin: 0 auto;">
+ <h2>The vendor problem is real.</h2>
+ <p>
+ Most AI companies are selling solutions in search of problems. In regulated industries, that's not just inefficient, it's dangerous. 2516 Technologies was built on a different premise: data infrastructure first, compliance by design, AI is earned not bolted on or by brute force.
+ </p>
+ <p style="margin-top: 32px;">
+ We work exclusively in high-stakes environments because that's where we came from. We've seen what happens when data fails under pressure. We build so it doesn't.
+ </p>
+ </div>
+ </div>
+ </section>
 
-    <div class="philosophy-band">
-      <div class="philosophy-inner">
-        <span class="eyebrow">Our Philosophy</span>
-        <h2><em>AI is Jazz.</em></h2>
-        <p class="muted philosophy-intro">
-          The name 2516 comes from a jazz chord progression: ii–V–I–VI.
-          It's the backbone of improvisation — structured, purposeful, and built
-          to adapt. That's how we approach AI.
-        </p>
-        <div class="chord-grid">
-          <div>
-            <span class="chord-number">2</span>
-            <span class="chord-label">ii chord</span>
-            <p class="chord-desc">Diagnose — understand the real problem before prescribing a solution.</p>
-          </div>
-          <div>
-            <span class="chord-number">5</span>
-            <span class="chord-label">V chord</span>
-            <p class="chord-desc">Architect — design infrastructure that resolves the tension.</p>
-          </div>
-          <div>
-            <span class="chord-number">1</span>
-            <span class="chord-label">I chord</span>
-            <p class="chord-desc">Deliver — resolve to something that actually works.</p>
-          </div>
-          <div>
-            <span class="chord-number">6</span>
-            <span class="chord-label">VI chord</span>
-            <p class="chord-desc">Sustain — build systems that hold their shape over time.</p>
-          </div>
-        </div>
-      </div>
-    </div>
+ <div class="philosophy-band">
+ <div class="philosophy-inner">
+ <span class="eyebrow">Our Philosophy</span>
+ <h2><em>AI is Jazz.</em></h2>
+ <p class="muted philosophy-intro">
+ The name 2516 comes from a jazz chord progression: ii–V–I–VI.
+ It's the backbone of improvisation structured, purposeful, and built
+ to adapt. That's how we approach AI.
+ </p>
+ <div class="chord-grid">
+ <div>
+ <span class="chord-number">2</span>
+ <span class="chord-label">ii chord</span>
+ <p class="chord-desc">Diagnose understand the real problem before prescribing a solution.</p>
+ </div>
+ <div>
+ <span class="chord-number">5</span>
+ <span class="chord-label">V chord</span>
+ <p class="chord-desc">Architect design infrastructure that resolves the tension.</p>
+ </div>
+ <div>
+ <span class="chord-number">1</span>
+ <span class="chord-label">I chord</span>
+ <p class="chord-desc">Deliver resolve to something that actually works.</p>
+ </div>
+ <div>
+ <span class="chord-number">6</span>
+ <span class="chord-label">VI chord</span>
+ <p class="chord-desc">Sustain build systems that hold their shape over time.</p>
+ </div>
+ </div>
+ </div>
+ </div>
 
-    <section class="section centered">
-      <span class="eyebrow">Where We've Worked</span>
-      <h2>The most demanding <em>data environments on the planet.</em></h2>
-      <div class="credential-badges">
-        <span class="credential-badge">&#9877; FDA Regulated Labs</span>
-        <span class="credential-badge">&#11041; DoD Financial Audits</span>
-        <span class="credential-badge">$ SOX Compliance</span>
-      </div>
-      <div class="credentials-stat-grid">
-        <div>
-          <span class="credentials-stat-number">$50M+</span>
-          <span class="credentials-stat-label">client savings</span>
-        </div>
-        <div>
-          <span class="credentials-stat-number">40–60%</span>
-          <span class="credentials-stat-label">cost reduction</span>
-        </div>
-        <div>
-          <span class="credentials-stat-number">15+</span>
-          <span class="credentials-stat-label">years experience</span>
-        </div>
-      </div>
-      <p class="muted credentials-closing">
-        When a regulator walks through your door, your data is legal evidence.
-        We build infrastructure that's ready for that moment.
-      </p>
-    </section>
+ <section class="section centered">
+ <span class="eyebrow">Where We've Worked</span>
+ <h2>The most demanding <em>data environments on the planet.</em></h2>
+ <div class="credential-badges">
+ <span class="credential-badge">&#9877; FDA Regulated Labs</span>
+ <span class="credential-badge">&#11041; DoD Financial Audits</span>
+ <span class="credential-badge">$ SOX Compliance</span>
+ </div>
+ <div class="credentials-stat-grid">
+ <div>
+ <span class="credentials-stat-number">$50M+</span>
+ <span class="credentials-stat-label">client savings</span>
+ </div>
+ <div>
+ <span class="credentials-stat-number">40–60%</span>
+ <span class="credentials-stat-label">cost reduction</span>
+ </div>
+ <div>
+ <span class="credentials-stat-number">15+</span>
+ <span class="credentials-stat-label">years experience</span>
+ </div>
+ </div>
+ <p class="muted credentials-closing">
+ When a regulator walks through your door, your data is legal evidence.
+ We build infrastructure that's ready for that moment.
+ </p>
+ </section>
 
-  </main>
+ </main>
 
-    <footer class="footer">
-    <div class="footer-inner">
-      <a href="index.html" class="footer-logo"><img src="/2516_logo_horizontal_dark_web.png" data-dark="/2516_logo_horizontal_dark_web.png" data-light="/2516_logo_horizontal_light_web.png" alt="2516 Technologies" style="height:36px; width:auto;"></a>
-      <span class="footer-tagline">AI is Jazz</span>
-    </div>
-  </footer>
+ <footer class="footer">
+ <div class="footer-inner">
+ <a href="index.html" class="footer-logo"><img src="/2516_logo_horizontal_dark_web.png" data-dark="/2516_logo_horizontal_dark_web.png" data-light="/2516_logo_horizontal_light_web.png" alt="2516 Technologies" style="height:36px; width:auto;"></a>
+ <span class="footer-tagline">AI is Jazz</span>
+ </div>
+ </footer>
 
-  <button class="theme-toggle-trigger" aria-label="Toggle theme options">🎨</button>
+ <button class="theme-toggle-trigger" aria-label="Toggle theme options"></button>
 
-  <div class="theme-switcher hidden">
-    <span class="theme-label">Theme</span>
-    <button class="theme-btn theme-btn-t1 active" data-theme="t1" aria-label="Light Blue Theme"></button>
-    <button class="theme-btn theme-btn-t2" data-theme="t2" aria-label="Dark Blue Theme"></button>
-    <button class="theme-btn theme-btn-t3" data-theme="t3" aria-label="Clean White Theme"></button>
-    <button class="theme-btn theme-btn-t4" data-theme="t4" aria-label="Bold Blue Theme"></button>
-    <button class="theme-btn theme-btn-t5" data-theme="t5" aria-label="Dark Gold Theme"></button>
-  </div>
+ <div class="theme-switcher hidden">
+ <span class="theme-label">Theme</span>
+ <button class="theme-btn theme-btn-t1 active" data-theme="t1" aria-label="Light Blue Theme"></button>
+ <button class="theme-btn theme-btn-t2" data-theme="t2" aria-label="Dark Blue Theme"></button>
+ <button class="theme-btn theme-btn-t3" data-theme="t3" aria-label="Clean White Theme"></button>
+ <button class="theme-btn theme-btn-t4" data-theme="t4" aria-label="Bold Blue Theme"></button>
+ <button class="theme-btn theme-btn-t5" data-theme="t5" aria-label="Dark Gold Theme"></button>
+ </div>
 
-  <script>
-    const themeButtons = document.querySelectorAll('.theme-btn');
-    const body = document.body;
-    const logos = document.querySelectorAll('img[data-dark][data-light]');
-    const hamburger = document.querySelector('.hamburger');
-    const mobileMenu = document.querySelector('.mobile-menu');
-    const themeSwitcher = document.querySelector('.theme-switcher');
-    const themeToggleTrigger = document.querySelector('.theme-toggle-trigger');
+ <script>
+ const themeButtons = document.querySelectorAll('.theme-btn');
+ const body = document.body;
+ const logos = document.querySelectorAll('img[data-dark][data-light]');
+ const hamburger = document.querySelector('.hamburger');
+ const mobileMenu = document.querySelector('.mobile-menu');
+ const themeSwitcher = document.querySelector('.theme-switcher');
+ const themeToggleTrigger = document.querySelector('.theme-toggle-trigger');
 
-    function updateLogo(theme) {
-      const isDarkTheme = ['t2', 't4', 't5'].includes(theme);
-      logos.forEach(logo => {
-        logo.src = isDarkTheme ? logo.dataset.light : logo.dataset.dark;
-      });
-    }
+ function updateLogo(theme) {
+ const isDarkTheme = ['t2', 't4', 't5'].includes(theme);
+ logos.forEach(logo => {
+ logo.src = isDarkTheme ? logo.dataset.light : logo.dataset.dark;
+ });
+ }
 
-    function setTheme(theme) {
-      body.className = theme;
-      localStorage.setItem('theme', theme);
+ function setTheme(theme) {
+ body.className = theme;
+ localStorage.setItem('theme', theme);
 
-      themeButtons.forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.theme === theme);
-      });
+ themeButtons.forEach(btn => {
+ btn.classList.toggle('active', btn.dataset.theme === theme);
+ });
 
-      updateLogo(theme);
-    }
+ updateLogo(theme);
+ }
 
-    themeButtons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        setTheme(btn.dataset.theme);
-      });
-    });
+ themeButtons.forEach(btn => {
+ btn.addEventListener('click', () => {
+ setTheme(btn.dataset.theme);
+ });
+ });
 
-    hamburger.addEventListener('click', () => {
-      hamburger.classList.toggle('active');
-      mobileMenu.classList.toggle('open');
-    });
+ hamburger.addEventListener('click', () => {
+ hamburger.classList.toggle('active');
+ mobileMenu.classList.toggle('open');
+ });
 
-    mobileMenu.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
-        hamburger.classList.remove('active');
-        mobileMenu.classList.remove('open');
-      });
-    });
+ mobileMenu.querySelectorAll('a').forEach(link => {
+ link.addEventListener('click', () => {
+ hamburger.classList.remove('active');
+ mobileMenu.classList.remove('open');
+ });
+ });
 
-    // Theme toggle functionality
-    themeToggleTrigger.addEventListener('click', (e) => {
-      e.stopPropagation();
-      themeSwitcher.classList.toggle('hidden');
-      themeToggleTrigger.classList.toggle('active');
-    });
+ // Theme toggle functionality
+ themeToggleTrigger.addEventListener('click', (e) => {
+ e.stopPropagation();
+ themeSwitcher.classList.toggle('hidden');
+ themeToggleTrigger.classList.toggle('active');
+ });
 
-    // Close theme switcher when clicking outside
-    document.addEventListener('click', (e) => {
-      if (!themeSwitcher.contains(e.target) && !themeToggleTrigger.contains(e.target)) {
-        themeSwitcher.classList.add('hidden');
-        themeToggleTrigger.classList.remove('active');
-      }
-    });
+ // Close theme switcher when clicking outside
+ document.addEventListener('click', (e) => {
+ if (!themeSwitcher.contains(e.target) && !themeToggleTrigger.contains(e.target)) {
+ themeSwitcher.classList.add('hidden');
+ themeToggleTrigger.classList.remove('active');
+ }
+ });
 
-    const savedTheme = localStorage.getItem('theme') || 't1';
-    setTheme(savedTheme);
-  </script>
+ const savedTheme = localStorage.getItem('theme') || 't1';
+ setTheme(savedTheme);
+ </script>
 <!-- PASTE THIS ENTIRE BLOCK RIGHT BEFORE </body> IN EACH HTML FILE -->
 <!-- Replace the existing <script src="/supabase-connector.js"></script> line -->
 
@@ -1108,265 +1108,265 @@ const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_
 
 // Session tracking
 function getOrCreateSessionId() {
-  let sessionId = sessionStorage.getItem('session_id');
-  if (!sessionId) {
-    sessionId = 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-    sessionStorage.setItem('session_id', sessionId);
-  }
-  return sessionId;
+ let sessionId = sessionStorage.getItem('session_id');
+ if (!sessionId) {
+ sessionId = 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+ sessionStorage.setItem('session_id', sessionId);
+ }
+ return sessionId;
 }
 
 function getOrCreateUserId() {
-  let userId = localStorage.getItem('user_id');
-  if (!userId) {
-    userId = 'user_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-    localStorage.setItem('user_id', userId);
-  }
-  return userId;
+ let userId = localStorage.getItem('user_id');
+ if (!userId) {
+ userId = 'user_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+ localStorage.setItem('user_id', userId);
+ }
+ return userId;
 }
 
 // Get IP address
 async function getIPAddress() {
-  try {
-    const response = await fetch('https://api.ipify.org?format=json');
-    const data = await response.json();
-    return data.ip;
-  } catch (error) {
-    console.log('Could not fetch IP address');
-    return null;
-  }
+ try {
+ const response = await fetch('https://api.ipify.org?format=json');
+ const data = await response.json();
+ return data.ip;
+ } catch (error) {
+ console.log('Could not fetch IP address');
+ return null;
+ }
 }
 
 // Get user context
 function getUserContext() {
-  // Return context with user tracking
-  return {
-    user_agent: navigator.userAgent,
-    referrer: document.referrer || null,
-    page_url: window.location.href,
-    ip_address: null,
-    session_id: getOrCreateSessionId(),
-    user_id: getOrCreateUserId()
-  };
+ // Return context with user tracking
+ return {
+ user_agent: navigator.userAgent,
+ referrer: document.referrer || null,
+ page_url: window.location.href,
+ ip_address: null,
+ session_id: getOrCreateSessionId(),
+ user_id: getOrCreateUserId()
+ };
 }
 
 // Track events
 async function trackEvent(eventType, eventName, eventData = {}) {
-  try {
-    const context = getUserContext();
-    
-    // Insert event first (without waiting for IP)
-    const { data, error } = await supabaseClient
-      .from('analytics_events')
-      .insert({
-        event_type: eventType,
-        event_name: eventName,
-        event_data: eventData,
-        ...context
-      })
-      .select();
-    
-    if (error) {
-      console.error('Analytics tracking error:', error);
-      return;
-    }
-    
-    // Fetch IP in background and update the record
-    if (data && data[0]) {
-      getIPAddress().then(ip => {
-        if (ip) {
-          supabaseClient
-            .from('analytics_events')
-            .update({ ip_address: ip })
-            .eq('id', data[0].id)
-            .then(() => {});
-        }
-      }).catch(() => {});
-    }
-  } catch (err) {
-    console.error('Analytics error:', err);
-  }
+ try {
+ const context = getUserContext();
+ 
+ // Insert event first (without waiting for IP)
+ const { data, error } = await supabaseClient
+ .from('analytics_events')
+ .insert({
+ event_type: eventType,
+ event_name: eventName,
+ event_data: eventData,
+ ...context
+ })
+ .select();
+ 
+ if (error) {
+ console.error('Analytics tracking error:', error);
+ return;
+ }
+ 
+ // Fetch IP in background and update the record
+ if (data && data[0]) {
+ getIPAddress().then(ip => {
+ if (ip) {
+ supabaseClient
+ .from('analytics_events')
+ .update({ ip_address: ip })
+ .eq('id', data[0].id)
+ .then(() => {});
+ }
+ }).catch(() => {});
+ }
+ } catch (err) {
+ console.error('Analytics error:', err);
+ }
 }
 
 // Track page view on load
 window.addEventListener('load', () => {
-  trackEvent('page_view', document.title, {
-    path: window.location.pathname
-  });
+ trackEvent('page_view', document.title, {
+ path: window.location.pathname
+ });
 });
 
 // Track time on page
 let pageLoadTime = Date.now();
 window.addEventListener('beforeunload', () => {
-  const timeOnPage = Math.round((Date.now() - pageLoadTime) / 1000);
-  trackEvent('time_on_page', document.title, {
-    duration_seconds: timeOnPage,
-    path: window.location.pathname
-  });
+ const timeOnPage = Math.round((Date.now() - pageLoadTime) / 1000);
+ trackEvent('time_on_page', document.title, {
+ duration_seconds: timeOnPage,
+ path: window.location.pathname
+ });
 });
 
 // Track scroll depth
 let maxScrollDepth = 0;
 window.addEventListener('scroll', () => {
-  const scrollDepth = Math.round((window.scrollY + window.innerHeight) / document.body.scrollHeight * 100);
-  if (scrollDepth > maxScrollDepth) {
-    maxScrollDepth = scrollDepth;
-    if (scrollDepth >= 25 && scrollDepth < 50) {
-      trackEvent('scroll_depth', '25%', { depth: 25, path: window.location.pathname });
-    } else if (scrollDepth >= 50 && scrollDepth < 75) {
-      trackEvent('scroll_depth', '50%', { depth: 50, path: window.location.pathname });
-    } else if (scrollDepth >= 75 && scrollDepth < 90) {
-      trackEvent('scroll_depth', '75%', { depth: 75, path: window.location.pathname });
-    } else if (scrollDepth >= 90) {
-      trackEvent('scroll_depth', '90%', { depth: 90, path: window.location.pathname });
-    }
-  }
+ const scrollDepth = Math.round((window.scrollY + window.innerHeight) / document.body.scrollHeight * 100);
+ if (scrollDepth > maxScrollDepth) {
+ maxScrollDepth = scrollDepth;
+ if (scrollDepth >= 25 && scrollDepth < 50) {
+ trackEvent('scroll_depth', '25%', { depth: 25, path: window.location.pathname });
+ } else if (scrollDepth >= 50 && scrollDepth < 75) {
+ trackEvent('scroll_depth', '50%', { depth: 50, path: window.location.pathname });
+ } else if (scrollDepth >= 75 && scrollDepth < 90) {
+ trackEvent('scroll_depth', '75%', { depth: 75, path: window.location.pathname });
+ } else if (scrollDepth >= 90) {
+ trackEvent('scroll_depth', '90%', { depth: 90, path: window.location.pathname });
+ }
+ }
 });
 
 // Track button clicks
 document.addEventListener('click', (e) => {
-  const button = e.target.closest('[data-track]');
-  if (button) {
-    trackEvent('button_click', button.dataset.track, {
-      button_text: button.textContent,
-      button_href: button.href || null
-    });
-  }
+ const button = e.target.closest('[data-track]');
+ if (button) {
+ trackEvent('button_click', button.dataset.track, {
+ button_text: button.textContent,
+ button_href: button.href || null
+ });
+ }
 });
 
 // Contact form submission
 async function submitContactForm(formData) {
-  try {
-    const context = getUserContext();
-    
-    const { data, error } = await supabaseClient
-      .from('contact_submissions')
-      .insert({
-        full_name: formData.fullName,
-        email: formData.email,
-        company: formData.company || null,
-        service_interest: formData.service || null,
-        industry: formData.industry,
-        other_industry: formData.otherIndustry || null,
-        message: formData.message || null,
-        // Only include fields that exist in contact_submissions
-        user_agent: context.user_agent,
-        referrer: context.referrer,
-        page_url: context.page_url,
-        ip_address: context.ip_address,
-        status: 'new'
-      })
-      .select();
-    
-    if (error) throw error;
-    
-    trackEvent('form_submit', 'Contact Form', {
-      industry: formData.industry,
-      service: formData.service || 'not_specified'
-    });
-    
-    return { success: true, data };
-  } catch (error) {
-    console.error('Contact form submission error:', error);
-    return { success: false, error };
-  }
+ try {
+ const context = getUserContext();
+ 
+ const { data, error } = await supabaseClient
+ .from('contact_submissions')
+ .insert({
+ full_name: formData.fullName,
+ email: formData.email,
+ company: formData.company || null,
+ service_interest: formData.service || null,
+ industry: formData.industry,
+ other_industry: formData.otherIndustry || null,
+ message: formData.message || null,
+ // Only include fields that exist in contact_submissions
+ user_agent: context.user_agent,
+ referrer: context.referrer,
+ page_url: context.page_url,
+ ip_address: context.ip_address,
+ status: 'new'
+ })
+ .select();
+ 
+ if (error) throw error;
+ 
+ trackEvent('form_submit', 'Contact Form', {
+ industry: formData.industry,
+ service: formData.service || 'not_specified'
+ });
+ 
+ return { success: true, data };
+ } catch (error) {
+ console.error('Contact form submission error:', error);
+ return { success: false, error };
+ }
 }
 
 // Assessment form submission
 async function submitAssessmentForm(formData) {
-  try {
-    const context = getUserContext();
-    
-    let finalScore = 0;
-    let scoreCategory = 'Not Completed';
-    
-    if (formData.answers && Array.isArray(formData.answers)) {
-      finalScore = formData.answers.reduce((sum, answer) => sum + (answer || 0), 0);
-      
-      if (finalScore >= 45) scoreCategory = 'Advanced';
-      else if (finalScore >= 35) scoreCategory = 'High';
-      else if (finalScore >= 25) scoreCategory = 'Medium';
-      else scoreCategory = 'Low';
-    }
-    
-    const { data, error } = await supabaseClient
-      .from('assessment_submissions')
-      .insert({
-        name: formData.name,
-        email: formData.email,
-        company: formData.company,
-        industry: formData.industry,
-        other_industry: formData.otherIndustry || null,
-        
-        q1_answer: formData.answers?.[0]?.toString() || null,
-        q2_answer: formData.answers?.[1]?.toString() || null,
-        q3_answer: formData.answers?.[2]?.toString() || null,
-        q4_answer: formData.answers?.[3]?.toString() || null,
-        q5_answer: formData.answers?.[4]?.toString() || null,
-        q6_answer: formData.answers?.[5]?.toString() || null,
-        q7_answer: formData.answers?.[6]?.toString() || null,
-        q8_answer: formData.answers?.[7]?.toString() || null,
-        q9_answer: formData.answers?.[8]?.toString() || null,
-        q10_answer: formData.answers?.[9]?.toString() || null,
-        
-        final_score: finalScore,
-        score_category: scoreCategory,
-        
-        assessment_data: {
-          answers: formData.answers || [],
-          questions: formData.questions || [],
-          score: finalScore,
-          category: scoreCategory
-        },
-        
-        // Only include fields that exist in assessment_submissions
-        user_agent: context.user_agent,
-        referrer: context.referrer,
-        page_url: context.page_url,
-        ip_address: context.ip_address,
-        status: 'new'
-      })
-      .select();
-    
-    if (error) throw error;
-    
-    trackEvent('form_submit', 'Assessment Form', {
-      industry: formData.industry,
-      score: finalScore,
-      category: scoreCategory
-    });
-    
-    return { success: true, data, score: finalScore, category: scoreCategory };
-  } catch (error) {
-    console.error('Assessment form submission error:', error);
-    return { success: false, error };
-  }
+ try {
+ const context = getUserContext();
+ 
+ let finalScore = 0;
+ let scoreCategory = 'Not Completed';
+ 
+ if (formData.answers && Array.isArray(formData.answers)) {
+ finalScore = formData.answers.reduce((sum, answer) => sum + (answer || 0), 0);
+ 
+ if (finalScore >= 45) scoreCategory = 'Advanced';
+ else if (finalScore >= 35) scoreCategory = 'High';
+ else if (finalScore >= 25) scoreCategory = 'Medium';
+ else scoreCategory = 'Low';
+ }
+ 
+ const { data, error } = await supabaseClient
+ .from('assessment_submissions')
+ .insert({
+ name: formData.name,
+ email: formData.email,
+ company: formData.company,
+ industry: formData.industry,
+ other_industry: formData.otherIndustry || null,
+ 
+ q1_answer: formData.answers?.[0]?.toString() || null,
+ q2_answer: formData.answers?.[1]?.toString() || null,
+ q3_answer: formData.answers?.[2]?.toString() || null,
+ q4_answer: formData.answers?.[3]?.toString() || null,
+ q5_answer: formData.answers?.[4]?.toString() || null,
+ q6_answer: formData.answers?.[5]?.toString() || null,
+ q7_answer: formData.answers?.[6]?.toString() || null,
+ q8_answer: formData.answers?.[7]?.toString() || null,
+ q9_answer: formData.answers?.[8]?.toString() || null,
+ q10_answer: formData.answers?.[9]?.toString() || null,
+ 
+ final_score: finalScore,
+ score_category: scoreCategory,
+ 
+ assessment_data: {
+ answers: formData.answers || [],
+ questions: formData.questions || [],
+ score: finalScore,
+ category: scoreCategory
+ },
+ 
+ // Only include fields that exist in assessment_submissions
+ user_agent: context.user_agent,
+ referrer: context.referrer,
+ page_url: context.page_url,
+ ip_address: context.ip_address,
+ status: 'new'
+ })
+ .select();
+ 
+ if (error) throw error;
+ 
+ trackEvent('form_submit', 'Assessment Form', {
+ industry: formData.industry,
+ score: finalScore,
+ category: scoreCategory
+ });
+ 
+ return { success: true, data, score: finalScore, category: scoreCategory };
+ } catch (error) {
+ console.error('Assessment form submission error:', error);
+ return { success: false, error };
+ }
 }
 
 // One-pager tracking
 function trackOnePagerView(onePagerName) {
-  trackEvent('onepager_view', onePagerName, {
-    onepager: onePagerName
-  });
+ trackEvent('onepager_view', onePagerName, {
+ onepager: onePagerName
+ });
 }
 
 // Theme change tracking
 function trackThemeChange(themeName) {
-  trackEvent('theme_change', themeName, {
-    theme: themeName
-  });
+ trackEvent('theme_change', themeName, {
+ theme: themeName
+ });
 }
 
 // Export functions
 window.SupabaseConnector = {
-  submitContactForm,
-  submitAssessmentForm,
-  trackEvent,
-  trackOnePagerView,
-  trackThemeChange
+ submitContactForm,
+ submitAssessmentForm,
+ trackEvent,
+ trackOnePagerView,
+ trackThemeChange
 };
 
-console.log('✓ Supabase Connector loaded inline');
+console.log(' Supabase Connector loaded inline');
 </script>
 
 </body>
