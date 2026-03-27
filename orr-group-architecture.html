@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Proposed Architecture — Orr Group Proposal · 2516 Technologies</title>
+  <title>Proposed Architecture Orr Group Proposal · 2516 Technologies</title>
   <link rel="icon" type="image/png" href="/public/2516_icon_light_512.png">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -276,14 +276,14 @@
 
   <section class="section">
     <span class="eyebrow">AWS service stack</span>
-    <h2>The services, the rationale, <em>and what CJ pays for each.</em></h2>
-    <p style="margin:16px 0 32px;color:var(--muted);">Under all three delivery options, CJ owns the AWS account. These costs are billed directly to Orr Group by Amazon — 2516 has zero financial exposure on infrastructure under any option.</p>
+    <h2>The services, the rationale, <em>and what The Orr Group pays for each.</em></h2>
+    <p style="margin:16px 0 32px;color:var(--muted);">Under all three delivery options, The Orr Group owns the AWS account. These costs are billed directly to Orr Group by Amazon 2516 has zero financial exposure on infrastructure under any option.</p>
 
     <table class="info-table">
       <tr><th>Service</th><th>What it does</th><th>Est. monthly cost at 1,000 orgs</th><th>Why this service</th></tr>
       <tr>
         <td class="td-label">Aurora PostgreSQL Serverless v2</td>
-        <td>Primary database — all user data, CRM records, audit logs, subscriptions</td>
+        <td>Primary database all user data, CRM records, audit logs, subscriptions</td>
         <td>$150–$250</td>
         <td>Auto-scales with query load. Row-level security enforced at DB level. Serverless means no idle cost during off-hours.</td>
       </tr>
@@ -297,17 +297,17 @@
         <td class="td-label">AWS Lambda + API Gateway</td>
         <td>All API calls, background jobs, document processing</td>
         <td>$35–$60</td>
-        <td>Serverless — scales automatically with traffic. No servers to provision or manage. Pay only for what you use.</td>
+        <td>Serverless scales automatically with traffic. No servers to provision or manage. Pay only for what you use.</td>
       </tr>
       <tr>
         <td class="td-label">Step Functions + EventBridge</td>
-        <td>Workflow engine — onboarding sequences, reminders, SLA alerts</td>
+        <td>Workflow engine onboarding sequences, reminders, SLA alerts</td>
         <td>$15–$25</td>
         <td>Durable, visual workflow orchestration. Each step is logged and retryable. Critical for complex onboarding flows.</td>
       </tr>
       <tr>
         <td class="td-label">Amazon SES</td>
-        <td>Transactional emails — notifications, welcome emails, digests</td>
+        <td>Transactional emails notifications, welcome emails, digests</td>
         <td>$8–$18</td>
         <td>$0.10 per 1,000 emails. Best-in-class deliverability. Negligible cost at any realistic send volume.</td>
       </tr>
@@ -315,13 +315,13 @@
         <td class="td-label">Amazon SNS ⚠</td>
         <td>SMS text notifications and alerts</td>
         <td>$30–$150</td>
-        <td>⚠ Biggest variable cost. $0.00645/text. Heavy SMS usage drives significant cost — establish a usage policy at launch.</td>
+        <td>⚠ Biggest variable cost. $0.00645/text. Heavy SMS usage drives significant cost establish a usage policy at launch.</td>
       </tr>
       <tr>
         <td class="td-label">Amazon Cognito</td>
         <td>User authentication, roles, MFA support</td>
         <td>$10–$25</td>
-        <td>First 50,000 MAU free. Handles OAuth, MFA, password reset — no custom auth code to maintain.</td>
+        <td>First 50,000 MAU free. Handles OAuth, MFA, password reset no custom auth code to maintain.</td>
       </tr>
       <tr>
         <td class="td-label">CloudWatch + CloudTrail</td>
@@ -345,8 +345,8 @@
   <section class="section-sm" style="background:var(--card);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
     <div style="max-width:900px;margin:0 auto;">
       <span class="eyebrow">AWS cost at scale</span>
-      <h2>Infrastructure costs grow with you — <em>but slowly.</em></h2>
-      <p style="margin:16px 0 32px;color:var(--muted);">At 1,000 organizations, CJ's AWS bill is roughly $480/month — less than 1% of gross revenue at $75 blended pricing. As the platform scales, infrastructure costs increase, but the curve is favorable: revenue grows faster than AWS costs at every tier.</p>
+      <h2>Infrastructure costs grow with you <em>but slowly.</em></h2>
+      <p style="margin:16px 0 32px;color:var(--muted);">At 1,000 organizations, The Orr Group's AWS bill is roughly $480/month less than 1% of gross revenue at $75 blended pricing. As the platform scales, infrastructure costs increase, but the curve is favorable: revenue grows faster than AWS costs at every tier.</p>
       <table class="info-table">
         <tr><th>Scale</th><th>Monthly AWS est.</th><th>Annual AWS est.</th><th>As % of gross revenue at $75 avg</th></tr>
         <tr><td class="td-label">500 orgs</td><td>$188–$362</td><td>$2,256–$4,344</td><td>~0.8%</td></tr>
@@ -371,7 +371,7 @@
       </div>
       <div class="card" style="padding:24px;">
         <h3 style="font-size:18px;margin-bottom:8px;">AI training pipeline</h3>
-        <p style="font-size:13px;color:var(--muted);">The data structure is designed for future fine-tuning. When the time comes to train a custom model on Orr Group's accumulated platform data, the pipeline exists — no rebuild required.</p>
+        <p style="font-size:13px;color:var(--muted);">The data structure is designed for future fine-tuning. When the time comes to train a custom model on Orr Group's accumulated platform data, the pipeline exists no rebuild required.</p>
       </div>
     </div>
   </section>
@@ -380,7 +380,7 @@
     <div class="inner">
       <span class="eyebrow">Next</span>
       <h2>The phased <em>build roadmap.</em></h2>
-      <p class="muted">How the platform gets built — what ships in Phase 1, what comes in Phase 2, and what the Year 3 platform looks like.</p>
+      <p class="muted">How the platform gets built what ships in Phase 1, what comes in Phase 2, and what the Year 3 platform looks like.</p>
       <div class="btn-row" style="justify-content:center;">
         <a href="orr-group-roadmap.html" class="btn btn-primary">See the roadmap →</a>
       </div>

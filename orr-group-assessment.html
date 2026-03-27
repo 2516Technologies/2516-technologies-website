@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Infrastructure Assessment — Orr Group Proposal · 2516 Technologies</title>
+  <title>Infrastructure Assessment Orr Group Proposal · 2516 Technologies</title>
   <link rel="icon" type="image/png" href="/public/2516_icon_light_512.png">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -269,15 +269,15 @@
   <section class="hero-proposal">
     <div class="inner">
       <span class="eyebrow">Infrastructure Assessment</span>
-      <h1>Here's what we found when we looked at what you built — <em>and what needs to happen next.</em></h1>
-      <p class="hero-subhead muted" style="margin:24px 0 0;">This is an honest technical assessment of the prototype, not a criticism of it. Prototypes are supposed to look like this. The question is what it takes to go from here to production.</p>
+      <h1>Here's what we found when we looked at what you built <em>and what needs to happen next.</em></h1>
+      <p class="hero-subhead muted" style="margin:24px 0 0;">The hardest part of application development is communication of requirements and expectations, your prototype removes that barrier. This is one of the best prototypes I've seen in the industry, and makes my job a lot easier.</p>
     </div>
   </section>
 
   <section class="section">
     <span class="eyebrow">Current state diagnosis</span>
     <h2>What the prototype is, and what <em>it isn't.</em></h2>
-    <p style="margin:16px 0 40px;">The prototype you and Ari built in Claude is a proof of concept — and it succeeded at that job. The Claude API integration works. The UX intent is clear. You can demo it. None of that is wasted. But there's a gap between a working prototype and a production platform that serves 1,000 organizations, handles real billing, and doesn't lose data.</p>
+    <p style="margin:16px 0 40px;">The prototype you and Ari built in Claude is a proof of concept and it succeeded at that job. The Claude API integration works. The UX intent is clear. You can demo it. None of that is wasted. But there's a gap between a working prototype and a production platform that serves 1,000 organizations, handles real billing, and doesn't lose data.</p>
 
     <div class="two-col" style="margin-bottom:48px;">
       <div>
@@ -296,45 +296,36 @@
       </div>
     </div>
 
-    <div class="quote-band" style="border-radius:16px;border:1px solid var(--border);">
-      <blockquote style="font-size:clamp(18px,2.5vw,26px);">This is a rebuild, not an upgrade. That's not a criticism — it's what prototypes are for. The job now is to take everything the prototype proved and build it on a foundation that can actually hold 1,000 organizations.</blockquote>
-      <cite>— 2516 Technologies technical assessment</cite>
-    </div>
+    
   </section>
 
   <section class="section-sm" style="background:var(--card);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
     <div style="max-width:900px;margin:0 auto;">
       <span class="eyebrow">What a production rebuild requires</span>
       <h2>The foundation that makes <em>everything else possible.</em></h2>
-      <p style="margin:16px 0 32px;">Every capability on the roadmap — analytics, AI training, donor scoring, grant recommendations — requires the same thing: clean, structured, tenant-isolated data collected from day one. The rebuild isn't just about fixing what's broken. It's about building a foundation that makes the Year 2 and Year 3 features possible without starting over again.</p>
+      <p style="margin:16px 0 32px;">Every capability on the roadmap analytics, AI training, donor scoring, grant recommendations requires the same thing: clean, structured, tenant-isolated data collected from day one. Going to market with a tool of this scale requires building an infrastructure that makes year 2 and 3 happen seamlessly and enables you to easily add features as ideas come to you. My goal is to make your future requirements happen as well.</p>
       <div class="three-col">
         <div>
-          <div style="font-size:24px;margin-bottom:12px;">🗄️</div>
           <h3 style="font-size:18px;margin-bottom:8px;">Production Database</h3>
           <p style="font-size:13px;color:var(--muted);">Aurora PostgreSQL Serverless v2 with row-level security, proper indexing, and a schema designed for analytics from day one. Every user action timestamped and auditable.</p>
         </div>
         <div>
-          <div style="font-size:24px;margin-bottom:12px;">🔐</div>
           <h3 style="font-size:18px;margin-bottom:8px;">Auth + Multi-tenancy</h3>
-          <p style="font-size:13px;color:var(--muted);">Amazon Cognito for authentication with MFA support. Row-level security enforced at the database level — no org can ever see another org's data, regardless of how the application behaves.</p>
+          <p style="font-size:13px;color:var(--muted);">Amazon Cognito for authentication with MFA support. Row-level security enforced at the database level no org can ever see another org's data, regardless of how the application behaves.</p>
         </div>
         <div>
-          <div style="font-size:24px;margin-bottom:12px;">💳</div>
           <h3 style="font-size:18px;margin-bottom:8px;">Subscription Billing</h3>
           <p style="font-size:13px;color:var(--muted);">Stripe integration with plan management, tier upgrades, usage tracking, and webhook-driven subscription events. The commercial layer that makes this a real business.</p>
         </div>
         <div>
-          <div style="font-size:24px;margin-bottom:12px;">📱</div>
           <h3 style="font-size:18px;margin-bottom:8px;">Mobile-First Frontend</h3>
-          <p style="font-size:13px;color:var(--muted);">React/Next.js designed for 375px screens first. Every surface — CRM, dashboard, notifications, consultant — works excellently on a phone before it's adapted for desktop.</p>
+          <p style="font-size:13px;color:var(--muted);">React/Next.js designed for 375px screens first. Every surface CRM, dashboard, notifications, consultant works excellently on a phone before it's adapted for desktop.</p>
         </div>
         <div>
-          <div style="font-size:24px;margin-bottom:12px;">⚡</div>
           <h3 style="font-size:18px;margin-bottom:8px;">Serverless API Layer</h3>
           <p style="font-size:13px;color:var(--muted);">AWS Lambda + API Gateway for a serverless backend that scales automatically with usage. No servers to manage, no capacity planning, no overprovisioning.</p>
         </div>
         <div>
-          <div style="font-size:24px;margin-bottom:12px;">🔄</div>
           <h3 style="font-size:18px;margin-bottom:8px;">CI/CD Pipeline</h3>
           <p style="font-size:13px;color:var(--muted);">GitHub Actions automating test and deploy. Every code change runs through automated testing before reaching production. No manual deployments, no surprises.</p>
         </div>
