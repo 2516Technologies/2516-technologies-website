@@ -229,7 +229,7 @@
   </style>
 
 </head>
-<body class="t1">
+<body class="t1" style="background-color:#F0F5FF;color:#0D1B3E;">
   <nav class="navbar">
     <a href="orr-group-index.html">
       <img src="/2516_logo_horizontal_dark_web.png"
@@ -248,7 +248,7 @@
       <a href="orr-group-investment.html" class="nav-link">Investment</a>
       <a href="orr-group-why-2516.html" class="nav-link">Why 2516</a>
       <a href="orr-group-next-steps.html" class="nav-link">Next Steps</a>
-      <span class="nav-badge">Orr Group · Confidential</span>
+      <span class="nav-badge">Confidential</span>
     </div>
     <button class="hamburger" aria-label="Toggle menu">
       <span class="hamburger-line"></span>
@@ -267,7 +267,7 @@
     <a href="orr-group-investment.html" class="nav-link">Investment</a>
     <a href="orr-group-why-2516.html" class="nav-link">Why 2516</a>
     <a href="orr-group-next-steps.html" class="nav-link">Next Steps</a>
-    <span style="font-size:11px;color:var(--muted);padding:12px 0;letter-spacing:0.1em;text-transform:uppercase;">Orr Group · Confidential</span>
+    <span style="font-size:11px;color:var(--muted);padding:12px 0;letter-spacing:0.1em;text-transform:uppercase;">Confidential</span>
   </div>
 <main>
 
@@ -487,6 +487,7 @@
       }
     });
     const savedTheme = localStorage.getItem('theme') || 't1';
+    if (!localStorage.getItem('theme')) { localStorage.setItem('theme','t1'); }
     setTheme(savedTheme);
   </script>
 

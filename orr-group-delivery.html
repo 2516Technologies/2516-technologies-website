@@ -1,529 +1,556 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
- <meta charset="UTF-8">
- <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <title>Delivery Options Orr Group Proposal · 2516 Technologies</title>
- <link rel="icon" type="image/png" href="/public/2516_icon_light_512.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Delivery Options — Orr Group Proposal · 2516 Technologies</title>
+  <link rel="icon" type="image/png" href="/public/2516_icon_light_512.png">
 
- <link rel="preconnect" href="https://fonts.googleapis.com">
- <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
- <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Roboto+Slab:wght@300;400;500&display=swap" rel="stylesheet">
- <style>
- * { margin:0; padding:0; box-sizing:border-box; }
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Roboto+Slab:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
 
- body.t1 { --bg:#F0F5FF; --card:#FFFFFF; --input:#F0F5FF; --border:rgba(30,80,180,0.15); --text:#0D1B3E; --muted:#5A7AB0; --gold:#1B4FD8; --gold-light:#4A7FFF; --glow:rgba(27,79,216,0.08); }
- body.t2 { --bg:#0A1628; --card:#0F2144; --input:#0A1628; --border:rgba(74,127,255,0.2); --text:#E8F0FF; --muted:#6A9FD8; --gold:#4A7FFF; --gold-light:#7AAFFF; --glow:rgba(74,127,255,0.1); }
- body.t3 { --bg:#FFFFFF; --card:#F7FAFF; --input:#FFFFFF; --border:rgba(30,80,180,0.12); --text:#0D1B3E; --muted:#6A8AB8; --gold:#1B4FD8; --gold-light:#3A6FEF; --glow:rgba(27,79,216,0.05); }
- body.t4 { --bg:#1B4FD8; --card:#1440B8; --input:#1B4FD8; --border:rgba(255,255,255,0.18); --text:#FFFFFF; --muted:rgba(255,255,255,0.65); --gold:#FFFFFF; --gold-light:#E8F0FF; --glow:rgba(255,255,255,0.08); }
- body.t5 { --bg:#1C1C1B; --card:#2A2A29; --input:#343433; --border:rgba(200,169,81,0.18); --text:#E8EDF5; --muted:#7A8BA8; --gold:#C8A951; --gold-light:#E4CC7A; --glow:rgba(200,169,81,0.06); }
+    body.t1 { --bg:#F0F5FF; --card:#FFFFFF; --input:#F0F5FF; --border:rgba(30,80,180,0.15); --text:#0D1B3E; --muted:#5A7AB0; --gold:#1B4FD8; --gold-light:#4A7FFF; --glow:rgba(27,79,216,0.08); }
+    body.t2 { --bg:#0A1628; --card:#0F2144; --input:#0A1628; --border:rgba(74,127,255,0.2); --text:#E8F0FF; --muted:#6A9FD8; --gold:#4A7FFF; --gold-light:#7AAFFF; --glow:rgba(74,127,255,0.1); }
+    body.t3 { --bg:#FFFFFF; --card:#F7FAFF; --input:#FFFFFF; --border:rgba(30,80,180,0.12); --text:#0D1B3E; --muted:#6A8AB8; --gold:#1B4FD8; --gold-light:#3A6FEF; --glow:rgba(27,79,216,0.05); }
+    body.t4 { --bg:#1B4FD8; --card:#1440B8; --input:#1B4FD8; --border:rgba(255,255,255,0.18); --text:#FFFFFF; --muted:rgba(255,255,255,0.65); --gold:#FFFFFF; --gold-light:#E8F0FF; --glow:rgba(255,255,255,0.08); }
+    body.t5 { --bg:#1C1C1B; --card:#2A2A29; --input:#343433; --border:rgba(200,169,81,0.18); --text:#E8EDF5; --muted:#7A8BA8; --gold:#C8A951; --gold-light:#E4CC7A; --glow:rgba(200,169,81,0.06); }
 
- body { overflow-x:hidden; font-family:'DM Sans',sans-serif; background:var(--bg); color:var(--text); line-height:1.6; transition:background-color 0.3s ease,color 0.3s ease; min-height:100vh; }
+    body { overflow-x:hidden; font-family:'DM Sans',sans-serif; background:var(--bg); color:var(--text); line-height:1.6; transition:background-color 0.3s ease,color 0.3s ease; min-height:100vh; }
 
- h1 { font-family:'Cormorant Garamond',serif; font-size:clamp(28px,5vw,52px); font-weight:300; line-height:1.2; }
- h2 { font-family:'Cormorant Garamond',serif; font-size:clamp(22px,4vw,38px); font-weight:400; line-height:1.3; }
- h3 { font-family:'Cormorant Garamond',serif; font-size:22px; font-weight:400; }
- h1 em, h2 em, h3 em { font-style:italic; color:var(--gold); }
- p { font-family:'DM Sans',sans-serif; font-size:15px; line-height:1.75; }
- .muted { color:var(--muted); }
+    h1 { font-family:'Cormorant Garamond',serif; font-size:clamp(28px,5vw,52px); font-weight:300; line-height:1.2; }
+    h2 { font-family:'Cormorant Garamond',serif; font-size:clamp(22px,4vw,38px); font-weight:400; line-height:1.3; }
+    h3 { font-family:'Cormorant Garamond',serif; font-size:22px; font-weight:400; }
+    h1 em, h2 em, h3 em { font-style:italic; color:var(--gold); }
+    p { font-family:'DM Sans',sans-serif; font-size:15px; line-height:1.75; }
+    .muted { color:var(--muted); }
 
- .eyebrow { font-family:'DM Sans',sans-serif; font-size:11px; font-weight:500; letter-spacing:0.18em; text-transform:uppercase; color:var(--gold); display:block; margin-bottom:12px; }
+    .eyebrow { font-family:'DM Sans',sans-serif; font-size:11px; font-weight:500; letter-spacing:0.18em; text-transform:uppercase; color:var(--gold); display:block; margin-bottom:12px; }
 
- .btn { font-family:'DM Sans',sans-serif; font-size:13px; font-weight:500; letter-spacing:0.06em; padding:14px 32px; border-radius:8px; cursor:pointer; transition:all 0.2s ease; border:none; display:inline-flex; align-items:center; gap:8px; text-decoration:none; min-height:44px; }
- .btn-primary { background:var(--gold); color:#fff; }
- body.t4 .btn-primary { color:#1440B8; background:#fff; }
- body.t5 .btn-primary { color:#1C1C1B; }
- .btn-primary:hover { background:var(--gold-light); transform:translateY(-1px); box-shadow:0 6px 20px rgba(0,0,0,0.15); }
- .btn-ghost { background:transparent; border:1px solid var(--border); color:var(--muted); }
- .btn-ghost:hover { border-color:var(--gold); color:var(--text); }
- .btn-row { display:flex; gap:16px; flex-wrap:wrap; }
+    .btn { font-family:'DM Sans',sans-serif; font-size:13px; font-weight:500; letter-spacing:0.06em; padding:14px 32px; border-radius:8px; cursor:pointer; transition:all 0.2s ease; border:none; display:inline-flex; align-items:center; gap:8px; text-decoration:none; min-height:44px; }
+    .btn-primary { background:var(--gold); color:#fff; }
+    body.t4 .btn-primary { color:#1440B8; background:#fff; }
+    body.t5 .btn-primary { color:#1C1C1B; }
+    .btn-primary:hover { background:var(--gold-light); transform:translateY(-1px); box-shadow:0 6px 20px rgba(0,0,0,0.15); }
+    .btn-ghost { background:transparent; border:1px solid var(--border); color:var(--muted); }
+    .btn-ghost:hover { border-color:var(--gold); color:var(--text); }
+    .btn-row { display:flex; gap:16px; flex-wrap:wrap; }
 
- .card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:40px; box-shadow:0 8px 40px rgba(0,0,0,0.06); transition:background 0.3s,border-color 0.3s; }
+    .card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:40px; box-shadow:0 8px 40px rgba(0,0,0,0.06); transition:background 0.3s,border-color 0.3s; }
 
- .section { max-width:1100px; margin:0 auto; padding:96px 24px; }
- .section-sm { max-width:1100px; margin:0 auto; padding:64px 24px; }
- .centered { text-align:center; }
- .section h2 { margin-bottom:16px; }
- .section h2+p, .section h1+p { margin-bottom:40px; }
+    .section { max-width:1100px; margin:0 auto; padding:96px 24px; }
+    .section-sm { max-width:1100px; margin:0 auto; padding:64px 24px; }
+    .centered { text-align:center; }
+    .section h2 { margin-bottom:16px; }
+    .section h2+p, .section h1+p { margin-bottom:40px; }
 
- /* NAV */
- .navbar { position:sticky; top:0; z-index:100; height:64px; background:var(--card); border-bottom:1px solid var(--border); transition:background 0.3s,border-color 0.3s; display:flex; justify-content:space-between; align-items:center; padding:0 24px; gap:16px; }
- .logo { height:32px; width:auto; }
- .nav-links { display:flex; gap:16px; align-items:center; flex:1; justify-content:center; overflow:hidden; }
- .nav-link { font-family:'DM Sans',sans-serif; font-size:12px; font-weight:500; letter-spacing:0.03em; color:var(--muted); text-decoration:none; transition:color 0.2s ease; min-height:44px; display:inline-flex; align-items:center; white-space:nowrap; }
- .nav-link:hover { color:var(--gold); }
- .nav-link.active { color:var(--gold); border-bottom:1px solid var(--gold); padding-bottom:2px; }
- .nav-cta { margin-left:8px; }
- .nav-badge { font-family:'DM Sans',sans-serif; font-size:10px; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted); padding:4px 10px; border:1px solid var(--border); border-radius:20px; white-space:nowrap; flex-shrink:0; margin-left:8px; }
+    /* NAV */
+    .navbar { position:sticky; top:0; z-index:100; height:64px; background:var(--card); border-bottom:1px solid var(--border); transition:background 0.3s,border-color 0.3s; display:flex; justify-content:space-between; align-items:center; padding:0 24px; gap:16px; }
+    .logo { height:32px; width:auto; }
+    .nav-links { display:flex; gap:16px; align-items:center; flex:1; justify-content:center; overflow:hidden; }
+    .nav-link { font-family:'DM Sans',sans-serif; font-size:12px; font-weight:500; letter-spacing:0.03em; color:var(--muted); text-decoration:none; transition:color 0.2s ease; min-height:44px; display:inline-flex; align-items:center; white-space:nowrap; }
+    .nav-link:hover { color:var(--gold); }
+    .nav-link.active { color:var(--gold); border-bottom:1px solid var(--gold); padding-bottom:2px; }
+    .nav-cta { margin-left:8px; }
+    .nav-badge { font-family:'DM Sans',sans-serif; font-size:10px; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted); padding:4px 10px; border:1px solid var(--border); border-radius:20px; white-space:nowrap; flex-shrink:0; margin-left:8px; }
 
- .hamburger { display:none; flex-direction:column; gap:5px; background:none; border:none; cursor:pointer; padding:8px; }
- .hamburger-line { width:20px; height:2px; background:var(--text); transition:all 0.3s; }
- .hamburger.active .hamburger-line:nth-child(1) { transform:rotate(45deg) translate(7px,7px); }
- .hamburger.active .hamburger-line:nth-child(2) { opacity:0; }
- .hamburger.active .hamburger-line:nth-child(3) { transform:rotate(-45deg) translate(7px,-7px); }
+    .hamburger { display:none; flex-direction:column; gap:5px; background:none; border:none; cursor:pointer; padding:8px; }
+    .hamburger-line { width:20px; height:2px; background:var(--text); transition:all 0.3s; }
+    .hamburger.active .hamburger-line:nth-child(1) { transform:rotate(45deg) translate(7px,7px); }
+    .hamburger.active .hamburger-line:nth-child(2) { opacity:0; }
+    .hamburger.active .hamburger-line:nth-child(3) { transform:rotate(-45deg) translate(7px,-7px); }
 
- .mobile-menu { display:none; position:fixed; top:64px; left:0; right:0; background:var(--card); border-bottom:1px solid var(--border); padding:16px 24px; flex-direction:column; gap:0; z-index:999; max-height:calc(100vh - 64px); overflow-y:auto; }
- .mobile-menu.open { display:flex; }
- .mobile-menu .nav-link { padding:12px 0; display:flex; align-items:center; height:44px; }
- .mobile-menu .nav-cta { margin-left:0; margin-top:8px; }
- .mobile-menu .btn { width:100%; justify-content:center; }
+    .mobile-menu { display:none; position:fixed; top:64px; left:0; right:0; background:var(--card); border-bottom:1px solid var(--border); padding:16px 24px; flex-direction:column; gap:0; z-index:999; max-height:calc(100vh - 64px); overflow-y:auto; }
+    .mobile-menu.open { display:flex; }
+    .mobile-menu .nav-link { padding:12px 0; display:flex; align-items:center; height:44px; }
+    .mobile-menu .nav-cta { margin-left:0; margin-top:8px; }
+    .mobile-menu .btn { width:100%; justify-content:center; }
 
- /* THEME SWITCHER */
- .theme-toggle-trigger { position:fixed; top:80px; right:16px; z-index:50; width:36px; height:36px; border-radius:50%; background:var(--card); border:1px solid var(--border); cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:16px; transition:all 0.2s ease; box-shadow:0 2px 12px rgba(0,0,0,0.08); }
- .theme-toggle-trigger:hover { transform:scale(1.08); border-color:var(--gold); }
- .theme-toggle-trigger.active { opacity:0; pointer-events:none; }
- .theme-switcher { position:fixed; top:80px; right:16px; z-index:50; display:flex; align-items:center; gap:6px; background:var(--card); border:1px solid var(--border); border-radius:40px; padding:3px 6px; box-shadow:0 4px 20px rgba(0,0,0,0.12); transition:all 0.3s ease; }
- .theme-switcher.hidden { opacity:0; pointer-events:none; transform:translateY(-10px); }
- .theme-label { font-size:9px; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); font-weight:500; margin-right:4px; }
- .theme-btn { width:18px; height:18px; min-width:18px; min-height:18px; border-radius:50%; border:2px solid transparent; cursor:pointer; transition:transform 0.15s ease,border-color 0.3s ease; padding:0; background:none; flex-shrink:0; }
- .theme-btn:hover { transform:scale(1.15); }
- .theme-btn.active { border-color:var(--gold); transform:scale(1.15); }
- .theme-btn-t1 { background:linear-gradient(135deg,#F0F5FF 0% 50%,#1B4FD8 50% 100%); }
- .theme-btn-t2 { background:linear-gradient(135deg,#0A1628 0% 50%,#4A7FFF 50% 100%); }
- .theme-btn-t3 { background:linear-gradient(135deg,#FFFFFF 0% 50%,#1B4FD8 50% 100%); }
- .theme-btn-t4 { background:linear-gradient(135deg,#1B4FD8 0% 50%,#FFFFFF 50% 100%); }
- .theme-btn-t5 { background:linear-gradient(135deg,#1C1C1B 0% 50%,#C8A951 50% 100%); }
+    /* THEME SWITCHER */
+    .theme-toggle-trigger { position:fixed; top:80px; right:16px; z-index:50; width:36px; height:36px; border-radius:50%; background:var(--card); border:1px solid var(--border); cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:16px; transition:all 0.2s ease; box-shadow:0 2px 12px rgba(0,0,0,0.08); }
+    .theme-toggle-trigger:hover { transform:scale(1.08); border-color:var(--gold); }
+    .theme-toggle-trigger.active { opacity:0; pointer-events:none; }
+    .theme-switcher { position:fixed; top:80px; right:16px; z-index:50; display:flex; align-items:center; gap:6px; background:var(--card); border:1px solid var(--border); border-radius:40px; padding:3px 6px; box-shadow:0 4px 20px rgba(0,0,0,0.12); transition:all 0.3s ease; }
+    .theme-switcher.hidden { opacity:0; pointer-events:none; transform:translateY(-10px); }
+    .theme-label { font-size:9px; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); font-weight:500; margin-right:4px; }
+    .theme-btn { width:18px; height:18px; min-width:18px; min-height:18px; border-radius:50%; border:2px solid transparent; cursor:pointer; transition:transform 0.15s ease,border-color 0.3s ease; padding:0; background:none; flex-shrink:0; }
+    .theme-btn:hover { transform:scale(1.15); }
+    .theme-btn.active { border-color:var(--gold); transform:scale(1.15); }
+    .theme-btn-t1 { background:linear-gradient(135deg,#F0F5FF 0% 50%,#1B4FD8 50% 100%); }
+    .theme-btn-t2 { background:linear-gradient(135deg,#0A1628 0% 50%,#4A7FFF 50% 100%); }
+    .theme-btn-t3 { background:linear-gradient(135deg,#FFFFFF 0% 50%,#1B4FD8 50% 100%); }
+    .theme-btn-t4 { background:linear-gradient(135deg,#1B4FD8 0% 50%,#FFFFFF 50% 100%); }
+    .theme-btn-t5 { background:linear-gradient(135deg,#1C1C1B 0% 50%,#C8A951 50% 100%); }
 
- /* QUOTE BAND */
- .quote-band { background:var(--card); border-top:1px solid var(--border); border-bottom:1px solid var(--border); padding:80px 24px; text-align:center; }
- .quote-band blockquote { font-family:'Cormorant Garamond',Georgia,serif; font-size:clamp(22px,3.5vw,34px); font-weight:300; font-style:italic; color:var(--text); max-width:760px; margin:0 auto; line-height:1.5; }
- .quote-band cite { font-family:'DM Sans',system-ui,sans-serif; font-size:13px; color:var(--muted); font-style:normal; margin-top:24px; display:block; }
+    /* QUOTE BAND */
+    .quote-band { background:var(--card); border-top:1px solid var(--border); border-bottom:1px solid var(--border); padding:80px 24px; text-align:center; }
+    .quote-band blockquote { font-family:'Cormorant Garamond',Georgia,serif; font-size:clamp(22px,3.5vw,34px); font-weight:300; font-style:italic; color:var(--text); max-width:760px; margin:0 auto; line-height:1.5; }
+    .quote-band cite { font-family:'DM Sans',system-ui,sans-serif; font-size:13px; color:var(--muted); font-style:normal; margin-top:24px; display:block; }
 
- /* STATS */
- .stats-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:40px; max-width:800px; margin:48px auto 0; }
- .stat { text-align:center; }
- .stat-number { font-family:'Cormorant Garamond',Georgia,serif; font-size:clamp(48px,8vw,72px); font-weight:300; color:var(--gold); line-height:1; display:block; }
- .stat-label { font-family:'DM Sans',system-ui,sans-serif; font-size:13px; color:var(--muted); margin-top:8px; display:block; }
+    /* STATS */
+    .stats-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:40px; max-width:800px; margin:48px auto 0; }
+    .stat { text-align:center; }
+    .stat-number { font-family:'Cormorant Garamond',Georgia,serif; font-size:clamp(48px,8vw,72px); font-weight:300; color:var(--gold); line-height:1; display:block; }
+    .stat-label { font-family:'DM Sans',system-ui,sans-serif; font-size:13px; color:var(--muted); margin-top:8px; display:block; }
 
- /* FOOTER */
- .footer { background:var(--card); border-top:1px solid var(--border); padding:24px 32px; }
- .footer-inner { max-width:1100px; margin:0 auto; display:flex; justify-content:space-between; align-items:center; }
- .footer-logo img { height:36px; width:auto; display:block; }
- .footer-tagline { font-family:'DM Sans',sans-serif; font-size:12px; color:var(--muted); font-style:italic; }
- .footer-nav { display:flex; gap:24px; }
- .footer-nav a { font-family:'DM Sans',sans-serif; font-size:12px; color:var(--muted); text-decoration:none; }
- .footer-nav a:hover { color:var(--gold); }
+    /* FOOTER */
+    .footer { background:var(--card); border-top:1px solid var(--border); padding:24px 32px; }
+    .footer-inner { max-width:1100px; margin:0 auto; display:flex; justify-content:space-between; align-items:center; }
+    .footer-logo img { height:36px; width:auto; display:block; }
+    .footer-tagline { font-family:'DM Sans',sans-serif; font-size:12px; color:var(--muted); font-style:italic; }
+    .footer-nav { display:flex; gap:24px; }
+    .footer-nav a { font-family:'DM Sans',sans-serif; font-size:12px; color:var(--muted); text-decoration:none; }
+    .footer-nav a:hover { color:var(--gold); }
 
- /* PROPOSAL-SPECIFIC */
- .hero-proposal { padding:120px 24px 80px; position:relative; overflow:hidden; }
- .hero-proposal::before { content:''; position:fixed; top:0; left:0; right:0; bottom:0; z-index:0; pointer-events:none; background:radial-gradient(ellipse 70% 50% at 50% 0%,var(--glow) 0%,transparent 70%); }
- .hero-proposal .inner { position:relative; z-index:1; max-width:760px; opacity:0; transform:translateY(24px); animation:fadeInUp 0.6s ease-out forwards; }
- @keyframes fadeInUp { to { opacity:1; transform:translateY(0); } }
+    /* PROPOSAL-SPECIFIC */
+    .hero-proposal { padding:120px 24px 80px; position:relative; overflow:hidden; }
+    .hero-proposal::before { content:''; position:fixed; top:0; left:0; right:0; bottom:0; z-index:0; pointer-events:none; background:radial-gradient(ellipse 70% 50% at 50% 0%,var(--glow) 0%,transparent 70%); }
+    .hero-proposal .inner { position:relative; z-index:1; max-width:760px; opacity:0; transform:translateY(24px); animation:fadeInUp 0.6s ease-out forwards; }
+    @keyframes fadeInUp { to { opacity:1; transform:translateY(0); } }
 
- .tag { display:inline-block; font-family:'DM Sans',sans-serif; font-size:11px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; padding:4px 12px; border-radius:20px; border:1px solid var(--border); color:var(--muted); margin-bottom:20px; }
- .tag-gold { border-color:var(--gold); color:var(--gold); }
+    .tag { display:inline-block; font-family:'DM Sans',sans-serif; font-size:11px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; padding:4px 12px; border-radius:20px; border:1px solid var(--border); color:var(--muted); margin-bottom:20px; }
+    .tag-gold { border-color:var(--gold); color:var(--gold); }
 
- .two-col { display:grid; grid-template-columns:1fr 1fr; gap:48px; }
- .three-col { display:grid; grid-template-columns:repeat(3,1fr); gap:32px; }
- .four-col { display:grid; grid-template-columns:repeat(4,1fr); gap:24px; }
+    .two-col { display:grid; grid-template-columns:1fr 1fr; gap:48px; }
+    .three-col { display:grid; grid-template-columns:repeat(3,1fr); gap:32px; }
+    .four-col { display:grid; grid-template-columns:repeat(4,1fr); gap:24px; }
 
- .divider { border:none; border-top:1px solid var(--border); margin:48px 0; }
+    .divider { border:none; border-top:1px solid var(--border); margin:48px 0; }
 
- .finding { border-left:3px solid; padding:20px 24px; border-radius:0 12px 12px 0; margin-bottom:16px; }
- .finding-critical { background:rgba(220,50,50,0.04); border-color:#dc3232; }
- .finding-warning { background:rgba(200,130,0,0.05); border-color:#c87800; }
- .finding-positive { background:rgba(20,150,80,0.05); border-color:#149650; }
- .finding-insight { background:rgba(27,79,216,0.05); border-color:var(--gold); }
- .finding h4 { font-family:'DM Sans',sans-serif; font-size:14px; font-weight:600; margin-bottom:6px; }
- .finding p { font-size:13px; line-height:1.65; }
+    .finding { border-left:3px solid; padding:20px 24px; border-radius:0 12px 12px 0; margin-bottom:16px; }
+    .finding-critical { background:rgba(220,50,50,0.04); border-color:#dc3232; }
+    .finding-warning { background:rgba(200,130,0,0.05); border-color:#c87800; }
+    .finding-positive { background:rgba(20,150,80,0.05); border-color:#149650; }
+    .finding-insight { background:rgba(27,79,216,0.05); border-color:var(--gold); }
+    .finding h4 { font-family:'DM Sans',sans-serif; font-size:14px; font-weight:600; margin-bottom:6px; }
+    .finding p { font-size:13px; line-height:1.65; }
 
- .option-card { background:var(--card); border:1px solid var(--border); border-radius:16px; overflow:hidden; margin-bottom:32px; }
- .option-card.recommended { border-color:var(--gold); }
- .option-header { padding:28px 32px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:flex-start; gap:24px; flex-wrap:wrap; }
- .option-num { font-family:'DM Sans',sans-serif; font-size:10px; letter-spacing:0.16em; text-transform:uppercase; color:var(--muted); margin-bottom:6px; }
- .option-title { font-family:'Cormorant Garamond',serif; font-size:26px; font-weight:400; margin-bottom:6px; }
- .option-tagline { font-size:14px; color:var(--muted); max-width:500px; line-height:1.5; }
- .option-price { text-align:right; flex-shrink:0; }
- .price-label { font-family:'DM Sans',sans-serif; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted); margin-bottom:6px; }
- .price-main { font-family:'Cormorant Garamond',serif; font-size:32px; font-weight:300; color:var(--gold); }
- .price-sub { font-size:13px; color:var(--muted); margin-top:4px; }
- .option-body { padding:32px; }
- .rec-strip { background:var(--gold); padding:8px 32px; }
- .rec-strip span { font-family:'DM Sans',sans-serif; font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:#fff; }
+    .option-card { background:var(--card); border:1px solid var(--border); border-radius:16px; overflow:hidden; margin-bottom:32px; }
+    .option-card.recommended { border-color:var(--gold); }
+    .option-header { padding:28px 32px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:flex-start; gap:24px; flex-wrap:wrap; }
+    .option-num { font-family:'DM Sans',sans-serif; font-size:10px; letter-spacing:0.16em; text-transform:uppercase; color:var(--muted); margin-bottom:6px; }
+    .option-title { font-family:'Cormorant Garamond',serif; font-size:26px; font-weight:400; margin-bottom:6px; }
+    .option-tagline { font-size:14px; color:var(--muted); max-width:500px; line-height:1.5; }
+    .option-price { text-align:right; flex-shrink:0; }
+    .price-label { font-family:'DM Sans',sans-serif; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted); margin-bottom:6px; }
+    .price-main { font-family:'Cormorant Garamond',serif; font-size:32px; font-weight:300; color:var(--gold); }
+    .price-sub { font-size:13px; color:var(--muted); margin-top:4px; }
+    .option-body { padding:32px; }
+    .rec-strip { background:var(--gold); padding:8px 32px; }
+    .rec-strip span { font-family:'DM Sans',sans-serif; font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:#fff; }
 
- .inc-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
- .inc-item { display:flex; gap:10px; align-items:flex-start; padding:10px 14px; background:var(--bg); border:1px solid var(--border); border-radius:8px; font-size:13px; color:var(--muted); line-height:1.5; }
- .inc-icon { font-size:14px; flex-shrink:0; margin-top:1px; }
+    .inc-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+    .inc-item { display:flex; gap:10px; align-items:flex-start; padding:10px 14px; background:var(--bg); border:1px solid var(--border); border-radius:8px; font-size:13px; color:var(--muted); line-height:1.5; }
+    .inc-icon { font-size:14px; flex-shrink:0; margin-top:1px; }
 
- .responsibility-row { display:flex; gap:12px; align-items:flex-start; padding:12px 0; border-bottom:1px solid var(--border); }
- .responsibility-row:last-child { border-bottom:none; }
- .responsibility-icon { font-size:16px; flex-shrink:0; }
- .responsibility-title { font-size:13px; font-weight:600; color:var(--text); margin-bottom:3px; }
- .responsibility-body { font-size:12px; color:var(--muted); line-height:1.6; }
+    .responsibility-row { display:flex; gap:12px; align-items:flex-start; padding:12px 0; border-bottom:1px solid var(--border); }
+    .responsibility-row:last-child { border-bottom:none; }
+    .responsibility-icon { font-size:16px; flex-shrink:0; }
+    .responsibility-title { font-size:13px; font-weight:600; color:var(--text); margin-bottom:3px; }
+    .responsibility-body { font-size:12px; color:var(--muted); line-height:1.6; }
 
- .phase-row { display:grid; grid-template-columns:120px 1fr; gap:24px; padding:24px 0; border-bottom:1px solid var(--border); align-items:start; }
- .phase-row:last-child { border-bottom:none; }
- .phase-num { font-family:'Roboto Slab',serif; font-size:11px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold); }
- .phase-timeline { font-family:'DM Sans',sans-serif; font-size:11px; color:var(--muted); margin-top:4px; }
- .phase-title { font-family:'Cormorant Garamond',serif; font-size:20px; font-weight:400; margin-bottom:8px; }
- .phase-items { display:flex; flex-direction:column; gap:6px; margin-top:10px; }
- .phase-item { font-size:13px; color:var(--muted); display:flex; gap:8px; }
- .phase-item::before { content:'→'; color:var(--gold); flex-shrink:0; }
+    .phase-row { display:grid; grid-template-columns:120px 1fr; gap:24px; padding:24px 0; border-bottom:1px solid var(--border); align-items:start; }
+    .phase-row:last-child { border-bottom:none; }
+    .phase-num { font-family:'Roboto Slab',serif; font-size:11px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold); }
+    .phase-timeline { font-family:'DM Sans',sans-serif; font-size:11px; color:var(--muted); margin-top:4px; }
+    .phase-title { font-family:'Cormorant Garamond',serif; font-size:20px; font-weight:400; margin-bottom:8px; }
+    .phase-items { display:flex; flex-direction:column; gap:6px; margin-top:10px; }
+    .phase-item { font-size:13px; color:var(--muted); display:flex; gap:8px; }
+    .phase-item::before { content:'→'; color:var(--gold); flex-shrink:0; }
 
- .info-table { width:100%; border-collapse:collapse; margin-top:16px; }
- .info-table th { font-family:'DM Sans',sans-serif; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); padding:10px 16px; text-align:left; border-bottom:1px solid var(--border); background:var(--bg); }
- .info-table td { padding:12px 16px; font-size:13px; color:var(--muted); border-bottom:1px solid var(--border); vertical-align:top; line-height:1.6; }
- .info-table tr:last-child td { border-bottom:none; }
- .info-table tr:hover td { background:var(--card); }
- .td-label { color:var(--text); font-weight:500; }
- .td-amount { font-family:'Cormorant Garamond',serif; font-size:20px; color:var(--gold); white-space:nowrap; }
+    .info-table { width:100%; border-collapse:collapse; margin-top:16px; }
+    .info-table th { font-family:'DM Sans',sans-serif; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); padding:10px 16px; text-align:left; border-bottom:1px solid var(--border); background:var(--bg); }
+    .info-table td { padding:12px 16px; font-size:13px; color:var(--muted); border-bottom:1px solid var(--border); vertical-align:top; line-height:1.6; }
+    .info-table tr:last-child td { border-bottom:none; }
+    .info-table tr:hover td { background:var(--card); }
+    .td-label { color:var(--text); font-weight:500; }
+    .td-amount { font-family:'Cormorant Garamond',serif; font-size:20px; color:var(--gold); white-space:nowrap; }
 
- .warning-box { background:rgba(200,130,0,0.06); border:1px solid rgba(200,130,0,0.2); border-left:3px solid #c87800; border-radius:0 12px 12px 0; padding:18px 22px; margin-top:16px; }
- .warning-box p { font-size:13px; color:var(--muted); line-height:1.65; }
+    .warning-box { background:rgba(200,130,0,0.06); border:1px solid rgba(200,130,0,0.2); border-left:3px solid #c87800; border-radius:0 12px 12px 0; padding:18px 22px; margin-top:16px; }
+    .warning-box p { font-size:13px; color:var(--muted); line-height:1.65; }
 
- /* SLIDER */
- .slider-wrap { margin-bottom:28px; }
- .slider-label-row { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:8px; }
- .slider-tier { font-family:'Cormorant Garamond',serif; font-size:20px; font-weight:400; }
- .slider-price { font-family:'Cormorant Garamond',serif; font-size:28px; color:var(--gold); }
- .slider-desc { font-size:12px; color:var(--muted); margin-bottom:10px; }
- input[type=range] { width:100%; -webkit-appearance:none; height:4px; border-radius:2px; outline:none; cursor:pointer; background:linear-gradient(to right,var(--gold) var(--pct,0%),var(--border) var(--pct,0%)); }
- input[type=range]::-webkit-slider-thumb { -webkit-appearance:none; width:18px; height:18px; border-radius:50%; background:var(--gold); border:2px solid var(--card); box-shadow:0 2px 8px rgba(0,0,0,0.2); transition:transform 0.15s; }
- input[type=range]::-webkit-slider-thumb:hover { transform:scale(1.15); }
- .slider-range { display:flex; justify-content:space-between; margin-top:4px; }
- .slider-range span { font-family:'DM Sans',sans-serif; font-size:10px; color:var(--muted); }
+    /* SLIDER */
+    .slider-wrap { margin-bottom:28px; }
+    .slider-label-row { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:8px; }
+    .slider-tier { font-family:'Cormorant Garamond',serif; font-size:20px; font-weight:400; }
+    .slider-price { font-family:'Cormorant Garamond',serif; font-size:28px; color:var(--gold); }
+    .slider-desc { font-size:12px; color:var(--muted); margin-bottom:10px; }
+    input[type=range] { width:100%; -webkit-appearance:none; height:4px; border-radius:2px; outline:none; cursor:pointer; background:linear-gradient(to right,var(--gold) var(--pct,0%),var(--border) var(--pct,0%)); }
+    input[type=range]::-webkit-slider-thumb { -webkit-appearance:none; width:18px; height:18px; border-radius:50%; background:var(--gold); border:2px solid var(--card); box-shadow:0 2px 8px rgba(0,0,0,0.2); transition:transform 0.15s; }
+    input[type=range]::-webkit-slider-thumb:hover { transform:scale(1.15); }
+    .slider-range { display:flex; justify-content:space-between; margin-top:4px; }
+    .slider-range span { font-family:'DM Sans',sans-serif; font-size:10px; color:var(--muted); }
 
- .rev-table { width:100%; }
- .rev-row { display:flex; justify-content:space-between; align-items:center; padding:10px 16px; border-radius:8px; background:var(--bg); margin-bottom:8px; }
- .rev-year { font-family:'DM Sans',sans-serif; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); }
- .rev-orgs { font-size:12px; color:var(--muted); }
- .rev-amount { font-family:'Cormorant Garamond',serif; font-size:24px; color:var(--gold); }
+    .rev-table { width:100%; }
+    .rev-row { display:flex; justify-content:space-between; align-items:center; padding:10px 16px; border-radius:8px; background:var(--bg); margin-bottom:8px; }
+    .rev-year { font-family:'DM Sans',sans-serif; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); }
+    .rev-orgs { font-size:12px; color:var(--muted); }
+    .rev-amount { font-family:'Cormorant Garamond',serif; font-size:24px; color:var(--gold); }
 
- /* BOTTOM CTA */
- .bottom-cta-section { background:var(--card); border-top:1px solid var(--border); padding:96px 24px; text-align:center; }
- .bottom-cta-section .inner { max-width:640px; margin:0 auto; }
- .bottom-cta-section p.muted { margin:20px auto 40px; max-width:520px; line-height:1.8; }
- .bottom-cta-section .btn-row { justify-content:center; }
+    /* BOTTOM CTA */
+    .bottom-cta-section { background:var(--card); border-top:1px solid var(--border); padding:96px 24px; text-align:center; }
+    .bottom-cta-section .inner { max-width:640px; margin:0 auto; }
+    .bottom-cta-section p.muted { margin:20px auto 40px; max-width:520px; line-height:1.8; }
+    .bottom-cta-section .btn-row { justify-content:center; }
 
- /* RESPONSIVE */
- @media(max-width:900px) {
- .two-col,.three-col,.four-col { grid-template-columns:1fr; }
- .inc-grid { grid-template-columns:1fr; }
- }
- @media(max-width:768px) {
- .nav-links { display:none; }
- .hamburger { display:flex; }
- .navbar { padding:0 24px; }
- .logo { height:28px; }
- .section { padding:64px 20px; }
- .section-sm { padding:48px 20px; }
- .hero-proposal { padding:80px 20px 60px; }
- .option-header { flex-direction:column; }
- .option-price { text-align:left; }
- .stats-grid { grid-template-columns:1fr; gap:32px; }
- .phase-row { grid-template-columns:1fr; gap:8px; }
- }
- @media(max-width:480px) {
- .section { padding:48px 16px; }
- .card { padding:28px; }
- .btn-row { flex-direction:column; }
- .btn-row .btn { width:100%; justify-content:center; }
- .option-body { padding:20px; }
- .footer-inner { flex-direction:row; gap:12px; align-items:center; }
- }
- </style>
+    /* RESPONSIVE */
+    @media(max-width:900px) {
+      .two-col,.three-col,.four-col { grid-template-columns:1fr; }
+      .inc-grid { grid-template-columns:1fr; }
+    }
+    @media(max-width:768px) {
+      .nav-links { display:none; }
+      .hamburger { display:flex; }
+      .navbar { padding:0 24px; }
+      .logo { height:28px; }
+      .section { padding:64px 20px; }
+      .section-sm { padding:48px 20px; }
+      .hero-proposal { padding:80px 20px 60px; }
+      .option-header { flex-direction:column; }
+      .option-price { text-align:left; }
+      .stats-grid { grid-template-columns:1fr; gap:32px; }
+      .phase-row { grid-template-columns:1fr; gap:8px; }
+    }
+    @media(max-width:480px) {
+      .section { padding:48px 16px; }
+      .card { padding:28px; }
+      .btn-row { flex-direction:column; }
+      .btn-row .btn { width:100%; justify-content:center; }
+      .option-body { padding:20px; }
+      .footer-inner { flex-direction:row; gap:12px; align-items:center; }
+    }
+  </style>
 
 </head>
-<body class="t1">
- <nav class="navbar">
- <a href="orr-group-index.html">
- <img src="/2516_logo_horizontal_dark_web.png"
- data-dark="/2516_logo_horizontal_dark_web.png"
- data-light="/2516_logo_horizontal_light_web.png"
- alt="2516 Technologies" class="logo" style="height:32px;width:auto;">
- </a>
- <div class="nav-links">
- <a href="orr-group-index.html" class="nav-link">Overview</a>
- <a href="orr-group-opportunity.html" class="nav-link">Opportunity</a>
- <a href="orr-group-market-sizing.html" class="nav-link">Market</a>
- <a href="orr-group-assessment.html" class="nav-link">Assessment</a>
- <a href="orr-group-architecture.html" class="nav-link">Architecture</a>
- <a href="orr-group-roadmap.html" class="nav-link">Roadmap</a>
- <a href="orr-group-delivery.html" class="nav-link active">Delivery</a>
- <a href="orr-group-investment.html" class="nav-link">Investment</a>
- <a href="orr-group-why-2516.html" class="nav-link">Why 2516</a>
- <a href="orr-group-next-steps.html" class="nav-link">Next Steps</a>
- <span class="nav-badge">Orr Group · Confidential</span>
- </div>
- <button class="hamburger" aria-label="Toggle menu">
- <span class="hamburger-line"></span>
- <span class="hamburger-line"></span>
- <span class="hamburger-line"></span>
- </button>
- </nav>
- <div class="mobile-menu">
- <a href="orr-group-index.html" class="nav-link">Overview</a>
- <a href="orr-group-opportunity.html" class="nav-link">Opportunity</a>
- <a href="orr-group-market-sizing.html" class="nav-link">Market</a>
- <a href="orr-group-assessment.html" class="nav-link">Assessment</a>
- <a href="orr-group-architecture.html" class="nav-link">Architecture</a>
- <a href="orr-group-roadmap.html" class="nav-link">Roadmap</a>
- <a href="orr-group-delivery.html" class="nav-link active">Delivery</a>
- <a href="orr-group-investment.html" class="nav-link">Investment</a>
- <a href="orr-group-why-2516.html" class="nav-link">Why 2516</a>
- <a href="orr-group-next-steps.html" class="nav-link">Next Steps</a>
- <span style="font-size:11px;color:var(--muted);padding:12px 0;letter-spacing:0.1em;text-transform:uppercase;">Orr Group · Confidential</span>
- </div>
+<body class="t1" style="background-color:#F0F5FF;color:#0D1B3E;">
+  <nav class="navbar">
+    <a href="orr-group-index.html">
+      <img src="/2516_logo_horizontal_dark_web.png"
+           data-dark="/2516_logo_horizontal_dark_web.png"
+           data-light="/2516_logo_horizontal_light_web.png"
+           alt="2516 Technologies" class="logo" style="height:32px;width:auto;">
+    </a>
+    <div class="nav-links">
+      <a href="orr-group-index.html" class="nav-link">Overview</a>
+      <a href="orr-group-opportunity.html" class="nav-link">Opportunity</a>
+      <a href="orr-group-market-sizing.html" class="nav-link">Market</a>
+      <a href="orr-group-assessment.html" class="nav-link">Assessment</a>
+      <a href="orr-group-architecture.html" class="nav-link">Architecture</a>
+      <a href="orr-group-roadmap.html" class="nav-link">Roadmap</a>
+      <a href="orr-group-delivery.html" class="nav-link active">Delivery</a>
+      <a href="orr-group-investment.html" class="nav-link">Investment</a>
+      <a href="orr-group-why-2516.html" class="nav-link">Why 2516</a>
+      <a href="orr-group-next-steps.html" class="nav-link">Next Steps</a>
+      <span class="nav-badge">Confidential</span>
+    </div>
+    <button class="hamburger" aria-label="Toggle menu">
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+    </button>
+  </nav>
+  <div class="mobile-menu">
+    <a href="orr-group-index.html" class="nav-link">Overview</a>
+    <a href="orr-group-opportunity.html" class="nav-link">Opportunity</a>
+    <a href="orr-group-market-sizing.html" class="nav-link">Market</a>
+    <a href="orr-group-assessment.html" class="nav-link">Assessment</a>
+    <a href="orr-group-architecture.html" class="nav-link">Architecture</a>
+    <a href="orr-group-roadmap.html" class="nav-link">Roadmap</a>
+    <a href="orr-group-delivery.html" class="nav-link active">Delivery</a>
+    <a href="orr-group-investment.html" class="nav-link">Investment</a>
+    <a href="orr-group-why-2516.html" class="nav-link">Why 2516</a>
+    <a href="orr-group-next-steps.html" class="nav-link">Next Steps</a>
+    <span style="font-size:11px;color:var(--muted);padding:12px 0;letter-spacing:0.1em;text-transform:uppercase;">Confidential</span>
+  </div>
 <main>
 
- <section class="hero-proposal">
- <div class="inner">
- <span class="eyebrow">Delivery Options</span>
- <h1>Three ways to engage 2516. <em>The difference matters more than the price.</em></h1>
- <p class="hero-subhead muted" style="margin:24px 0 0;">The right option isn't the cheapest one it's the one that matches how much operational responsibility Orr Group wants to own. This page is intentionally direct about what each option means in practice.</p>
- </div>
- </section>
-
- <section class="section">
-
- <!-- OPTION 1 -->
- <div class="option-card">
- <div class="option-header">
- <div>
- <div class="option-num">Option 01</div>
- <div class="option-title">Build, Deliver &amp; Train</div>
- <p class="option-tagline">2516 builds the full platform, delivers the codebase, and trains Orr Group's team. After the 90-day post-launch window, the engagement is complete. Orr Group owns the code, the IP, and all operational responsibility.</p>
- </div>
- <div class="option-price">
- <div class="price-label">One-time fee</div>
- <div class="price-main">$80,000</div>
- <div class="price-sub">No recurring fees to 2516</div>
- </div>
- </div>
- <div class="option-body">
- <div class="two-col">
- <div>
- <div style="font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;">What's included</div>
- <div class="inc-grid">
- <div class="inc-item">Full Phase 1A + 1B build</div>
- <div class="inc-item">Complete technical documentation</div>
- <div class="inc-item">Runbooks and architecture diagrams</div>
- <div class="inc-item">3 training sessions (admin / user / technical)</div>
- <div class="inc-item">Private GitHub repo full codebase</div>
- <div class="inc-item">90-day post-launch bug fix window</div>
- <div class="inc-item">Weekly progress updates during build</div>
- <div class="inc-item">Monthly milestone demos your approval required</div>
- </div>
- <div style="margin-top:14px;">
- <div class="inc-item" style="border-color:rgba(220,50,50,0.3);">No ongoing support after 90 days</div>
- <div class="inc-item" style="margin-top:8px;border-color:rgba(220,50,50,0.3);">No security monitoring or proactive maintenance</div>
- <div class="inc-item" style="margin-top:8px;border-color:rgba(220,50,50,0.3);">No upgrade recommendations or platform updates</div>
- </div>
- </div>
- <div>
- <div style="font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:#dc3232;margin-bottom:14px;">Orr Group's inherited responsibilities</div>
- <div class="responsibility-row"><div><div class="responsibility-title">AWS cost monitoring + budget management</div><div class="responsibility-body">The Orr Group's AWS account. The Orr Group's bill. Variable costs scale with usage someone needs to watch this and act on anomalies.</div></div></div>
- <div class="responsibility-row"><div><div class="responsibility-title">User onboarding + account management</div><div class="responsibility-body">Every new nonprofit subscriber needs onboarding. That's a real operational burden at 1,000+ organizations.</div></div></div>
- <div class="responsibility-row"><div><div class="responsibility-title">Platform updates + dependency patching</div><div class="responsibility-body">Dependencies go stale. Security patches need applying. Without this, the platform becomes a liability over time.</div></div></div>
- <div class="responsibility-row"><div><div class="responsibility-title">Security monitoring + incident response</div><div class="responsibility-body">No proactive monitoring means incidents become crises. Someone needs to own this or engage 2516 at $175/hr when something breaks.</div></div></div>
- <div class="responsibility-row"><div><div class="responsibility-title">All vendor relationships</div><div class="responsibility-body">AWS, Stripe, and any third-party integrations are Orr Group's relationship to manage. 2516 is no longer in the picture.</div></div></div>
- <div class="warning-box">
- <p><strong style="color:var(--text);">Staffing requirement:</strong> This option requires a part-time technical operator ($65K/yr) to manage AWS, security, patching, and vendor relationships plus a client success / sales role (self-managed Year 1, $55K Year 2, $75K Year 3) for nonprofit client relationships. If the technical hire leaves, institutional knowledge leaves with them.</p>
- </div>
- </div>
- </div>
- </div>
+  <section class="hero-proposal">
+    <div class="inner">
+      <span class="eyebrow">Delivery Options</span>
+      <h1>Three ways to engage 2516. <em>The difference matters more than the price.</em></h1>
+      <p class="hero-subhead muted" style="margin:24px 0 0;">The right option isn't the cheapest one — it's the one that matches how much operational responsibility Orr Group wants to own. This page is intentionally direct about what each option means in practice.</p>
     </div>
- </div>
- </div>
+  </section>
 
- <!-- OPTION 2 -->
- <div class="option-card">
- <div class="option-header">
- <div>
- <div class="option-num">Option 02</div>
- <div class="option-title">Build, Deliver &amp; Hourly Support</div>
- <p class="option-tagline">Same build as Option 1 at a lower upfront fee no full documentation package or training sessions. 2516 stays available on-call at $175/hr. Orr Group still owns and operates the platform. You manage the AWS account directly.</p>
- </div>
- <div class="option-price">
- <div class="price-label">Build fee + ongoing</div>
- <div class="price-main">$60,000</div>
- <div class="price-sub">+ $175/hr when engaged</div>
- </div>
- </div>
- <div class="option-body">
- <div class="two-col">
- <div>
- <div style="font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;">What's different from Option 1</div>
- <div class="inc-grid">
- <div class="inc-item">Full Phase 1A + 1B build identical scope</div>
- <div class="inc-item">Basic handover documentation</div>
- <div class="inc-item">Private GitHub repo</div>
- <div class="inc-item">90-day bug fix window</div>
- <div class="inc-item">Basic monthly report (automated uptime summary)</div>
- <div class="inc-item">Shared Slack channel (48-hour response SLA)</div>
- <div class="inc-item">On-call support at $175/hr after window</div>
- <div class="inc-item" style="border-color:rgba(220,50,50,0.3);">No full documentation package</div>
- <div class="inc-item" style="border-color:rgba(220,50,50,0.3);">No training sessions (basic handover only)</div>
- <div class="inc-item" style="border-color:rgba(220,50,50,0.3);">No proactive security monitoring</div>
- </div>
- </div>
- <div>
- <div style="font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:#c87800;margin-bottom:14px;">Orr Group's responsibilities same as Option 1</div>
- <p style="font-size:13px;color:var(--muted);margin-bottom:14px;">Option 2 reduces the upfront fee by $20,000 by removing the documentation and training package. The operational responsibility Orr Group inherits is identical to Option 1. You have direct access to 2516 when something is urgent but you're still responsible for knowing when to call it.</p>
- <div class="warning-box">
- <p><strong style="color:var(--text);">Variable cost risk:</strong> At 8 hours/month of support engagement, Option 2 generates ~$16,800/year in additional fees. A bad incident month could mean $5,000–$10,000+ in a single invoice. The 10-hour monthly cap in the contract protects the worst case but variable costs require active management.</p>
- </div>
- <div class="warning-box" style="margin-top:12px;">
- <p><strong style="color:var(--text);">Staffing note:</strong> Same as Option 1 part-time technical operator required ($65K/yr). Client success / sales role required (self-managed Year 1, hired Year 2+). Attrition risk on technical hire is real and carries cost.</p>
- </div>
- </div>
- </div>
- </div>
+  <section class="section">
+
+    <!-- OPTION 1 -->
+    <div class="option-card">
+      <div class="option-header">
+        <div>
+          <div class="option-num">Option 01</div>
+          <div class="option-title">Build, Deliver &amp; Train</div>
+          <p class="option-tagline">2516 builds the full platform, delivers the codebase, and trains Orr Group's team. After the 90-day post-launch window, the engagement is complete. Orr Group owns the code, the IP, and all operational responsibility.</p>
+        </div>
+        <div class="option-price">
+          <div class="price-label">One-time fee</div>
+          <div class="price-main">$80,000</div>
+          <div class="price-sub">No recurring fees to 2516</div>
+        </div>
+      </div>
+      <div class="option-body">
+        <div class="two-col">
+          <div>
+            <div style="font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;">What's included</div>
+            <div class="inc-grid">
+              <div class="inc-item"><span class="inc-icon">✓</span>Full Phase 1A + 1B build</div>
+              <div class="inc-item"><span class="inc-icon">✓</span>Complete technical documentation</div>
+              <div class="inc-item"><span class="inc-icon">✓</span>Runbooks and architecture diagrams</div>
+              <div class="inc-item"><span class="inc-icon">✓</span>3 training sessions (admin / user / technical)</div>
+              <div class="inc-item"><span class="inc-icon">✓</span>Private GitHub repo — full codebase</div>
+              <div class="inc-item"><span class="inc-icon">✓</span>90-day post-launch bug fix window</div>
+              <div class="inc-item"><span class="inc-icon">✓</span>Weekly progress updates during build</div>
+              <div class="inc-item"><span class="inc-icon">✓</span>Monthly milestone demos — your approval required</div>
+            </div>
+            <div style="margin-top:14px;">
+              <div class="inc-item" style="border-color:rgba(220,50,50,0.3);"><span class="inc-icon">–</span>No ongoing support after 90 days</div>
+              <div class="inc-item" style="margin-top:8px;border-color:rgba(220,50,50,0.3);"><span class="inc-icon">–</span>No security monitoring or proactive maintenance</div>
+              <div class="inc-item" style="margin-top:8px;border-color:rgba(220,50,50,0.3);"><span class="inc-icon">–</span>No upgrade recommendations or platform updates</div>
+            </div>
+          </div>
+          <div>
+            <div style="font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:#dc3232;margin-bottom:14px;">Orr Group's inherited responsibilities</div>
+            <div class="responsibility-row"><div class="responsibility-icon">📊</div><div><div class="responsibility-title">AWS cost monitoring + budget management</div><div class="responsibility-body">CJ's AWS account. CJ's bill. Variable costs scale with usage — someone needs to watch this and act on anomalies.</div></div></div>
+            <div class="responsibility-row"><div class="responsibility-icon">👥</div><div><div class="responsibility-title">User onboarding + account management</div><div class="responsibility-body">Every new nonprofit subscriber needs onboarding. That's a real operational burden at 1,000+ organizations.</div></div></div>
+            <div class="responsibility-row"><div class="responsibility-icon">🔧</div><div><div class="responsibility-title">Platform updates + dependency patching</div><div class="responsibility-body">Dependencies go stale. Security patches need applying. Without this, the platform becomes a liability over time.</div></div></div>
+            <div class="responsibility-row"><div class="responsibility-icon">🔒</div><div><div class="responsibility-title">Security monitoring + incident response</div><div class="responsibility-body">No proactive monitoring means incidents become crises. Someone needs to own this — or engage 2516 at $175/hr when something breaks.</div></div></div>
+            <div class="responsibility-row"><div class="responsibility-icon">🤝</div><div><div class="responsibility-title">All vendor relationships</div><div class="responsibility-body">AWS, Stripe, and any third-party integrations are Orr Group's relationship to manage. 2516 is no longer in the picture.</div></div></div>
+            <div class="warning-box">
+              <p><strong style="color:var(--text);">Staffing requirement:</strong> This option requires a part-time technical operator ($65K/yr) to manage AWS, security, patching, and vendor relationships — plus a client success / sales role (self-managed Year 1, $55K Year 2, $75K Year 3) for nonprofit client relationships. If the technical hire leaves, institutional knowledge leaves with them.</p>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:24px;padding-top:24px;border-top:1px solid var(--border);">
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;">
+            <div>
+              <div style="font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;">Payment schedule</div>
+              <p style="font-size:13px;color:var(--muted);">$40,000 at contract signing · $40,000 at beta launch and approval</p>
+            </div>
+            <div>
+              <div style="font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;">2516's obligation ends</div>
+              <p style="font-size:13px;color:var(--muted);">90 days after launch. No ongoing SLA.</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
- </div>
- </div>
 
- <!-- OPTION 3 -->
- <div class="option-card recommended">
- <div class="rec-strip"><span> 2516 Recommendation Best outcome for Orr Group over the long term</span></div>
- <div class="option-header">
- <div>
- <div class="option-num">Option 03</div>
- <div class="option-title">Licensed SaaS + Retainer</div>
- <p class="option-tagline">2516 builds, owns, and operates the platform. Orr Group licenses access per organization per month, owns all client relationships, and sets its own retail pricing. 2516 handles everything technical permanently.</p>
- </div>
- <div class="option-price">
- <div class="price-label">Onboarding (one-time)</div>
- <div class="price-main">$20,000</div>
- <div class="price-sub">+ $5,000/mo retainer + $14/org/mo</div>
- </div>
- </div>
- <div class="option-body">
- <div class="two-col">
- <div>
- <div style="font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;">What's included in the retainer</div>
- <div class="inc-grid">
- <div class="inc-item">All AWS infrastructure management</div>
- <div class="inc-item">SLA: critical incidents in 2 hours</div>
- <div class="inc-item">Platform always on latest version</div>
- <div class="inc-item">Security monitoring + proactive patching</div>
- <div class="inc-item">Monthly performance reports engagement, retention, health</div>
- <div class="inc-item">Astrato executive + marketing dashboard (live data)</div>
- <div class="inc-item">Proactive upgrade recommendations</div>
- <div class="inc-item">Annual platform roadmap review</div>
- <div class="inc-item">Dedicated Slack channel same-day responses</div>
- <div class="inc-item">Data portability guaranteed full export anytime</div>
- <div class="inc-item">180-day exit + transition support</div>
- <div class="inc-item">Rate locked 24 months from go-live</div>
- </div>
- </div>
- <div>
- <div style="font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;">What Orr Group is responsible for</div>
- <p style="font-size:13px;color:var(--muted);margin-bottom:16px;">Under Option 3, 2516 owns and manages everything technical. Orr Group's operational responsibilities are limited to the commercial side of the business:</p>
- <div class="responsibility-row"><div><div class="responsibility-title">Sales + client acquisition</div><div class="responsibility-body">Bringing nonprofits onto the platform. Marketing, outreach, conversion Orr Group's core competency.</div></div></div>
- <div class="responsibility-row"><div><div class="responsibility-title">Client success + renewals</div><div class="responsibility-body">Managing relationships with nonprofit subscribers, onboarding, renewals. The Orr Group self-manages Year 1; dedicated hire recommended at Year 2.</div></div></div>
- <div class="responsibility-row"><div><div class="responsibility-title">AWS account (owner, not operator)</div><div class="responsibility-body">The Orr Group's AWS account his card, his bill, zero operational burden. 2516 manages everything inside it via IAM access.</div></div></div>
- <div style="background:rgba(27,79,216,0.06);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:14px 18px;margin-top:16px;">
- <p style="font-size:13px;color:var(--muted);"><strong style="color:var(--text);">No technical attrition risk.</strong> 2516 holds all platform knowledge permanently. There's no hire whose departure creates an operational crisis.</p>
- </div>
- </div>
- </div>
-
- <div style="margin-top:32px;padding-top:24px;border-top:1px solid var(--border);">
- <div style="font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;">Monthly cost at scale</div>
- <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;"><table class="info-table">
- <tr><th>Organizations</th><th>Per-org fee</th><th>Base retainer</th><th>Total monthly</th><th>Total annual</th></tr>
- <tr><td class="td-label">500 orgs</td><td>$7,000</td><td>$5,000</td><td class="td-amount">$12,000</td><td>$144,000</td></tr>
- <tr><td class="td-label">1,000 orgs</td><td>$14,000</td><td>$5,000</td><td class="td-amount">$19,000</td><td>$228,000</td></tr>
- <tr><td class="td-label">5,000 orgs</td><td>$70,000</td><td>$5,000</td><td class="td-amount">$75,000</td><td>$900,000</td></tr>
- <tr><td class="td-label">15,000 orgs</td><td>$210,000</td><td>$5,000</td><td class="td-amount">$215,000</td><td>$2,580,000</td></tr>
- </table></div>
- <p style="font-size:12px;color:var(--muted);margin-top:10px;">Renegotiation rights: either party may trigger a rate review at any mutually agreed milestone. Rate locked at current figures for the first 24 months from go-live.</p>
- </div>
-
- </div>
+    <!-- OPTION 2 -->
+    <div class="option-card">
+      <div class="option-header">
+        <div>
+          <div class="option-num">Option 02</div>
+          <div class="option-title">Build, Deliver &amp; Hourly Support</div>
+          <p class="option-tagline">Same build as Option 1 at a lower upfront fee — no full documentation package or training sessions. 2516 stays available on-call at $175/hr. Orr Group still owns and operates the platform. You manage the AWS account directly.</p>
+        </div>
+        <div class="option-price">
+          <div class="price-label">Build fee + ongoing</div>
+          <div class="price-main">$60,000</div>
+          <div class="price-sub">+ $175/hr when engaged (cap: 10hrs/mo)</div>
+        </div>
+      </div>
+      <div class="option-body">
+        <div class="two-col">
+          <div>
+            <div style="font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;">What's different from Option 1</div>
+            <div class="inc-grid">
+              <div class="inc-item"><span class="inc-icon">✓</span>Full Phase 1A + 1B build — identical scope</div>
+              <div class="inc-item"><span class="inc-icon">✓</span>Basic handover documentation</div>
+              <div class="inc-item"><span class="inc-icon">✓</span>Private GitHub repo</div>
+              <div class="inc-item"><span class="inc-icon">✓</span>90-day bug fix window</div>
+              <div class="inc-item"><span class="inc-icon">✓</span>Basic monthly report (automated uptime summary)</div>
+              <div class="inc-item"><span class="inc-icon">✓</span>Shared Slack channel (48-hour response SLA)</div>
+              <div class="inc-item"><span class="inc-icon">✓</span>On-call support at $175/hr after window</div>
+              <div class="inc-item" style="border-color:rgba(220,50,50,0.3);"><span class="inc-icon">–</span>No full documentation package</div>
+              <div class="inc-item" style="border-color:rgba(220,50,50,0.3);"><span class="inc-icon">–</span>No training sessions (basic handover only)</div>
+              <div class="inc-item" style="border-color:rgba(220,50,50,0.3);"><span class="inc-icon">–</span>No proactive security monitoring</div>
+            </div>
+          </div>
+          <div>
+            <div style="font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:#c87800;margin-bottom:14px;">Orr Group's responsibilities — same as Option 1</div>
+            <p style="font-size:13px;color:var(--muted);margin-bottom:14px;">Option 2 reduces the upfront fee by $20,000 by removing the documentation and training package. The operational responsibility Orr Group inherits is identical to Option 1. You have a phone number to call when something breaks — but you're still responsible for knowing when to call it.</p>
+            <div class="warning-box">
+              <p><strong style="color:var(--text);">Variable cost risk:</strong> At 8 hours/month of support engagement, Option 2 generates ~$16,800/year in additional fees. A bad incident month could mean $5,000–$10,000+ in a single invoice. The 10-hour monthly cap in the contract protects the worst case — but variable costs require active management.</p>
+            </div>
+            <div class="warning-box" style="margin-top:12px;">
+              <p><strong style="color:var(--text);">Staffing note:</strong> Same as Option 1 — part-time technical operator required ($65K/yr). Client success / sales role required (self-managed Year 1, hired Year 2+). Attrition risk on technical hire is real and carries cost.</p>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:24px;padding-top:24px;border-top:1px solid var(--border);">
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;">
+            <div>
+              <div style="font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;">Payment schedule</div>
+              <p style="font-size:13px;color:var(--muted);">$30,000 at contract signing · $30,000 at beta launch · $175/hr billed monthly thereafter</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
- </div>
- </div>
 
- <div style="background:var(--card);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:0 16px 16px 0;padding:28px 32px;margin-top:16px;">
- <h3 style="margin-bottom:12px;">A note on the long-term comparison</h3>
- <p style="font-size:14px;color:var(--muted);line-height:1.8;">Options 1 and 2 show lower net margin in Year 1 to Year 3 on paper when the true cost of technical staffing, attrition, security incidents, and platform maintenance is included. The numbers on the Investment page make this comparison explicit. Option 3 costs more in the first year but it removes operational risk, eliminates technical staff dependency, and lets Orr Group focus entirely on growing the client base rather than managing infrastructure. The platform also stays current and secure permanently, which Options 1 and 2 cannot guarantee.</p>
- </div>
+    <!-- OPTION 3 -->
+    <div class="option-card recommended">
+      <div class="rec-strip"><span>★ 2516 Recommendation — Best outcome for Orr Group over the long term</span></div>
+      <div class="option-header">
+        <div>
+          <div class="option-num">Option 03</div>
+          <div class="option-title">Licensed SaaS + Retainer</div>
+          <p class="option-tagline">2516 builds, owns, and operates the platform. Orr Group licenses access per organization per month, owns all client relationships, and sets its own retail pricing. 2516 handles everything technical — permanently.</p>
+        </div>
+        <div class="option-price">
+          <div class="price-label">Onboarding (one-time)</div>
+          <div class="price-main">$20,000</div>
+          <div class="price-sub">+ $5,000/mo retainer + $14/org/mo</div>
+        </div>
+      </div>
+      <div class="option-body">
+        <div class="two-col">
+          <div>
+            <div style="font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;">What's included in the retainer</div>
+            <div class="inc-grid">
+              <div class="inc-item"><span class="inc-icon">★</span>All AWS infrastructure management</div>
+              <div class="inc-item"><span class="inc-icon">★</span>SLA: critical incidents in 2 hours</div>
+              <div class="inc-item"><span class="inc-icon">★</span>Platform always on latest version</div>
+              <div class="inc-item"><span class="inc-icon">★</span>Security monitoring + proactive patching</div>
+              <div class="inc-item"><span class="inc-icon">★</span>Monthly performance reports — engagement, retention, health</div>
+              <div class="inc-item"><span class="inc-icon">★</span>Astrato executive + marketing dashboard (live data)</div>
+              <div class="inc-item"><span class="inc-icon">★</span>Proactive upgrade recommendations</div>
+              <div class="inc-item"><span class="inc-icon">★</span>Annual platform roadmap review</div>
+              <div class="inc-item"><span class="inc-icon">★</span>Dedicated Slack channel — same-day responses</div>
+              <div class="inc-item"><span class="inc-icon">★</span>Data portability guaranteed — full export anytime</div>
+              <div class="inc-item"><span class="inc-icon">★</span>180-day exit + transition support</div>
+              <div class="inc-item"><span class="inc-icon">★</span>Rate locked 24 months from go-live</div>
+            </div>
+          </div>
+          <div>
+            <div style="font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;">What Orr Group is responsible for</div>
+            <p style="font-size:13px;color:var(--muted);margin-bottom:16px;">Under Option 3, 2516 owns and manages everything technical. Orr Group's operational responsibilities are limited to the commercial side of the business:</p>
+            <div class="responsibility-row"><div class="responsibility-icon">💼</div><div><div class="responsibility-title">Sales + client acquisition</div><div class="responsibility-body">Bringing nonprofits onto the platform. Marketing, outreach, conversion — Orr Group's core competency.</div></div></div>
+            <div class="responsibility-row"><div class="responsibility-icon">🤝</div><div><div class="responsibility-title">Client success + renewals</div><div class="responsibility-body">Managing relationships with nonprofit subscribers, onboarding, renewals. CJ self-manages Year 1; dedicated hire recommended at Year 2.</div></div></div>
+            <div class="responsibility-row"><div class="responsibility-icon">💳</div><div><div class="responsibility-title">AWS account (owner, not operator)</div><div class="responsibility-body">CJ's AWS account — his card, his bill, zero operational burden. 2516 manages everything inside it via IAM access.</div></div></div>
+            <div style="background:rgba(27,79,216,0.06);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:14px 18px;margin-top:16px;">
+              <p style="font-size:13px;color:var(--muted);"><strong style="color:var(--text);">No technical attrition risk.</strong> 2516 holds all platform knowledge permanently. There's no hire whose departure creates an operational crisis.</p>
+            </div>
+          </div>
+        </div>
 
- <p style="font-size:12px;color:var(--muted);margin-top:24px;text-align:center;"> Cybersecurity health checks available as a post-launch add-on under all options. Quarterly vulnerability assessment + written findings report. Pricing on request.</p>
+        <div style="margin-top:32px;padding-top:24px;border-top:1px solid var(--border);">
+          <div style="font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;">Monthly cost at scale</div>
+          <table class="info-table">
+            <tr><th>Organizations</th><th>Per-org fee</th><th>Base retainer</th><th>Total monthly</th><th>Total annual</th></tr>
+            <tr><td class="td-label">500 orgs</td><td>$7,000</td><td>$5,000</td><td class="td-amount">$12,000</td><td>$144,000</td></tr>
+            <tr><td class="td-label">1,000 orgs</td><td>$14,000</td><td>$5,000</td><td class="td-amount">$19,000</td><td>$228,000</td></tr>
+            <tr><td class="td-label">5,000 orgs</td><td>$70,000</td><td>$5,000</td><td class="td-amount">$75,000</td><td>$900,000</td></tr>
+            <tr><td class="td-label">15,000 orgs</td><td>$210,000</td><td>$5,000</td><td class="td-amount">$215,000</td><td>$2,580,000</td></tr>
+          </table>
+          <p style="font-size:12px;color:var(--muted);margin-top:10px;">Renegotiation rights: either party may trigger a rate review at any mutually agreed milestone. Rate locked at current figures for the first 24 months from go-live.</p>
+        </div>
 
- </section>
+        <div style="margin-top:24px;padding-top:24px;border-top:1px solid var(--border);">
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;">
+            <div>
+              <div style="font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;">Payment schedule</div>
+              <p style="font-size:13px;color:var(--muted);">$10,000 at contract signing · $10,000 at beta launch · $5,000/mo + $14/org/mo beginning at go-live</p>
+            </div>
+            <div>
+              <div style="font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;">2516's fiduciary obligation</div>
+              <p style="font-size:13px;color:var(--muted);">Continuous. SLA-backed. For the life of the agreement.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
- <section class="bottom-cta-section">
- <div class="inner">
- <span class="eyebrow">Next</span>
- <h2>The full investment, <em>all three options.</em></h2>
- <p class="muted">Complete pricing, payment schedules, and The Orr Group's economics what the platform costs, what it generates, and what the three-year picture looks like.</p>
- <div class="btn-row" style="justify-content:center;">
- <a href="orr-group-investment.html" class="btn btn-primary">See the investment →</a>
- </div>
- </div>
- </section>
+    <div style="background:var(--card);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:0 16px 16px 0;padding:28px 32px;margin-top:16px;">
+      <h3 style="margin-bottom:12px;">A note on the long-term comparison</h3>
+      <p style="font-size:14px;color:var(--muted);line-height:1.8;">Options 1 and 2 show lower net margin in Year 1 to Year 3 on paper when the true cost of technical staffing, attrition, security incidents, and platform maintenance is included. The numbers on the Investment page make this comparison explicit. Option 3 costs more in the first year — but it removes operational risk, eliminates technical staff dependency, and lets Orr Group focus entirely on growing the client base rather than managing infrastructure. The platform also stays current and secure permanently, which Options 1 and 2 cannot guarantee.</p>
+    </div>
+
+    <p style="font-size:12px;color:var(--muted);margin-top:24px;text-align:center;">★ Cybersecurity health checks available as a post-launch add-on under all options. Quarterly vulnerability assessment + written findings report. Pricing on request.</p>
+
+  </section>
+
+  <section class="bottom-cta-section">
+    <div class="inner">
+      <span class="eyebrow">Next</span>
+      <h2>The full investment, <em>all three options.</em></h2>
+      <p class="muted">Complete pricing, payment schedules, and CJ's economics — what the platform costs, what it generates, and what the three-year picture looks like.</p>
+      <div class="btn-row" style="justify-content:center;">
+        <a href="orr-group-investment.html" class="btn btn-primary">See the investment →</a>
+      </div>
+    </div>
+  </section>
 </main>
- <footer class="footer">
- <div class="footer-inner">
- <a href="orr-group-index.html" class="footer-logo">
- <img src="/2516_logo_horizontal_dark_web.png"
- data-dark="/2516_logo_horizontal_dark_web.png"
- data-light="/2516_logo_horizontal_light_web.png"
- alt="2516 Technologies" style="height:32px;width:auto;">
- </a>
- <div class="footer-nav">
- <a href="orr-group-roadmap.html">← Roadmap</a>
- <a href="orr-group-investment.html">Investment →</a>
- </div>
- <span class="footer-tagline">AI is Jazz.</span>
- </div>
- </footer>
- <button class="theme-toggle-trigger" aria-label="Toggle theme"></button>
- <div class="theme-switcher hidden">
- <span class="theme-label">Theme</span>
- <button class="theme-btn theme-btn-t1 active" data-theme="t1"></button>
- <button class="theme-btn theme-btn-t2" data-theme="t2"></button>
- <button class="theme-btn theme-btn-t3" data-theme="t3"></button>
- <button class="theme-btn theme-btn-t4" data-theme="t4"></button>
- <button class="theme-btn theme-btn-t5" data-theme="t5"></button>
- </div>
+  <footer class="footer">
+    <div class="footer-inner">
+      <a href="orr-group-index.html" class="footer-logo">
+        <img src="/2516_logo_horizontal_dark_web.png"
+             data-dark="/2516_logo_horizontal_dark_web.png"
+             data-light="/2516_logo_horizontal_light_web.png"
+             alt="2516 Technologies" style="height:32px;width:auto;">
+      </a>
+      <div class="footer-nav">
+        <a href="orr-group-roadmap.html">← Roadmap</a>
+        <a href="orr-group-investment.html">Investment →</a>
+      </div>
+      <span class="footer-tagline">AI is Jazz.</span>
+    </div>
+  </footer>
+  <button class="theme-toggle-trigger" aria-label="Toggle theme">🎨</button>
+  <div class="theme-switcher hidden">
+    <span class="theme-label">Theme</span>
+    <button class="theme-btn theme-btn-t1 active" data-theme="t1"></button>
+    <button class="theme-btn theme-btn-t2" data-theme="t2"></button>
+    <button class="theme-btn theme-btn-t3" data-theme="t3"></button>
+    <button class="theme-btn theme-btn-t4" data-theme="t4"></button>
+    <button class="theme-btn theme-btn-t5" data-theme="t5"></button>
+  </div>
 
- <script>
- const themeButtons = document.querySelectorAll('.theme-btn');
- const body = document.body;
- const logos = document.querySelectorAll('img[data-dark][data-light]');
- const hamburger = document.querySelector('.hamburger');
- const mobileMenu = document.querySelector('.mobile-menu');
- const themeSwitcher = document.querySelector('.theme-switcher');
- const themeToggleTrigger = document.querySelector('.theme-toggle-trigger');
+  <script>
+    const themeButtons = document.querySelectorAll('.theme-btn');
+    const body = document.body;
+    const logos = document.querySelectorAll('img[data-dark][data-light]');
+    const hamburger = document.querySelector('.hamburger');
+    const mobileMenu = document.querySelector('.mobile-menu');
+    const themeSwitcher = document.querySelector('.theme-switcher');
+    const themeToggleTrigger = document.querySelector('.theme-toggle-trigger');
 
- function updateLogo(theme) {
- const isDarkTheme = ['t2','t4','t5'].includes(theme);
- logos.forEach(logo => { logo.src = isDarkTheme ? logo.dataset.light : logo.dataset.dark; });
- }
- function setTheme(theme) {
- body.className = theme;
- localStorage.setItem('theme', theme);
- themeButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.theme === theme));
- updateLogo(theme);
- }
- themeButtons.forEach(btn => btn.addEventListener('click', () => setTheme(btn.dataset.theme)));
- hamburger.addEventListener('click', () => {
- hamburger.classList.toggle('active');
- mobileMenu.classList.toggle('open');
- });
- mobileMenu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
- hamburger.classList.remove('active');
- mobileMenu.classList.remove('open');
- }));
- themeToggleTrigger.addEventListener('click', (e) => {
- e.stopPropagation();
- themeSwitcher.classList.toggle('hidden');
- themeToggleTrigger.classList.toggle('active');
- });
- document.addEventListener('click', (e) => {
- if (!themeSwitcher.contains(e.target) && !themeToggleTrigger.contains(e.target)) {
- themeSwitcher.classList.add('hidden');
- themeToggleTrigger.classList.remove('active');
- }
- });
- const savedTheme = localStorage.getItem('theme') || 't1';
- setTheme(savedTheme);
- </script>
+    function updateLogo(theme) {
+      const isDarkTheme = ['t2','t4','t5'].includes(theme);
+      logos.forEach(logo => { logo.src = isDarkTheme ? logo.dataset.light : logo.dataset.dark; });
+    }
+    function setTheme(theme) {
+      body.className = theme;
+      localStorage.setItem('theme', theme);
+      themeButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.theme === theme));
+      updateLogo(theme);
+    }
+    themeButtons.forEach(btn => btn.addEventListener('click', () => setTheme(btn.dataset.theme)));
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      mobileMenu.classList.toggle('open');
+    });
+    mobileMenu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
+      hamburger.classList.remove('active');
+      mobileMenu.classList.remove('open');
+    }));
+    themeToggleTrigger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      themeSwitcher.classList.toggle('hidden');
+      themeToggleTrigger.classList.toggle('active');
+    });
+    document.addEventListener('click', (e) => {
+      if (!themeSwitcher.contains(e.target) && !themeToggleTrigger.contains(e.target)) {
+        themeSwitcher.classList.add('hidden');
+        themeToggleTrigger.classList.remove('active');
+      }
+    });
+    const savedTheme = localStorage.getItem('theme') || 't1';
+    if (!localStorage.getItem('theme')) { localStorage.setItem('theme','t1'); }
+    setTheme(savedTheme);
+  </script>
 
 </body>
 </html>
