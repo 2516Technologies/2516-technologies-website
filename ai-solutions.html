@@ -486,9 +486,74 @@
       font-family: 'Inter', sans-serif;
     }
 
+    /* ── HAMBURGER ── */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+    }
+
+    .hamburger-line {
+      width: 20px;
+      height: 2px;
+      background: rgba(200,215,255,0.8);
+      transition: all 0.3s;
+    }
+
+    .hamburger.active .hamburger-line:nth-child(1) { transform: rotate(45deg) translate(7px, 7px); }
+    .hamburger.active .hamburger-line:nth-child(2) { opacity: 0; }
+    .hamburger.active .hamburger-line:nth-child(3) { transform: rotate(-45deg) translate(7px, -7px); }
+
+    /* ── MOBILE MENU ── */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 63px;
+      left: 0; right: 0;
+      background: rgba(13,27,62,0.98);
+      border-bottom: 1px solid var(--divider);
+      padding: 16px 1.4rem;
+      flex-direction: column;
+      z-index: 99;
+      max-height: calc(100vh - 63px);
+      overflow-y: auto;
+    }
+
+    .mobile-menu.open { display: flex; }
+
+    .mobile-menu a {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 400;
+      color: rgba(200,215,255,0.75);
+      text-decoration: none;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--divider);
+      transition: color 0.2s;
+    }
+
+    .mobile-menu a:last-child { border-bottom: none; }
+    .mobile-menu a:hover { color: var(--white); }
+    .mobile-menu a.active { color: var(--blue); }
+
+    .mobile-menu .nav-cta {
+      background: var(--blue-btn);
+      color: var(--white) !important;
+      border-radius: 6px;
+      padding: 0.6rem 1.2rem;
+      margin-top: 8px;
+      text-align: center;
+      border-bottom: none !important;
+    }
+
     @media (max-width: 768px) {
       nav { padding: 1rem 1.4rem; }
       .nav-links { display: none; }
+      .hamburger { display: flex; }
       .hero, .section { padding-left: 1.4rem; padding-right: 1.4rem; }
       .jazz-bars { padding-left: 1.4rem; }
       .card-grid { grid-template-columns: 1fr; }
@@ -503,7 +568,7 @@
 <!-- NAV -->
 <nav>
   <a class="nav-logo" href="index.html">
-    <img src="2516_logo_horizontal_dark_web.png" alt="2516 Technologies" />
+    <img src="2516_logo_horizontal_dark_web (1).png" data-dark="2516_logo_horizontal_dark_web (1).png" data-light="2516_logo_horizontal_light_web (1).png" alt="2516 Technologies" />
   </a>
   <ul class="nav-links">
     <li><a href="index.html">Home</a></li>
@@ -514,7 +579,22 @@
     <li><a href="contact.html">Contact</a></li>
     <li><a href="assessment.html" class="nav-cta">Take the Assessment</a></li>
   </ul>
+  <button class="hamburger" aria-label="Toggle menu">
+    <span class="hamburger-line"></span>
+    <span class="hamburger-line"></span>
+    <span class="hamburger-line"></span>
+  </button>
 </nav>
+
+<div class="mobile-menu">
+  <a href="index.html">Home</a>
+  <a href="about.html">About</a>
+  <a href="ai-solutions.html" class="active">AI Solutions</a>
+  <a href="services.html">Advisory</a>
+  <a href="process.html">Process</a>
+  <a href="contact.html">Contact</a>
+  <a href="assessment.html" class="nav-cta">Take the Assessment</a>
+</div>
 
 <!-- HERO -->
 <section class="hero">
@@ -684,10 +764,40 @@
 <!-- FOOTER -->
 <footer>
   <a href="index.html">
-    <img src="2516_logo_horizontal_dark_web.png" alt="2516 Technologies" style="height:28px;" />
+    <img src="2516_logo_horizontal_dark_web (1).png" data-dark="2516_logo_horizontal_dark_web (1).png" data-light="2516_logo_horizontal_light_web (1).png" alt="2516 Technologies" style="height:28px;" />
   </a>
   <span class="footer-tagline">AI is Jazz</span>
 </footer>
+
+
+<script>
+  const hamburger = document.querySelector('.hamburger');
+  const mobileMenu = document.querySelector('.mobile-menu');
+  const logos = document.querySelectorAll('img[data-dark][data-light]');
+
+  function updateLogo(theme) {
+    const isDarkTheme = ['t2', 't4', 't5'].includes(theme);
+    logos.forEach(logo => {
+      logo.src = isDarkTheme ? logo.dataset.light : logo.dataset.dark;
+    });
+  }
+
+  const savedTheme = localStorage.getItem('theme') || 't1';
+  document.body.className = savedTheme;
+  updateLogo(savedTheme);
+
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('active');
+    mobileMenu.classList.toggle('open');
+  });
+
+  mobileMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('active');
+      mobileMenu.classList.remove('open');
+    });
+  });
+</script>
 
 </body>
 </html>
