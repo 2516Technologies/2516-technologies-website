@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Submissions — 2516</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #0a0a0a;
+      color: #e5e5e5;
+      min-height: 100vh;
+      padding: 2rem;
+    }
+    h1 { font-size: 1.6rem; font-weight: 600; margin-bottom: 0.25rem; color: #fff; }
+    .subtitle { color: #666; font-size: 0.875rem; margin-bottom: 2rem; }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .stat-card {
+      background: #141414;
+      border: 1px solid #222;
+      border-radius: 10px;
+      padding: 1.25rem;
+    }
+    .stat-card .label { font-size: 0.75rem; color: #666; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
+    .stat-card .value { font-size: 2rem; font-weight: 700; color: #fff; }
+    .stat-card .sub { font-size: 0.75rem; color: #555; margin-top: 0.25rem; }
+    .charts {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    @media (max-width: 700px) { .charts { grid-template-columns: 1fr; } }
+    .chart-card {
+      background: #141414;
+      border: 1px solid #222;
+      border-radius: 10px;
+      padding: 1.5rem;
+    }
+    .chart-card h2 { font-size: 0.875rem; font-weight: 600; color: #aaa; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.05em; }
+    canvas { max-height: 240px; }
+    .table-card {
+      background: #141414;
+      border: 1px solid #222;
+      border-radius: 10px;
+      padding: 1.5rem;
+      overflow-x: auto;
+    }
+    .table-card h2 { font-size: 0.875rem; font-weight: 600; color: #aaa; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.05em; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.825rem; }
+    th { text-align: left; padding: 0.6rem 0.75rem; color: #555; font-weight: 500; border-bottom: 1px solid #1e1e1e; white-space: nowrap; }
+    td { padding: 0.65rem 0.75rem; border-bottom: 1px solid #1a1a1a; vertical-align: top; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: #1a1a1a; }
+    .badge {
+      display: inline-block;
+      padding: 0.2rem 0.55rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      background: #1e2a1e;
+      color: #6ee7b7;
+    }
+    .loading { text-align: center; padding: 4rem; color: #555; }
+    .error { color: #f87171; background: #1c1010; border: 1px solid #3b1010; border-radius: 8px; padding: 1rem; margin-bottom: 1rem; }
+    .empty { color: #555; font-style: italic; }
+  </style>
+</head>
+<body>
+  <h1>Contact Submissions</h1>
+  <p class="subtitle">2516 website — live data from Supabase</p>
+
+  <div id="error-banner"></div>
+  <div id="app"><p class="loading">Loading submissions…</p></div>
+
+  <script>
+    const SUPABASE_URL = 'https://kgfmwlpqyxrvlitzjrml.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtnZm13bHBxeXhydmxpdHpqcm1sIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg4NDQ3NTMsImV4cCI6MjA4NDQyMDc1M30.MR0zZeRdglsSrbK8jxmZL6fx79Ca4WEangbr7OARbMU';
+
+    const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    function fmtDate(iso) {
+      if (!iso) return '—';
+      return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    }
+
+    function groupByDay(rows) {
+      const map = {};
+      rows.forEach(r => {
+        const day = (r.created_at || r.submitted_at || '').slice(0, 10);
+        if (!day) return;
+        map[day] = (map[day] || 0) + 1;
+      });
+      const sorted = Object.keys(map).sort();
+      return { labels: sorted.map(d => fmtDate(d + 'T12:00:00')), counts: sorted.map(d => map[d]) };
+    }
+
+    function groupByField(rows, field) {
+      const map = {};
+      rows.forEach(r => {
+        const val = r[field] || 'Unknown';
+        map[val] = (map[val] || 0) + 1;
+      });
+      return map;
+    }
+
+    function chartColors(n) {
+      const palette = ['#6366f1','#06b6d4','#10b981','#f59e0b','#f43f5e','#8b5cf6','#ec4899','#14b8a6'];
+      return Array.from({length: n}, (_, i) => palette[i % palette.length]);
+    }
+
+    async function main() {
+      const { data, error } = await client
+        .from('contact_submissions')
+        .select('*')
+        .order('created_at', { ascending: true });
+
+      const app = document.getElementById('app');
+
+      if (error) {
+        document.getElementById('error-banner').innerHTML =
+          `<div class="error"><strong>Error querying Supabase:</strong> ${error.message}</div>`;
+        app.innerHTML = '';
+        return;
+      }
+
+      if (!data || data.length === 0) {
+        app.innerHTML = '<p class="empty">No submissions found.</p>';
+        return;
+      }
+
+      // Stats
+      const total = data.length;
+      const firstDate = fmtDate(data[0].created_at || data[0].submitted_at);
+      const lastDate  = fmtDate(data[data.length - 1].created_at || data[data.length - 1].submitted_at);
+
+      const serviceMap = groupByField(data, 'service');
+      const topService = Object.entries(serviceMap).sort((a,b) => b[1]-a[1])[0];
+
+      const industryMap = groupByField(data, 'industry');
+
+      // Timeline
+      const timeline = groupByDay(data);
+
+      // Columns to show in table (skip id/long blobs)
+      const skipCols = new Set(['id']);
+      const allCols = data.length > 0 ? Object.keys(data[0]).filter(c => !skipCols.has(c)) : [];
+
+      app.innerHTML = `
+        <div class="stats">
+          <div class="stat-card">
+            <div class="label">Total Submissions</div>
+            <div class="value">${total}</div>
+          </div>
+          <div class="stat-card">
+            <div class="label">First Submission</div>
+            <div class="value" style="font-size:1.1rem;margin-top:0.3rem">${firstDate}</div>
+          </div>
+          <div class="stat-card">
+            <div class="label">Latest Submission</div>
+            <div class="value" style="font-size:1.1rem;margin-top:0.3rem">${lastDate}</div>
+          </div>
+          ${topService ? `<div class="stat-card">
+            <div class="label">Top Service</div>
+            <div class="value" style="font-size:1rem;margin-top:0.3rem">${topService[0]}</div>
+            <div class="sub">${topService[1]} submission${topService[1]>1?'s':''}</div>
+          </div>` : ''}
+        </div>
+
+        <div class="charts">
+          <div class="chart-card">
+            <h2>Submissions Over Time</h2>
+            <canvas id="timelineChart"></canvas>
+          </div>
+          <div class="chart-card">
+            <h2>By Service</h2>
+            <canvas id="serviceChart"></canvas>
+          </div>
+          <div class="chart-card">
+            <h2>By Industry</h2>
+            <canvas id="industryChart"></canvas>
+          </div>
+        </div>
+
+        <div class="table-card">
+          <h2>All Submissions (${total})</h2>
+          <table>
+            <thead><tr>${allCols.map(c => `<th>${c}</th>`).join('')}</tr></thead>
+            <tbody>
+              ${data.map(row => `<tr>${allCols.map(c => {
+                let val = row[c];
+                if (c === 'created_at' || c === 'submitted_at') val = fmtDate(val);
+                if (val === null || val === undefined || val === '') val = '<span style="color:#444">—</span>';
+                return `<td>${val}</td>`;
+              }).join('')}</tr>`).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+
+      // Chart defaults
+      Chart.defaults.color = '#666';
+      Chart.defaults.borderColor = '#1e1e1e';
+
+      // Timeline bar chart
+      new Chart(document.getElementById('timelineChart'), {
+        type: 'bar',
+        data: {
+          labels: timeline.labels,
+          datasets: [{
+            label: 'Submissions',
+            data: timeline.counts,
+            backgroundColor: '#6366f1',
+            borderRadius: 4,
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: { legend: { display: false } },
+          scales: {
+            x: { ticks: { maxRotation: 45 } },
+            y: { beginAtZero: true, ticks: { stepSize: 1 } }
+          }
+        }
+      });
+
+      // Service doughnut
+      const svcKeys = Object.keys(serviceMap);
+      new Chart(document.getElementById('serviceChart'), {
+        type: 'doughnut',
+        data: {
+          labels: svcKeys,
+          datasets: [{ data: svcKeys.map(k => serviceMap[k]), backgroundColor: chartColors(svcKeys.length), borderWidth: 0 }]
+        },
+        options: { responsive: true, plugins: { legend: { position: 'right', labels: { boxWidth: 12, padding: 12 } } } }
+      });
+
+      // Industry bar chart
+      const indKeys = Object.keys(industryMap).sort((a,b) => industryMap[b]-industryMap[a]);
+      new Chart(document.getElementById('industryChart'), {
+        type: 'bar',
+        data: {
+          labels: indKeys,
+          datasets: [{
+            label: 'Submissions',
+            data: indKeys.map(k => industryMap[k]),
+            backgroundColor: '#06b6d4',
+            borderRadius: 4,
+          }]
+        },
+        options: {
+          indexAxis: 'y',
+          responsive: true,
+          plugins: { legend: { display: false } },
+          scales: { x: { beginAtZero: true, ticks: { stepSize: 1 } } }
+        }
+      });
+    }
+
+    main();
+  </script>
+</body>
+</html>
