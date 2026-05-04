@@ -1143,7 +1143,7 @@
 
 
  @media (max-width: 1024px) {
- .theme-toggle-trigger { display: none; }
+ @media (max-width: 768px) { .theme-toggle-trigger { display: none; } .theme-switcher { display: none; } }
  .theme-switcher { display: none !important; }
  }
 
@@ -1154,7 +1154,7 @@
 <body class="t1">
  <nav class="navbar">
  <a href="/" class="logo-text">
- <img src="/2516_logo_horizontal_dark_web.png" data-dark="/2516_logo_horizontal_dark_web.png" data-light="/2516_logo_horizontal_light_web.png" alt="2516 Technologies" class="logo" style="height:36px; width:auto;">
+ <img src="/2516_logo_horizontal_dark_web (1).png" data-dark="/2516_logo_horizontal_dark_web (1).png" data-light="/2516_logo_horizontal_light_web (1).png" alt="2516 Technologies" class="logo" style="height:36px; width:auto;">
  </a>
  <div class="nav-links">
  <a href="index.html" class="nav-link">Home</a>
@@ -1291,12 +1291,12 @@
 
  <footer class="footer">
  <div class="footer-inner">
- <a href="index.html" class="footer-logo"><img src="/2516_logo_horizontal_dark_web.png" data-dark="/2516_logo_horizontal_dark_web.png" data-light="/2516_logo_horizontal_light_web.png" alt="2516 Technologies" style="height:36px; width:auto;"></a>
+ <a href="index.html" class="footer-logo"><img src="/2516_logo_horizontal_dark_web (1).png" data-dark="/2516_logo_horizontal_dark_web (1).png" data-light="/2516_logo_horizontal_light_web (1).png" alt="2516 Technologies" style="height:36px; width:auto;"></a>
  <span class="footer-tagline">AI is Jazz</span>
  </div>
  </footer>
 
- <button class="theme-toggle-trigger" aria-label="Toggle theme options"></button>
+ <button class="theme-toggle-trigger" aria-label="Toggle theme options"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 0 20"/><path d="M12 8v8M8 12h8"/></svg></button>
 
  <div class="theme-switcher hidden">
  <span class="theme-label">Theme</span>
@@ -1328,7 +1328,7 @@
 
  const termsContent = `
  <div class="modal-header">
- <img src="/2516_logo_horizontal_dark_web.png" class="modal-logo" id="modalLogo" alt="2516 Technologies">
+ <img src="/2516_logo_horizontal_dark_web (1).png" class="modal-logo" id="modalLogo" alt="2516 Technologies">
  <div class="modal-header-text">
  <h1>Terms and Conditions</h1>
  <p class="modal-tagline">AI is Jazz</p>
@@ -1379,7 +1379,7 @@
  
  const privacyContent = `
  <div class="modal-header">
- <img src="/2516_logo_horizontal_dark_web.png" class="modal-logo" id="modalLogo" alt="2516 Technologies">
+ <img src="/2516_logo_horizontal_dark_web (1).png" class="modal-logo" id="modalLogo" alt="2516 Technologies">
  <div class="modal-header-text">
  <h1>Privacy Policy</h1>
  <p class="modal-tagline">AI is Jazz</p>
@@ -1466,7 +1466,7 @@
  const isDarkTheme = ['t2', 't4', 't5'].includes(currentTheme);
  const modalLogo = document.getElementById('modalLogo');
  if (modalLogo) {
- modalLogo.src = isDarkTheme ? '/public/2516_logo_horizontal_light_web.png' : '/public/2516_logo_horizontal_dark_web.png';
+ modalLogo.src = isDarkTheme ? '/public/2516_logo_horizontal_light_web (1).png' : '/public/2516_logo_horizontal_dark_web (1).png';
  }
  }
 
