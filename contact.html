@@ -107,35 +107,6 @@
  transform: translateY(-10px);
  }
 
- .theme-toggle-trigger {
- position: fixed;
- top: 80px;
- right: 16px;
- z-index: 50;
- width: 36px;
- height: 36px;
- border-radius: 50%;
- background: var(--card);
- border: 1px solid var(--border);
- cursor: pointer;
- display: flex;
- align-items: center;
- justify-content: center;
- font-size: 16px;
- transition: all 0.2s ease;
- box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
- }
-
- .theme-toggle-trigger:hover {
- transform: scale(1.08);
- border-color: var(--gold);
- }
-
- .theme-toggle-trigger.active {
- opacity: 0;
- pointer-events: none;
- }
-
  .theme-label {
  font-size: 9px;
  letter-spacing: 0.1em;
@@ -869,7 +840,7 @@
 
 
  @media (max-width: 1024px) {
- @media (max-width: 768px) { .theme-toggle-trigger { display: none; } .theme-switcher { display: none; } }
+  .theme-switcher { display: none; } }
  .theme-switcher { display: none !important; }
  }
 
@@ -1006,9 +977,9 @@
  </div>
  </footer>
 
- <button class="theme-toggle-trigger" aria-label="Toggle theme options"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10c1.1 0 2-.9 2-2v-.5c0-.55.45-1 1-1h2c2.76 0 5-2.24 5-5 0-4.42-4.03-8-9-8z" stroke="#94a3b8" fill="none"/><circle cx="6.5" cy="11.5" r="1.5" fill="#ef4444"/><circle cx="9.5" cy="7.5" r="1.5" fill="#3b82f6"/><circle cx="14.5" cy="7.5" r="1.5" fill="#22c55e"/><circle cx="17.5" cy="11.5" r="1.5" fill="#f59e0b"/></svg></button>
+ 
 
- <div class="theme-switcher hidden">
+ <div class="theme-switcher">
  <span class="theme-label">Theme</span>
  <button class="theme-btn theme-btn-t1 active" data-theme="t1" aria-label="Light Blue Theme"></button>
  <button class="theme-btn theme-btn-t2" data-theme="t2" aria-label="Dark Blue Theme"></button>
@@ -1024,15 +995,7 @@
  const hamburger = document.querySelector('.hamburger');
  const mobileMenu = document.querySelector('.mobile-menu');
  const themeSwitcher = document.querySelector('.theme-switcher');
- const themeToggleTrigger = document.querySelector('.theme-toggle-trigger');
- const contactForm = document.getElementById('contactForm');
- const formSuccess = document.getElementById('formSuccess');
-
- function updateLogo(theme) {
- const isDarkTheme = ['t2', 't4', 't5'].includes(theme);
- logos.forEach(logo => {
- logo.src = isDarkTheme ? logo.dataset.light : logo.dataset.dark;
- });
+ 
  }
 
  function setTheme(theme) {
