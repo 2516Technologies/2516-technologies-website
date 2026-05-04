@@ -103,12 +103,6 @@
  transition: all 0.3s ease;
  }
 
- .theme-switcher.hidden {
- opacity: 0;
- pointer-events: none;
- transform: translateY(-10px);
- }
-
  .theme-label {
  font-size: 9px;
  letter-spacing: 0.1em;
@@ -439,7 +433,7 @@
  min-height: 44px;
  }
 
- @media (max-width: 1024px) {
+ @media (max-width: 768px) {
  .nav-links {
  display: none;
  }
@@ -1445,9 +1439,12 @@
  var hamburger = document.querySelector('.hamburger');
  var mobileMenu = document.querySelector('.mobile-menu');
  var themeSwitcher = document.querySelector('.theme-switcher');
- var themeToggleTrigger = document.querySelector(');
- // Update modal logo if modal is open
- updateModalLogo();
+
+ function updateLogo(theme) {
+ var isDark = theme === 't2' || theme === 't5';
+ logos.forEach(function(logo) {
+ logo.src = isDark ? logo.dataset.dark : logo.dataset.light;
+ });
  }
 
  function setTheme(theme) {
@@ -1476,20 +1473,6 @@
  mobileMenu.classList.remove('open');
  });
  });
-
- themeToggleTrigger.addEventListener('click', function(e) {
- e.stopPropagation();
- themeSwitcher.classList.toggle('hidden');
- themeToggleTrigger.classList.toggle('active');
- });
-
- document.addEventListener('click', function(e) {
- if (!themeSwitcher.contains(e.target) && !themeToggleTrigger.contains(e.target)) {
- themeSwitcher.classList.add('hidden');
- themeToggleTrigger.classList.remove('active');
- }
- });
-
  var savedTheme = localStorage.getItem('theme') || 't1';
  setTheme(savedTheme);
 

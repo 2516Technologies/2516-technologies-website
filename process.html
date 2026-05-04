@@ -101,12 +101,6 @@
  transition: all 0.3s ease;
  }
 
- .theme-switcher.hidden {
- opacity: 0;
- pointer-events: none;
- transform: translateY(-10px);
- }
-
  .theme-label {
  font-size: 9px;
  letter-spacing: 0.1em;
@@ -399,7 +393,7 @@
  align-items: center;
  }
 
- @media (max-width: 1024px) {
+ @media (max-width: 768px) {
  .nav-links {
  display: none;
  }
@@ -910,7 +904,12 @@
  const hamburger = document.querySelector('.hamburger');
  const mobileMenu = document.querySelector('.mobile-menu');
  const themeSwitcher = document.querySelector('.theme-switcher');
- 
+
+ function updateLogo(theme) {
+ const isDark = theme === 't2' || theme === 't5';
+ logos.forEach(logo => {
+ logo.src = isDark ? logo.dataset.dark : logo.dataset.light;
+ });
  }
 
  function setTheme(theme) {
@@ -940,19 +939,6 @@
  hamburger.classList.remove('active');
  mobileMenu.classList.remove('open');
  });
- });
-
- themeToggleTrigger.addEventListener('click', (e) => {
- e.stopPropagation();
- themeSwitcher.classList.toggle('hidden');
- themeToggleTrigger.classList.toggle('active');
- });
-
- document.addEventListener('click', (e) => {
- if (!themeSwitcher.contains(e.target) && !themeToggleTrigger.contains(e.target)) {
- themeSwitcher.classList.add('hidden');
- themeToggleTrigger.classList.remove('active');
- }
  });
 
  // Mobile accordion for timeline
