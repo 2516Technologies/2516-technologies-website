@@ -908,7 +908,7 @@
  function updateLogo(theme) {
  const isDark = theme === 't2' || theme === 't5';
  logos.forEach(logo => {
- logo.src = isDark ? logo.dataset.dark : logo.dataset.light;
+ logo.src = isDark ? logo.dataset.light : logo.dataset.dark;
  });
  }
 
