@@ -989,7 +989,7 @@
  const themeSwitcher = document.querySelector('.theme-switcher');
 
  function updateLogo(theme) {
- const isDark = theme === 't2' || theme === 't5';
+ const isDark = theme === 't2' || theme === 't4' || theme === 't5';
  logos.forEach(logo => {
  logo.src = isDark ? logo.dataset.light : logo.dataset.dark;
  });
