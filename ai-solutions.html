@@ -3,11 +3,11 @@
 <head>
  <meta charset="UTF-8">
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <title>Our Process - 2516 Technologies</title>
+ <title>Solutions - 2516 Technologies</title>
  <link rel="icon" type="image/png" href="/public/2516_icon_light_512.png">
  <link rel="preconnect" href="https://fonts.googleapis.com">
  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
- <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+ <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Roboto+Slab:wght@300;400;500&display=swap" rel="stylesheet">
  <style>
  * {
  margin: 0;
@@ -243,6 +243,17 @@
  margin-bottom: 12px;
  }
 
+ .section h2,
+ .section-sm h2 {
+ margin-bottom: 16px;
+ }
+
+ .section h2 + p,
+ .section-sm h2 + p,
+ .section h1 + p {
+ margin-bottom: 40px;
+ }
+
  .btn {
  font-family: 'DM Sans', sans-serif;
  font-size: 13px;
@@ -305,6 +316,22 @@
  padding: 96px 24px;
  }
 
+ .section-sm {
+ max-width: 1100px;
+ margin: 0 auto;
+ padding: 64px 24px;
+ }
+
+ .centered {
+ text-align: center;
+ }
+
+ .btn-row {
+ display: flex;
+ gap: 16px;
+ flex-wrap: wrap;
+ }
+
  .navbar {
  position: sticky;
  top: 0;
@@ -324,6 +351,15 @@
  width: auto;
  }
 
+ .logo-text {
+ font-family: 'Cormorant Garamond', serif;
+ font-size: 20px;
+ font-weight: 400;
+ color: var(--text);
+ text-decoration: none;
+ white-space: nowrap;
+ }
+
  .nav-links {
  display: flex;
  gap: 32px;
@@ -338,6 +374,7 @@
  color: var(--muted);
  text-decoration: none;
  transition: color 0.2s ease;
+ position: relative;
  }
 
  .nav-link:hover {
@@ -406,7 +443,7 @@
  .mobile-menu .nav-link {
  padding: 12px 0;
  display: block;
- min-height: 40px;
+ height: 40px;
  display: flex;
  align-items: center;
  }
@@ -421,11 +458,19 @@
  justify-content: center;
  }
 
+ * {
+ -webkit-tap-highlight-color: transparent;
+ }
+
  .btn,
  .nav-link {
  min-height: 44px;
  display: inline-flex;
  align-items: center;
+ }
+
+ .nav-link {
+ min-height: 44px;
  }
 
  @media (max-width: 768px) {
@@ -441,225 +486,450 @@
  padding: 0 24px;
  }
 
+ .logo {
+ height: 28px;
+ width: auto;
+ }
+
  .section {
- padding: 64px 24px;
+ padding: 64px 20px;
+ }
+
+ .section-sm {
+ padding: 48px 20px;
  }
  }
 
- /* Process Hero */
- .process-hero {
- padding: 80px 24px 48px;
+ .hero {
+ min-height: 100vh;
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+ align-items: center;
+ padding: 120px 24px;
+ position: relative;
+ overflow: hidden;
+ }
+
+ .hero::before {
+ content: '';
+ position: fixed;
+ top: 0;
+ left: 0;
+ right: 0;
+ bottom: 0;
+ z-index: 0;
+ pointer-events: none;
+ background: radial-gradient(ellipse 70% 50% at 50% 0%, var(--glow) 0%, transparent 70%);
+ }
+
+ .hero-content {
+ position: relative;
+ z-index: 1;
+ max-width: 760px;
+ margin: 0 auto;
+ text-align: center;
+ opacity: 0;
+ transform: translateY(24px);
+ animation: fadeInUp 0.6s ease-out forwards;
+ }
+
+ @keyframes fadeInUp {
+ to {
+ opacity: 1;
+ transform: translateY(0);
+ }
+ }
+
+ .hero-content h1 {
+ margin-bottom: 24px;
+ }
+
+ .hero-subhead {
+ font-size: clamp(15px, 2.5vw, 17px);
+ line-height: 1.8;
+ max-width: 560px;
+ margin: 0 auto 40px;
+ }
+
+ .hero .btn-row {
+ justify-content: center;
+ }
+
+ .trust-signals {
+ margin-top: 48px;
+ font-family: 'DM Sans', sans-serif;
+ font-size: 12px;
+ color: var(--muted);
+ display: flex;
+ gap: 24px;
+ justify-content: center;
+ flex-wrap: wrap;
+ align-items: center;
+ }
+
+ .trust-signals span:not(:last-child)::after {
+ content: '•';
+ margin-left: 24px;
+ opacity: 0.5;
+ }
+
+ /* Animated Jazz Bars Hero matches 2516 logo exactly */
+ .jazz-bars {
+ display: flex;
+ align-items: center;
+ gap: 8px;
+ margin-bottom: 48px;
+ height: 100px;
+ justify-content: center;
+ position: relative;
+ }
+
+ .bar {
+ width: 16px;
+ border-radius: 50px;
+ opacity: 0;
+ transform: scaleY(0);
+ transform-origin: center;
+ animation: barGrow 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+ }
+
+ /* 4-bar ii-V-I-vi chord progression matches logo mark */
+ .bar-1 {
+ height: 35px;
+ background: #1e3a8a;
+ animation-delay: 0.1s;
+ }
+
+ .bar-2 {
+ height: 100px;
+ background: #3b82f6;
+ animation-delay: 0.25s;
+ }
+
+ .bar-3 {
+ height: 55px;
+ background: #1e3a8a;
+ animation-delay: 0.4s;
+ }
+
+ .bar-4 {
+ height: 80px;
+ background: #3b82f6;
+ animation-delay: 0.55s;
+ }
+
+ @keyframes barGrow {
+ 0% {
+ transform: scaleY(0);
+ opacity: 0;
+ }
+ 60% {
+ opacity: 1;
+ }
+ 100% {
+ transform: scaleY(1);
+ opacity: 1;
+ }
+ }
+
+ .brand-name {
+ font-family: 'Roboto Slab', serif;
+ font-size: 64px;
+ font-weight: 400;
+ letter-spacing: 0.5px;
+ margin: 0 0 16px 0;
+ display: flex;
+ justify-content: center;
+ flex-wrap: wrap;
+ }
+
+ .brand-name .char {
+ display: inline-block;
+ opacity: 0;
+ transform: scaleY(0);
+ transform-origin: center;
+ animation: barGrow 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+ }
+
+ .brand-name .char-space {
+ width: 0.3em;
+ }
+
+ .brand-tagline {
+ font-family: 'Cormorant Garamond', serif;
+ font-size: 24px;
+ font-weight: 300;
+ font-style: italic;
+ color: var(--muted);
+ margin: 0 auto 48px auto;
+ opacity: 0;
+ animation: fadeInUp 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.9s forwards;
+ max-width: 600px;
+ text-align: center;
+ width: 100%;
+ }
+
+ .jazz-bars:hover .bar {
+ animation: barPulse 0.4s ease-in-out;
+ }
+
+ @keyframes barPulse {
+ 0%, 100% { transform: scaleY(1); }
+ 50% { transform: scaleY(1.1); }
+ }
+
+ .problems-section {
+ text-align: center;
+ padding-top: 48px;
+ }
+
+ .problems-section p.muted {
+ max-width: 560px;
+ margin: 0 auto 56px;
+ }
+
+ .problems-grid {
+ display: grid;
+ grid-template-columns: repeat(3, 1fr);
+ gap: 24px;
+ }
+
+ .problem-card {
  text-align: center;
  }
 
- .process-hero-content {
- max-width: 760px;
- margin: 0 auto;
- }
-
- .process-hero-content h1 {
- margin-bottom: 16px;
- }
-
- .process-hero-content p {
- max-width: 580px;
- font-size: clamp(15px, 2.5vw, 17px);
- line-height: 1.8;
- margin: 0 auto;
- }
-
- /* Timeline Layout */
-
- @media (max-width: 768px) {
- .timeline-item {
- cursor: pointer;
- }
-
- .process-header {
- display: flex;
- justify-content: space-between;
- align-items: flex-start;
- gap: 16px;
- }
-
- .process-toggle {
- font-size: 24px;
+ .problem-icon {
+ font-size: 32px;
  color: var(--gold);
- flex-shrink: 0;
+ margin-bottom: 20px;
+ display: block;
  line-height: 1;
- transition: transform 0.3s ease;
- margin-top: -4px;
  }
 
- .timeline-item.expanded .process-toggle {
- transform: rotate(45deg);
+ .problem-card h3 {
+ margin-bottom: 8px;
  }
 
- .process-details {
+ .problem-card p {
+ font-size: 14px;
+ margin-top: 8px;
+ }
+
+ .dash-mobile {
  display: none;
  }
 
- .timeline-item.expanded .process-details {
+ .dash-desktop {
+ display: inline;
+ }
+
+ @media (max-width: 768px) {
+ .dash-mobile {
  display: block;
  }
 
- .timeline-item:not(.expanded) .process-card {
- padding-bottom: 24px;
- }
- }
-
- @media (min-width: 769px) {
- .process-toggle {
+ .dash-desktop {
  display: none;
  }
 
- .process-details {
- display: block !important;
- }
- }
-
- .timeline-container {
- max-width: 800px;
- margin: 0 auto;
- position: relative;
- }
-
- .timeline-item {
- display: flex;
- gap: 40px;
- margin-bottom: 48px;
- position: relative;
- }
-
- .timeline-item:not(:last-child)::before {
- content: '';
- position: absolute;
- left: 39px;
- top: 80px;
- bottom: -48px;
- width: 2px;
- background: var(--border);
- }
-
- .timeline-marker {
- flex-shrink: 0;
- position: relative;
- z-index: 1;
- }
-
- .timeline-number {
- width: 80px;
+ .jazz-bars {
  height: 80px;
- border-radius: 50%;
- background: var(--card);
- border: 2px solid var(--gold);
- display: flex;
- align-items: center;
+ gap: 6px;
+ margin-bottom: 32px;
+ }
+
+ .bar {
+ width: 12px;
+ }
+
+ .bar-1 { height: 28px; }
+ .bar-2 { height: 78px; }
+ .bar-3 { height: 42px; }
+ .bar-4 { height: 62px; }
+
+ .brand-name {
+ font-size: clamp(28px, 8vw, 40px);
+ letter-spacing: 0px;
+ }
+
+ .brand-tagline {
+ font-size: 18px;
+ margin-bottom: 32px;
+ }
+ }
+
+ @media (max-width: 900px) {
+ .problems-grid {
+ grid-template-columns: repeat(2, 1fr);
+ }
+
+ .problem-card:nth-child(3) {
+ grid-column: 1 / -1;
+ max-width: 400px;
+ margin: 0 auto;
+ }
+ }
+
+ @media (max-width: 640px) {
+ .problems-grid {
+ grid-template-columns: 1fr;
+ }
+
+ .problem-card:nth-child(3) {
+ grid-column: auto;
+ max-width: none;
+ }
+ }
+
+ @media (max-width: 480px) {
+ .section {
+ padding: 48px 16px;
+ }
+
+ .card {
+ padding: 28px;
+ }
+
+ .btn-row {
+ flex-direction: column;
+ }
+
+ .btn-row .btn {
+ width: 100%;
  justify-content: center;
- font-family: 'Cormorant Garamond', serif;
+
+ .brand-name {
  font-size: 32px;
- font-weight: 400;
- color: var(--gold);
  }
 
- .timeline-content {
- flex: 1;
- padding-top: 8px;
+ .brand-tagline {
+ font-size: 16px;
+ }
+ }
  }
 
- .process-card {
- position: relative;
- padding: 32px;
+ .hero {
+ padding: 80px 16px 48px;
+ min-height: auto;
  }
 
- .process-card h3 {
- margin-bottom: 16px;
- font-size: 24px;
+ .bottom-cta-section {
+ padding: 64px 16px;
+ }
  }
 
- .timeline {
- font-family: 'DM Sans', sans-serif;
- font-size: 13px;
- font-weight: 400;
- color: var(--muted);
- font-style: normal;
+ @media (max-width: 420px) {
+ h1 {
+ font-size: 28px;
  }
 
- .process-list {
- list-style: none;
- margin: 0 0 24px 0;
- padding: 0;
+ h2 {
+ font-size: 22px;
  }
 
- .process-list li {
- font-family: 'DM Sans', sans-serif;
- font-size: 14px;
- line-height: 1.7;
- color: var(--text);
- margin-bottom: 10px;
- padding-left: 20px;
- position: relative;
+ .quote-band {
+ padding: 48px 16px;
+ }
  }
 
- .process-list li:before {
- content: '•';
- position: absolute;
- left: 0;
- color: var(--gold);
- font-weight: bold;
- }
-
- .deliverable-tag {
- font-family: 'DM Sans', sans-serif;
- font-size: 13px;
- line-height: 1.6;
- color: var(--muted);
- margin-top: 20px;
- padding-top: 20px;
- border-top: 1px solid var(--border);
- }
-
- /* Principles Band */
- .principles-band {
+ .quote-band {
  background: var(--card);
  border-top: 1px solid var(--border);
  border-bottom: 1px solid var(--border);
  padding: 80px 24px;
- margin-top: 96px;
+ text-align: center;
  }
 
- .principles-inner {
- max-width: 1100px;
+ .quote-band blockquote {
+ font-family: 'Cormorant Garamond', Georgia, serif;
+ font-size: clamp(22px, 3.5vw, 34px);
+ font-weight: 300;
+ font-style: italic;
+ color: var(--text);
+ max-width: 760px;
  margin: 0 auto;
- text-align: center;
+ line-height: 1.5;
  }
 
- .principles-inner h2 {
- margin-bottom: 48px;
+ .quote-band cite {
+ font-family: 'DM Sans', system-ui, sans-serif;
+ font-size: 13px;
+ color: var(--muted);
+ font-style: normal;
+ margin-top: 24px;
+ display: block;
  }
 
- .principles-grid {
+ .stats-grid {
  display: grid;
- grid-template-columns: repeat(2, 1fr);
- gap: 48px;
+ grid-template-columns: repeat(3, 1fr);
+ gap: 40px;
+ max-width: 800px;
+ margin: 48px auto 0;
+ }
+
+ .stat {
  text-align: center;
  }
 
- @media (max-width: 768px) {
- .principles-grid {
+ .stat-number {
+ font-family: 'Cormorant Garamond', Georgia, serif;
+ font-size: clamp(48px, 8vw, 72px);
+ font-weight: 300;
+ color: var(--gold);
+ line-height: 1;
+ display: block;
+ }
+
+ .stat-label {
+ font-family: 'DM Sans', system-ui, sans-serif;
+ font-size: 13px;
+ color: var(--muted);
+ margin-top: 8px;
+ display: block;
+ }
+
+ .stats-section p.muted {
+ font-size: 15px;
+ max-width: 600px;
+ margin: 48px auto 0;
+ line-height: 1.8;
+ }
+
+ @media (max-width: 640px) {
+ .stats-grid {
  grid-template-columns: 1fr;
  gap: 32px;
  }
  }
 
- .principle-item h3 {
- font-size: 20px;
- margin-bottom: 12px;
+ @media (max-width: 480px) {
+ .stats-grid {
+ gap: 24px;
+ }
  }
 
- .principle-item p {
- font-size: 15px;
- line-height: 1.7;
+ .bottom-cta-section {
+ background: var(--card);
+ border-top: 1px solid var(--border);
+ padding: 96px 24px;
+ text-align: center;
+ }
+
+ .bottom-cta-section .inner {
+ max-width: 640px;
+ margin: 0 auto;
+ }
+
+ .bottom-cta-section p.muted {
+ margin: 20px auto 40px;
+ max-width: 520px;
+ line-height: 1.8;
+ }
+
+ .bottom-cta-section .btn-row {
+ justify-content: center;
  }
 
  .footer {
@@ -694,7 +964,6 @@
  font-style: italic;
  }
 
-
  @media (max-width: 640px) {
  .footer-inner {
  flex-direction: row;
@@ -711,27 +980,7 @@
  font-size: 11px;
  white-space: nowrap;
  }
-
- .timeline-item {
- gap: 24px;
  }
-
- .timeline-number {
- width: 60px;
- height: 60px;
- font-size: 24px;
- }
-
- .timeline-item:not(:last-child)::before {
- left: 29px;
- }
-
- .process-card {
- padding: 24px;
- }
-
- }
-
 
  img {
  max-width: 100%;
@@ -750,15 +999,15 @@
 </head>
 <body class="t1">
  <nav class="navbar">
- <a href="/" class="logo-text">
+ <a href="/" class="logo-link">
  <img src="/2516_logo_horizontal_dark_web.png" data-dark="/2516_logo_horizontal_dark_web.png" data-light="/2516_logo_horizontal_light_web.png" alt="2516 Technologies" class="logo" style="height:36px; width:auto;">
  </a>
  <div class="nav-links">
  <a href="index.html" class="nav-link">Home</a>
  <a href="about.html" class="nav-link">About</a>
- <a href="ai-solutions.html" class="nav-link">Solutions</a>
+ <a href="ai-solutions.html" class="nav-link active">Solutions</a>
  <a href="services.html" class="nav-link">Advisory</a>
- <a href="process.html" class="nav-link active">Process</a>
+ <a href="process.html" class="nav-link">Process</a>
  <a href="contact.html" class="nav-link">Contact</a>
  <a href="assessment.html" class="btn btn-primary nav-cta">Take the Assessment</a>
  </div>
@@ -772,148 +1021,158 @@
  <div class="mobile-menu">
  <a href="index.html" class="nav-link">Home</a>
  <a href="about.html" class="nav-link">About</a>
- <a href="ai-solutions.html" class="nav-link">Solutions</a>
+ <a href="ai-solutions.html" class="nav-link active">Solutions</a>
  <a href="services.html" class="nav-link">Advisory</a>
- <a href="process.html" class="nav-link active">Process</a>
+ <a href="process.html" class="nav-link">Process</a>
  <a href="contact.html" class="nav-link">Contact</a>
  <a href="assessment.html" class="btn btn-primary nav-cta">Take the Assessment</a>
  </div>
 
  <main>
- <section class="process-hero">
- <div class="process-hero-content">
- <h1>Four phases. <em>One goal.</em></h1>
- <p class="muted">From discovery to optimization, we stay engaged through execution not just hand you a deck and walk away.</p>
- </div>
- </section>
 
- <section class="section">
- <div class="timeline-container">
- <div class="timeline-item">
- <div class="timeline-marker">
- <div class="timeline-number">01</div>
- </div>
- <div class="timeline-content">
- <div class="card process-card">
- <div class="process-header">
- <h3>Discovery & Assessment</h3>
- <span class="process-toggle">+</span>
- </div>
- <div class="process-details">
- <p class="muted" style="margin-bottom: 24px;">We start by understanding where you are and where you need to go. This includes:</p>
- <ul class="process-list">
- <li>Stakeholder interviews across business and technical teams</li>
- <li>Current state analysis of your data infrastructure, tools, and capabilities</li>
- <li>Identification of pain points, bottlenecks, and quick wins</li>
- <li>Assessment of organizational readiness for change</li>
- <li>Regulatory and compliance requirement mapping</li>
- </ul>
- <p class="deliverable-tag"><strong>Deliverable:</strong> Comprehensive assessment report with prioritized recommendations and ROI projections. Executive Presentation.</p>
- </div>
- </div>
- </div>
- </div>
+  <!-- HERO -->
+  <section class="hero">
+   <div class="hero-content">
+    <span class="eyebrow">Solutions</span>
+    <h1>We don't just advise on AI.<br><em>We build it.</em></h1>
+    <p class="hero-subhead muted">
+     From custom SaaS products to warehouse-native analytics — 2516 Technologies designs, builds, and deploys AI-powered solutions engineered for regulated industries.
+    </p>
+    <div class="btn-row">
+     <a href="contact.html" class="btn btn-primary" data-track="Start Conversation - AI Hero">Start a Conversation</a>
+     <a href="assessment.html" class="btn btn-ghost" data-track="Take Assessment - AI Hero">Take the Free Assessment</a>
+    </div>
+   </div>
+  </section>
 
- <div class="timeline-item">
- <div class="timeline-marker">
- <div class="timeline-number">02</div>
- </div>
- <div class="timeline-content">
- <div class="card process-card">
- <div class="process-header">
- <h3>Strategic Roadmap Development <span class="timeline">(Weeks 4-12)</span></h3>
- <span class="process-toggle">+</span>
- </div>
- <div class="process-details">
- <p class="muted" style="margin-bottom: 24px;">With a clear picture of your current state, we build the path forward:</p>
- <ul class="process-list">
- <li>Multi-year transformation roadmap aligned to business objectives</li>
- <li>Technology stack recommendations and vendor evaluation criteria</li>
- <li>Team structure and capability gap analysis</li>
- <li>Change management and adoption strategy</li>
- <li>Budget modeling and phased investment planning</li>
- </ul>
- <p class="deliverable-tag"><strong>Deliverable:</strong> Executable roadmap with defined milestones, success metrics, resource requirements, full documentation.</p>
- </div>
- </div>
- </div>
- </div>
+  <!-- SERVICE CARDS -->
+  <section class="section">
+   <span class="eyebrow">What We Build</span>
+   <h2>Two offerings.<br><em>One standard of precision.</em></h2>
+   <p class="muted">Regulated industries don't need more dashboards. They need infrastructure and products that perform under pressure — in audits, in scale, and in production.</p>
 
- <div class="timeline-item">
- <div class="timeline-marker">
- <div class="timeline-number">03</div>
- </div>
- <div class="timeline-content">
- <div class="card process-card">
- <div class="process-header">
- <h3>Implementation Support <span class="timeline">(Ongoing)</span></h3>
- <span class="process-toggle">+</span>
- </div>
- <div class="process-details">
- <p class="muted" style="margin-bottom: 24px;">We don't just hand you a plan and walk away. We stay engaged through execution:</p>
- <ul class="process-list">
- <li>Vendor selection and contract negotiation support</li>
- <li>Technical architecture review and validation</li>
- <li>Team hiring, training, and capability development</li>
- <li>Project governance and progress monitoring</li>
- <li>Course correction as business needs evolve</li>
- </ul>
- <p class="deliverable-tag"><strong>Deliverable:</strong> Regular progress reviews, risk mitigation, and optimization recommendations</p>
- </div>
- </div>
- </div>
- </div>
+   <!-- Card 1: Custom SaaS Builds -->
+   <div class="card" style="margin-bottom: 24px;">
+    <span class="eyebrow">Custom Build</span>
+    <h3 style="margin-bottom: 12px;">Custom SaaS Builds</h3>
+    <p class="muted" style="margin-bottom: 28px;">Most SaaS products aren't built for regulated industries. The compliance requirements are too complex, the data too sensitive, and the audit trails too critical to trust off-the-shelf. We build bespoke SaaS products — from data layer to front-end — designed specifically for pharma, defense, and financial services environments where getting it wrong isn't an option.</p>
 
- <div class="timeline-item">
- <div class="timeline-marker">
- <div class="timeline-number">04</div>
- </div>
- <div class="timeline-content">
- <div class="card process-card">
- <div class="process-header">
- <h3>Optimization & Scale <span class="timeline">(Months 6+)</span></h3>
- <span class="process-toggle">+</span>
- </div>
- <div class="process-details">
- <p class="muted" style="margin-bottom: 24px;">Once foundational capabilities are in place, we help you maximize value:</p>
- <ul class="process-list">
- <li>Advanced analytics and AI use case development</li>
- <li>Performance tuning and cost optimization</li>
- <li>Governance framework refinement</li>
- <li>Best practice documentation and knowledge transfer</li>
- <li>Preparation for internal team ownership</li>
- </ul>
- <p class="deliverable-tag"><strong>Deliverable:</strong> Self-sufficient analytics organization with documented processes and proven results</p>
- </div>
- </div>
- </div>
- </div>
- </div>
- </section>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-bottom: 28px;">
+     <div>
+      <p style="font-size: 10px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px;">What we build</p>
+      <ul style="list-style: none;">
+       <li style="font-size: 14px; padding: 8px 0; border-bottom: 1px solid var(--border); color: var(--text);">AI-powered analytics portals</li>
+       <li style="font-size: 14px; padding: 8px 0; border-bottom: 1px solid var(--border); color: var(--text);">Compliance &amp; audit dashboards</li>
+       <li style="font-size: 14px; padding: 8px 0; border-bottom: 1px solid var(--border); color: var(--text);">Embedded reporting applications</li>
+       <li style="font-size: 14px; padding: 8px 0; border-bottom: 1px solid var(--border); color: var(--text);">Operational workflow tools</li>
+       <li style="font-size: 14px; padding: 8px 0; border-bottom: 1px solid var(--border); color: var(--text);">Custom data products on your warehouse</li>
+       <li style="font-size: 14px; padding: 8px 0; color: var(--text);">Internal AI tooling for regulated teams</li>
+      </ul>
+     </div>
+     <div>
+      <p style="font-size: 10px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px;">Built on</p>
+      <ul style="list-style: none;">
+       <li style="font-size: 14px; padding: 8px 0; border-bottom: 1px solid var(--border); color: var(--text);">Your existing cloud data warehouse</li>
+       <li style="font-size: 14px; padding: 8px 0; border-bottom: 1px solid var(--border); color: var(--text);">FDA · SOX · HIPAA · DoD aligned architecture</li>
+       <li style="font-size: 14px; padding: 8px 0; border-bottom: 1px solid var(--border); color: var(--text);">Full data lineage &amp; audit trail by design</li>
+       <li style="font-size: 14px; padding: 8px 0; color: var(--text);">Scalable from prototype to production</li>
+      </ul>
+     </div>
+    </div>
 
- <div class="principles-band">
- <div class="principles-inner">
- <h2>Throughout <em>Every Engagement</em></h2>
- <div class="principles-grid">
- <div class="principle-item">
- <h3>Regulatory Compliance First</h3>
- <p class="muted">Every recommendation considers your industry's regulatory requirements</p>
- </div>
- <div class="principle-item">
- <h3>Measurable Business Impact</h3>
- <p class="muted">We track metrics that matter - cost savings, time to insights, revenue impact</p>
- </div>
- <div class="principle-item">
- <h3>Knowledge Transfer</h3>
- <p class="muted">Your team learns alongside us, building internal capability</p>
- </div>
- <div class="principle-item">
- <h3>Vendor Agnostic</h3>
- <p class="muted">We recommend what's right for you, not what pays us commissions</p>
- </div>
- </div>
- </div>
- </div>
+    <p style="font-size: 10px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px;">Compatible warehouses &amp; databases</p>
+    <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px;">
+     <span style="font-size: 12px; color: var(--muted); background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 5px 12px;">Snowflake</span>
+     <span style="font-size: 12px; color: var(--muted); background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 5px 12px;">Amazon Redshift</span>
+     <span style="font-size: 12px; color: var(--muted); background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 5px 12px;">Google BigQuery</span>
+     <span style="font-size: 12px; color: var(--muted); background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 5px 12px;">Databricks</span>
+     <span style="font-size: 12px; color: var(--muted); background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 5px 12px;">ClickHouse</span>
+     <span style="font-size: 12px; color: var(--muted); background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 5px 12px;">PostgreSQL</span>
+     <span style="font-size: 12px; color: var(--muted); background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 5px 12px;">Supabase</span>
+    </div>
+
+    <p class="muted" style="font-size: 14px; border-left: 2px solid var(--gold); padding-left: 16px; margin-bottom: 28px;">We build on your stack — not ours. <strong style="color: var(--text);">No vendor lock-in. No rip-and-replace.</strong> Every product we deliver is engineered to integrate cleanly with your existing warehouse infrastructure and compliance framework.</p>
+
+    <div style="padding-top: 24px; border-top: 1px solid var(--border);">
+     <div class="btn-row">
+      <a href="contact.html" class="btn btn-primary" data-track="Start Conversation - Custom SaaS">Start a Conversation</a>
+      <a href="assessment.html" class="btn btn-ghost" data-track="Take Assessment - Custom SaaS">Take the Free Assessment</a>
+     </div>
+    </div>
+   </div>
+
+   <!-- Card 2: Astrato -->
+   <div class="card">
+    <span class="eyebrow">Certified Partner</span>
+    <p class="muted" style="font-size: 13px; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+     <span style="width: 7px; height: 7px; background: #4ade80; border-radius: 50%; display: inline-block; flex-shrink: 0;"></span>
+     <span><strong style="color: var(--text);">Astrato Analytics</strong> — Authorized Reseller &amp; Implementation Partner</span>
+    </p>
+    <h3 style="margin-bottom: 12px;">Astrato Analytics — Warehouse-Native BI</h3>
+    <p class="muted" style="margin-bottom: 28px;">Legacy BI tools were built before the cloud data warehouse existed. Astrato was built for it. As an authorized Astrato reseller and implementation partner, 2516 Technologies delivers warehouse-native business intelligence that lives directly in Snowflake, Redshift, BigQuery, or Databricks — no data copies, no stale extracts, no sprawling middleware. Just live queries from a single governed source of truth.</p>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-bottom: 28px;">
+     <div>
+      <p style="font-size: 10px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px;">What you get</p>
+      <ul style="list-style: none;">
+       <li style="font-size: 14px; padding: 8px 0; border-bottom: 1px solid var(--border); color: var(--text);">Guided self-service analytics</li>
+       <li style="font-size: 14px; padding: 8px 0; border-bottom: 1px solid var(--border); color: var(--text);">Embedded &amp; customer-facing dashboards</li>
+       <li style="font-size: 14px; padding: 8px 0; border-bottom: 1px solid var(--border); color: var(--text);">Data apps &amp; operational workflows</li>
+       <li style="font-size: 14px; padding: 8px 0; border-bottom: 1px solid var(--border); color: var(--text);">Automated branded reporting (Excel, PDF, PPT)</li>
+       <li style="font-size: 14px; padding: 8px 0; border-bottom: 1px solid var(--border); color: var(--text);">Native writeback to your warehouse</li>
+       <li style="font-size: 14px; padding: 8px 0; color: var(--text);">GenAI-powered data exploration</li>
+      </ul>
+     </div>
+     <div>
+      <p style="font-size: 10px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px;">What we deliver</p>
+      <ul style="list-style: none;">
+       <li style="font-size: 14px; padding: 8px 0; border-bottom: 1px solid var(--border); color: var(--text);">Astrato licensing (reseller)</li>
+       <li style="font-size: 14px; padding: 8px 0; border-bottom: 1px solid var(--border); color: var(--text);">Implementation &amp; configuration</li>
+       <li style="font-size: 14px; padding: 8px 0; border-bottom: 1px solid var(--border); color: var(--text);">Warehouse integration &amp; semantic layer setup</li>
+       <li style="font-size: 14px; padding: 8px 0; border-bottom: 1px solid var(--border); color: var(--text);">Dashboard &amp; data app development</li>
+       <li style="font-size: 14px; padding: 8px 0; border-bottom: 1px solid var(--border); color: var(--text);">Team training &amp; enablement</li>
+       <li style="font-size: 14px; padding: 8px 0; color: var(--text);">Ongoing support &amp; optimization</li>
+      </ul>
+     </div>
+    </div>
+
+    <p style="font-size: 10px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px;">Astrato certifications</p>
+    <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px;">
+     <span style="font-size: 12px; color: var(--gold); background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 5px 12px;">SOC 2 Type II</span>
+     <span style="font-size: 12px; color: var(--gold); background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 5px 12px;">HIPAA Compliant</span>
+     <span style="font-size: 12px; color: var(--gold); background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 5px 12px;">GDPR Ready</span>
+     <span style="font-size: 12px; color: var(--gold); background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 5px 12px;">ISO 27001</span>
+     <span style="font-size: 12px; color: var(--gold); background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 5px 12px;">Google Cloud Ready</span>
+     <span style="font-size: 12px; color: var(--gold); background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 5px 12px;">Snowflake Technology Partner</span>
+    </div>
+
+    <p class="muted" style="font-size: 14px; border-left: 2px solid var(--gold); padding-left: 16px; margin-bottom: 28px;">Astrato connects natively to <strong style="color: var(--text);">Snowflake, Amazon Redshift, Google BigQuery, Databricks, ClickHouse, PostgreSQL, and Supabase</strong>. If you've already moved to a cloud warehouse, Astrato connects in hours — not weeks.</p>
+
+    <div style="padding-top: 24px; border-top: 1px solid var(--border);">
+     <div class="btn-row">
+      <a href="contact.html" class="btn btn-primary" data-track="Get Demo - Astrato">Get a Demo</a>
+      <a href="https://www.astrato.io" target="_blank" rel="noopener" class="btn btn-ghost" data-track="Learn Astrato">Learn About Astrato ↗</a>
+     </div>
+    </div>
+   </div>
+
+  </section>
+
+  <!-- CTA -->
+  <section class="bottom-cta-section">
+   <div class="inner">
+    <span class="eyebrow">Get Started</span>
+    <h2>Ready to build something that <em>holds up?</em></h2>
+    <p class="muted">
+     Whether you need a custom SaaS product or a modern BI layer for your warehouse, we start with your data and build from there.
+    </p>
+    <div class="btn-row">
+     <a href="contact.html" class="btn btn-primary" data-track="Start Conversation - AI CTA">Start a Conversation</a>
+     <a href="assessment.html" class="btn btn-ghost" data-track="Take Assessment - AI CTA">Take the Free Assessment</a>
+    </div>
+   </div>
+  </section>
+
  </main>
 
  <footer class="footer">
@@ -934,7 +1193,7 @@
  <button class="theme-btn theme-btn-t5" data-theme="t5" aria-label="Dark Gold Theme"></button>
  </div>
 
- <script>
+ <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
  const themeButtons = document.querySelectorAll('.theme-btn');
  const body = document.body;
  const logos = document.querySelectorAll('img[data-dark][data-light]');
@@ -979,52 +1238,18 @@
  });
  });
 
+ // Theme toggle functionality
  themeToggleTrigger.addEventListener('click', (e) => {
  e.stopPropagation();
  themeSwitcher.classList.toggle('hidden');
  themeToggleTrigger.classList.toggle('active');
  });
 
+ // Close theme switcher when clicking outside
  document.addEventListener('click', (e) => {
  if (!themeSwitcher.contains(e.target) && !themeToggleTrigger.contains(e.target)) {
  themeSwitcher.classList.add('hidden');
  themeToggleTrigger.classList.remove('active');
- }
- });
-
- // Mobile accordion for timeline
- function initTimelineAccordion() {
- if (window.innerWidth <= 768) {
- const items = document.querySelectorAll('.timeline-item');
- items.forEach(item => {
- // Remove existing listeners by cloning
- const newItem = item.cloneNode(true);
- item.parentNode.replaceChild(newItem, item);
- });
- 
- document.querySelectorAll('.timeline-item').forEach(item => {
- item.addEventListener('click', function(e) {
- // Don't toggle if clicking a link or button
- if (e.target.closest('a') || e.target.closest('.btn')) {
- return;
- }
- this.classList.toggle('expanded');
- });
- });
- }
- }
-
- // Initialize on load
- initTimelineAccordion();
-
- // Reset on resize
- window.addEventListener('resize', () => {
- if (window.innerWidth > 768) {
- document.querySelectorAll('.timeline-item').forEach(item => {
- item.classList.remove('expanded');
- });
- } else {
- initTimelineAccordion();
  }
  });
 
@@ -1094,7 +1319,7 @@ function getUserContext() {
 async function trackEvent(eventType, eventName, eventData = {}) {
  try {
  const context = getUserContext();
- 
+
  // Insert event first (without waiting for IP)
  const { data, error } = await supabaseClient
  .from('analytics_events')
@@ -1105,12 +1330,12 @@ async function trackEvent(eventType, eventName, eventData = {}) {
  ...context
  })
  .select();
- 
+
  if (error) {
  console.error('Analytics tracking error:', error);
  return;
  }
- 
+
  // Fetch IP in background and update the record
  if (data && data[0]) {
  getIPAddress().then(ip => {
@@ -1177,8 +1402,18 @@ document.addEventListener('click', (e) => {
 // Contact form submission
 async function submitContactForm(formData) {
  try {
+ // Fetch IP address first (with timeout)
+ let ip = null;
+ try {
+ const ipPromise = getIPAddress();
+ const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject('timeout'), 3000));
+ ip = await Promise.race([ipPromise, timeoutPromise]);
+ } catch (err) {
+ console.log('Could not fetch IP:', err);
+ }
+
  const context = getUserContext();
- 
+
  const { data, error } = await supabaseClient
  .from('contact_submissions')
  .insert({
@@ -1193,18 +1428,18 @@ async function submitContactForm(formData) {
  user_agent: context.user_agent,
  referrer: context.referrer,
  page_url: context.page_url,
- ip_address: context.ip_address,
+ ip_address: ip,
  status: 'new'
  })
  .select();
- 
+
  if (error) throw error;
- 
+
  trackEvent('form_submit', 'Contact Form', {
  industry: formData.industry,
  service: formData.service || 'not_specified'
  });
- 
+
  return { success: true, data };
  } catch (error) {
  console.error('Contact form submission error:', error);
@@ -1215,20 +1450,30 @@ async function submitContactForm(formData) {
 // Assessment form submission
 async function submitAssessmentForm(formData) {
  try {
+ // Fetch IP address first (with timeout)
+ let ip = null;
+ try {
+ const ipPromise = getIPAddress();
+ const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject('timeout'), 3000));
+ ip = await Promise.race([ipPromise, timeoutPromise]);
+ } catch (err) {
+ console.log('Could not fetch IP:', err);
+ }
+
  const context = getUserContext();
- 
+
  let finalScore = 0;
  let scoreCategory = 'Not Completed';
- 
+
  if (formData.answers && Array.isArray(formData.answers)) {
  finalScore = formData.answers.reduce((sum, answer) => sum + (answer || 0), 0);
- 
+
  if (finalScore >= 45) scoreCategory = 'Advanced';
  else if (finalScore >= 35) scoreCategory = 'High';
  else if (finalScore >= 25) scoreCategory = 'Medium';
  else scoreCategory = 'Low';
  }
- 
+
  const { data, error } = await supabaseClient
  .from('assessment_submissions')
  .insert({
@@ -1237,7 +1482,7 @@ async function submitAssessmentForm(formData) {
  company: formData.company,
  industry: formData.industry,
  other_industry: formData.otherIndustry || null,
- 
+
  q1_answer: formData.answers?.[0]?.toString() || null,
  q2_answer: formData.answers?.[1]?.toString() || null,
  q3_answer: formData.answers?.[2]?.toString() || null,
@@ -1248,34 +1493,34 @@ async function submitAssessmentForm(formData) {
  q8_answer: formData.answers?.[7]?.toString() || null,
  q9_answer: formData.answers?.[8]?.toString() || null,
  q10_answer: formData.answers?.[9]?.toString() || null,
- 
+
  final_score: finalScore,
  score_category: scoreCategory,
- 
+
  assessment_data: {
  answers: formData.answers || [],
  questions: formData.questions || [],
  score: finalScore,
  category: scoreCategory
  },
- 
+
  // Only include fields that exist in assessment_submissions
  user_agent: context.user_agent,
  referrer: context.referrer,
  page_url: context.page_url,
- ip_address: context.ip_address,
+ ip_address: ip,
  status: 'new'
  })
  .select();
- 
+
  if (error) throw error;
- 
+
  trackEvent('form_submit', 'Assessment Form', {
  industry: formData.industry,
  score: finalScore,
  category: scoreCategory
  });
- 
+
  return { success: true, data, score: finalScore, category: scoreCategory };
  } catch (error) {
  console.error('Assessment form submission error:', error);
@@ -1300,14 +1545,6 @@ function trackThemeChange(themeName) {
 // Export functions
 window.SupabaseConnector = {
  submitContactForm,
- submitAssessmentForm,
- trackEvent,
- trackOnePagerView,
- trackThemeChange
-};
-
-console.log(' Supabase Connector loaded inline');
-</script>
-
+ subm</script>
 </body>
 </html>
