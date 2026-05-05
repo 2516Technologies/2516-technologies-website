@@ -130,6 +130,22 @@ h1{font-size:clamp(2.8rem,5vw,4.2rem)} h2{font-size:clamp(1.8rem,3vw,2.6rem)} h3
   .offer-links{flex-direction:column;align-items:center}
   .footer{grid-template-columns:1fr;text-align:center} .footer-right{text-align:center}
 }
+
+/* HAMBURGER */
+.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:8px}
+.hamburger-line{width:22px;height:2px;background:var(--text);border-radius:2px;transition:all 0.3s}
+.hamburger.active .hamburger-line:nth-child(1){transform:rotate(45deg) translate(7px,7px)}
+.hamburger.active .hamburger-line:nth-child(2){opacity:0}
+.hamburger.active .hamburger-line:nth-child(3){transform:rotate(-45deg) translate(7px,-7px)}
+.mobile-menu{display:none;position:fixed;top:60px;left:0;right:0;background:rgba(10,22,40,0.98);border-bottom:1px solid var(--border);padding:1.5rem;flex-direction:column;gap:0;z-index:199}
+.mobile-menu.open{display:flex}
+.mobile-menu a{display:block;padding:0.9rem 0;font-size:0.82rem;font-weight:400;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);text-decoration:none;border-bottom:1px solid var(--border);transition:color .2s}
+.mobile-menu a:last-child{border-bottom:none}
+.mobile-menu a:hover{color:var(--text)}
+.mobile-menu a.active{color:var(--accent-gold)}
+.mobile-menu .nav-cta{background:var(--accent-gold);color:#0A1628;padding:0.7rem 1.2rem;border-radius:3px;text-align:center;margin-top:0.8rem;font-weight:600;border-bottom:none}
+@media(max-width:768px){.hamburger{display:flex}.nav-links{display:none}}
+
 </style>
 </head>
 <body>
@@ -147,7 +163,21 @@ h1{font-size:clamp(2.8rem,5vw,4.2rem)} h2{font-size:clamp(1.8rem,3vw,2.6rem)} h3
     <li><a href="contact.html">Contact</a></li>
   </ul>
   <a href="contact.html" class="nav-cta">Book a Call</a>
+  <button class="hamburger" aria-label="Toggle menu">
+    <span class="hamburger-line"></span>
+    <span class="hamburger-line"></span>
+    <span class="hamburger-line"></span>
+  </button>
 </nav>
+<div class="mobile-menu">
+<a href="index.html">Home</a>
+    <a href="offer.html">Offer</a>
+    <a href="modernization.html">Modernization</a>
+    <a href="expand.html">Expand</a>
+    <a href="about.html" class="active">About</a>
+    <a href="contact.html">Contact</a>
+  <a href="contact.html" class="nav-cta">Book a Call</a>
+</div>
 
 <!-- HERO -->
 <div class="about-hero">
@@ -377,5 +407,22 @@ h1{font-size:clamp(2.8rem,5vw,4.2rem)} h2{font-size:clamp(1.8rem,3vw,2.6rem)} h3
   <div class="footer-right">© 2026 2516 Technologies<br>All rights reserved.</div>
 </footer>
 
+
+<script>
+const hamburger = document.querySelector('.hamburger');
+const mobileMenu = document.querySelector('.mobile-menu');
+if (hamburger && mobileMenu) {
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('active');
+    mobileMenu.classList.toggle('open');
+  });
+  mobileMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('active');
+      mobileMenu.classList.remove('open');
+    });
+  });
+}
+</script>
 </body>
 </html>
