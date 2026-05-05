@@ -15,65 +15,7 @@
  box-sizing: border-box;
  }
 
- body.t1 {
- --bg: #F0F5FF;
- --card: #FFFFFF;
- --input: #F0F5FF;
- --border: rgba(30, 80, 180, 0.15);
- --text: #0D1B3E;
- --muted: #5A7AB0;
- --gold: #1B4FD8;
- --gold-light: #4A7FFF;
- --glow: rgba(27, 79, 216, 0.08);
- }
-
- body.t2 {
- --bg: #0A1628;
- --card: #0F2144;
- --input: #0A1628;
- --border: rgba(74, 127, 255, 0.2);
- --text: #E8F0FF;
- --muted: #6A9FD8;
- --gold: #4A7FFF;
- --gold-light: #7AAFFF;
- --glow: rgba(74, 127, 255, 0.1);
- }
-
- body.t3 {
- --bg: #FFFFFF;
- --card: #F7FAFF;
- --input: #FFFFFF;
- --border: rgba(30, 80, 180, 0.12);
- --text: #0D1B3E;
- --muted: #6A8AB8;
- --gold: #1B4FD8;
- --gold-light: #3A6FEF;
- --glow: rgba(27, 79, 216, 0.05);
- }
-
- body.t4 {
- --bg: #1B4FD8;
- --card: #1440B8;
- --input: #1B4FD8;
- --border: rgba(255, 255, 255, 0.18);
- --text: #FFFFFF;
- --muted: rgba(255, 255, 255, 0.65);
- --gold: #FFFFFF;
- --gold-light: #E8F0FF;
- --glow: rgba(255, 255, 255, 0.08);
- }
-
- body.t5 {
- --bg: #1C1C1B;
- --card: #2A2A29;
- --input: #343433;
- --border: rgba(200, 169, 81, 0.18);
- --text: #E8EDF5;
- --muted: #7A8BA8;
- --gold: #C8A951;
- --gold-light: #E4CC7A;
- --glow: rgba(200, 169, 81, 0.06);
- }
+:root{--bg:#0A1628;--bg-card:#0F2144;--bg-card2:#0D1C3A;--accent:#4A7FFF;--accent-gold:#C9A84C;--text:#E8EEF8;--text-muted:#8A9BBC;--text-dim:#4A5A78;--border:rgba(74,127,255,0.12);--border-mid:rgba(74,127,255,0.26);--white:#FFFFFF;--jazz-dark:#1e3a8a;--jazz-blue:#3b82f6;--card:var(--bg-card);--input:var(--bg);--muted:var(--text-muted);--gold:var(--accent-gold);--gold-light:#E4CC7A;--glow:rgba(74,127,255,0.10)}
 
  body {
  overflow-x: hidden;
@@ -81,84 +23,7 @@
  background: var(--bg);
  color: var(--text);
  line-height: 1.6;
- transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
  min-height: 100vh;
- }
-
- .theme-switcher {
- position: fixed;
- top: 80px;
- right: 16px;
- z-index: 50;
- display: flex;
- align-items: center;
- gap: 6px;
- background: var(--card);
- border: 1px solid var(--border);
- border-radius: 40px;
- padding: 3px 6px;
- box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
- transition: all 0.3s ease;
- }
-
- .theme-label {
- font-size: 9px;
- letter-spacing: 0.1em;
- text-transform: uppercase;
- color: var(--muted);
- font-weight: 500;
- margin-right: 4px;
- transition: color 0.3s ease;
- }
-
- .theme-btn {
- width: 18px;
- height: 18px;
- min-width: 18px;
- min-height: 18px;
- max-width: 18px;
- max-height: 18px;
- border-radius: 50%;
- border: 2px solid transparent;
- cursor: pointer;
- transition: transform 0.15s ease, border-color 0.3s ease;
- padding: 0;
- background: none;
- flex-shrink: 0;
- }
-
- .theme-btn:hover {
- transform: scale(1.15);
- }
-
- .theme-btn.active {
- border-color: var(--gold);
- transform: scale(1.15);
- }
-
- .theme-btn-t1 {
- background: linear-gradient(135deg, #F0F5FF 0% 50%, #1B4FD8 50% 100%);
- background-size: 100% 100%;
- }
-
- .theme-btn-t2 {
- background: linear-gradient(135deg, #0A1628 0% 50%, #4A7FFF 50% 100%);
- background-size: 100% 100%;
- }
-
- .theme-btn-t3 {
- background: linear-gradient(135deg, #FFFFFF 0% 50%, #1B4FD8 50% 100%);
- background-size: 100% 100%;
- }
-
- .theme-btn-t4 {
- background: linear-gradient(135deg, #1B4FD8 0% 50%, #FFFFFF 50% 100%);
- background-size: 100% 100%;
- }
-
- .theme-btn-t5 {
- background: linear-gradient(135deg, #1C1C1B 0% 50%, #C8A951 50% 100%);
- background-size: 100% 100%;
  }
 
  h1 {
@@ -291,160 +156,31 @@
  flex-wrap: wrap;
  }
 
- .navbar {
- position: sticky;
- top: 0;
- z-index: 100;
- height: 64px;
- background: var(--card);
- border-bottom: 1px solid var(--border);
- transition: background 0.3s, border-color 0.3s;
- display: flex;
- justify-content: space-between;
- align-items: center;
- padding: 0 32px;
- }
-
- .logo {
- height: 32px;
- width: auto;
- }
-
- .logo-text {
- font-family: 'Cormorant Garamond', serif;
- font-size: 20px;
- font-weight: 400;
- color: var(--text);
- text-decoration: none;
- }
-
- .nav-links {
- display: flex;
- gap: 32px;
- align-items: center;
- }
-
- .nav-link {
- font-family: 'DM Sans', sans-serif;
- font-size: 13px;
- font-weight: 500;
- letter-spacing: 0.05em;
- color: var(--muted);
- text-decoration: none;
- transition: color 0.2s ease;
- position: relative;
- }
-
- .nav-link:hover {
- color: var(--gold);
- }
-
- .nav-link.active {
- color: var(--gold);
- border-bottom: 1px solid var(--gold);
- padding-bottom: 2px;
- }
-
- .nav-cta {
- margin-left: 16px;
- }
-
- .hamburger {
- display: none;
- flex-direction: column;
- gap: 5px;
- background: none;
- border: none;
- cursor: pointer;
- padding: 8px;
- }
-
- .hamburger-line {
- width: 20px;
- height: 2px;
- background: var(--text);
- transition: all 0.3s;
- }
-
- .hamburger.active .hamburger-line:nth-child(1) {
- transform: rotate(45deg) translate(7px, 7px);
- }
-
- .hamburger.active .hamburger-line:nth-child(2) {
- opacity: 0;
- }
-
- .hamburger.active .hamburger-line:nth-child(3) {
- transform: rotate(-45deg) translate(7px, -7px);
- }
-
- .mobile-menu {
- display: none;
- position: fixed;
- top: 64px;
- left: 0;
- right: 0;
- background: var(--card);
- border-bottom: 1px solid var(--border);
- padding: 16px 24px;
- flex-direction: column;
- gap: 0;
- z-index: 999;
- max-height: calc(100vh - 64px);
- overflow-y: auto;
- }
-
- .mobile-menu.open {
- display: flex;
- }
-
- .mobile-menu .nav-link {
- padding: 12px 0;
- display: flex;
- align-items: center;
- height: 40px;
- }
-
- .mobile-menu .nav-cta {
- margin-left: 0;
- margin-top: 8px;
- }
-
- .mobile-menu .btn {
- width: 100%;
- justify-content: center;
- }
+.nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:1.1rem 3.5rem;background:rgba(10,22,40,0.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+.nav-brand{display:flex;align-items:center;gap:.9rem;text-decoration:none}
+.nav-wordmark{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:400;letter-spacing:.18em;text-transform:uppercase;color:var(--text)}
+.nav-links{display:flex;gap:0;list-style:none}
+.nav-links a{display:block;padding:.45rem 1rem;font-size:.76rem;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--text)} .nav-links a.active{color:var(--accent-gold)}
+.nav-cta{background:var(--accent-gold);color:#0A1628;padding:.58rem 1.35rem;border-radius:3px;font-size:.74rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;transition:opacity .2s,transform .15s}
+.nav-cta:hover{opacity:.84;transform:translateY(-1px)}
 
  * {
  -webkit-tap-highlight-color: transparent;
  }
 
- .btn,
- .nav-link,
- .footer-link,
- .footer-email {
+ .btn {
  min-height: 44px;
  display: inline-flex;
  align-items: center;
  }
 
- .nav-link {
- min-height: 44px;
+ @media (max-width: 900px) {
+ .nav { padding: 1rem 1.5rem; }
+ .nav-links { display: none; }
  }
 
  @media (max-width: 768px) {
- .nav-links {
- display: none;
- }
-
- .hamburger {
- display: flex;
- }
-
- .navbar {
- padding: 0 24px;
- }
-
  .section {
  padding: 64px 20px;
  }
@@ -840,36 +576,21 @@
  <!-- Supabase Client Library -->
  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
-<body class="t1">
- <nav class="navbar">
- <a href="/" class="logo-text">
- <img src="/2516_logo_horizontal_dark_web (1).png" data-dark="/2516_logo_horizontal_light_web (1).png" data-light="/2516_logo_horizontal_dark_web (1).png" alt="2516 Technologies" class="logo" style="height:36px; width:auto;">
- </a>
- <div class="nav-links">
- <a href="index.html" class="nav-link">Home</a>
- <a href="about.html" class="nav-link">About</a>
- <a href="ai-solutions.html" class="nav-link">Solutions</a>
- <a href="services.html" class="nav-link">Advisory</a>
- <a href="process.html" class="nav-link">Process</a>
- <a href="contact.html" class="nav-link active">Contact</a>
- <a href="assessment.html" class="btn btn-primary nav-cta">Take the Assessment</a>
- </div>
- <button class="hamburger" aria-label="Toggle menu">
- <span class="hamburger-line"></span>
- <span class="hamburger-line"></span>
- <span class="hamburger-line"></span>
- </button>
- </nav>
-
- <div class="mobile-menu">
- <a href="index.html" class="nav-link">Home</a>
- <a href="about.html" class="nav-link">About</a>
- <a href="ai-solutions.html" class="nav-link">Solutions</a>
- <a href="services.html" class="nav-link">Advisory</a>
- <a href="process.html" class="nav-link">Process</a>
- <a href="contact.html" class="nav-link active">Contact</a>
- <a href="assessment.html" class="btn btn-primary nav-cta">Take the Assessment</a>
- </div>
+<body>
+<nav class="nav">
+  <a href="index.html" class="nav-brand">
+    <img src="2516_logo_horizontal_dark_web (1).png" alt="2516 Technologies" style="height:32px;width:auto;">
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="offer.html">Offer</a></li>
+    <li><a href="modernization.html">Modernization</a></li>
+    <li><a href="expand.html">Expand</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html" class="active">Contact</a></li>
+  </ul>
+  <a href="contact.html" class="nav-cta">Book a Call</a>
+</nav>
 
  <main>
  <section class="contact-hero">
@@ -964,65 +685,14 @@
 
  <footer class="footer">
  <div class="footer-inner">
- <a href="index.html" class="footer-logo"><img src="/2516_logo_horizontal_dark_web (1).png" data-dark="/2516_logo_horizontal_light_web (1).png" data-light="/2516_logo_horizontal_dark_web (1).png" alt="2516 Technologies" style="height:36px; width:auto;"></a>
+ <a href="index.html" class="footer-logo"><img src="2516_logo_horizontal_dark_web (1).png" alt="2516 Technologies" style="height:36px; width:auto;"></a>
  <span class="footer-tagline">AI is Jazz</span>
  </div>
  </footer>
 
  
 
- <div class="theme-switcher">
- <span class="theme-label">Theme</span>
- <button class="theme-btn theme-btn-t1 active" data-theme="t1" aria-label="Light Blue Theme"></button>
- <button class="theme-btn theme-btn-t2" data-theme="t2" aria-label="Dark Blue Theme"></button>
- <button class="theme-btn theme-btn-t3" data-theme="t3" aria-label="Clean White Theme"></button>
- <button class="theme-btn theme-btn-t4" data-theme="t4" aria-label="Bold Blue Theme"></button>
- <button class="theme-btn theme-btn-t5" data-theme="t5" aria-label="Dark Gold Theme"></button>
- </div>
-
- <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
- const themeButtons = document.querySelectorAll('.theme-btn');
- const body = document.body;
- const logos = document.querySelectorAll('img[data-dark][data-light]');
- const hamburger = document.querySelector('.hamburger');
- const mobileMenu = document.querySelector('.mobile-menu');
- const themeSwitcher = document.querySelector('.theme-switcher');
-
- function updateLogo(theme) {
- const isDark = theme === 't2' || theme === 't4' || theme === 't5';
- logos.forEach(logo => {
- logo.src = isDark ? logo.dataset.light : logo.dataset.dark;
- });
- }
-
- function setTheme(theme) {
- body.className = theme;
- localStorage.setItem('theme', theme);
-
- themeButtons.forEach(btn => {
- btn.classList.toggle('active', btn.dataset.theme === theme);
- });
-
- updateLogo(theme);
- }
-
- themeButtons.forEach(btn => {
- btn.addEventListener('click', () => {
- setTheme(btn.dataset.theme);
- });
- });
-
- hamburger.addEventListener('click', () => {
- hamburger.classList.toggle('active');
- mobileMenu.classList.toggle('open');
- });
-
- mobileMenu.querySelectorAll('a').forEach(link => {
- link.addEventListener('click', () => {
- hamburger.classList.remove('active');
- mobileMenu.classList.remove('open');
- });
- });
+ <script>
  function toggleOtherIndustry() {
  const industry = document.getElementById('industry').value;
  const otherGroup = document.getElementById('otherIndustryGroup');
@@ -1032,9 +702,6 @@
  otherGroup.style.display = 'none';
  }
  }
-
- const savedTheme = localStorage.getItem('theme') || 't1';
- setTheme(savedTheme);
  </script>
 <!-- PASTE THIS ENTIRE BLOCK RIGHT BEFORE </body> IN EACH HTML FILE -->
 <!-- Replace the existing <script src="/supabase-connector.js"></script> line -->

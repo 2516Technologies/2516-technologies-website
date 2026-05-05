@@ -15,65 +15,7 @@
  box-sizing: border-box;
  }
 
- body.t1 {
- --bg: #F0F5FF;
- --card: #FFFFFF;
- --input: #F0F5FF;
- --border: rgba(30, 80, 180, 0.15);
- --text: #0D1B3E;
- --muted: #5A7AB0;
- --gold: #1B4FD8;
- --gold-light: #4A7FFF;
- --glow: rgba(27, 79, 216, 0.08);
- }
-
- body.t2 {
- --bg: #0A1628;
- --card: #0F2144;
- --input: #0A1628;
- --border: rgba(74, 127, 255, 0.2);
- --text: #E8F0FF;
- --muted: #6A9FD8;
- --gold: #4A7FFF;
- --gold-light: #7AAFFF;
- --glow: rgba(74, 127, 255, 0.1);
- }
-
- body.t3 {
- --bg: #FFFFFF;
- --card: #F7FAFF;
- --input: #FFFFFF;
- --border: rgba(30, 80, 180, 0.12);
- --text: #0D1B3E;
- --muted: #6A8AB8;
- --gold: #1B4FD8;
- --gold-light: #3A6FEF;
- --glow: rgba(27, 79, 216, 0.05);
- }
-
- body.t4 {
- --bg: #1B4FD8;
- --card: #1440B8;
- --input: #1B4FD8;
- --border: rgba(255, 255, 255, 0.18);
- --text: #FFFFFF;
- --muted: rgba(255, 255, 255, 0.65);
- --gold: #FFFFFF;
- --gold-light: #E8F0FF;
- --glow: rgba(255, 255, 255, 0.08);
- }
-
- body.t5 {
- --bg: #1C1C1B;
- --card: #2A2A29;
- --input: #343433;
- --border: rgba(200, 169, 81, 0.18);
- --text: #E8EDF5;
- --muted: #7A8BA8;
- --gold: #C8A951;
- --gold-light: #E4CC7A;
- --glow: rgba(200, 169, 81, 0.06);
- }
+:root{--bg:#0A1628;--bg-card:#0F2144;--bg-card2:#0D1C3A;--accent:#4A7FFF;--accent-gold:#C9A84C;--text:#E8EEF8;--text-muted:#8A9BBC;--text-dim:#4A5A78;--border:rgba(74,127,255,0.12);--border-mid:rgba(74,127,255,0.26);--white:#FFFFFF;--jazz-dark:#1e3a8a;--jazz-blue:#3b82f6;--card:var(--bg-card);--input:var(--bg);--muted:var(--text-muted);--gold:var(--accent-gold);--gold-light:#E4CC7A;--glow:rgba(74,127,255,0.10)}
 
  body {
  overflow-x: hidden;
@@ -293,6 +235,14 @@
  flex-wrap: wrap;
  }
 
+.nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:1.1rem 3.5rem;background:rgba(10,22,40,0.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+.nav-brand{display:flex;align-items:center;gap:.9rem;text-decoration:none}
+.nav-wordmark{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:400;letter-spacing:.18em;text-transform:uppercase;color:var(--text)}
+.nav-links{display:flex;gap:0;list-style:none}
+.nav-links a{display:block;padding:.45rem 1rem;font-size:.76rem;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--text)} .nav-links a.active{color:var(--accent-gold)}
+.nav-cta{background:var(--accent-gold);color:#0A1628;padding:.58rem 1.35rem;border-radius:3px;font-size:.74rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;transition:opacity .2s,transform .15s}
+.nav-cta:hover{opacity:.84;transform:translateY(-1px)}
  .navbar {
  position: sticky;
  top: 0;
@@ -1115,35 +1065,20 @@
  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body class="t1">
- <nav class="navbar">
- <a href="/" class="logo-text">
- <img src="/2516_logo_horizontal_dark_web (1).png" data-dark="/2516_logo_horizontal_light_web (1).png" data-light="/2516_logo_horizontal_dark_web (1).png" alt="2516 Technologies" class="logo" style="height:36px; width:auto;">
- </a>
- <div class="nav-links">
- <a href="index.html" class="nav-link">Home</a>
- <a href="about.html" class="nav-link">About</a>
- <a href="ai-solutions.html" class="nav-link">Solutions</a>
- <a href="services.html" class="nav-link">Advisory</a>
- <a href="process.html" class="nav-link">Process</a>
- <a href="contact.html" class="nav-link">Contact</a>
- <a href="assessment.html" class="nav-link active">Assessment</a>
- </div>
- <button class="hamburger" aria-label="Toggle menu">
- <span class="hamburger-line"></span>
- <span class="hamburger-line"></span>
- <span class="hamburger-line"></span>
- </button>
- </nav>
-
- <div class="mobile-menu">
- <a href="index.html" class="nav-link">Home</a>
- <a href="about.html" class="nav-link">About</a>
- <a href="ai-solutions.html" class="nav-link">Solutions</a>
- <a href="services.html" class="nav-link">Advisory</a>
- <a href="process.html" class="nav-link">Process</a>
- <a href="contact.html" class="nav-link">Contact</a>
- <a href="assessment.html" class="nav-link active">Assessment</a>
- </div>
+<nav class="nav">
+  <a href="index.html" class="nav-brand">
+    <img src="2516_logo_horizontal_dark_web (1).png" alt="2516 Technologies" style="height:32px;width:auto;">
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="offer.html">Offer</a></li>
+    <li><a href="modernization.html">Modernization</a></li>
+    <li><a href="expand.html">Expand</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html" class="active">Contact</a></li>
+  </ul>
+  <a href="contact.html" class="nav-cta">Book a Call</a>
+</nav>
 
  <main>
  <div id="s-intro" class="screen active">
@@ -1254,7 +1189,7 @@
 
  <footer class="footer">
  <div class="footer-inner">
- <a href="index.html" class="footer-logo"><img src="/2516_logo_horizontal_dark_web (1).png" data-dark="/2516_logo_horizontal_light_web (1).png" data-light="/2516_logo_horizontal_dark_web (1).png" alt="2516 Technologies" style="height:36px; width:auto;"></a>
+ <a href="index.html" class="footer-logo"><img src="/2516_logo_horizontal_dark_web (1).png" data-dark="/2516_logo_horizontal_dark_web (1).png" data-light="/2516_logo_horizontal_dark_web (1).png" alt="2516 Technologies" style="height:36px; width:auto;"></a>
  <span class="footer-tagline">AI is Jazz</span>
  </div>
  </footer>
@@ -1429,15 +1364,13 @@
  const isDarkTheme = ['t2', 't4', 't5'].includes(currentTheme);
  const modalLogo = document.getElementById('modalLogo');
  if (modalLogo) {
- modalLogo.src = isDarkTheme ? '/public/2516_logo_horizontal_light_web (1).png' : '/public/2516_logo_horizontal_dark_web (1).png';
+ modalLogo.src = isDarkTheme ? '/public/2516_logo_horizontal_dark_web (1).png' : '/public/2516_logo_horizontal_dark_web (1).png';
  }
  }
 
  var themeButtons = document.querySelectorAll('.theme-btn');
  var bodyEl = document.body;
  var logos = document.querySelectorAll('img[data-dark][data-light]');
- var hamburger = document.querySelector('.hamburger');
- var mobileMenu = document.querySelector('.mobile-menu');
  var themeSwitcher = document.querySelector('.theme-switcher');
 
  function updateLogo(theme) {
@@ -1462,17 +1395,6 @@
  });
  });
 
- hamburger.addEventListener('click', function() {
- hamburger.classList.toggle('active');
- mobileMenu.classList.toggle('open');
- });
-
- mobileMenu.querySelectorAll('a').forEach(function(link) {
- link.addEventListener('click', function() {
- hamburger.classList.remove('active');
- mobileMenu.classList.remove('open');
- });
- });
  var savedTheme = localStorage.getItem('theme') || 't1';
  setTheme(savedTheme);
 

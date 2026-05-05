@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Expand — 2516 Technologies</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0A1628;--bg-card:#0F2144;--bg-card2:#0D1C3A;--accent:#4A7FFF;--accent-gold:#C9A84C;--text:#E8EEF8;--text-muted:#8A9BBC;--text-dim:#4A5A78;--border:rgba(74,127,255,0.12);--border-mid:rgba(74,127,255,0.26);--white:#FFFFFF;--jazz-dark:#1e3a8a;--jazz-blue:#3b82f6}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;font-weight:300;line-height:1.6}
+::-webkit-scrollbar{width:3px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--accent)}
+
+.nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:1.1rem 3.5rem;background:rgba(10,22,40,0.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+.nav-brand{display:flex;align-items:center;gap:.9rem;text-decoration:none}
+.nav-wordmark{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:400;letter-spacing:.18em;text-transform:uppercase;color:var(--text)}
+.nav-links{display:flex;gap:0;list-style:none}
+.nav-links a{display:block;padding:.45rem 1rem;font-size:.76rem;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--text)} .nav-links a.active{color:var(--accent-gold)}
+.nav-cta{background:var(--accent-gold);color:#0A1628;padding:.58rem 1.35rem;border-radius:3px;font-size:.74rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;transition:opacity .2s,transform .15s}
+.nav-cta:hover{opacity:.84;transform:translateY(-1px)}
+
+/* BUTTONS */
+.btn-primary{display:inline-block;background:var(--accent);color:#fff;padding:.9rem 2.1rem;border-radius:3px;font-size:.78rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;transition:opacity .2s,transform .15s;border:none;cursor:pointer}
+.btn-primary:hover{opacity:.84;transform:translateY(-2px)}
+.btn-outline{display:inline-block;background:transparent;color:var(--text);padding:.9rem 2.1rem;border-radius:3px;font-size:.78rem;font-weight:400;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;border:1px solid var(--border-mid);transition:border-color .2s,color .2s}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent)}
+
+/* JAZZ BARS */
+.jazz-bars{display:flex;align-items:flex-end;gap:3px;height:28px}
+.bar{width:5px;border-radius:2px 2px 0 0;transform-origin:bottom}
+.bar1{height:16px;background:var(--jazz-dark);animation:b1 1.8s ease-in-out infinite}
+.bar2{height:28px;background:var(--jazz-blue);animation:b2 1.8s ease-in-out infinite .2s}
+.bar3{height:20px;background:var(--jazz-dark);animation:b3 1.8s ease-in-out infinite .4s}
+.bar4{height:24px;background:var(--jazz-blue);animation:b4 1.8s ease-in-out infinite .1s}
+@keyframes b1{0%,100%{height:16px}50%{height:9px}}
+@keyframes b2{0%,100%{height:28px}50%{height:14px}}
+@keyframes b3{0%,100%{height:20px}50%{height:28px}}
+@keyframes b4{0%,100%{height:24px}50%{height:11px}}
+
+/* SECTION BASE */
+section{padding:6rem 3.5rem}.container{max-width:1160px;margin:0 auto}
+h1{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2.8rem,5vw,4.2rem);line-height:1.1;letter-spacing:-.01em}
+h2{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2rem,3.2vw,2.8rem);line-height:1.12;letter-spacing:-.01em}
+h1 em,h2 em{font-style:italic;color:var(--accent)}
+h3{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:1.35rem;line-height:1.2}
+.eyebrow{font-family:'DM Mono',monospace;font-size:.69rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);display:flex;align-items:center;gap:.7rem;margin-bottom:1.1rem}
+.eyebrow::before{content:'';width:24px;height:1px;background:var(--accent)}
+
+/* PAGE HERO */
+.page-hero{padding:9rem 3.5rem 5rem;background:var(--bg);position:relative;overflow:hidden;border-bottom:1px solid var(--border)}
+.page-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 60% at 70% 50%,var(--glow) 0%,transparent 70%)}
+.ph-inner{max-width:1160px;margin:0 auto;position:relative;z-index:1}
+.ph-sub{font-size:1rem;line-height:1.72;color:var(--text-muted);max-width:580px;margin:1.5rem 0 2.5rem}
+.ph-actions{display:flex;gap:1rem;flex-wrap:wrap}
+
+/* BUILD CARDS */
+.build-section{background:var(--bg)}
+.build-card{background:var(--bg-card);border:1px solid var(--border);border-radius:3px;padding:2.5rem;margin-bottom:1.5rem;transition:border-color .22s}
+.build-card:last-child{margin-bottom:0}
+.build-card:hover{border-color:var(--border-mid)}
+.build-card.featured{border-color:rgba(201,168,76,.25)}
+.build-card-badge{display:flex;align-items:center;gap:.6rem;font-size:.84rem;color:var(--text-muted);margin-bottom:1.25rem}
+.live-dot{width:7px;height:7px;background:#4ade80;border-radius:50%;flex-shrink:0}
+.build-card h3{margin-bottom:1.25rem}
+.build-card-inner{display:grid;grid-template-columns:1fr 1fr;gap:3rem}
+.build-card-desc{font-size:.95rem;line-height:1.72;color:var(--text-muted);margin-bottom:1.75rem}
+.list-label{font-family:'DM Mono',monospace;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--text-dim);margin-bottom:.85rem}
+.build-list{list-style:none;margin-bottom:1.5rem}
+.build-list li{font-size:.86rem;padding:.55rem 0;border-bottom:1px solid var(--border);color:var(--text)}
+.build-list li:last-child{border-bottom:none}
+.tag-row{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.5rem}
+.tag{font-size:.74rem;color:var(--text-muted);background:var(--bg);border:1px solid var(--border);border-radius:2px;padding:.28rem .7rem;font-family:'DM Mono',monospace}
+.tag.accent{color:var(--accent);border-color:rgba(74,127,255,.25)}
+.build-note{font-size:.86rem;border-left:2px solid var(--accent);padding-left:1rem;color:var(--text-muted);line-height:1.65;margin-bottom:1.5rem}
+.build-card-actions{display:flex;gap:.85rem;flex-wrap:wrap;padding-top:1.75rem;border-top:1px solid var(--border);margin-top:2rem}
+
+/* ADVISORY */
+.advisory-section{background:var(--bg-card2)}
+.advisory-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-top:3rem}
+.adv-card{background:var(--bg-card);border:1px solid var(--border);padding:2rem 1.75rem;border-radius:3px;transition:border-color .22s,transform .22s}
+.adv-card:hover{border-color:var(--border-mid);transform:translateY(-2px)}
+.adv-eyebrow{font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:.7rem}
+.adv-card h3{margin-bottom:.75rem}
+.adv-card-desc{font-size:.88rem;color:var(--text-muted);line-height:1.68;margin-bottom:1.25rem}
+.adv-list{list-style:none;margin-bottom:1.5rem}
+.adv-list li{font-size:.82rem;color:var(--text-dim);padding:.35rem 0;display:flex;align-items:center;gap:.6rem;border-bottom:1px solid var(--border)}
+.adv-list li:last-child{border-bottom:none}
+.adv-list li::before{content:'→';color:var(--accent);font-size:.7rem;flex-shrink:0}
+.adv-link{font-size:.74rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);text-decoration:none;transition:opacity .2s}
+.adv-link:hover{opacity:.7}
+
+/* CTA */
+.cta-section{background:var(--bg-card);padding:7rem 3.5rem;text-align:center;position:relative;overflow:hidden;border-top:1px solid var(--border)}
+.cta-section::before{content:'2516';position:absolute;font-family:'Cormorant Garamond',serif;font-size:22rem;font-weight:300;color:rgba(74,127,255,.03);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;letter-spacing:-.05em;white-space:nowrap}
+.cta-section .eyebrow{justify-content:center}
+.cta-section h2{margin:.75rem auto 1.25rem;max-width:560px}
+.cta-section p{font-size:.96rem;color:var(--text-muted);max-width:480px;margin:0 auto 2.75rem;line-height:1.72}
+.cta-actions{display:flex;justify-content:center;gap:1.25rem;flex-wrap:wrap}
+
+/* FOOTER */
+.footer{background:#060F1E;padding:2.75rem 3.5rem;border-top:1px solid var(--border);display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:2rem}
+.footer-brand{display:flex;align-items:center;gap:.85rem}
+.footer-wordmark{font-family:'Cormorant Garamond',serif;font-size:.95rem;font-weight:400;letter-spacing:.16em;text-transform:uppercase;color:var(--text-muted)}
+.footer-links{display:flex;gap:2rem;list-style:none;justify-content:center;flex-wrap:wrap}
+.footer-links a{font-size:.73rem;letter-spacing:.08em;text-transform:uppercase;color:var(--text-dim);text-decoration:none;transition:color .2s}
+.footer-links a:hover{color:var(--accent)}
+.footer-right{text-align:right;font-size:.72rem;color:var(--text-dim);letter-spacing:.04em}
+
+@media(max-width:900px){
+  .nav{padding:1rem 1.5rem}.nav-links{display:none}
+  .page-hero{padding:7rem 1.5rem 4rem}
+  section{padding:4rem 1.5rem}
+  .build-card-inner{grid-template-columns:1fr}
+  .advisory-grid{grid-template-columns:1fr}
+  .footer{grid-template-columns:1fr;text-align:center}.footer-right{text-align:center}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="index.html" class="nav-brand">
+    <img src="2516_logo_horizontal_dark_web (1).png" alt="2516 Technologies" style="height:32px;width:auto;">
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="offer.html">Offer</a></li>
+    <li><a href="modernization.html">Modernization</a></li>
+    <li><a href="expand.html" class="active">Expand</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a href="contact.html" class="nav-cta">Book a Call</a>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="ph-inner">
+    <div class="eyebrow">Capabilities</div>
+    <h1>We don't just advise on AI.<br><em>We build it.</em></h1>
+    <p class="ph-sub">From warehouse-native analytics to AI readiness frameworks — 2516 Technologies designs, builds, and deploys capabilities engineered for regulated industries. Every engagement starts with your data. We build the foundation, then the AI follows.</p>
+    <div class="ph-actions">
+      <a href="contact.html" class="btn-primary">Start a Conversation →</a>
+      <a href="#advisory" class="btn-outline">See Advisory Services</a>
+    </div>
+  </div>
+</div>
+
+<!-- BUILD SECTION -->
+<section class="build-section">
+  <div class="container">
+    <div class="eyebrow">What We Build</div>
+    <h2>Two offerings.<br><em>One standard of precision.</em></h2>
+    <p style="color:var(--text-muted);font-size:.98rem;line-height:1.72;max-width:580px;margin:1rem 0 3rem">Regulated industries don't need more dashboards. They need infrastructure and products that perform under pressure — in audits, at scale, and in production.</p>
+
+    <!-- Astrato Card -->
+    <div class="build-card featured">
+      <div class="build-card-badge">
+        <span class="live-dot"></span>
+        <strong style="color:var(--text)">Astrato Analytics</strong>&nbsp;— Authorized Reseller &amp; Implementation Partner
+      </div>
+      <div class="eyebrow" style="color:var(--accent-gold)"><span style="width:24px;height:1px;background:var(--accent-gold);display:inline-block"></span>Certified Partner</div>
+      <h3>Astrato Analytics — Warehouse-Native BI</h3>
+      <div class="build-card-inner">
+        <div>
+          <p class="build-card-desc">Legacy BI tools were built before the cloud data warehouse existed. Astrato was built for it. As an authorized Astrato reseller and implementation partner, 2516 Technologies delivers warehouse-native business intelligence that lives directly in Snowflake, Redshift, BigQuery, or Databricks — no data copies, no stale extracts, no sprawling middleware. Just live queries from a single governed source of truth.</p>
+          <div class="list-label">Astrato certifications</div>
+          <div class="tag-row">
+            <span class="tag accent">SOC 2 Type II</span>
+            <span class="tag accent">HIPAA Compliant</span>
+            <span class="tag accent">GDPR Ready</span>
+            <span class="tag accent">ISO 27001</span>
+            <span class="tag accent">Google Cloud Ready</span>
+            <span class="tag accent">Snowflake Technology Partner</span>
+          </div>
+          <p class="build-note">Astrato connects natively to <strong style="color:var(--text)">Snowflake, Amazon Redshift, Google BigQuery, Databricks, ClickHouse, PostgreSQL, and Supabase</strong>. If you've already moved to a cloud warehouse, Astrato connects in hours — not weeks.</p>
+        </div>
+        <div>
+          <div class="list-label">What you get</div>
+          <ul class="build-list">
+            <li>Guided self-service analytics</li>
+            <li>Embedded &amp; customer-facing dashboards</li>
+            <li>Data apps &amp; operational workflows</li>
+            <li>Automated branded reporting (Excel, PDF, PPT)</li>
+            <li>Native writeback to your warehouse</li>
+            <li>GenAI-powered data exploration</li>
+          </ul>
+          <div class="list-label">What we deliver</div>
+          <ul class="build-list">
+            <li>Astrato licensing (reseller)</li>
+            <li>Implementation &amp; configuration</li>
+            <li>Warehouse integration &amp; semantic layer setup</li>
+            <li>Dashboard &amp; data app development</li>
+            <li>Team training &amp; enablement</li>
+            <li>Ongoing support &amp; optimization</li>
+          </ul>
+        </div>
+      </div>
+      <div class="build-card-actions">
+        <a href="contact.html" class="btn-primary">Get a Demo →</a>
+        <a href="https://www.astrato.io" target="_blank" rel="noopener" class="btn-outline">Learn About Astrato ↗</a>
+      </div>
+    </div>
+
+    <!-- Custom SaaS Card -->
+    <div class="build-card">
+      <div class="eyebrow">Custom Build</div>
+      <h3>Custom SaaS Builds</h3>
+      <div class="build-card-inner">
+        <div>
+          <p class="build-card-desc">Most SaaS products aren't built for regulated industries. The compliance requirements are too complex, the data too sensitive, and the audit trails too critical to trust off-the-shelf. We build bespoke SaaS products — from data layer to front-end — designed specifically for pharma, defense, and financial services environments where getting it wrong isn't an option.</p>
+          <div class="list-label">Compatible warehouses &amp; databases</div>
+          <div class="tag-row">
+            <span class="tag">Snowflake</span>
+            <span class="tag">Amazon Redshift</span>
+            <span class="tag">Google BigQuery</span>
+            <span class="tag">Databricks</span>
+            <span class="tag">ClickHouse</span>
+            <span class="tag">PostgreSQL</span>
+            <span class="tag">Supabase</span>
+          </div>
+          <p class="build-note">We build on your stack — not ours. <strong style="color:var(--text)">No vendor lock-in. No rip-and-replace.</strong> Every product we deliver is engineered to integrate cleanly with your existing warehouse infrastructure and compliance framework.</p>
+        </div>
+        <div>
+          <div class="list-label">What we build</div>
+          <ul class="build-list">
+            <li>AI-powered analytics portals</li>
+            <li>Compliance &amp; audit dashboards</li>
+            <li>Embedded reporting applications</li>
+            <li>Operational workflow tools</li>
+            <li>Custom data products on your warehouse</li>
+            <li>Internal AI tooling for regulated teams</li>
+          </ul>
+          <div class="list-label">Built on</div>
+          <ul class="build-list">
+            <li>Your existing cloud data warehouse</li>
+            <li>FDA · SOX · HIPAA · DoD aligned architecture</li>
+            <li>Full data lineage &amp; audit trail by design</li>
+            <li>Scalable from prototype to production</li>
+          </ul>
+        </div>
+      </div>
+      <div class="build-card-actions">
+        <a href="contact.html" class="btn-primary">Start a Conversation →</a>
+        <a href="assessment.html" class="btn-outline">Take the Free Assessment</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ADVISORY SECTION -->
+<section class="advisory-section" id="advisory">
+  <div class="container">
+    <div class="eyebrow">Advisory Services</div>
+    <h2>Four ways we help you<br>get <em>AI-ready.</em></h2>
+    <p style="color:var(--text-muted);font-size:.98rem;line-height:1.72;max-width:560px;margin:1rem 0 0">Every engagement starts with your data. We build the foundation — then the AI follows. Built for regulated industries where precision, governance, and audit readiness are operating requirements.</p>
+    <div class="advisory-grid">
+
+      <div class="adv-card">
+        <div class="adv-eyebrow">Data Infrastructure Modernization</div>
+        <h3>Turn legacy systems into a scalable, AI-ready foundation.</h3>
+        <p class="adv-card-desc">Legacy systems aren't just slow — they're costing you in wasted time, failed audits, and stalled AI initiatives. We rebuild the foundation so you can finally move.</p>
+        <ul class="adv-list">
+          <li>Cloud Migration &amp; Architecture</li>
+          <li>Data Warehouse Optimization</li>
+          <li>Pipeline &amp; Integration Design</li>
+          <li>Medallion Architecture (Bronze/Silver/Gold)</li>
+        </ul>
+        <a href="contact.html" class="adv-link">Start a Conversation →</a>
+      </div>
+
+      <div class="adv-card">
+        <div class="adv-eyebrow">AI Readiness &amp; Implementation</div>
+        <h3>Stop chasing AI trends. Build the foundation that lets you deploy AI responsibly.</h3>
+        <p class="adv-card-desc">Most AI initiatives fail before they begin — not from lack of ambition, but from lack of readiness. Bad data, undefined governance, and compliance blind spots kill AI projects in regulated industries.</p>
+        <ul class="adv-list">
+          <li>AI Readiness Assessment</li>
+          <li>Use Case Identification &amp; Prioritization</li>
+          <li>Responsible AI Framework</li>
+          <li>Implementation &amp; Team Handoff</li>
+        </ul>
+        <a href="contact.html" class="adv-link">Start a Conversation →</a>
+      </div>
+
+      <div class="adv-card">
+        <div class="adv-eyebrow">Compliance &amp; Audit Readiness</div>
+        <h3>When the auditor walks in, your data needs to be bulletproof.</h3>
+        <p class="adv-card-desc">In FDA-regulated environments, SOX-audited financials, and DoD-contracted work, your data isn't just an operational asset — it's legal evidence. When it's wrong, it's expensive, disruptive, and sometimes career-ending.</p>
+        <ul class="adv-list">
+          <li>Data Lineage Documentation</li>
+          <li>Regulatory Alignment Review (FDA, SOX, HIPAA, DoD)</li>
+          <li>Governance Framework Design</li>
+          <li>Audit Response Playbook</li>
+        </ul>
+        <a href="contact.html" class="adv-link">Start a Conversation →</a>
+      </div>
+
+      <div class="adv-card">
+        <div class="adv-eyebrow">Analytics Strategy &amp; Transformation</div>
+        <h3>Stop reacting to data. Start leading with it.</h3>
+        <p class="adv-card-desc">Most analytics strategies fail not because the vision is wrong, but because there's no bridge between executive ambition and technical execution. We build that bridge and stay until the results are real.</p>
+        <ul class="adv-list">
+          <li>Current State Assessment</li>
+          <li>Multi-Year Roadmap</li>
+          <li>Executive Alignment Workshops</li>
+          <li>Internal Capability Building</li>
+        </ul>
+        <a href="contact.html" class="adv-link">Start a Conversation →</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="container">
+    <div class="eyebrow">Get Started</div>
+    <h2>Ready to build something that <em>holds up?</em></h2>
+    <p>Whether you need a custom SaaS product, a modern BI layer for your warehouse, or a path to AI readiness — we start with your data and build from there.</p>
+    <div class="cta-actions">
+      <a href="contact.html" class="btn-primary">Start a Conversation →</a>
+      <a href="assessment.html" class="btn-outline">Take the Free Assessment</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-brand">
+    <div class="jazz-bars" style="height:22px">
+      <div class="bar bar1" style="animation-duration:2.2s"></div>
+      <div class="bar bar2" style="animation-duration:2.2s"></div>
+      <div class="bar bar3" style="animation-duration:2.2s"></div>
+      <div class="bar bar4" style="animation-duration:2.2s"></div>
+    </div>
+    <span class="footer-wordmark">2516 Technologies</span>
+  </div>
+  <ul class="footer-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="offer.html">Offer</a></li>
+    <li><a href="modernization.html">Modernization</a></li>
+    <li><a href="expand.html">Expand</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="footer-right">© 2026 2516 Technologies<br>All rights reserved.</div>
+</footer>
+
+</body>
+</html>

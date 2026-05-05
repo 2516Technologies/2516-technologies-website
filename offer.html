@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The 30-Day BI System — 2516 Technologies</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0A1628;--bg-card:#0F2144;--bg-card2:#0D1C3A;--accent:#4A7FFF;--accent-gold:#C9A84C;--text:#E8EEF8;--text-muted:#8A9BBC;--text-dim:#4A5A78;--border:rgba(74,127,255,0.12);--border-mid:rgba(74,127,255,0.26);--white:#FFFFFF;--jazz-dark:#1e3a8a;--jazz-blue:#3b82f6}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;font-weight:300;line-height:1.6}
+::-webkit-scrollbar{width:3px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--accent)}
+.nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:1.1rem 3.5rem;background:rgba(10,22,40,0.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+.nav-brand{display:flex;align-items:center;gap:.9rem;text-decoration:none}
+.nav-wordmark{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:400;letter-spacing:.18em;text-transform:uppercase;color:var(--text)}
+.nav-links{display:flex;gap:0;list-style:none}
+.nav-links a{display:block;padding:.45rem 1rem;font-size:.76rem;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--text)} .nav-links a.active{color:var(--accent-gold)}
+.nav-cta{background:var(--accent-gold);color:#0A1628;padding:.58rem 1.35rem;border-radius:3px;font-size:.74rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;transition:opacity .2s,transform .15s}
+.nav-cta:hover{opacity:.84;transform:translateY(-1px)}
+.jazz-bars{display:flex;align-items:flex-end;gap:3px;height:28px}
+.bar{width:5px;border-radius:2px 2px 0 0;transform-origin:bottom}
+.bar1{height:16px;background:var(--jazz-dark);animation:b1 1.8s ease-in-out infinite}
+.bar2{height:28px;background:var(--jazz-blue);animation:b2 1.8s ease-in-out infinite .2s}
+.bar3{height:20px;background:var(--jazz-dark);animation:b3 1.8s ease-in-out infinite .4s}
+.bar4{height:24px;background:var(--jazz-blue);animation:b4 1.8s ease-in-out infinite .1s}
+@keyframes b1{0%,100%{height:16px}50%{height:9px}}@keyframes b2{0%,100%{height:28px}50%{height:14px}}@keyframes b3{0%,100%{height:20px}50%{height:28px}}@keyframes b4{0%,100%{height:24px}50%{height:11px}}
+section{padding:5.5rem 3.5rem}.container{max-width:1100px;margin:0 auto}
+h1,h2,h3{font-family:'Cormorant Garamond',serif;font-weight:300;line-height:1.1;letter-spacing:-.01em}
+h1{font-size:clamp(2.8rem,5vw,4.4rem)} h2{font-size:clamp(1.8rem,3vw,2.6rem)} h3{font-size:1.4rem}
+.eyebrow{font-family:'DM Mono',monospace;font-size:.69rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);display:flex;align-items:center;gap:.7rem;margin-bottom:1.1rem}
+.eyebrow::before{content:'';width:24px;height:1px;background:var(--accent)}
+.btn-primary{display:inline-block;background:var(--accent);color:#fff;padding:.9rem 2.1rem;border-radius:3px;font-size:.78rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;transition:opacity .2s,transform .15s;border:none;cursor:pointer}
+.btn-primary:hover{opacity:.84;transform:translateY(-2px)}
+.btn-outline{display:inline-block;background:transparent;color:var(--text);padding:.9rem 2.1rem;border-radius:3px;font-size:.78rem;font-weight:400;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;border:1px solid var(--border-mid);transition:border-color .2s,color .2s}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent)}
+.btn-gold{display:inline-block;background:var(--accent-gold);color:#0A1628;padding:.9rem 2.2rem;border-radius:3px;font-size:.78rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;transition:opacity .2s,transform .15s;border:none;cursor:pointer}
+.btn-gold:hover{opacity:.88;transform:translateY(-2px)}
+
+/* PAGE HERO */
+.page-hero{padding:9rem 3.5rem 5rem;background:var(--bg);position:relative;overflow:hidden}
+.page-hero::after{content:'';position:absolute;top:0;right:0;width:40%;height:100%;background:radial-gradient(ellipse 100% 80% at 80% 50%,rgba(74,127,255,.06) 0%,transparent 70%)}
+.ph-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 380px;gap:4rem;align-items:start;position:relative;z-index:1}
+.ph-title-block{padding-top:.5rem}
+.ph-sub{font-size:1.05rem;line-height:1.72;color:var(--text-muted);max-width:540px;margin:1.5rem 0 2rem}
+.ph-features{display:flex;gap:2rem;flex-wrap:wrap;margin-top:1.5rem}
+.ph-feat{font-size:.8rem;color:var(--text-muted);display:flex;align-items:center;gap:.5rem}
+.ph-feat::before{content:'';width:6px;height:6px;background:var(--accent);border-radius:50%;flex-shrink:0}
+.price-anchor{background:var(--bg-card);border:2px solid rgba(74,127,255,.3);border-radius:3px;padding:2rem;position:sticky;top:6rem}
+.pa-label{font-family:'DM Mono',monospace;font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:.75rem}
+.pa-price{font-family:'Cormorant Garamond',serif;font-size:2.8rem;font-weight:300;color:var(--white);line-height:1;margin-bottom:.2rem}
+.pa-range{font-size:.82rem;color:var(--text-muted);margin-bottom:1.5rem}
+.pa-includes{list-style:none;margin-bottom:1.5rem}
+.pa-includes li{display:flex;align-items:center;gap:.7rem;padding:.6rem 0;border-bottom:1px solid var(--border);font-size:.84rem;color:var(--text-muted)}
+.pa-includes li:last-child{border-bottom:none}
+.chk{width:15px;height:15px;background:rgba(74,127,255,.12);border:1px solid rgba(74,127,255,.3);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.5rem;color:var(--accent);flex-shrink:0}
+.pa-support{font-size:.78rem;color:var(--text-dim);text-align:center;margin-top:.85rem;line-height:1.5}
+
+/* DETAIL SECTIONS */
+.detail-full{background:var(--bg-card2)}
+.detail-alt{background:var(--bg)}
+
+/* DELIVERABLES */
+.dlv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-top:2.5rem}
+.dlv-item{background:var(--bg-card);border:1px solid var(--border);padding:2rem;border-radius:3px;transition:border-color .2s,transform .2s}
+.dlv-item:hover{border-color:var(--accent);transform:translateY(-2px)}
+.dlv-icon{font-size:1.4rem;margin-bottom:1rem}
+.dlv-item h4{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:400;color:var(--text);margin-bottom:.5rem}
+.dlv-item p{font-size:.84rem;color:var(--text-muted);line-height:1.58}
+
+/* TIMELINE */
+.timeline-full{margin-top:2.5rem;position:relative}
+.timeline-full::before{content:'';position:absolute;left:68px;top:0;bottom:0;width:1px;background:var(--border)}
+.tl-item{display:grid;grid-template-columns:80px 1fr;gap:2rem;margin-bottom:0;padding:2.5rem 0;border-bottom:1px solid var(--border)}
+.tl-item:last-child{border-bottom:none}
+.tl-week{text-align:right;padding-right:1.5rem}
+.tl-week-label{font-family:'DM Mono',monospace;font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:.35rem}
+.tl-dot{width:12px;height:12px;background:var(--accent);border-radius:50%;margin:0 auto;position:relative;z-index:1;box-shadow:0 0 0 3px var(--bg),0 0 0 5px rgba(74,127,255,.2)}
+.tl-content h3{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:400;color:var(--text);margin-bottom:.75rem}
+.tl-content p{font-size:.92rem;color:var(--text-muted);line-height:1.68;margin-bottom:1rem}
+.tl-tasks{list-style:none}
+.tl-tasks li{font-size:.84rem;color:var(--text-dim);padding:.35rem 0;display:flex;align-items:center;gap:.6rem}
+.tl-tasks li::before{content:'→';color:var(--accent);font-size:.7rem}
+
+/* WHO */
+.who-full{display:grid;grid-template-columns:1fr 1fr;gap:3rem;margin-top:2.5rem}
+.who-card{border:1px solid var(--border);padding:2rem;border-radius:3px;transition:border-color .22s}
+.who-card:hover{border-color:var(--border-mid)}
+.who-card-icon{font-size:1.5rem;margin-bottom:1rem}
+.who-card h3{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:400;color:var(--text);margin-bottom:.6rem}
+.who-card p{font-size:.88rem;color:var(--text-muted);line-height:1.65;margin-bottom:1rem}
+.pain-points{list-style:none}
+.pain-points li{font-size:.82rem;color:var(--text-dim);padding:.3rem 0;display:flex;gap:.6rem}
+.pain-points li::before{content:'✗';color:rgba(255,80,80,.5);font-size:.7rem;margin-top:.1rem}
+
+.not-for{background:var(--bg-card2);border:1px solid var(--border);padding:1.5rem 2rem;border-radius:3px;margin-top:2rem}
+.not-for h4{font-family:'DM Mono',monospace;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--text-dim);margin-bottom:.85rem}
+.not-for p{font-size:.86rem;color:var(--text-dim);line-height:1.62}
+
+/* PRICING FULL */
+.pricing-cards{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:2.5rem}
+.pc{background:var(--bg-card);border:1px solid var(--border);padding:2.25rem;border-radius:3px}
+.pc.featured{border:2px solid rgba(74,127,255,.4);position:relative}
+.pc-badge{position:absolute;top:-11px;left:2rem;background:var(--accent);color:#fff;font-family:'DM Mono',monospace;font-size:.64rem;letter-spacing:.12em;text-transform:uppercase;padding:.28rem .85rem;border-radius:2px}
+.pc h3{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:400;color:var(--text);margin-bottom:.5rem}
+.pc-sub{font-size:.84rem;color:var(--text-muted);margin-bottom:1.5rem}
+.pc-price{font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:300;color:var(--white);line-height:1;margin-bottom:.25rem}
+.pc-price-sub{font-size:.78rem;color:var(--text-dim);margin-bottom:1.5rem}
+.pc-list{list-style:none;margin-bottom:1.75rem}
+.pc-list li{display:flex;gap:.75rem;padding:.65rem 0;border-bottom:1px solid var(--border);font-size:.86rem;color:var(--text-muted)}
+.pc-list li:last-child{border-bottom:none}
+
+/* FAQ */
+.faq-list{margin-top:2.5rem;display:flex;flex-direction:column;gap:0}
+.faq-item{border-bottom:1px solid var(--border);padding:1.75rem 0;cursor:pointer}
+.faq-q{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:400;color:var(--text);display:flex;justify-content:space-between;align-items:center;gap:1rem;user-select:none}
+.faq-q::after{content:'+';font-family:'DM Sans',sans-serif;font-size:1.2rem;color:var(--accent);flex-shrink:0;transition:transform .25s}
+.faq-item.open .faq-q::after{transform:rotate(45deg)}
+.faq-a{font-size:.9rem;color:var(--text-muted);line-height:1.7;max-height:0;overflow:hidden;transition:max-height .3s ease,padding .3s ease}
+.faq-item.open .faq-a{max-height:300px;padding-top:1rem}
+
+/* FINAL CTA */
+.final-cta{background:var(--bg-card);text-align:center;border-top:1px solid var(--border);padding:7rem 3.5rem}
+.final-cta h2{max-width:580px;margin:1rem auto 1.25rem}
+.final-cta p{max-width:460px;margin:0 auto 2.5rem;font-size:.96rem;color:var(--text-muted);line-height:1.72}
+.cta-pair{display:flex;justify-content:center;gap:1.25rem;flex-wrap:wrap}
+
+/* FORM */
+.contact-block{max-width:520px;margin:3rem auto 0;background:var(--bg-card2);border:1px solid var(--border);border-radius:3px;padding:2.25rem;text-align:left}
+.contact-block h3{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:400;margin-bottom:1.5rem}
+.form-row{margin-bottom:1rem}
+.form-row label{display:block;font-family:'DM Mono',monospace;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-dim);margin-bottom:.4rem}
+.form-row input,.form-row textarea,.form-row select{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:3px;padding:.72rem 1rem;font-family:'DM Sans',sans-serif;font-size:.9rem;color:var(--text);outline:none;transition:border-color .2s}
+.form-row input:focus,.form-row textarea:focus{border-color:var(--accent)}
+.form-row textarea{height:90px;resize:vertical}
+.form-2col{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+.contact-also{text-align:center;margin-top:1.25rem;font-size:.8rem;color:var(--text-dim)}
+.contact-also a{color:var(--accent);text-decoration:none}
+
+.footer{background:#060F1E;padding:2.75rem 3.5rem;border-top:1px solid var(--border);display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:2rem}
+.footer-brand{display:flex;align-items:center;gap:.85rem}
+.footer-wordmark{font-family:'Cormorant Garamond',serif;font-size:.95rem;font-weight:400;letter-spacing:.16em;text-transform:uppercase;color:var(--text-muted)}
+.footer-links{display:flex;gap:2rem;list-style:none;justify-content:center;flex-wrap:wrap}
+.footer-links a{font-size:.73rem;letter-spacing:.08em;text-transform:uppercase;color:var(--text-dim);text-decoration:none;transition:color .2s}
+.footer-links a:hover{color:var(--accent)}
+.footer-right{text-align:right;font-size:.72rem;color:var(--text-dim);letter-spacing:.04em}
+
+@media(max-width:900px){
+  .nav{padding:1rem 1.5rem} .nav-links{display:none}
+  section{padding:4rem 1.5rem}
+  .ph-inner{grid-template-columns:1fr} .price-anchor{position:static}
+  .dlv-grid{grid-template-columns:1fr 1fr}
+  .who-full{grid-template-columns:1fr}
+  .pricing-cards{grid-template-columns:1fr}
+  .footer{grid-template-columns:1fr;text-align:center} .footer-right{text-align:center}
+  .form-2col{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="index.html" class="nav-brand">
+    <img src="2516_logo_horizontal_dark_web (1).png" alt="2516 Technologies" style="height:32px;width:auto;">
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="offer.html" class="active">Offer</a></li>
+    <li><a href="modernization.html">Modernization</a></li>
+    <li><a href="expand.html">Expand</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a href="contact.html" class="nav-cta">Book a Call</a>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="ph-inner">
+    <div class="ph-title-block">
+      <div class="eyebrow" style="margin-bottom:1.5rem">Core Offer</div>
+      <h1>The 30-Day<br><em style="font-style:italic;color:var(--accent)">BI System</em></h1>
+      <p class="ph-sub">A fully operational business intelligence system — custom-built for your company, connected to your data sources, and handed off to your team in four weeks. Fixed scope, fixed price, no surprises.</p>
+      <div style="display:flex;gap:1rem;flex-wrap:wrap">
+        <a href="#contact" class="btn-primary">Book a Strategy Call →</a>
+        <a href="#pricing" class="btn-outline">See Pricing</a>
+      </div>
+      <div class="ph-features">
+        <span class="ph-feat">30-day delivery</span>
+        <span class="ph-feat">3–5 data sources</span>
+        <span class="ph-feat">Fixed price</span>
+        <span class="ph-feat">Done for you</span>
+      </div>
+    </div>
+    <div class="price-anchor">
+      <div class="pa-label">Implementation Price</div>
+      <div class="pa-price">$6,500</div>
+      <div class="pa-range">to $10,000 · fixed · scoped upfront</div>
+      <ul class="pa-includes">
+        <li><div class="chk">✓</div>3–5 data sources integrated</li>
+        <li><div class="chk">✓</div>Executive + operational dashboards</li>
+        <li><div class="chk">✓</div>Automated data pipeline</li>
+        <li><div class="chk">✓</div>Insight layer + alerts</li>
+        <li><div class="chk">✓</div>Team training + docs</li>
+        <li><div class="chk">✓</div>30-day post-launch support</li>
+      </ul>
+      <a href="#contact" class="btn-primary" style="display:block;text-align:center;width:100%">Get Started →</a>
+      <p class="pa-support">Monthly support retainer available after launch</p>
+    </div>
+  </div>
+</div>
+
+<!-- DELIVERABLES -->
+<section class="detail-full">
+  <div class="container">
+    <div class="eyebrow">What You Get</div>
+    <h2>Every deliverable, defined.</h2>
+    <div class="dlv-grid">
+      <div class="dlv-item">
+        <div class="dlv-icon">🔗</div>
+        <h4>Data Integration</h4>
+        <p>We connect 3–5 of your core data sources — CRM, marketing platforms, financial systems, and ops tools — into a single, clean, automated data layer. No manual exports. No reconciliation.</p>
+      </div>
+      <div class="dlv-item">
+        <div class="dlv-icon">📊</div>
+        <h4>Executive Dashboard</h4>
+        <p>A leadership-facing view of the metrics that drive your business — revenue, pipeline, client performance, and growth KPIs — updated automatically, readable at a glance.</p>
+      </div>
+      <div class="dlv-item">
+        <div class="dlv-icon">⚙️</div>
+        <h4>Operational Dashboard</h4>
+        <p>Day-to-day visibility for your team — utilization, project status, campaign performance, or whatever drives your operations. Designed for the people who need to act on data, not just read it.</p>
+      </div>
+      <div class="dlv-item">
+        <div class="dlv-icon">🤖</div>
+        <h4>Automated Pipelines</h4>
+        <p>Your data refreshes on a schedule. No one needs to run a report, export a spreadsheet, or paste anything into a dashboard. It just works.</p>
+      </div>
+      <div class="dlv-item">
+        <div class="dlv-icon">💡</div>
+        <h4>Insight Layer</h4>
+        <p>Automated alerts and trend detection surface what matters before it becomes a problem. Anomaly flags, performance thresholds, and pattern signals built into the system.</p>
+      </div>
+      <div class="dlv-item">
+        <div class="dlv-icon">📋</div>
+        <h4>Training + Documentation</h4>
+        <p>Live team walkthrough, written documentation, and 30 days of post-launch support. You own the system — and you'll know exactly how to use it.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section class="detail-alt">
+  <div class="container">
+    <div class="eyebrow">How It Works</div>
+    <h2>Four weeks. Zero ambiguity.</h2>
+    <div class="timeline-full">
+      <div class="tl-item">
+        <div class="tl-week">
+          <span class="tl-week-label">Week 1</span>
+          <div class="tl-dot"></div>
+        </div>
+        <div class="tl-content">
+          <h3>Strategy &amp; KPI Definition</h3>
+          <p>We start by understanding your business, not just your data. We map your revenue model, operational structure, and decision-making patterns to define the metrics that actually matter for you — not a generic template.</p>
+          <ul class="tl-tasks">
+            <li>Kickoff call and business model mapping</li>
+            <li>KPI definition and prioritization workshop</li>
+            <li>Data source audit and access provisioning</li>
+            <li>Dashboard and architecture brief signed off</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-week">
+          <span class="tl-week-label">Week 2</span>
+          <div class="tl-dot"></div>
+        </div>
+        <div class="tl-content">
+          <h3>Data Integration</h3>
+          <p>We connect your data sources and build the unified data layer. This is the foundation everything else runs on — clean, reliable, and automated from day one.</p>
+          <ul class="tl-tasks">
+            <li>Connectors built for 3–5 agreed data sources</li>
+            <li>Data cleaning, normalization, and transformation</li>
+            <li>Automated refresh pipeline configured</li>
+            <li>Data quality validation and review</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-week">
+          <span class="tl-week-label">Week 3</span>
+          <div class="tl-dot"></div>
+        </div>
+        <div class="tl-content">
+          <h3>Dashboard Build</h3>
+          <p>With the data layer in place, we build your dashboards. Executive view and operational view, designed for your audience — not a default layout from a BI tool's template gallery.</p>
+          <ul class="tl-tasks">
+            <li>Executive dashboard built and reviewed</li>
+            <li>Operational dashboard built and reviewed</li>
+            <li>Insight layer and alert configuration</li>
+            <li>Midpoint review call with your team</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-week">
+          <span class="tl-week-label">Week 4</span>
+          <div class="tl-dot"></div>
+        </div>
+        <div class="tl-content">
+          <h3>Delivery &amp; Handoff</h3>
+          <p>We deliver the finished system, walk your team through it, and hand over everything you need to run it independently. 30 days of post-launch support included.</p>
+          <ul class="tl-tasks">
+            <li>Final QA and performance review</li>
+            <li>Live team training session</li>
+            <li>Full documentation package delivered</li>
+            <li>30-day support window begins</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHO -->
+<section class="detail-full">
+  <div class="container">
+    <div class="eyebrow">Who It's For</div>
+    <h2>Right fit, wrong fit.</h2>
+    <div class="who-full">
+      <div class="who-card">
+        <div class="who-card-icon">📈</div>
+        <h3>Marketing Agencies</h3>
+        <p>You're running campaigns across six platforms, billing clients for performance, and producing monthly reports that take your team two days to compile. That's fixable.</p>
+        <ul class="pain-points">
+          <li>No unified view of cross-channel performance</li>
+          <li>Manual client reporting process every month</li>
+          <li>Can't prove ROI quickly without a spreadsheet sprint</li>
+        </ul>
+      </div>
+      <div class="who-card">
+        <div class="who-card-icon">⚙️</div>
+        <h3>Service-Based Businesses</h3>
+        <p>You know your top-line revenue. You don't know which clients are profitable, which projects are over-budget, or where your team's time actually goes. That gap is costing you.</p>
+        <ul class="pain-points">
+          <li>No visibility into margin by client or project</li>
+          <li>Utilization tracked in spreadsheets (if at all)</li>
+          <li>Churn and at-risk signals invisible until it's too late</li>
+        </ul>
+      </div>
+      <div class="who-card">
+        <div class="who-card-icon">🚀</div>
+        <h3>Growing Companies ($1M–$20M)</h3>
+        <p>You've been running on gut feel and spreadsheets. It worked. Now you're bigger, the decisions are harder, and you need data infrastructure that can actually scale with you.</p>
+        <ul class="pain-points">
+          <li>Data spread across 4+ disconnected tools</li>
+          <li>No single source of truth for KPIs</li>
+          <li>Reporting takes days, not minutes</li>
+        </ul>
+      </div>
+      <div>
+        <div class="not-for">
+          <h4>This is not for you if…</h4>
+          <p>You're a pre-revenue startup with no operational data yet, you're a large enterprise that needs a dedicated internal data team, or you want to build and maintain the system yourself. We're a done-for-you implementation partner — not a training program or a SaaS license.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="detail-alt" id="pricing">
+  <div class="container">
+    <div class="eyebrow">Investment</div>
+    <h2>Transparent pricing. Fixed from the start.</h2>
+    <p style="color:var(--text-muted);font-size:.98rem;max-width:580px;line-height:1.7;margin-top:1rem">Pricing is determined during your strategy call based on number of data sources, dashboard complexity, and integration requirements. No hourly billing. No open scope. One flat investment.</p>
+    <div class="pricing-cards">
+      <div class="pc featured">
+        <div class="pc-badge">Core Implementation</div>
+        <h3>30-Day BI System</h3>
+        <p class="pc-sub">Everything you need to go from scattered data to a live, automated BI system.</p>
+        <div class="pc-price">$6,500 – $10,000</div>
+        <div class="pc-price-sub">Fixed implementation · One-time · Scoped on kickoff call</div>
+        <ul class="pc-list">
+          <li><div class="chk">✓</div>3–5 data sources integrated</li>
+          <li><div class="chk">✓</div>Executive + operational dashboards</li>
+          <li><div class="chk">✓</div>Automated data pipeline and refresh</li>
+          <li><div class="chk">✓</div>Insight layer and alert configuration</li>
+          <li><div class="chk">✓</div>Team training + full documentation</li>
+          <li><div class="chk">✓</div>30-day post-launch support</li>
+        </ul>
+        <a href="#contact" class="btn-primary" style="display:block;text-align:center;width:100%">Book a Strategy Call →</a>
+      </div>
+      <div class="pc">
+        <h3>With Ongoing Support</h3>
+        <p class="pc-sub">The core system plus a monthly retainer for teams who want a long-term BI partner.</p>
+        <div class="pc-price">Implementation +</div>
+        <div class="pc-price-sub">Monthly support retainer · Pricing discussed on call</div>
+        <ul class="pc-list">
+          <li><div class="chk">✓</div>Everything in the core system</li>
+          <li><div class="chk">✓</div>Monthly dashboard updates and refinement</li>
+          <li><div class="chk">✓</div>Additional data source integrations</li>
+          <li><div class="chk">✓</div>Ongoing insight layer tuning</li>
+          <li><div class="chk">✓</div>Priority support access</li>
+          <li><div class="chk">✓</div>Quarterly strategy reviews</li>
+        </ul>
+        <a href="#contact" class="btn-outline" style="display:block;text-align:center;width:100%">Discuss Support Options</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="detail-full">
+  <div class="container">
+    <div class="eyebrow">FAQ</div>
+    <h2>Common questions.</h2>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q">What data sources do you work with?</div>
+        <div class="faq-a">We work with most major platforms — Salesforce, HubSpot, Google Analytics, Meta Ads, QuickBooks, Xero, Shopify, and many others. During your strategy call, we'll confirm compatibility with your specific stack. If you use something less common, we'll tell you honestly whether it's in scope.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">What BI tools do you build on?</div>
+        <div class="faq-a">We work primarily with Astrato Analytics (we're an authorized implementation partner), as well as other modern cloud BI platforms depending on your environment and preferences. We match the tooling to your situation — not the other way around.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Do I need an internal data team?</div>
+        <div class="faq-a">No. That's the point. We handle the full build — architecture, integration, dashboard design, and pipeline automation. You need to be available for two or three working sessions during the four weeks, and you need to be able to provide data access credentials. That's it.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">What happens after the 30 days?</div>
+        <div class="faq-a">You own the system. We include 30 days of post-launch support in every engagement. After that, you can run it independently or engage us on a monthly retainer for ongoing updates, additional integrations, and strategic support.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">How is the price determined?</div>
+        <div class="faq-a">Pricing within the $6,500–$10,000 range depends on the number of data sources, dashboard complexity, and integration requirements. We scope this in detail on your strategy call before any commitment is made. No surprises after you start.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">What if my data is messy?</div>
+        <div class="faq-a">Most of our clients have messy data. That's normal, not a problem. Part of Week 2 is cleaning, normalizing, and structuring your data properly. The messier the starting point, the more valuable the clean output becomes.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta" id="contact">
+  <div class="eyebrow" style="justify-content:center">Start Here</div>
+  <h2>30 days from today,<br>your data works for you.</h2>
+  <p>Book a free 30-minute strategy call. We'll look at your current setup and tell you exactly what a BI system would look like for your business — no obligation, no pitch deck.</p>
+  <div class="cta-pair">
+    <a href="mailto:mark@2516technologies.com" class="btn-primary">Email Us Directly</a>
+    <a href="https://calendly.com" target="_blank" class="btn-outline">Schedule via Calendly</a>
+  </div>
+  <div class="contact-block">
+    <h3>Send Us a Message</h3>
+    <div class="form-2col">
+      <div class="form-row" style="margin-bottom:0"><label>First Name</label><input type="text" placeholder="First"></div>
+      <div class="form-row" style="margin-bottom:0"><label>Last Name</label><input type="text" placeholder="Last"></div>
+    </div>
+    <div style="height:1rem"></div>
+    <div class="form-row"><label>Email</label><input type="email" placeholder="you@company.com"></div>
+    <div class="form-row"><label>Company</label><input type="text" placeholder="Your Company"></div>
+    <div class="form-row"><label>Tell us about your data situation</label><textarea placeholder="What tools are you using? What's not working?"></textarea></div>
+    <button class="btn-primary" style="width:100%;text-align:center">Submit — We'll Respond Within 24hrs</button>
+    <div class="contact-also" style="margin-top:1rem;font-size:.8rem;color:var(--text-dim);text-align:center">
+      Or reach out at <a href="mailto:mark@2516technologies.com" style="color:var(--accent)">mark@2516technologies.com</a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-brand">
+    <div class="jazz-bars" style="height:22px"><div class="bar bar1"></div><div class="bar bar2"></div><div class="bar bar3"></div><div class="bar bar4"></div></div>
+    <span class="footer-wordmark">2516 Technologies</span>
+  </div>
+  <ul class="footer-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="offer.html">30-Day BI</a></li>
+    <li><a href="modernization.html">Modernization</a></li>
+    <li><a href="about.html">About</a></li>
+  </ul>
+  <div class="footer-right">© 2026 2516 Technologies<br>All rights reserved.</div>
+</footer>
+
+<script>
+document.querySelectorAll('.faq-item').forEach(item => {
+  item.querySelector('.faq-q').addEventListener('click', () => {
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  });
+});
+</script>
+</body>
+</html>
