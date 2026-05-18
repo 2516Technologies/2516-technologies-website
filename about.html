@@ -37,6 +37,9 @@ h1{font-size:clamp(2.8rem,5vw,4.2rem)} h2{font-size:clamp(1.8rem,3vw,2.6rem)} h3
 .btn-primary:hover{opacity:.84;transform:translateY(-2px)}
 .btn-outline{display:inline-block;background:transparent;color:var(--text);padding:.9rem 2.1rem;border-radius:3px;font-size:.78rem;font-weight:400;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;border:1px solid var(--border-mid);transition:border-color .2s,color .2s}
 .btn-outline:hover{border-color:var(--accent);color:var(--accent)}
+.hero{min-height:50vh;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:120px 24px 60px;text-align:center}
+.hero-content{max-width:720px;margin:0 auto}
+.hero-subhead{font-size:clamp(15px,2.5vw,17px);line-height:1.8;max-width:560px;margin:1rem auto 0;color:var(--text-muted)}
 
 /* PAGE HERO */
 .about-hero{padding:9rem 3.5rem 5.5rem;background:var(--bg);position:relative;overflow:hidden;border-bottom:1px solid var(--border)}
@@ -179,215 +182,45 @@ h1{font-size:clamp(2.8rem,5vw,4.2rem)} h2{font-size:clamp(1.8rem,3vw,2.6rem)} h3
   <a href="contact.html" class="nav-cta">Book a Call</a>
 </div>
 
-<!-- HERO -->
-<div class="about-hero">
-  <div class="ah-inner">
-    <div class="ah-left">
-      <div class="eyebrow">The Firm</div>
-      <h1>Built by someone who's<br><em style="font-style:italic;color:var(--accent)">done the work.</em></h1>
-      <p class="ah-lead">2516 Technologies is a business intelligence and data transformation consultancy founded by Mark Henning — an applied economist and enterprise data leader with over a decade of experience building analytics infrastructure in regulated, high-stakes industries.</p>
-      <div class="ah-cred">
-        <div class="cred-item"><span class="cred-icon">🎓</span><span><strong>M.S. Applied Economics</strong> — Johns Hopkins University</span></div>
-        <div class="cred-item"><span class="cred-icon">🎓</span><span><strong>Certificate in Business Strategy</strong> — Columbia Business School</span></div>
-        <div class="cred-item"><span class="cred-icon">💊</span><span>Enterprise analytics leadership in <strong>oncology pharma</strong></span></div>
-        <div class="cred-item"><span class="cred-icon">🤝</span><span><strong>Astrato Analytics</strong> — Authorized Reseller &amp; Implementation Partner</span></div>
-      </div>
-    </div>
-    <div class="ah-right">
-      <div class="stat-card">
-        <div class="sc-n">10<span>+</span></div>
-        <div class="sc-l">Years building analytics infrastructure in regulated industries</div>
-      </div>
-      <div class="stat-card">
-        <div class="sc-n">3<span> sectors</span></div>
-        <div class="sc-l">Pharma · Defense · Financial Services — high-stakes data environments</div>
-      </div>
-      <div class="stat-card">
-        <div class="sc-n">2<span> degrees</span></div>
-        <div class="sc-l">Applied Economics (Hopkins) + Business Strategy (Columbia)</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- EXPERIENCE -->
-<section class="experience">
-  <div class="container">
-    <div class="exp-layout">
-      <div class="exp-left">
-        <div class="eyebrow">Background</div>
-        <h2>What makes 2516<br>different.</h2>
-        <p class="exp-body">Most BI consultants come from a tools background — they know the software. Mark Henning comes from an outcomes background. Before founding 2516 Technologies, he built commercial analytics systems for oncology pharmaceutical organizations, where data errors don't just cost money — they affect patient care, regulatory compliance, and strategic decisions worth hundreds of millions of dollars.</p>
-        <p class="exp-body">That environment — with its demand for precision, its governance requirements, and its zero-tolerance for ambiguity — shaped how 2516 approaches every engagement. The result is a firm that doesn't just build dashboards, but builds systems that hold up under scrutiny.</p>
-        <div class="exp-history">
-          <div class="exp-item">
-            <div class="exp-year">Pharma</div>
-            <div class="exp-content">
-              <h4>Commercial Data &amp; Analytics</h4>
-              <p>Enterprise-level analytics for oncology pharmaceutical commercial operations — territory performance, targeting, sales reporting, and data infrastructure modernization at the associate director level.</p>
-            </div>
-          </div>
-          <div class="exp-item">
-            <div class="exp-year">Regulated</div>
-            <div class="exp-content">
-              <h4>Defense &amp; Financial Services</h4>
-              <p>Advisory work in industries where data governance, audit readiness, and compliance aren't optional — they're operating requirements. Where data systems need to be defensible, not just functional.</p>
-            </div>
-          </div>
-          <div class="exp-item">
-            <div class="exp-year">Now</div>
-            <div class="exp-content">
-              <h4>2516 Technologies</h4>
-              <p>Bringing enterprise-grade BI discipline to marketing agencies, service businesses, and growing companies that need real data infrastructure — not a consultant's recommendation to buy a SaaS tool.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="exp-right">
-        <div class="edu-section">
-          <h3>Education &amp; Credentials</h3>
-          <div class="edu-item">
-            <div class="edu-degree">M.S. Applied Economics</div>
-            <div class="edu-school">Johns Hopkins University</div>
-            <div class="edu-detail">Econometrics · Quantitative methods · Data modeling</div>
-          </div>
-          <div class="edu-item">
-            <div class="edu-degree">Certificate — Business Strategy</div>
-            <div class="edu-school">Columbia Business School</div>
-            <div class="edu-detail">Executive strategy and organizational decision-making</div>
-          </div>
-          <div class="edu-item">
-            <div class="edu-degree">Astrato Analytics</div>
-            <div class="edu-school">Authorized Reseller &amp; Implementation Partner</div>
-            <div class="edu-detail">Certified to implement and resell the Astrato platform</div>
-          </div>
-        </div>
-
-        <div style="margin-top:2rem;padding:1.75rem;background:var(--bg-card);border:1px solid var(--border);border-radius:3px">
-          <div style="font-family:'DM Mono',monospace;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--text-dim);margin-bottom:1rem">Core Competencies</div>
-          <div style="display:flex;flex-wrap:wrap;gap:.5rem">
-            <span style="background:rgba(74,127,255,.08);border:1px solid rgba(74,127,255,.2);color:var(--text-muted);font-size:.76rem;padding:.28rem .7rem;border-radius:2px">BI Architecture</span>
-            <span style="background:rgba(74,127,255,.08);border:1px solid rgba(74,127,255,.2);color:var(--text-muted);font-size:.76rem;padding:.28rem .7rem;border-radius:2px">Data Integration</span>
-            <span style="background:rgba(74,127,255,.08);border:1px solid rgba(74,127,255,.2);color:var(--text-muted);font-size:.76rem;padding:.28rem .7rem;border-radius:2px">Dashboard Design</span>
-            <span style="background:rgba(74,127,255,.08);border:1px solid rgba(74,127,255,.2);color:var(--text-muted);font-size:.76rem;padding:.28rem .7rem;border-radius:2px">Pipeline Automation</span>
-            <span style="background:rgba(74,127,255,.08);border:1px solid rgba(74,127,255,.2);color:var(--text-muted);font-size:.76rem;padding:.28rem .7rem;border-radius:2px">SQL / Data Modeling</span>
-            <span style="background:rgba(74,127,255,.08);border:1px solid rgba(74,127,255,.2);color:var(--text-muted);font-size:.76rem;padding:.28rem .7rem;border-radius:2px">KPI Strategy</span>
-            <span style="background:rgba(74,127,255,.08);border:1px solid rgba(74,127,255,.2);color:var(--text-muted);font-size:.76rem;padding:.28rem .7rem;border-radius:2px">AI Readiness</span>
-            <span style="background:rgba(74,127,255,.08);border:1px solid rgba(74,127,255,.2);color:var(--text-muted);font-size:.76rem;padding:.28rem .7rem;border-radius:2px">Applied Economics</span>
-          </div>
-        </div>
-      </div>
-    </div>
+<section class="hero" style="min-height:50vh">
+  <div class="hero-content">
+    <div class="eyebrow">About</div>
+    <h1 style="font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,4vw,3.2rem);font-weight:300;margin-bottom:1.25rem;line-height:1.12">Built to turn data into decisions.</h1>
+    <p class="hero-subhead">2516 Technologies helps companies modernize the way they use data, reporting, and AI.</p>
   </div>
 </section>
 
-<!-- TOOLS -->
-<section class="tools-section">
-  <div class="container">
-    <div class="eyebrow">Technology Stack</div>
-    <h2>The tools we work with.</h2>
-    <p style="color:var(--text-muted);font-size:.96rem;line-height:1.7;max-width:560px;margin:1rem 0 0">We work with the platforms our clients actually use — not a fixed stack we fit every engagement into. These are the tools we know well and build on.</p>
-    <div class="tools-grid">
-      <div class="tool-card featured">
-        <div class="tool-category">Authorized Partner</div>
-        <div class="tool-name">Astrato Analytics</div>
-        <div class="tool-desc">Our primary BI and visualization platform. We are an authorized reseller and implementation partner — certified to build, configure, and deploy.</div>
-      </div>
-      <div class="tool-card">
-        <div class="tool-category">BI & Visualization</div>
-        <div class="tool-name">Qlik Sense / QlikView</div>
-        <div class="tool-desc">Legacy Qlik environments — the platform we migrate organizations away from as part of the Modernization Program.</div>
-      </div>
-      <div class="tool-card">
-        <div class="tool-category">Data Integration</div>
-        <div class="tool-name">CRM + Cloud Connectors</div>
-        <div class="tool-desc">Salesforce, HubSpot, Google Analytics, Meta Ads, QuickBooks, Xero, Shopify — and the pipelines that connect them.</div>
-      </div>
-      <div class="tool-card">
-        <div class="tool-category">Data Infrastructure</div>
-        <div class="tool-name">SQL + Cloud Data</div>
-        <div class="tool-desc">SQL-native data modeling, cloud data warehouse architecture, and automated pipeline tooling for reliable, maintainable data systems.</div>
-      </div>
-      <div class="tool-card">
-        <div class="tool-category">Custom Development</div>
-        <div class="tool-name">Custom SaaS Builds</div>
-        <div class="tool-desc">Purpose-built internal tools and SaaS applications when off-the-shelf platforms don't fit the requirement.</div>
-      </div>
-      <div class="tool-card">
-        <div class="tool-category">AI Readiness</div>
-        <div class="tool-name">AI Implementation</div>
-        <div class="tool-desc">Structured readiness assessments and implementation frameworks for organizations preparing to build on AI infrastructure.</div>
-      </div>
-      <div class="tool-card">
-        <div class="tool-category">Compliance</div>
-        <div class="tool-name">Audit &amp; Governance</div>
-        <div class="tool-desc">Data governance frameworks, audit readiness preparation, and compliance-oriented analytics architecture for regulated industries.</div>
-      </div>
-      <div class="tool-card">
-        <div class="tool-category">Analytics Strategy</div>
-        <div class="tool-name">Transformation Advisory</div>
-        <div class="tool-desc">Strategic analytics advisory for organizations undergoing data transformation — from assessment through execution roadmap.</div>
+<section style="background:var(--bg);padding:5rem 3.5rem">
+  <div class="container" style="max-width:720px">
+
+    <p style="font-size:1.05rem;line-height:1.82;color:var(--text-muted);margin-bottom:1.75rem">Most companies already have plenty of data. The harder part is turning that data into clear answers leaders can trust.</p>
+    <p style="font-size:1.05rem;line-height:1.82;color:var(--text-muted);margin-bottom:3.5rem">That is where we come in. We build business intelligence systems, AI-enabled workflows, and custom tools that help teams move faster, reduce manual work, and make better decisions.</p>
+
+    <div class="eyebrow" style="margin-bottom:1rem">Why I Started 2516</div>
+    <p style="font-size:1.05rem;line-height:1.82;color:var(--text-muted);margin-bottom:1.75rem">I started 2516 after years of building analytics infrastructure in high-stakes environments where the numbers had to be accurate, explainable, and useful.</p>
+    <p style="font-size:1.05rem;line-height:1.82;color:var(--text-muted);margin-bottom:1.75rem">That experience shaped how I think about data work.</p>
+    <blockquote style="border-left:2px solid var(--accent);padding-left:1.5rem;margin:2rem 0;font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:300;font-style:italic;color:var(--text);line-height:1.5">A dashboard is not valuable because it looks good. It is valuable because it helps someone make the right decision faster.</blockquote>
+    <p style="font-size:1.05rem;line-height:1.82;color:var(--text-muted);margin-bottom:3.5rem">That is the standard behind every 2516 engagement.</p>
+
+    <div class="eyebrow" style="margin-bottom:1rem">How We Work</div>
+    <p style="font-size:1.05rem;line-height:1.82;color:var(--text-muted);margin-bottom:1.75rem">We start with the business decision, not the tool.</p>
+    <p style="font-size:1.05rem;line-height:1.82;color:var(--text-muted);margin-bottom:1.75rem">What does your team need to know? Where is the friction today? What needs to exist so the answer is easier to find next time?</p>
+    <p style="font-size:1.05rem;line-height:1.82;color:var(--text-muted);margin-bottom:1.75rem">Then we build the system around that.</p>
+    <p style="font-size:1.05rem;line-height:1.82;color:var(--text-muted);margin-bottom:3.5rem">Clear scope. Practical deliverables. Working tools. No unnecessary drag.</p>
+
+    <div class="eyebrow" style="margin-bottom:1rem">What We Do</div>
+    <p style="font-size:1.05rem;line-height:1.82;color:var(--text-muted);margin-bottom:1.75rem">We work across reporting modernization, AI implementation, analytics migrations, and custom internal tools. See the full scope on our <a href="services.html" style="color:var(--accent);text-decoration:none">What You Gain</a> page.</p>
+    <p style="font-size:1.05rem;line-height:1.82;color:var(--text-muted);margin-bottom:3.5rem">2516 Technologies was founded by Mark Henning, an analytics leader with experience in pharma, defense, and financial services. We are also an authorized Astrato Analytics reseller and implementation partner.</p>
+
+    <div style="background:var(--bg-card);border:1px solid var(--border-mid);border-radius:3px;padding:2.5rem;text-align:center">
+      <div class="eyebrow" style="justify-content:center;margin-bottom:1rem">Ready to Build Something That Works?</div>
+      <p style="font-size:.96rem;color:var(--text-muted);margin-bottom:2rem;line-height:1.72">Let's talk through your data environment, where the friction is, and what the right system could look like.</p>
+      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
+        <a href="contact.html" class="btn-primary">Book a Strategy Call →</a>
+        <a href="mailto:mark@2516technologies.com" class="btn-outline">Email Mark Directly</a>
       </div>
     </div>
-  </div>
-</section>
 
-<!-- APPROACH -->
-<section class="approach">
-  <div class="container">
-    <div class="approach-grid">
-      <div class="approach-text">
-        <div class="eyebrow">How We Work</div>
-        <h2>Productized.<br>Precise. No drag.</h2>
-        <p>2516 Technologies operates as a productized implementation firm — not a general consulting practice. That distinction matters. A general consultant scopes open-endedly, bills by the hour, and delivers a recommendation document. We scope fixed deliverables, bill by the engagement, and deliver a working system.</p>
-        <p>Every engagement starts with a defined outcome. Every week has a clear deliverable. Every project ends with a handoff — not a handwave.</p>
-        <div class="philosophy">
-          <p>"Data infrastructure should remove friction from decisions — not create it. If your team needs to ask an analyst before they can answer a business question, the system isn't done."</p>
-          <cite>— 2516 Technologies operating principle</cite>
-        </div>
-      </div>
-      <div class="principles">
-        <div class="principle">
-          <h4>Outcomes over outputs</h4>
-          <p>A dashboard is not the product. The product is a business decision that gets made faster and more confidently. We design backwards from that outcome.</p>
-        </div>
-        <div class="principle">
-          <h4>Scope before start</h4>
-          <p>Every engagement is scoped in full before work begins. Deliverables, timeline, and price are confirmed before any commitment is made. Scope creep is a design failure — and we design around it.</p>
-        </div>
-        <div class="principle">
-          <h4>Build for independence</h4>
-          <p>We build systems your team can run. Documentation, training, and handoff are not afterthoughts — they're the last deliverable of every project, and they're included in the price.</p>
-        </div>
-        <div class="principle">
-          <h4>Regulated-industry discipline</h4>
-          <p>The habits built in pharma, defense, and financial services — precision, audit trails, documented architecture — apply in every engagement. Your BI system will be built to hold up under scrutiny.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CTA -->
-<section class="about-cta">
-  <div class="eyebrow">Work With Us</div>
-  <h2>Ready to build<br>something that works?</h2>
-  <p>Book a 30-minute strategy call. We'll talk through your data environment and show you what the right system looks like for your business.</p>
-  <div style="display:flex;justify-content:center;gap:1.25rem;flex-wrap:wrap">
-    <a href="index.html#contact" class="btn-primary">Book a Strategy Call →</a>
-    <a href="mailto:mark@2516technologies.com" class="btn-outline">Email Mark Directly</a>
-  </div>
-  <div class="offer-links">
-    <a href="offer.html" class="offer-link-card">
-      <div class="olc-label">Core Offer</div>
-      <div class="olc-title">30-Day BI System</div>
-      <div class="olc-price">$6,500 – $10,000 · Fixed implementation</div>
-    </a>
-    <a href="modernization.html" class="offer-link-card">
-      <div class="olc-label" style="color:var(--accent-gold)">Premium Program</div>
-      <div class="olc-title">Qlik to Astrato Modernization</div>
-      <div class="olc-price">From $25,000 · 6–10 week engagement</div>
-    </a>
   </div>
 </section>
 
