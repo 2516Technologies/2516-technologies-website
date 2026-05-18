@@ -12,15 +12,15 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;font-weight:300;line-height:1.6}
 ::-webkit-scrollbar{width:3px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--accent)}
-.nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:1.1rem 3.5rem;background:rgba(10,22,40,0.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+.nav{position:fixed;top:0;left:0;right:0;z-index:200;display:grid;grid-template-columns:auto 1fr auto;align-items:center;padding:1.1rem 3.5rem;background:rgba(10,22,40,0.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
 .nav-brand{display:flex;align-items:center;gap:.9rem;text-decoration:none}
 .nav-wordmark{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:400;letter-spacing:.18em;text-transform:uppercase;color:var(--text)}
-.nav-links{display:flex;gap:0;list-style:none}
+.nav-links{display:flex;gap:0;list-style:none;justify-content:center}
 .nav-links a{display:block;padding:.45rem 1rem;font-size:.76rem;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);text-decoration:none;transition:color .2s}
 .nav-links a:hover{color:var(--text)} .nav-links a.active{color:var(--accent-gold)}
 .nav-cta{background:var(--accent-gold);color:#0A1628;padding:.58rem 1.35rem;border-radius:3px;font-size:.74rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;transition:opacity .2s,transform .15s;white-space:nowrap}
 .nav-cta:hover{opacity:.84;transform:translateY(-1px)}
-@media(max-width:768px){.nav-astrato{display:none}}
+@media(max-width:768px){.nav{display:flex;justify-content:space-between;padding:1rem 1.5rem}.nav-astrato{display:none}}
 .jazz-bars{display:flex;align-items:flex-end;gap:3px;height:28px}
 .bar{width:5px;border-radius:2px 2px 0 0;transform-origin:bottom}
 .bar1{height:16px;background:var(--jazz-dark);animation:b1 1.8s ease-in-out infinite}
