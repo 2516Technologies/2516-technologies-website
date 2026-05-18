@@ -54,6 +54,13 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);ove
 .btn-outline{display:inline-block;background:transparent;color:var(--text);padding:.9rem 2.1rem;border-radius:3px;font-size:.78rem;font-weight:400;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;border:1px solid var(--border-mid);transition:border-color .2s,color .2s}
 .btn-outline:hover{border-color:var(--accent);color:var(--accent)}
 
+/* PARTNER BAR */
+.partner-bar{display:flex;align-items:center;justify-content:center;padding:2.5rem 3.5rem;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--bg-card2)}
+.partner-label{font-family:'DM Mono',monospace;font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--text-dim);margin-right:1.5rem}
+.partner-link{display:flex;align-items:center;gap:.85rem;text-decoration:none;opacity:.75;transition:opacity .2s}
+.partner-link:hover{opacity:1}
+.partner-link img{height:28px;width:auto;filter:brightness(0) invert(1)}
+
 /* JAZZ BARS (footer/small) */
 .jazz-bars{display:flex;align-items:flex-end;gap:3px;height:28px}
 .bar{width:5px;border-radius:2px 2px 0 0;transform-origin:bottom}
@@ -308,6 +315,13 @@ h2 em{font-style:italic;color:var(--accent)}
   <span class="strip-item">Decisions. Faster. Backed by Data.</span>
   <div class="strip-dot"></div>
   <span class="strip-item">$1M+ Revenue</span>
+</div>
+
+<div class="partner-bar">
+  <span class="partner-label">Official Implementation Partner</span>
+  <a href="https://astrato.io" target="_blank" rel="noopener" class="partner-link">
+    <img src="Astrato_logo.png" alt="Astrato Analytics">
+  </a>
 </div>
 
 <!-- CORE OFFER -->
