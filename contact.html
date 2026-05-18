@@ -1065,6 +1065,12 @@ if (hamburger && mobileMenu) {
       mobileMenu.classList.remove('open');
     });
   });
+  document.addEventListener('click', (e) => {
+    if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) {
+      hamburger.classList.remove('active');
+      mobileMenu.classList.remove('open');
+    }
+  });
 }
 </script>
 </body>

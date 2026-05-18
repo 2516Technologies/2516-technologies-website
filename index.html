@@ -71,6 +71,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);ove
 .strip{background:var(--accent);padding:1rem 3.5rem;display:flex;align-items:center;justify-content:center;gap:3rem;flex-wrap:wrap}
 .strip-item{font-size:.76rem;letter-spacing:.14em;text-transform:uppercase;color:#fff;font-weight:500}
 .strip-dot{width:4px;height:4px;background:rgba(255,255,255,.4);border-radius:50%}
+@media(max-width:768px){.strip{padding:.75rem 1.25rem;gap:1rem;flex-direction:column;align-items:flex-start}.strip-dot{display:none}}
 
 /* SECTION BASE */
 section{padding:6rem 3.5rem}.container{max-width:1160px;margin:0 auto}
@@ -513,6 +514,12 @@ if (hamburger && mobileMenu) {
       hamburger.classList.remove('active');
       mobileMenu.classList.remove('open');
     });
+  });
+  document.addEventListener('click', (e) => {
+    if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) {
+      hamburger.classList.remove('active');
+      mobileMenu.classList.remove('open');
+    }
   });
 }
 </script>
