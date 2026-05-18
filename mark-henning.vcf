@@ -1,0 +1,10 @@
+BEGIN:VCARD
+VERSION:3.0
+N:Henning;Mark;;;
+FN:Mark Henning
+ORG:2516 Technologies
+TITLE:Founder
+EMAIL;TYPE=INTERNET,WORK:mark@2516technologies.com
+URL:https://www.2516technologies.com
+NOTE:Business Intelligence, AI Readiness, Qlik / Astrato Modernization.
+END:VCARD
