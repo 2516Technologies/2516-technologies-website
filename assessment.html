@@ -1071,13 +1071,14 @@
   </a>
   <ul class="nav-links">
     <li><a href="index.html">Home</a></li>
-    <li><a href="offer.html">Offer</a></li>
-    <li><a href="modernization.html">Modernization</a></li>
-    <li><a href="expand.html">Expand</a></li>
+    <li><a href="services.html">What You Gain</a></li>
     <li><a href="about.html">About</a></li>
-    <li><a href="contact.html" class="active">Contact</a></li>
+    <li><a href="contact.html">Contact</a></li>
   </ul>
-  <a href="contact.html" class="nav-cta">Book a Call</a>
+  <a href="https://astrato.io" target="_blank" rel="noopener" class="nav-astrato" style="display:flex;align-items:center;gap:.6rem;text-decoration:none;opacity:.6;transition:opacity .2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=.6">
+    <img src="Astrato_logo-removebg-preview.png" alt="Astrato Analytics" style="height:20px;width:auto;">
+    <span style="font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);line-height:1.3">Official Partner</span>
+  </a>
   <button class="hamburger" aria-label="Toggle menu">
     <span class="hamburger-line"></span>
     <span class="hamburger-line"></span>
@@ -1085,27 +1086,25 @@
   </button>
 </nav>
 <div class="mobile-menu">
-<a href="index.html">Home</a>
-    <a href="offer.html">Offer</a>
-    <a href="modernization.html">Modernization</a>
-    <a href="expand.html">Expand</a>
-    <a href="about.html">About</a>
-    <a href="contact.html" class="active">Contact</a>
+  <a href="index.html">Home</a>
+  <a href="services.html">What You Gain</a>
+  <a href="about.html">About</a>
+  <a href="contact.html">Contact</a>
   <a href="contact.html" class="nav-cta">Book a Call</a>
 </div>
 
  <main>
  <div id="s-intro" class="screen active">
  <div class="screen-inner">
- <span class="eyebrow">Free Assessment</span>
- <h1>How AI-ready is <em>your organization?</em></h1>
- <p class="muted">10 questions. 5 minutes. An honest diagnosis of your data foundation and AI readiness scored against regulated industry benchmarks.</p>
+ <span class="eyebrow">Free Diagnostic</span>
+ <h1>Are You Set Up to <em>Scale?</em></h1>
+ <p class="muted">10 questions. 5 minutes. An honest look at where your data and systems stand — and what to fix before it becomes a problem.</p>
  <div class="trust-signals">
  <span>10 questions</span>
  <span>~5 minutes</span>
  <span>Instant results</span>
  </div>
- <button class="btn btn-primary" onclick="show('s-contact')">Start the Assessment &rarr;</button>
+ <button class="btn btn-primary" onclick="show('s-contact')">Start The Data Health Check &rarr;</button>
  </div>
  </div>
 
@@ -1149,7 +1148,7 @@
  <span class="form-check-label">I agree to the <a href="#" onclick="openModal('privacy'); return false;">Privacy Policy</a></span>
  </label>
  <div class="form-error" id="contactError">Please complete all fields and accept both policies.</div>
- <button type="submit" class="btn btn-primary" data-track="Submit Assessment" style="width: 100%; justify-content: center;">Begin Assessment &rarr;</button>
+ <button type="submit" class="btn btn-primary" data-track="Submit Assessment" style="width: 100%; justify-content: center;">Begin The Check &rarr;</button>
  </form>
  </div>
  </div>
@@ -1168,7 +1167,7 @@
  <h2 class="question-text" id="questionText"></h2>
  <div class="scale-labels">
  <span>Not at all</span>
- <span>Fully implemented</span>
+ <span>Strongly agree</span>
  </div>
  <div class="scale-buttons" id="scaleContainer"></div>
  <div class="question-nav">
@@ -1181,7 +1180,7 @@
  <div id="s-results" class="screen">
  <div class="screen-inner">
  <span class="eyebrow">Your Results</span>
- <h1>AI Readiness <em>Score</em></h1>
+ <h1>Your Data Health <em>Score</em></h1>
  <div class="results-score-display">
  <span class="results-score-number" id="scoreValue">0</span>
  <span class="results-score-max">/50</span>
@@ -1322,7 +1321,7 @@
  <ul>
  <li>To provide and maintain our Service</li>
  <li>To manage Your Account</li>
- <li>For the performance of consulting services and AI readiness assessments</li>
+ <li>For the performance of consulting services and data health assessments</li>
  <li>To contact You regarding updates or contracted services</li>
  <li>To provide You with news and information about our services</li>
  </ul>
@@ -1431,44 +1430,44 @@
 
  var questions = [
  {
- theme: 'Data Infrastructure',
- text: 'Our data is stored in a centralized system rather than spreadsheets and siloed tools.'
+ theme: 'Decision-Making',
+ text: 'Our leadership team makes key decisions based on current data, not intuition or last quarter\'s report.'
  },
  {
- theme: 'Data Infrastructure',
- text: 'We have documented data pipelines with clear ownership and version control.'
+ theme: 'Commercial Readiness',
+ text: 'We can clearly connect our operational data to revenue, margin, or growth outcomes.'
  },
  {
- theme: 'Data Quality',
- text: 'We can trace any reported number back to its source within an hour.'
+ theme: 'Data Trust',
+ text: 'When two people pull the same report, they get the same number.'
  },
  {
- theme: 'Data Quality',
- text: 'Data quality issues are caught automatically, not during audits.'
- },
- {
- theme: 'Compliance & Governance',
- text: 'We have documented data governance policies that are actively enforced.'
+ theme: 'Data Trust',
+ text: 'We can trace any reported metric back to its source in under an hour.'
  },
  {
  theme: 'Compliance & Governance',
  text: 'Our data handling practices are audit-ready without emergency preparation.'
  },
  {
- theme: 'AI Readiness',
- text: 'Our leadership has a clear, realistic view of what AI can and cannot do for us.'
+ theme: 'Compliance & Governance',
+ text: 'We have documented data governance policies that are actively enforced.'
  },
  {
- theme: 'AI Readiness',
- text: 'We have the clean, structured, labeled data that AI models require.'
+ theme: 'Technology Strategy',
+ text: 'We have a clear view of what tools we use, what they cost, and whether they\'re earning their keep.'
  },
  {
- theme: 'Change Readiness',
- text: 'Our teams have the skills and appetite to adopt new data tools.'
+ theme: 'Technology Strategy',
+ text: 'Our data infrastructure could support a new reporting requirement without a major project.'
  },
  {
- theme: 'Change Readiness',
- text: 'We have a track record of successfully implementing technology change at scale.'
+ theme: 'Organizational Readiness',
+ text: 'There is a person or team with clear ownership over data quality and reporting accuracy.'
+ },
+ {
+ theme: 'Organizational Readiness',
+ text: 'When a data problem surfaces, we fix the root cause — not just the number.'
  }
  ];
 
