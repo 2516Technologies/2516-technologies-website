@@ -29,81 +29,6 @@
  flex-direction: column;
  }
 
- .theme-switcher {
- position: fixed;
- top: 80px;
- right: 16px;
- z-index: 50;
- display: flex;
- align-items: center;
- gap: 6px;
- background: var(--card);
- border: 1px solid var(--border);
- border-radius: 40px;
- padding: 3px 6px;
- box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
- transition: all 0.3s ease;
- }
-
- .theme-label {
- font-size: 9px;
- letter-spacing: 0.1em;
- text-transform: uppercase;
- color: var(--muted);
- font-weight: 500;
- margin-right: 4px;
- transition: color 0.3s ease;
- }
-
- .theme-btn {
- width: 18px;
- height: 18px;
- min-width: 18px;
- min-height: 18px;
- max-width: 18px;
- max-height: 18px;
- border-radius: 50%;
- border: 2px solid transparent;
- cursor: pointer;
- transition: transform 0.15s ease, border-color 0.3s ease;
- padding: 0;
- background: none;
- flex-shrink: 0;
- }
-
- .theme-btn:hover {
- transform: scale(1.15);
- }
-
- .theme-btn.active {
- border-color: var(--gold);
- transform: scale(1.15);
- }
-
- .theme-btn-t1 {
- background: linear-gradient(135deg, #F0F5FF 0% 50%, #1B4FD8 50% 100%);
- background-size: 100% 100%;
- }
-
- .theme-btn-t2 {
- background: linear-gradient(135deg, #0A1628 0% 50%, #4A7FFF 50% 100%);
- background-size: 100% 100%;
- }
-
- .theme-btn-t3 {
- background: linear-gradient(135deg, #FFFFFF 0% 50%, #1B4FD8 50% 100%);
- background-size: 100% 100%;
- }
-
- .theme-btn-t4 {
- background: linear-gradient(135deg, #1B4FD8 0% 50%, #FFFFFF 50% 100%);
- background-size: 100% 100%;
- }
-
- .theme-btn-t5 {
- background: linear-gradient(135deg, #1C1C1B 0% 50%, #C8A951 50% 100%);
- background-size: 100% 100%;
- }
 
  h1 {
  font-family: 'Cormorant Garamond', serif;
@@ -182,15 +107,6 @@
  .btn-primary {
  background: var(--gold);
  color: #fff;
- }
-
- body.t4 .btn-primary {
- color: #1440B8;
- background: #fff;
- }
-
- body.t5 .btn-primary {
- color: #1C1C1B;
  }
 
  .btn-primary:hover {
@@ -330,43 +246,12 @@
  transform: rotate(-45deg) translate(7px, -7px);
  }
 
- .mobile-menu {
- display: none;
- position: fixed;
- top: 64px;
- left: 0;
- right: 0;
- background: var(--card);
- border-bottom: 1px solid var(--border);
- padding: 16px 24px;
- flex-direction: column;
- gap: 0;
- z-index: 999;
- max-height: calc(100vh - 64px);
- overflow-y: auto;
- }
-
- .mobile-menu.open {
- display: flex;
- }
-
- .mobile-menu .nav-link {
- padding: 12px 0;
- display: block;
- height: 40px;
- display: flex;
- align-items: center;
- }
-
- .mobile-menu .nav-cta {
- margin-left: 0;
- margin-top: 8px;
- }
-
- .mobile-menu .btn {
- width: 100%;
- justify-content: center;
- }
+ .mobile-menu{display:none;position:fixed;top:60px;left:0;right:0;background:rgba(10,22,40,0.98);border-bottom:1px solid var(--border);padding:1.5rem;flex-direction:column;gap:0;z-index:199}
+ .mobile-menu.open{display:flex}
+ .mobile-menu a{display:block;padding:0.9rem 0;font-size:0.82rem;font-weight:400;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);text-decoration:none;border-bottom:1px solid var(--border);transition:color .2s}
+ .mobile-menu a:last-child{border-bottom:none}
+ .mobile-menu a:hover{color:var(--text)}
+ .mobile-menu a.active{color:var(--accent-gold)}
 
  * {
  -webkit-tap-highlight-color: transparent;
@@ -722,14 +607,6 @@
  color: #fff;
  }
 
- body.t4 .scale-btn.selected {
- color: #1440B8;
- }
-
- body.t5 .scale-btn.selected {
- color: #1C1C1B;
- }
-
  .question-nav {
  display: flex;
  justify-content: space-between;
@@ -1064,7 +941,7 @@
  <!-- Supabase Client Library -->
  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
-<body class="t1">
+<body class="t2">
 <nav class="nav">
   <a href="index.html" class="nav-brand">
     <img src="2516_logo_horizontal_dark_web (1).png" alt="2516 Technologies" style="height:32px;width:auto;">
@@ -1089,6 +966,7 @@
   <a href="index.html">Home</a>
   <a href="services.html">What You Gain</a>
   <a href="about.html">About</a>
+  <a href="assessment.html" class="active">Data Health Check</a>
   <a href="contact.html">Contact</a>
   <a href="contact.html" class="nav-cta">Book a Call</a>
 </div>
@@ -1209,14 +1087,6 @@
 
  
 
- <div class="theme-switcher">
- <span class="theme-label">Theme</span>
- <button class="theme-btn theme-btn-t1 active" data-theme="t1" aria-label="Light Blue Theme"></button>
- <button class="theme-btn theme-btn-t2" data-theme="t2" aria-label="Dark Blue Theme"></button>
- <button class="theme-btn theme-btn-t3" data-theme="t3" aria-label="Clean White Theme"></button>
- <button class="theme-btn theme-btn-t4" data-theme="t4" aria-label="Bold Blue Theme"></button>
- <button class="theme-btn theme-btn-t5" data-theme="t5" aria-label="Dark Gold Theme"></button>
- </div>
 
  <!-- Modal for Terms and Privacy -->
  <div class="modal-overlay" id="modalOverlay" onclick="closeModalOnOverlay(event)">
@@ -1353,9 +1223,6 @@
  body.innerHTML = privacyContent;
  }
  
- // Update modal logo based on current theme
- updateModalLogo();
- 
  overlay.classList.add('show');
  document.body.style.overflow = 'hidden';
  }
@@ -1371,45 +1238,6 @@
  closeModal();
  }
  }
-
- function updateModalLogo() {
- const currentTheme = document.body.className;
- const isDarkTheme = ['t2', 't4', 't5'].includes(currentTheme);
- const modalLogo = document.getElementById('modalLogo');
- if (modalLogo) {
- modalLogo.src = isDarkTheme ? '/public/2516_logo_horizontal_dark_web (1).png' : '/public/2516_logo_horizontal_dark_web (1).png';
- }
- }
-
- var themeButtons = document.querySelectorAll('.theme-btn');
- var bodyEl = document.body;
- var logos = document.querySelectorAll('img[data-dark][data-light]');
- var themeSwitcher = document.querySelector('.theme-switcher');
-
- function updateLogo(theme) {
- var isDark = theme === 't2' || theme === 't5';
- logos.forEach(function(logo) {
- logo.src = isDark ? logo.dataset.light : logo.dataset.dark;
- });
- }
-
- function setTheme(theme) {
- bodyEl.className = theme;
- localStorage.setItem('theme', theme);
- themeButtons.forEach(function(btn) {
- btn.classList.toggle('active', btn.dataset.theme === theme);
- });
- updateLogo(theme);
- }
-
- themeButtons.forEach(function(btn) {
- btn.addEventListener('click', function() {
- setTheme(btn.dataset.theme);
- });
- });
-
- var savedTheme = localStorage.getItem('theme') || 't1';
- setTheme(savedTheme);
 
  var screens = ['s-intro', 's-contact', 's-question', 's-results'];
 
