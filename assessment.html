@@ -949,6 +949,7 @@
   <ul class="nav-links">
     <li><a href="index.html">Home</a></li>
     <li><a href="services.html">What You Gain</a></li>
+    <li><a href="assessment.html" class="active">Data Health Check</a></li>
     <li><a href="about.html">About</a></li>
     <li><a href="contact.html">Contact</a></li>
   </ul>
@@ -965,8 +966,8 @@
 <div class="mobile-menu">
   <a href="index.html">Home</a>
   <a href="services.html">What You Gain</a>
-  <a href="about.html">About</a>
   <a href="assessment.html" class="active">Data Health Check</a>
+  <a href="about.html">About</a>
   <a href="contact.html">Contact</a>
   <a href="contact.html" class="nav-cta">Book a Call</a>
 </div>
@@ -1502,25 +1503,6 @@
  show('s-intro');
  }
  </script>
-<!-- PASTE THIS ENTIRE BLOCK RIGHT BEFORE 
-<script>
-const hamburger = document.querySelector('.hamburger');
-const mobileMenu = document.querySelector('.mobile-menu');
-if (hamburger && mobileMenu) {
-  hamburger.addEventListener('click', () => {
-    hamburger.classList.toggle('active');
-    mobileMenu.classList.toggle('open');
-  });
-  mobileMenu.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
-      hamburger.classList.remove('active');
-      mobileMenu.classList.remove('open');
-    });
-  });
-}
-</script>
-</body> IN EACH HTML FILE -->
-<!-- Replace the existing <script src="/supabase-connector.js"></script> line -->
 
 <script>
 // ============================================================================
@@ -1811,6 +1793,12 @@ if (hamburger && mobileMenu) {
       hamburger.classList.remove('active');
       mobileMenu.classList.remove('open');
     });
+  });
+  document.addEventListener('click', (e) => {
+    if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) {
+      hamburger.classList.remove('active');
+      mobileMenu.classList.remove('open');
+    }
   });
 }
 </script>
