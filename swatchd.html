@@ -291,9 +291,51 @@ canvas { display: none; }
 .p-code-hex-m  { font-family: var(--mono); font-size: 0.5rem; color: var(--text); }
 .copy-all-btn-m { width: 100%; padding: 0.55rem; background: transparent; border: 1px solid var(--border); border-radius: 8px; color: var(--muted); font-size: 0.58rem; letter-spacing: 0.08em; text-transform: uppercase; font-family: var(--mono); cursor: pointer; transition: all 0.15s; }
 .copy-all-btn-m:active { background: rgba(255,255,255,0.05); color: var(--text); }
+
+.browser-warning {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 999;
+  background: #f5c842;
+  color: #0a0a0c;
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: "Trebuchet MS", system-ui, sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  gap: 0.75rem;
+}
+.browser-warning a {
+  background: #0a0a0c;
+  color: #f5c842;
+  padding: 0.4rem 0.9rem;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
 </style>
 </head>
 <body>
+<div class="browser-warning" id="browserWarning" style="display:none">
+  📷 Camera blocked by LinkedIn — open in your browser for the full experience.
+  <a href="https://2516technologies.com/swatchd.html" target="_blank">Open</a>
+</div>
+<script>
+(function(){
+  const ua = navigator.userAgent || '';
+  const isInAppBrowser = /LinkedIn/i.test(ua) || /FBAN|FBAV/i.test(ua) || /Instagram/i.test(ua) || ((/iPhone|iPad|Android/i.test(ua)) && !/Safari/i.test(ua) && !/Chrome/i.test(ua));
+  if (isInAppBrowser) {
+    document.getElementById('browserWarning').style.display = 'flex';
+  }
+})();
+</script>
 
 <!-- ============================================================
      DESKTOP
