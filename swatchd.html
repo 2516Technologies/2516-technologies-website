@@ -330,8 +330,14 @@ canvas { display: none; }
 <script>
 (function(){
   const ua = navigator.userAgent || '';
-  const isInAppBrowser = /LinkedIn/i.test(ua) || /FBAN|FBAV/i.test(ua) || /Instagram/i.test(ua) || ((/iPhone|iPad|Android/i.test(ua)) && !/Safari/i.test(ua) && !/Chrome/i.test(ua));
-  if (isInAppBrowser) {
+  const isLinkedIn = /LinkedIn/i.test(ua);
+  const isFacebook = /FBAN|FBAV|FB_IAB/i.test(ua);
+  const isInstagram = /Instagram/i.test(ua);
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(ua);
+  const isChrome = /CriOS|Chrome/i.test(ua);
+  const isSafari = /Safari/i.test(ua) && !/Chrome/i.test(ua);
+  const isWebView = isMobile && !isChrome && !isSafari;
+  if (isLinkedIn || isFacebook || isInstagram || isWebView) {
     document.getElementById('browserWarning').style.display = 'flex';
   }
 })();
