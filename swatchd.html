@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Swatchd — Pick Any Color</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:      #0a0a0c;
+  --surface: #141416;
+  --border:  #252528;
+  --muted:   #505055;
+  --text:    #e8e8ec;
+  --accent:  #f5c842;
+  --mono:    "Consolas","Menlo","Courier New",monospace;
+  --display: "Trebuchet MS","Century Gothic","Gill Sans",system-ui,sans-serif;
+  --radius:  12px;
+}
+
+html, body {
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--display);
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+/* ============================================================
+   MODE SWITCHING
+   ============================================================ */
+.desktop-tool { display: flex; flex-direction: column; align-items: center; padding: 2rem; gap: 1.6rem; min-height: 100vh; }
+.mobile-tool  { display: none; flex-direction: column; height: 100dvh; overflow: hidden; }
+
+@media (max-width: 768px) {
+  .desktop-tool { display: none !important; }
+  .mobile-tool  { display: flex !important; }
+}
+
+/* ============================================================
+   DESKTOP — header
+   ============================================================ */
+.tool-header {
+  text-align: center;
+}
+.tool-header h1 {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  letter-spacing: -0.03em;
+  color: var(--text);
+}
+.tool-header h1 span { color: var(--accent); }
+.tool-header p {
+  color: var(--muted);
+  font-size: 0.82rem;
+  margin-top: 0.4rem;
+  letter-spacing: 0.04em;
+  font-family: var(--mono);
+}
+
+/* ============================================================
+   DESKTOP — card
+   ============================================================ */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  width: 100%; max-width: 480px;
+  overflow: hidden;
+}
+
+.color-preview {
+  width: 100%; height: 180px;
+  background: #1e1e22;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.25s; position: relative; overflow: hidden;
+}
+.color-preview::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: repeating-conic-gradient(#2a2a2e 0% 25%, transparent 0% 50%) 0 0 / 20px 20px;
+  opacity: 0.3;
+}
+.color-preview.has-color::after { display: none; }
+
+.preview-hint {
+  font-family: var(--display); font-size: 0.8rem;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); z-index: 1;
+}
+.color-preview.has-color .preview-hint { display: none; }
+
+.big-hex {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--display); font-weight: 800;
+  font-size: clamp(1.8rem, 6vw, 2.8rem); letter-spacing: -0.02em;
+  z-index: 2; opacity: 0; transition: opacity 0.2s;
+  cursor: pointer; mix-blend-mode: difference; color: white;
+}
+.color-preview.has-color .big-hex { opacity: 1; }
+.big-hex:hover { text-decoration: underline; }
+
+.color-name-bar {
+  padding: 0.7rem 1rem; border-top: 1px solid var(--border);
+  font-size: 0.75rem; color: var(--muted);
+  display: flex; align-items: center; gap: 0.5rem;
+}
+.color-name-bar span { color: var(--text); font-weight: 500; }
+
+.values-grid {
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  border-top: 1px solid var(--border);
+}
+.value-cell {
+  padding: 1rem; border-right: 1px solid var(--border);
+  cursor: pointer; transition: background 0.15s; position: relative;
+}
+.value-cell:last-child { border-right: none; }
+.value-cell:hover { background: rgba(255,255,255,0.03); }
+.value-label { font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.3rem; }
+.value-data  { font-size: 0.85rem; font-weight: 500; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: var(--mono); }
+.copy-flash  {
+  position: absolute; inset: 0;
+  background: var(--accent); color: var(--bg);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;
+  opacity: 0; pointer-events: none; transition: opacity 0.1s;
+  font-family: var(--display); font-weight: 700;
+}
+.copy-flash.show { opacity: 1; }
+
+.pick-btn {
+  width: 100%; padding: 1rem;
+  background: var(--accent); color: var(--bg);
+  border: none; cursor: pointer;
+  font-family: var(--display); font-weight: 700;
+  font-size: 1rem; letter-spacing: 0.06em; text-transform: uppercase;
+  display: flex; align-items: center; justify-content: center; gap: 0.6rem;
+  transition: background 0.15s, transform 0.1s;
+}
+.pick-btn:hover  { background: #ffd14d; }
+.pick-btn:active { transform: scale(0.99); }
+.pick-btn:disabled { background: var(--border); color: var(--muted); cursor: not-allowed; }
+.pick-btn svg { width: 20px; height: 20px; }
+
+.no-support {
+  background: #2a1010; border: 1px solid #5a2020; border-radius: var(--radius);
+  padding: 1rem 1.4rem; max-width: 480px;
+  font-size: 0.8rem; color: #e08080; line-height: 1.6; display: none;
+}
+
+/* ============================================================
+   DESKTOP — shared section shells
+   ============================================================ */
+.d-section {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); width: 100%; max-width: 480px; padding: 1.2rem;
+}
+.d-section-title {
+  font-family: var(--display); font-size: 0.7rem;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 1rem;
+}
+
+/* colorblind */
+.cb-swatches { display: grid; grid-template-columns: repeat(4,1fr); gap: 0.6rem; }
+.cb-swatch   { border-radius: 8px; overflow: hidden; border: 1px solid var(--border); }
+.cb-color    { height: 44px; background: #1e1e22; transition: background 0.25s; }
+.cb-label    { background: var(--bg); font-size: 0.58rem; letter-spacing: 0.05em; text-align: center; padding: 0.3rem 0.2rem; color: var(--muted); text-transform: uppercase; }
+
+/* harmonies */
+.harmony-group { margin-bottom: 1rem; }
+.harmony-group:last-child { margin-bottom: 0; }
+.harmony-group-label { font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.45rem; }
+.harmony-swatches { display: flex; gap: 0.5rem; }
+.harmony-swatch {
+  flex: 1; border-radius: 8px; overflow: hidden; border: 1px solid var(--border);
+  cursor: pointer; transition: transform 0.12s, box-shadow 0.12s; position: relative;
+}
+.harmony-swatch:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.4); }
+.harmony-color { height: 48px; background: #1e1e22; transition: background 0.25s; }
+.harmony-hex   { background: var(--bg); font-size: 0.58rem; letter-spacing: 0.03em; text-align: center; padding: 0.3rem 0.2rem; color: var(--muted); font-family: var(--mono); }
+.harmony-flash { position: absolute; inset: 0; background: var(--accent); color: var(--bg); display: flex; align-items: center; justify-content: center; font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0; pointer-events: none; transition: opacity 0.1s; font-family: var(--display); font-weight: 700; }
+.harmony-flash.show { opacity: 1; }
+
+/* palette */
+.palette-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); width: 100%; max-width: 480px; overflow: hidden; }
+.palette-header { padding: 1rem 1.2rem 0.8rem; display: flex; align-items: baseline; justify-content: space-between; }
+.palette-tabs { display: flex; gap: 0.4rem; }
+.palette-tab {
+  font-size: 0.58rem; letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 0.2rem 0.55rem; border-radius: 20px;
+  border: 1px solid var(--border); background: transparent;
+  color: var(--muted); cursor: pointer; font-family: var(--mono); transition: all 0.15s;
+}
+.palette-tab:hover { border-color: var(--text); color: var(--text); }
+.palette-tab.active { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+.palette-strip { display: flex; height: 90px; }
+.palette-chip  { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; cursor: pointer; position: relative; transition: flex 0.2s; }
+.palette-chip:hover { flex: 1.6; }
+.palette-chip-inner { height: 100%; width: 100%; transition: background 0.25s; }
+.palette-chip-label { position: absolute; bottom: 0; left: 0; right: 0; padding: 0.25rem 0.2rem; font-size: 0.5rem; letter-spacing: 0.06em; text-transform: uppercase; text-align: center; opacity: 0; transition: opacity 0.15s; font-family: var(--display); font-weight: 700; pointer-events: none; mix-blend-mode: difference; color: white; }
+.palette-chip:hover .palette-chip-label { opacity: 1; }
+.palette-chip-flash { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 0.6rem; font-family: var(--display); font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; background: rgba(0,0,0,0.55); color: white; opacity: 0; pointer-events: none; transition: opacity 0.1s; }
+.palette-chip-flash.show { opacity: 1; }
+.palette-codes { display: grid; grid-template-columns: repeat(6,1fr); border-top: 1px solid var(--border); }
+.palette-code-cell { padding: 0.55rem 0.3rem; border-right: 1px solid var(--border); cursor: pointer; transition: background 0.12s; text-align: center; }
+.palette-code-cell:last-child { border-right: none; }
+.palette-code-cell:hover { background: rgba(255,255,255,0.03); }
+.palette-code-role { font-size: 0.5rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.2rem; }
+.palette-code-hex  { font-size: 0.6rem; color: var(--text); font-weight: 500; font-family: var(--mono); }
+.palette-copy-all  { width: 100%; padding: 0.7rem; background: transparent; border: none; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; font-family: var(--mono); cursor: pointer; transition: background 0.15s, color 0.15s; }
+.palette-copy-all:hover { background: rgba(255,255,255,0.03); color: var(--text); }
+
+/* ============================================================
+   MOBILE — full-screen camera layout
+   ============================================================ */
+.viewfinder { position: relative; flex: 1; min-height: 0; background: #000; overflow: hidden; }
+video { width: 100%; height: 100%; object-fit: cover; display: block; transform-origin: center; transition: transform 0.05s linear; }
+.ring { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 72px; height: 72px; border: 2px solid rgba(255,255,255,0.8); border-radius: 50%; pointer-events: none; z-index: 3; }
+.dot  { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 18px; height: 18px; border-radius: 50%; border: 2.5px solid white; background: #888; z-index: 4; pointer-events: none; box-shadow: 0 0 8px rgba(0,0,0,0.6); transition: background 0.08s; }
+.ripple { position: absolute; width: 70px; height: 70px; margin: -35px 0 0 -35px; border-radius: 50%; background: rgba(245,200,66,0.35); pointer-events: none; z-index: 5; opacity: 0; transform: scale(0); transition: transform 0.4s ease-out, opacity 0.4s ease-out; }
+.ripple.fire { opacity: 1; transform: scale(2.8); }
+canvas { display: none; }
+
+.m-header { padding: 0.75rem 1.1rem; padding-top: max(0.75rem, env(safe-area-inset-top)); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; background: var(--bg); flex-shrink: 0; z-index: 10; }
+.m-logo { font-weight: 800; font-size: 1.2rem; letter-spacing: -0.02em; }
+.m-logo span { color: var(--accent); }
+.m-hint { font-size: 0.6rem; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; font-family: var(--mono); }
+
+.cam-error { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.8rem; background: var(--bg); z-index: 10; padding: 2rem; text-align: center; }
+.cam-error.hidden { display: none; }
+.cam-error-icon  { font-size: 2.5rem; }
+.cam-error-title { font-weight: 800; font-size: 1rem; }
+.cam-error-msg   { font-size: 0.72rem; color: var(--muted); line-height: 1.6; }
+.retry-btn { padding: 0.7rem 1.8rem; background: var(--accent); color: var(--bg); border: none; border-radius: 10px; font-weight: 800; font-size: 0.85rem; letter-spacing: 0.05em; text-transform: uppercase; cursor: pointer; margin-top: 0.4rem; }
+
+.results { flex-shrink: 0; height: 40vh; overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; background: var(--border); display: flex; flex-direction: column; gap: 1px; padding-bottom: max(0.5rem, env(safe-area-inset-bottom)); }
+.empty { background: var(--surface); text-align: center; color: var(--muted); font-size: 0.72rem; letter-spacing: 0.06em; padding: 2rem 1rem; line-height: 1.8; }
+.empty-icon { font-size: 1.8rem; display: block; margin-bottom: 0.4rem; opacity: 0.4; }
+
+.m-section { background: var(--surface); padding: 0.85rem 1rem; }
+.m-section-title { font-size: 0.58rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.65rem; font-weight: 700; }
+
+.color-row-m { display: flex; align-items: center; gap: 0.9rem; }
+.color-swatch-m { width: 52px; height: 52px; border-radius: 12px; background: #2a2a2e; border: 1px solid var(--border); flex-shrink: 0; transition: background 0.2s; }
+.color-name-m { font-weight: 800; font-size: 1.05rem; letter-spacing: -0.01em; }
+.color-hex-m  { font-family: var(--mono); font-size: 0.76rem; color: var(--muted); margin-top: 0.1rem; }
+
+.values-m { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.45rem; }
+.val-cell-m { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 0.6rem 0.4rem; text-align: center; cursor: pointer; position: relative; overflow: hidden; transition: border-color 0.12s; }
+.val-cell-m:active { border-color: var(--accent); }
+.val-label-m { font-size: 0.48rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.22rem; }
+.val-data-m  { font-family: var(--mono); font-size: 0.66rem; font-weight: 600; color: var(--text); }
+.val-flash-m { position: absolute; inset: 0; background: var(--accent); color: var(--bg); display: flex; align-items: center; justify-content: center; font-size: 0.62rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0; pointer-events: none; transition: opacity 0.1s; }
+.val-flash-m.show { opacity: 1; }
+
+.cb-grid-m { display: grid; grid-template-columns: repeat(4,1fr); gap: 0.45rem; }
+.cb-chip-m  { border-radius: 8px; overflow: hidden; border: 1px solid var(--border); }
+.cb-color-m { height: 36px; background: #1e1e22; transition: background 0.25s; }
+.cb-label-m { background: var(--bg); font-size: 0.48rem; text-align: center; padding: 0.22rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
+
+.harm-group-m { margin-bottom: 0.65rem; }
+.harm-group-m:last-child { margin-bottom: 0; }
+.harm-group-label-m { font-size: 0.52rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.3rem; }
+.harm-swatches-m { display: flex; gap: 0.4rem; }
+.harm-swatch-m { flex: 1; border-radius: 6px; overflow: hidden; border: 1px solid var(--border); cursor: pointer; position: relative; }
+.harm-swatch-m:active { opacity: 0.7; }
+.harm-color-m { height: 36px; }
+.harm-hex-m   { background: var(--bg); font-size: 0.48rem; text-align: center; padding: 0.2rem; color: var(--muted); font-family: var(--mono); }
+.harm-flash-m { position: absolute; inset: 0; background: var(--accent); color: var(--bg); display: flex; align-items: center; justify-content: center; font-size: 0.58rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0; pointer-events: none; transition: opacity 0.1s; }
+.harm-flash-m.show { opacity: 1; }
+
+.p-tabs-m { display: flex; gap: 0.35rem; margin-bottom: 0.65rem; flex-wrap: wrap; }
+.p-tab-m { font-size: 0.5rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.18rem 0.5rem; border-radius: 20px; border: 1px solid var(--border); background: transparent; color: var(--muted); cursor: pointer; font-family: var(--mono); transition: all 0.15s; }
+.p-tab-m.active { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+.p-strip-m { display: flex; height: 56px; border-radius: 8px; overflow: hidden; margin-bottom: 0.5rem; }
+.p-chip-m { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; cursor: pointer; position: relative; }
+.p-chip-inner-m { height: 100%; width: 100%; }
+.p-chip-label-m { position: absolute; bottom: 0; left: 0; right: 0; font-size: 0.42rem; letter-spacing: 0.05em; text-transform: uppercase; text-align: center; padding: 0.15rem; opacity: 0; mix-blend-mode: difference; color: white; font-weight: 700; pointer-events: none; }
+.p-chip-m:active .p-chip-label-m { opacity: 1; }
+.p-chip-flash-m { position: absolute; inset: 0; background: rgba(0,0,0,0.5); color: white; display: flex; align-items: center; justify-content: center; font-size: 0.55rem; font-weight: 800; opacity: 0; pointer-events: none; transition: opacity 0.1s; }
+.p-chip-flash-m.show { opacity: 1; }
+.p-codes-m { display: grid; grid-template-columns: repeat(6,1fr); gap: 0.3rem; margin-bottom: 0.5rem; }
+.p-code-m  { background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 0.35rem 0.2rem; text-align: center; cursor: pointer; }
+.p-code-role-m { font-size: 0.42rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.15rem; }
+.p-code-hex-m  { font-family: var(--mono); font-size: 0.5rem; color: var(--text); }
+.copy-all-btn-m { width: 100%; padding: 0.55rem; background: transparent; border: 1px solid var(--border); border-radius: 8px; color: var(--muted); font-size: 0.58rem; letter-spacing: 0.08em; text-transform: uppercase; font-family: var(--mono); cursor: pointer; transition: all 0.15s; }
+.copy-all-btn-m:active { background: rgba(255,255,255,0.05); color: var(--text); }
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     DESKTOP
+     ============================================================ -->
+<div class="desktop-tool">
+
+  <header class="tool-header">
+    <h1>Swat<span>chd</span></h1>
+    <p>hover anywhere · pick any pixel · copy instantly</p>
+  </header>
+
+  <div class="no-support" id="noSupport">
+    ⚠️ Your browser doesn't support the EyeDropper API.
+    Please use <strong>Chrome</strong> or <strong>Edge</strong> (v95+).
+  </div>
+
+  <div class="card">
+    <div class="color-preview" id="preview">
+      <div class="preview-hint">No color picked yet</div>
+      <div class="big-hex" id="bigHex">#------</div>
+    </div>
+    <div class="color-name-bar" id="nameBar" style="display:none">
+      Closest name: <span id="colorName">—</span>
+    </div>
+    <div class="values-grid">
+      <div class="value-cell" onclick="copyValue('hex')">
+        <div class="value-label">HEX</div>
+        <div class="value-data" id="hexVal">—</div>
+        <div class="copy-flash" id="flashHex">Copied</div>
+      </div>
+      <div class="value-cell" onclick="copyValue('rgb')">
+        <div class="value-label">RGB</div>
+        <div class="value-data" id="rgbVal">—</div>
+        <div class="copy-flash" id="flashRgb">Copied</div>
+      </div>
+      <div class="value-cell" onclick="copyValue('hsl')">
+        <div class="value-label">HSL</div>
+        <div class="value-data" id="hslVal">—</div>
+        <div class="copy-flash" id="flashHsl">Copied</div>
+      </div>
+    </div>
+    <button class="pick-btn" id="pickBtn" onclick="pickColor()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M2 13.5V20a2 2 0 002 2h16a2 2 0 002-2v-6.5"/>
+        <path d="M9 3l3 3 3-3"/><path d="M12 6v10"/>
+        <circle cx="12" cy="19" r="1"/>
+      </svg>
+      Pick a Color
+    </button>
+  </div>
+
+  <div class="d-section">
+    <div class="d-section-title">Colorblind Simulation</div>
+    <div class="cb-swatches">
+      <div class="cb-swatch"><div class="cb-color" id="cbNormal"></div><div class="cb-label">Normal</div></div>
+      <div class="cb-swatch"><div class="cb-color" id="cbProtan"></div><div class="cb-label">Protanopia</div></div>
+      <div class="cb-swatch"><div class="cb-color" id="cbDeutan"></div><div class="cb-label">Deuteranopia</div></div>
+      <div class="cb-swatch"><div class="cb-color" id="cbTritan"></div><div class="cb-label">Tritanopia</div></div>
+    </div>
+  </div>
+
+  <div class="d-section" id="harmonySection" style="display:none">
+    <div class="d-section-title">Color Harmonies</div>
+    <div class="harmony-group"><div class="harmony-group-label">Complementary</div><div class="harmony-swatches" id="harmComplement"></div></div>
+    <div class="harmony-group"><div class="harmony-group-label">Analogous</div><div class="harmony-swatches" id="harmAnalogous"></div></div>
+    <div class="harmony-group"><div class="harmony-group-label">Triadic</div><div class="harmony-swatches" id="harmTriadic"></div></div>
+    <div class="harmony-group"><div class="harmony-group-label">Split-Complementary</div><div class="harmony-swatches" id="harmSplit"></div></div>
+  </div>
+
+  <div class="palette-wrap" id="paletteSection" style="display:none">
+    <div class="palette-header">
+      <div class="d-section-title" style="margin:0">Suggested Palette</div>
+      <div class="palette-tabs">
+        <button class="palette-tab active" onclick="switchPaletteStyle('modern',this)">Modern</button>
+        <button class="palette-tab" onclick="switchPaletteStyle('pastel',this)">Pastel</button>
+        <button class="palette-tab" onclick="switchPaletteStyle('bold',this)">Bold</button>
+        <button class="palette-tab" onclick="switchPaletteStyle('earth',this)">Earth</button>
+      </div>
+    </div>
+    <div class="palette-strip" id="paletteStrip"></div>
+    <div class="palette-codes" id="paletteCodes"></div>
+    <button class="palette-copy-all" onclick="copyAllHex()">⊞ Copy all as CSS variables</button>
+  </div>
+
+</div>
+
+<!-- ============================================================
+     MOBILE
+     ============================================================ -->
+<div class="mobile-tool">
+  <div class="m-header">
+    <div class="m-logo">Swat<span>chd</span></div>
+    <div class="m-hint">Tap to sample</div>
+  </div>
+
+  <div class="viewfinder" id="viewfinder">
+    <video id="video" autoplay playsinline muted></video>
+    <canvas id="canvas"></canvas>
+    <div class="ring"></div>
+    <div class="dot" id="dot"></div>
+    <div class="ripple" id="ripple"></div>
+    <div class="cam-error hidden" id="camError">
+      <div class="cam-error-icon">📷</div>
+      <div class="cam-error-title">Camera access needed</div>
+      <div class="cam-error-msg">Swatchd uses your camera to sample real-world colors.<br>Please allow camera access and reload.</div>
+      <button class="retry-btn" onclick="startCamera()">Try Again</button>
+    </div>
+  </div>
+
+  <div class="results" id="results">
+    <div class="empty" id="emptyState">
+      <span class="empty-icon">🎨</span>
+      TAP ANYWHERE TO SAMPLE A COLOR
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     SCRIPTS
+     ============================================================ -->
+<script>
+// ============================================================
+// SHARED COLOR MATH
+// ============================================================
+function hexToRgb(hex){return{r:parseInt(hex.slice(1,3),16),g:parseInt(hex.slice(3,5),16),b:parseInt(hex.slice(5,7),16)};}
+
+function rgbToHsl(r,g,b){
+  r/=255;g/=255;b/=255;
+  const max=Math.max(r,g,b),min=Math.min(r,g,b);
+  let h,s,l=(max+min)/2;
+  if(max===min){h=s=0;}
+  else{const d=max-min;s=l>0.5?d/(2-max-min):d/(max+min);
+    switch(max){case r:h=((g-b)/d+(g<b?6:0))/6;break;case g:h=((b-r)/d+2)/6;break;case b:h=((r-g)/d+4)/6;break;}}
+  return{h:Math.round(h*360),s:Math.round(s*100),l:Math.round(l*100)};
+}
+
+function hslToHex(h,s,l){
+  h=((h%360)+360)%360;s/=100;l/=100;
+  const a=s*Math.min(l,1-l);
+  const f=n=>{const k=(n+h/30)%12;const c=l-a*Math.max(Math.min(k-3,9-k,1),-1);return Math.round(255*c).toString(16).padStart(2,'0');};
+  return`#${f(0)}${f(8)}${f(4)}`.toUpperCase();
+}
+
+function simulateCB(r,g,b,type){
+  const lin=v=>{v/=255;return v<=0.04045?v/12.92:Math.pow((v+0.055)/1.055,2.4);};
+  let rl=lin(r),gl=lin(g),bl=lin(b);
+  let L=0.31399022*rl+0.63951294*gl+0.04649755*bl;
+  let M=0.15537241*rl+0.75789446*gl+0.08670142*bl;
+  let S=0.01775239*rl+0.10944209*gl+0.87256922*bl;
+  let Ls=L,Ms=M,Ss=S;
+  if(type==='protan')Ls=Math.max(0,2.02344*M-2.52581*S);
+  else if(type==='deutan')Ms=Math.max(0,0.494207*L+1.24827*S);
+  else if(type==='tritan')Ss=Math.max(0,-0.395913*L+0.801109*M);
+  let rs=5.47221206*Ls-4.64196010*Ms+0.16963708*Ss;
+  let gs=-1.12524190*Ls+2.29317094*Ms-0.16789520*Ss;
+  let bs=0.02980165*Ls-0.19318073*Ms+1.16364789*Ss;
+  const d=v=>{v=Math.max(0,Math.min(1,v));return v<=0.0031308?12.92*v:1.055*Math.pow(v,1/2.4)-0.055;};
+  return{r:Math.round(d(rs)*255),g:Math.round(d(gs)*255),b:Math.round(d(bs)*255)};
+}
+
+function rgbToLab(r,g,b){
+  const lin=v=>{v/=255;return v<=0.04045?v/12.92:Math.pow((v+0.055)/1.055,2.4);};
+  const rl=lin(r),gl=lin(g),bl=lin(b);
+  const X=rl*0.4124564+gl*0.3575761+bl*0.1804375;
+  const Y=rl*0.2126729+gl*0.7151522+bl*0.0721750;
+  const Z=rl*0.0193339+gl*0.1191920+bl*0.9503041;
+  const fx=v=>v>0.008856?Math.cbrt(v):7.787*v+16/116;
+  return[116*fx(Y)-16,500*(fx(X/0.9505)-fx(Y)),200*(fx(Y)-fx(Z/1.089))];
+}
+
+const NAMED=[
+  ['Red',255,0,0],['Crimson',220,20,60],['Firebrick',178,34,34],['Dark Red',139,0,0],['Maroon',128,0,0],['Tomato',255,99,71],
+  ['Orange',255,165,0],['Dark Orange',255,140,0],['Burnt Orange',204,85,0],['Pumpkin',255,117,24],['Amber',255,126,0],['Apricot',235,140,75],
+  ['Coral',255,127,80],['Salmon',250,128,114],['Sienna',160,82,45],['Rust',183,65,14],
+  ['Yellow',255,255,0],['Gold',255,215,0],['Khaki',240,230,140],
+  ['Lime',0,255,0],['Green',0,128,0],['Dark Green',0,100,0],['Olive',128,128,0],['Forest Green',34,139,34],
+  ['Mint',152,255,152],['Sea Green',46,139,87],['Spring Green',0,255,127],
+  ['Teal',0,128,128],['Cyan',0,255,255],['Turquoise',64,224,208],['Aquamarine',127,255,212],
+  ['Blue',0,0,255],['Navy',0,0,128],['Royal Blue',65,105,225],['Dodger Blue',30,144,255],
+  ['Cornflower Blue',100,149,237],['Steel Blue',70,130,180],['Sky Blue',135,206,235],
+  ['Slate Blue',106,90,205],['Medium Slate Blue',123,104,238],
+  ['Purple',128,0,128],['Indigo',75,0,130],['Blue Violet',138,43,226],
+  ['Violet',238,130,238],['Medium Purple',147,112,219],['Periwinkle',100,100,200],['Lavender',150,120,210],
+  ['Magenta',255,0,255],['Hot Pink',255,105,180],['Deep Pink',255,20,147],['Pink',255,182,193],
+  ['Brown',139,69,19],['Chocolate',210,105,30],['Peru',205,133,63],['Tan',210,180,140],
+  ['Beige',245,245,220],['Sandy Brown',244,164,96],
+  ['White',255,255,255],['Light Gray',211,211,211],['Silver',192,192,192],
+  ['Gray',128,128,128],['Dark Gray',64,64,64],['Charcoal',54,69,79],['Black',0,0,0],
+];
+const NAMED_LAB=NAMED.map(([name,r,g,b])=>({name,lab:rgbToLab(r,g,b)}));
+function getColorName(r,g,b){
+  const inp=rgbToLab(r,g,b);let best=NAMED_LAB[0].name,bd=Infinity;
+  for(const{name,lab}of NAMED_LAB){const d=Math.sqrt((inp[0]-lab[0])**2+(inp[1]-lab[1])**2+(inp[2]-lab[2])**2);if(d<bd){bd=d;best=name;}}
+  return best;
+}
+
+function getHarmonies(h,s,l){
+  const S=Math.max(30,Math.min(s,90)),L=Math.max(25,Math.min(l,75));
+  return{
+    comp:   [hslToHex(h,S,L),hslToHex(h+180,S,L)],
+    analog: [hslToHex(h-30,S,L),hslToHex(h,S,L),hslToHex(h+30,S,L)],
+    triadic:[hslToHex(h,S,L),hslToHex(h+120,S,L),hslToHex(h+240,S,L)],
+    split:  [hslToHex(h,S,L),hslToHex(h+150,S,L),hslToHex(h+210,S,L)],
+  };
+}
+
+const ROLES=['Primary','Secondary','Accent','Neutral','Light','Dark'];
+
+function buildPalette(h,s,l,style){
+  switch(style){
+    case 'modern':return[hslToHex(h,Math.min(s,75),Math.max(l,45)),hslToHex(h+30,Math.min(s-10,60),Math.min(l+8,65)),hslToHex(h+180,Math.min(s,80),Math.max(l-5,45)),hslToHex(h,12,55),hslToHex(h,20,94),hslToHex(h,25,14)];
+    case 'pastel':return[hslToHex(h,55,78),hslToHex(h+40,50,80),hslToHex(h+180,55,80),hslToHex(h,15,82),hslToHex(h,30,95),hslToHex(h,20,35)];
+    case 'bold':  return[hslToHex(h,95,45),hslToHex(h+25,85,38),hslToHex(h+180,90,50),hslToHex(h,20,40),hslToHex(h,15,92),hslToHex(h,30,10)];
+    case 'earth': return[hslToHex(h,Math.min(s,45),Math.max(l-5,38)),hslToHex(h+20,38,52),hslToHex(h-15,55,58),hslToHex(h,18,60),hslToHex(h+10,22,90),hslToHex(h,20,18)];
+    default:      return[hslToHex(h,70,50),hslToHex(h+30,60,55),hslToHex(h+180,70,50),hslToHex(h,12,55),hslToHex(h,20,94),hslToHex(h,25,14)];
+  }
+}
+
+// ============================================================
+// DESKTOP LOGIC
+// ============================================================
+let deskH,deskS,deskL,deskStyle='modern';
+
+if(!window.EyeDropper){
+  document.getElementById('noSupport').style.display='block';
+  document.getElementById('pickBtn').disabled=true;
+}
+
+async function pickColor(){
+  if(!window.EyeDropper)return;
+  try{const r=await new EyeDropper().open();setDesktopColor(r.sRGBHex.toUpperCase());}
+  catch(e){}
+}
+
+function setDesktopColor(hex){
+  const{r,g,b}=hexToRgb(hex);
+  const{h,s,l}=rgbToHsl(r,g,b);
+  deskH=h;deskS=s;deskL=l;
+
+  const prev=document.getElementById('preview');
+  prev.style.background=hex; prev.classList.add('has-color');
+  const bh=document.getElementById('bigHex');
+  bh.textContent=hex; bh.onclick=()=>copyValue('hex');
+  document.getElementById('hexVal').textContent=hex;
+  document.getElementById('rgbVal').textContent=`${r}, ${g}, ${b}`;
+  document.getElementById('hslVal').textContent=`${h}°, ${s}%, ${l}%`;
+  document.getElementById('colorName').textContent=getColorName(r,g,b);
+  document.getElementById('nameBar').style.display='flex';
+
+  const p=simulateCB(r,g,b,'protan'),d=simulateCB(r,g,b,'deutan'),t=simulateCB(r,g,b,'tritan');
+  document.getElementById('cbNormal').style.background=hex;
+  document.getElementById('cbProtan').style.background=`rgb(${p.r},${p.g},${p.b})`;
+  document.getElementById('cbDeutan').style.background=`rgb(${d.r},${d.g},${d.b})`;
+  document.getElementById('cbTritan').style.background=`rgb(${t.r},${t.g},${t.b})`;
+
+  const harm=getHarmonies(h,s,l);
+  renderHarmonyGroup('harmComplement',harm.comp);
+  renderHarmonyGroup('harmAnalogous',harm.analog);
+  renderHarmonyGroup('harmTriadic',harm.triadic);
+  renderHarmonyGroup('harmSplit',harm.split);
+  document.getElementById('harmonySection').style.display='block';
+
+  renderDesktopPalette(h,s,l,deskStyle);
+  document.getElementById('paletteSection').style.display='block';
+}
+
+function copyValue(type){
+  const vals={hex:'hexVal',rgb:'rgbVal',hsl:'hslVal'};
+  const flashes={hex:'flashHex',rgb:'flashRgb',hsl:'flashHsl'};
+  const text=document.getElementById(vals[type]).textContent;
+  if(text==='—')return;
+  navigator.clipboard.writeText(text).then(()=>{
+    const el=document.getElementById(flashes[type]);
+    el.classList.add('show');setTimeout(()=>el.classList.remove('show'),900);
+  });
+}
+
+function renderHarmonyGroup(id,list){
+  const c=document.getElementById(id);c.innerHTML='';
+  list.forEach((hex,i)=>{
+    const sw=document.createElement('div');sw.className='harmony-swatch';
+    sw.innerHTML=`<div class="harmony-color" style="background:${hex}"></div><div class="harmony-hex">${hex}</div><div class="harmony-flash" id="hf-${id}-${i}">Copied</div>`;
+    sw.onclick=()=>navigator.clipboard.writeText(hex).then(()=>{const f=document.getElementById(`hf-${id}-${i}`);f.classList.add('show');setTimeout(()=>f.classList.remove('show'),800);});
+    c.appendChild(sw);
+  });
+}
+
+function renderDesktopPalette(h,s,l,style){
+  const palette=buildPalette(h,s,l,style);
+  const strip=document.getElementById('paletteStrip'),codes=document.getElementById('paletteCodes');
+  strip.innerHTML='';codes.innerHTML='';
+  palette.forEach((hex,i)=>{
+    const chip=document.createElement('div');chip.className='palette-chip';
+    chip.innerHTML=`<div class="palette-chip-inner" style="background:${hex}"></div><div class="palette-chip-label">${ROLES[i]}</div><div class="palette-chip-flash" id="pcf-${i}">✓</div>`;
+    chip.onclick=()=>navigator.clipboard.writeText(hex).then(()=>{const f=document.getElementById(`pcf-${i}`);f.classList.add('show');setTimeout(()=>f.classList.remove('show'),700);});
+    strip.appendChild(chip);
+    const cell=document.createElement('div');cell.className='palette-code-cell';
+    cell.innerHTML=`<div class="palette-code-role">${ROLES[i].slice(0,3)}</div><div class="palette-code-hex">${hex}</div>`;
+    cell.onclick=()=>navigator.clipboard.writeText(hex).then(()=>{cell.style.background='rgba(245,200,66,0.15)';setTimeout(()=>cell.style.background='',600);});
+    codes.appendChild(cell);
+  });
+}
+
+function switchPaletteStyle(style,btn){
+  deskStyle=style;
+  document.querySelectorAll('.palette-tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  if(deskH!==undefined)renderDesktopPalette(deskH,deskS,deskL,style);
+}
+
+function copyAllHex(){
+  if(deskH===undefined)return;
+  const p=buildPalette(deskH,deskS,deskL,deskStyle);
+  const css=[':root {',`  --color-primary:   ${p[0]};`,`  --color-secondary: ${p[1]};`,`  --color-accent:    ${p[2]};`,`  --color-neutral:   ${p[3]};`,`  --color-light:     ${p[4]};`,`  --color-dark:      ${p[5]};`,'}'].join('\n');
+  navigator.clipboard.writeText(css).then(()=>{
+    const btn=document.querySelector('.palette-copy-all');
+    const orig=btn.textContent;btn.textContent='✓ Copied 6 variables to clipboard';
+    setTimeout(()=>btn.textContent=orig,2000);
+  }).catch(()=>prompt('Copy CSS:',css));
+}
+
+// ============================================================
+// MOBILE CAMERA LOGIC
+// ============================================================
+let stream=null,samplingActive=false,pinchDist=null,zoomLevel=1;
+let lastH,lastS,lastL,paletteStyle='modern';
+
+async function startCamera(){
+  document.getElementById('camError').classList.add('hidden');
+  try{
+    stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment',width:{ideal:1920},height:{ideal:1080}},audio:false});
+    const vid=document.getElementById('video');vid.srcObject=stream;await vid.play();
+    samplingActive=true;requestAnimationFrame(sampleLoop);
+  }catch(e){document.getElementById('camError').classList.remove('hidden');}
+}
+
+function sampleLoop(){
+  if(!samplingActive)return;
+  const vid=document.getElementById('video');
+  if(vid.readyState<2){requestAnimationFrame(sampleLoop);return;}
+  const c=document.getElementById('canvas');
+  c.width=vid.videoWidth;c.height=vid.videoHeight;
+  const ctx=c.getContext('2d');ctx.drawImage(vid,0,0);
+  const cx=Math.round(vid.videoWidth/2),cy=Math.round(vid.videoHeight/2);
+  const px=ctx.getImageData(cx,cy,1,1).data;
+  document.getElementById('dot').style.background='#'+[px[0],px[1],px[2]].map(v=>v.toString(16).padStart(2,'0')).join('').toUpperCase();
+  requestAnimationFrame(sampleLoop);
+}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  const vf=document.getElementById('viewfinder');
+  if(!vf)return;
+  vf.addEventListener('click',e=>{
+    if(!samplingActive)return;
+    const vid=document.getElementById('video');if(vid.readyState<2)return;
+    const c=document.getElementById('canvas');
+    const ctx=c.getContext('2d');
+    const px=ctx.getImageData(Math.round(vid.videoWidth/2),Math.round(vid.videoHeight/2),1,1).data;
+    captureColor(px[0],px[1],px[2],e.clientX,e.clientY);
+  });
+  vf.addEventListener('touchstart',e=>{if(e.touches.length===2)pinchDist=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);},{passive:true});
+  vf.addEventListener('touchmove',e=>{
+    if(e.touches.length===2&&pinchDist){
+      const nd=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);
+      zoomLevel=Math.max(1,Math.min(5,zoomLevel*(nd/pinchDist)));
+      document.getElementById('video').style.transform=`scale(${zoomLevel})`;
+      pinchDist=nd;
+    }
+  },{passive:true});
+  vf.addEventListener('touchend',()=>{pinchDist=null;},{passive:true});
+});
+
+function captureColor(r,g,b,cx,cy){
+  const hex='#'+[r,g,b].map(v=>v.toString(16).padStart(2,'0')).join('').toUpperCase();
+  const rp=document.getElementById('ripple');
+  const rect=document.getElementById('viewfinder').getBoundingClientRect();
+  rp.style.left=(cx-rect.left)+'px';rp.style.top=(cy-rect.top)+'px';
+  rp.classList.remove('fire');void rp.offsetWidth;rp.classList.add('fire');
+  setTimeout(()=>rp.classList.remove('fire'),450);
+  renderMobileResult(r,g,b,hex);
+}
+
+function renderMobileResult(r,g,b,hex){
+  document.getElementById('emptyState')?.remove();
+  const{h,s,l}=rgbToHsl(r,g,b);lastH=h;lastS=s;lastL=l;
+  const name=getColorName(r,g,b);
+  const hsl=`${h}°, ${s}%, ${l}%`, rgb=`${r}, ${g}, ${b}`;
+  const harm=getHarmonies(h,s,l);
+  const palette=buildPalette(h,s,l,paletteStyle);
+  const cbP=simulateCB(r,g,b,'protan'),cbD=simulateCB(r,g,b,'deutan'),cbT=simulateCB(r,g,b,'tritan');
+  const toHex=({r,g,b})=>'#'+[r,g,b].map(v=>v.toString(16).padStart(2,'0')).join('').toUpperCase();
+
+  const block=document.createElement('div');
+  block.innerHTML=`
+    <div class="m-section">
+      <div class="color-row-m">
+        <div class="color-swatch-m" style="background:${hex}"></div>
+        <div><div class="color-name-m">${name}</div><div class="color-hex-m">${hex}</div></div>
+      </div>
+    </div>
+    <div class="m-section">
+      <div class="m-section-title">Color Values</div>
+      <div class="values-m">
+        <div class="val-cell-m" onclick="mCopy('${hex}','mfHex')"><div class="val-label-m">HEX</div><div class="val-data-m">${hex}</div><div class="val-flash-m" id="mfHex">Copied</div></div>
+        <div class="val-cell-m" onclick="mCopy('${rgb}','mfRgb')"><div class="val-label-m">RGB</div><div class="val-data-m">${rgb}</div><div class="val-flash-m" id="mfRgb">Copied</div></div>
+        <div class="val-cell-m" onclick="mCopy('${hsl}','mfHsl')"><div class="val-label-m">HSL</div><div class="val-data-m">${hsl}</div><div class="val-flash-m" id="mfHsl">Copied</div></div>
+      </div>
+    </div>
+    <div class="m-section">
+      <div class="m-section-title">Colorblind Simulation</div>
+      <div class="cb-grid-m">
+        <div class="cb-chip-m"><div class="cb-color-m" style="background:${hex}"></div><div class="cb-label-m">Normal</div></div>
+        <div class="cb-chip-m"><div class="cb-color-m" style="background:${toHex(cbP)}"></div><div class="cb-label-m">Protanopia</div></div>
+        <div class="cb-chip-m"><div class="cb-color-m" style="background:${toHex(cbD)}"></div><div class="cb-label-m">Deuteranopia</div></div>
+        <div class="cb-chip-m"><div class="cb-color-m" style="background:${toHex(cbT)}"></div><div class="cb-label-m">Tritanopia</div></div>
+      </div>
+    </div>
+    <div class="m-section">
+      <div class="m-section-title">Harmonies</div>
+      ${mHarmGroup('Comp',harm.comp)}${mHarmGroup('Analog',harm.analog)}${mHarmGroup('Triadic',harm.triadic)}${mHarmGroup('Split',harm.split)}
+    </div>
+    <div class="m-section">
+      <div class="m-section-title">Suggested Palette</div>
+      <div class="p-tabs-m">${['modern','pastel','bold','earth'].map(s=>`<button class="p-tab-m${s===paletteStyle?' active':''}" onclick="switchMobileStyle('${s}',this)">${s}</button>`).join('')}</div>
+      <div class="p-strip-m" id="mPaletteStrip">${palette.map((h,i)=>`<div class="p-chip-m" onclick="mCopy('${h}','mpcf${i}')"><div class="p-chip-inner-m" style="background:${h}"></div><div class="p-chip-label-m">${ROLES[i]}</div><div class="p-chip-flash-m" id="mpcf${i}">✓</div></div>`).join('')}</div>
+      <div class="p-codes-m">${palette.map((h,i)=>`<div class="p-code-m" onclick="mCopy('${h}','')"><div class="p-code-role-m">${ROLES[i].slice(0,3)}</div><div class="p-code-hex-m">${h}</div></div>`).join('')}</div>
+      <button class="copy-all-btn-m" onclick="copyAllCss()">⊞ Copy CSS variables</button>
+    </div>
+  `;
+  const results=document.getElementById('results');
+  results.innerHTML='';results.appendChild(block);
+}
+
+function mHarmGroup(label,list){
+  return`<div class="harm-group-m"><div class="harm-group-label-m">${label}</div><div class="harm-swatches-m">${list.map((h,i)=>`<div class="harm-swatch-m" onclick="mCopy('${h}','')"><div class="harm-color-m" style="background:${h}"></div><div class="harm-hex-m">${h}</div></div>`).join('')}</div></div>`;
+}
+
+function mCopy(text,flashId){
+  navigator.clipboard.writeText(text).then(()=>{
+    if(!flashId)return;
+    const el=document.getElementById(flashId);if(!el)return;
+    el.classList.add('show');setTimeout(()=>el.classList.remove('show'),800);
+  });
+}
+
+function switchMobileStyle(style,btn){
+  paletteStyle=style;
+  document.querySelectorAll('.p-tab-m').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  if(lastH===undefined)return;
+  const palette=buildPalette(lastH,lastS,lastL,style);
+  const strip=document.getElementById('mPaletteStrip');
+  if(strip)strip.innerHTML=palette.map((h,i)=>`<div class="p-chip-m" onclick="mCopy('${h}','mpcf${i}')"><div class="p-chip-inner-m" style="background:${h}"></div><div class="p-chip-label-m">${ROLES[i]}</div><div class="p-chip-flash-m" id="mpcf${i}">✓</div></div>`).join('');
+}
+
+function copyAllCss(){
+  if(lastH===undefined)return;
+  const p=buildPalette(lastH,lastS,lastL,paletteStyle);
+  const css=[':root {',`  --color-primary:   ${p[0]};`,`  --color-secondary: ${p[1]};`,`  --color-accent:    ${p[2]};`,`  --color-neutral:   ${p[3]};`,`  --color-light:     ${p[4]};`,`  --color-dark:      ${p[5]};`,'}'].join('\n');
+  navigator.clipboard.writeText(css).then(()=>{
+    const btn=document.querySelector('.copy-all-btn-m');
+    const orig=btn.textContent;btn.textContent='✓ Copied 6 variables!';
+    setTimeout(()=>btn.textContent=orig,2000);
+  }).catch(()=>prompt('Copy CSS:',css));
+}
+
+if(window.innerWidth<=768)startCamera();
+</script>
+</body>
+</html>
