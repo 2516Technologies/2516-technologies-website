@@ -109,6 +109,16 @@ h2 em{font-style:italic;color:var(--accent)}
   .who-grid{grid-template-columns:1fr}
   .hero-actions{flex-direction:column;align-items:center}
 }
+
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(201,168,76,0.12)}
+.kpi-card{background:var(--bg-card);padding:2.5rem 2rem;border-top:2px solid var(--accent-gold);text-align:center}
+.kpi-stat{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,3.2vw,2.6rem);font-weight:300;color:var(--accent-gold);line-height:1.1;margin-bottom:.75rem}
+.kpi-desc{font-size:.82rem;color:rgba(232,238,248,0.6);line-height:1.55}
+@media(max-width:768px){.kpi-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:400px){.kpi-grid{grid-template-columns:1fr}}
+
+.founder-body p{font-size:.96rem;color:var(--text-muted);line-height:1.72;margin-top:1.25rem}
+.founder-body p:first-child{margin-top:1.5rem}
 </style>
 </head>
 <body>
@@ -155,6 +165,30 @@ h2 em{font-style:italic;color:var(--accent)}
     <div class="hero-actions">
       <a href="contact.html" class="btn-primary">Schedule a Commercial Data Health Check →</a>
       <a href="contact.html" class="btn-outline">Talk through your launch data strategy →</a>
+    </div>
+  </div>
+</section>
+
+<!-- KPI BAR -->
+<section style="background:var(--bg-card);padding:4rem 3.5rem;border-top:1px solid rgba(201,168,76,0.15);border-bottom:1px solid rgba(201,168,76,0.15)">
+  <div class="container">
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-stat">$50M+</div>
+        <div class="kpi-desc">Commercial decisions supported through analytics, reporting, and data infrastructure</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-stat">40–60%</div>
+        <div class="kpi-desc">Reduction in manual reporting burden and data overhead, achieved in prior engagements</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-stat">15+</div>
+        <div class="kpi-desc">Years across pharma, defense, and financial services</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-stat">100%<br>founder-led</div>
+        <div class="kpi-desc">Every engagement is led hands-on by the person you hired</div>
+      </div>
     </div>
   </div>
 </section>
@@ -257,6 +291,21 @@ h2 em{font-style:italic;color:var(--accent)}
     <h2>Built by someone who understands commercial pharma data.</h2>
     <p style="font-size:.96rem;color:var(--text-muted);line-height:1.72;margin-top:1.5rem">2516 Technologies brings hands-on experience building pharma commercial data infrastructure, modernizing reporting environments, improving dashboard reliability, and connecting messy operational data to clear business decisions.</p>
     <p style="font-size:.96rem;color:var(--text-muted);line-height:1.72;margin-top:1.25rem">This is not abstract strategy. It is practical commercial data architecture, reporting, and implementation support for teams that need to move quickly without creating long-term technical debt.</p>
+  </div>
+</section>
+
+<!-- FOUNDER CREDENTIALING -->
+<section style="background:var(--bg-card2)">
+  <div class="container" style="max-width:760px">
+    <div class="eyebrow">Why This Work, Why Me</div>
+    <h2>The person you hire is the person doing the work.</h2>
+    <div class="founder-body">
+      <p>I've spent years inside specialty pharma commercial analytics — most recently as Associate Director of Commercial Data &amp; Analytics at a specialty oncology company. I wasn't advising from the outside. I was the person building the reporting infrastructure, managing the CRM data pipelines, and making sure the numbers leadership relied on at launch were actually right.</p>
+      <p>That work spanned territory analytics, launch KPI design, BI platform implementation, and the unglamorous but critical job of connecting fragmented data sources — distributor feeds, CRM exports, claims data, and third-party datasets — into reporting a field team and leadership team could actually use.</p>
+      <p>My background also includes military service, where decisions under uncertainty carry real consequences. That experience shapes how I work: disciplined, calm under pressure, and focused on getting the foundation right before it matters.</p>
+      <p>What I built inside a commercial pharma organization is what I now help pre-commercial teams build before they need it — not after.</p>
+      <p>2516 Technologies is a one-person consultancy by design. When you work with me, you get me directly: the same experience, the same judgment, applied to your commercial data foundation.</p>
+    </div>
   </div>
 </section>
 
