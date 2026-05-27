@@ -8,17 +8,13 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --navy: #1e3a8a;
-      --blue: #3b82f6;
-      --gold: #C9A84C;
-      --gold-light: #e8c97a;
-      --dark: #0f1a2e;
-      --darker: #080f1c;
-      --text: #1a2540;
-      --muted: #6b7a99;
-      --border: #e2e8f0;
-      --bg: #fafaf8;
-      --white: #ffffff;
+      --bg:#0A1628;--bg-card:#0F2144;--bg-card2:#0D1C3A;
+      --accent:#4A7FFF;--accent-gold:#C9A84C;
+      --text:#E8EEF8;--text-muted:#8A9BBC;--text-dim:#4A5A78;
+      --border:rgba(74,127,255,0.12);--border-mid:rgba(74,127,255,0.26);
+      --white:#FFFFFF;--jazz-dark:#1e3a8a;--jazz-blue:#3b82f6;
+      --dark:#0A1628;--darker:#060F1E;--navy:#1e3a8a;--blue:#3b82f6;
+      --gold:#C9A84C;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -34,18 +30,27 @@
     }
 
     /* NAV */
-    nav {
-      position: sticky;
-      top: 0;
-      z-index: 200;
-      background: var(--darker);
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-      padding: 0 2rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 64px;
-    }
+    .nav{position:fixed;top:0;left:0;right:0;z-index:200;display:grid;grid-template-columns:auto 1fr auto;align-items:center;padding:1.1rem 3.5rem;background:rgba(10,22,40,0.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+    .nav-brand{display:flex;align-items:center;gap:.9rem;text-decoration:none}
+    .nav-wordmark{font-family:"Cormorant Garamond",serif;font-size:1.05rem;font-weight:400;letter-spacing:.18em;text-transform:uppercase;color:var(--text)}
+    .nav-links{display:flex;gap:0;list-style:none;justify-content:center}
+    .nav-links a{display:block;padding:.45rem 1rem;font-size:.76rem;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);text-decoration:none;transition:color .2s}
+    .nav-links a:hover{color:var(--text)} .nav-links a.active{color:var(--accent-gold)}
+    .nav-cta{background:var(--accent-gold);color:#0A1628;padding:.58rem 1.35rem;border-radius:3px;font-size:.74rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;transition:opacity .2s,transform .15s;white-space:nowrap}
+    .nav-cta:hover{opacity:.84;transform:translateY(-1px)}
+    .hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:8px}
+    .hamburger-line{width:22px;height:2px;background:var(--text);border-radius:2px;transition:all 0.3s}
+    .hamburger.active .hamburger-line:nth-child(1){transform:rotate(45deg) translate(7px,7px)}
+    .hamburger.active .hamburger-line:nth-child(2){opacity:0}
+    .hamburger.active .hamburger-line:nth-child(3){transform:rotate(-45deg) translate(7px,-7px)}
+    .mobile-menu{display:none;position:fixed;top:60px;left:0;right:0;background:rgba(10,22,40,0.98);border-bottom:1px solid var(--border);padding:1.5rem;flex-direction:column;gap:0;z-index:199}
+    .mobile-menu.open{display:flex}
+    .mobile-menu a{display:block;padding:0.9rem 0;font-size:0.82rem;font-weight:400;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);text-decoration:none;border-bottom:1px solid var(--border);transition:color .2s}
+    .mobile-menu a:last-child{border-bottom:none}
+    .mobile-menu a:hover{color:var(--text)}
+    .mobile-menu a.active{color:var(--accent-gold)}
+    .mobile-menu .nav-cta{background:var(--accent-gold);color:#0A1628;padding:0.7rem 1.2rem;border-radius:3px;text-align:center;margin-top:0.8rem;font-weight:600;border-bottom:none}
+    @media(max-width:768px){.hamburger{display:flex}.nav-links{display:none}.nav{padding:1rem 1.5rem}}
 
     .nav-logo {
       display: flex;
@@ -1199,7 +1204,7 @@
     const hamburger = document.getElementById('hamburger');
     const mobileMenu = document.getElementById('mobile-menu');
     hamburger.addEventListener('click', () => {
-      hamburger.classList.toggle('open');
+      hamburger.classList.toggle('active');
       mobileMenu.classList.toggle('open');
     });
 
