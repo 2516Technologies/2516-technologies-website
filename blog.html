@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Writing — 2516 Technologies</title>
+  <meta name="description" content="Perspectives on Decision Intelligence, data strategy, and the future of AI in regulated industries." />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy: #1e3a8a;
+      --blue: #3b82f6;
+      --gold: #C9A84C;
+      --gold-light: #e8c97a;
+      --dark: #0f1a2e;
+      --darker: #080f1c;
+      --text: #1a2540;
+      --muted: #6b7a99;
+      --border: #e2e8f0;
+      --bg: #fafaf8;
+      --white: #ffffff;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--dark);
+      color: var(--text);
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    /* NAV */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      background: var(--darker);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .jazz-bars {
+      display: flex;
+      gap: 3px;
+      align-items: flex-end;
+      height: 22px;
+    }
+
+    .jazz-bars span {
+      display: block;
+      width: 4px;
+      border-radius: 2px;
+      background: var(--white);
+    }
+    .jazz-bars span:nth-child(1) { height: 10px; }
+    .jazz-bars span:nth-child(2) { height: 18px; background: var(--blue); }
+    .jazz-bars span:nth-child(3) { height: 14px; }
+    .jazz-bars span:nth-child(4) { height: 22px; background: var(--blue); }
+
+    .nav-wordmark {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: var(--white);
+      letter-spacing: 0.02em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.85rem;
+      font-weight: 400;
+      color: rgba(255,255,255,0.55);
+      text-decoration: none;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active { color: var(--white); }
+
+
+    /* hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--white);
+      border-radius: 2px;
+      transition: transform 0.3s, opacity 0.3s;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 64px;
+      left: 0; right: 0;
+      background: var(--darker);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      z-index: 199;
+      padding: 1.5rem 2rem;
+      flex-direction: column;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.65);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 0.85rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      transition: color 0.2s;
+    }
+    .mobile-menu a:last-child { border-bottom: none; }
+    .mobile-menu a:hover, .mobile-menu a.active { color: var(--white); }
+
+    /* HERO */
+    .page-hero {
+      background: var(--dark);
+      padding: 5rem 2rem 4rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .page-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 60% 0%, rgba(59,130,246,0.12) 0%, transparent 60%),
+                  radial-gradient(ellipse at 20% 100%, rgba(201,168,76,0.08) 0%, transparent 50%);
+    }
+
+    .page-hero-inner {
+      position: relative;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .page-hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.8rem, 6vw, 4rem);
+      font-weight: 300;
+      color: var(--white);
+      letter-spacing: -0.01em;
+      line-height: 1.1;
+      margin-bottom: 1.2rem;
+    }
+
+    .page-hero h1 em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .page-hero p {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.6);
+      font-weight: 300;
+      max-width: 480px;
+      margin: 0 auto 2rem;
+    }
+
+    .hero-divider {
+      width: 48px;
+      height: 2px;
+      background: var(--gold);
+      margin: 0 auto;
+    }
+
+    /* FILTER BAR */
+    .filter-bar {
+      background: rgba(255,255,255,0.04);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      gap: 0;
+      overflow-x: auto;
+    }
+
+    .filter-btn {
+      padding: 1rem 1.4rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .filter-btn:hover { color: rgba(255,255,255,0.8); }
+    .filter-btn.active {
+      color: var(--white);
+      border-bottom-color: var(--gold);
+    }
+
+    /* MAIN GRID */
+    .blog-section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    .articles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 2rem;
+    }
+
+    /* ARTICLE CARD */
+    .article-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 2px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .article-card:hover {
+      transform: translateY(-3px);
+      background: rgba(255,255,255,0.08);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+    }
+
+    .card-top {
+      padding: 1.8rem 1.8rem 0;
+    }
+
+    .card-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .source-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 2px;
+    }
+
+    .source-badge.linkedin {
+      background: #e8f0fb;
+      color: #0a66c2;
+    }
+    .source-badge.substack {
+      background: #fff3e0;
+      color: #c2410c;
+    }
+    .source-badge.external {
+      background: #f0fdf4;
+      color: #166534;
+    }
+
+    .source-badge svg {
+      width: 12px;
+      height: 12px;
+      flex-shrink: 0;
+    }
+
+    .card-date {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.35);
+      font-weight: 300;
+    }
+
+    .card-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 500;
+      line-height: 1.25;
+      color: var(--white);
+      margin-bottom: 0.8rem;
+    }
+
+    .card-excerpt {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.65;
+      font-weight: 300;
+    }
+
+    .card-bottom {
+      padding: 1.4rem 1.8rem 1.8rem;
+      margin-top: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      margin-top: 1.4rem;
+    }
+
+    .read-link {
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .read-link svg {
+      width: 14px;
+      height: 14px;
+      transition: transform 0.2s;
+    }
+
+    .article-card:hover .read-link svg {
+      transform: translateX(3px);
+    }
+
+    .card-tag {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.3);
+      font-weight: 300;
+      font-style: italic;
+    }
+
+    /* FEATURED CARD */
+    .article-card.featured {
+      grid-column: 1 / -1;
+      flex-direction: row;
+      align-items: stretch;
+    }
+
+    .article-card.featured .card-top {
+      flex: 1;
+      padding: 2.4rem 2.4rem 0;
+    }
+
+    .article-card.featured .card-bottom {
+      padding: 2rem 2.4rem;
+    }
+
+    .article-card.featured .card-title {
+      font-size: 2rem;
+    }
+
+    .featured-label {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.8rem;
+    }
+
+    .featured-accent {
+      width: 6px;
+      background: linear-gradient(to bottom, var(--navy), var(--blue));
+      flex-shrink: 0;
+    }
+
+    /* SUBSTACK CTA */
+    .substack-cta {
+      background: var(--dark);
+      border-radius: 2px;
+      padding: 3rem 2.4rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .substack-cta-text h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 400;
+      color: var(--white);
+      margin-bottom: 0.4rem;
+    }
+
+    .substack-cta-text p {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.5);
+      font-weight: 300;
+    }
+
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0.85rem 2rem;
+      background: var(--gold);
+      color: var(--dark);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 2px;
+      white-space: nowrap;
+      transition: background 0.2s;
+    }
+
+    .cta-btn:hover { background: var(--gold-light); }
+
+
+    .section-label {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.6rem;
+      border-bottom: 1px solid rgba(201,168,76,0.2);
+    }
+    .posts-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.8rem;
+      margin-bottom: 3rem;
+    }
+    .post-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .post-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.9rem 1.2rem;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .post-embed { width: 100%; border: none; display: block; }
+
+
+    .card-image {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .article-card.featured .card-image { height: 200px; }
+
+    /* HIDDEN for filter */
+    .article-card.hidden { display: none; }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .article-card.featured { flex-direction: column; }
+      .featured-accent { width: 100%; height: 5px; background: linear-gradient(to right, var(--navy), var(--blue)); }
+      .article-card.featured .card-top { padding: 1.8rem 1.8rem 0; }
+      .article-card.featured .card-bottom { padding: 1.4rem 1.8rem 1.8rem; }
+      .posts-grid { grid-template-columns: 1fr; }
+      .substack-cta { flex-direction: column; text-align: center; }
+    }
+
+    /* hidden filter */
+    [data-source].hidden { display: none; }
+
+    /* Coming Soon */
+    .coming-soon {
+      display: none;
+      text-align: center;
+      padding: 6rem 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+
+    .coming-soon::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 40%, rgba(59,130,246,0.08) 0%, transparent 65%),
+                  radial-gradient(ellipse at 80% 80%, rgba(201,168,76,0.06) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .coming-soon-inner {
+      position: relative;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    .coming-soon-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(201,168,76,0.1);
+      border: 1px solid rgba(201,168,76,0.25);
+      border-radius: 100px;
+      padding: 5px 16px;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 2rem;
+    }
+
+    .coming-soon-badge::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--gold);
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.7); }
+    }
+
+    .coming-soon h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.2rem, 5vw, 3.2rem);
+      font-weight: 300;
+      color: var(--white);
+      line-height: 1.15;
+      margin-bottom: 1.2rem;
+      letter-spacing: -0.01em;
+    }
+
+    .coming-soon h2 em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .coming-soon p {
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.5);
+      font-weight: 300;
+      line-height: 1.7;
+      margin-bottom: 2.5rem;
+    }
+
+    .coming-soon-divider {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+    }
+    .coming-soon-divider::before,
+    .coming-soon-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(255,255,255,0.08);
+    }
+
+    .coming-soon-bars {
+      display: flex;
+      gap: 4px;
+      align-items: flex-end;
+      height: 28px;
+    }
+    .coming-soon-bars span {
+      display: block;
+      width: 5px;
+      border-radius: 3px;
+      background: rgba(201,168,76,0.4);
+      animation: bar-dance 1.4s ease-in-out infinite;
+    }
+    .coming-soon-bars span:nth-child(1) { height: 12px; animation-delay: 0s; }
+    .coming-soon-bars span:nth-child(2) { height: 22px; animation-delay: 0.2s; background: rgba(59,130,246,0.5); }
+    .coming-soon-bars span:nth-child(3) { height: 16px; animation-delay: 0.4s; }
+    .coming-soon-bars span:nth-child(4) { height: 28px; animation-delay: 0.6s; background: rgba(59,130,246,0.5); }
+
+    @keyframes bar-dance {
+      0%, 100% { transform: scaleY(1); opacity: 0.5; }
+      50% { transform: scaleY(0.5); opacity: 1; }
+    }
+
+    .coming-soon-notify {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0.8rem 1.8rem;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 2px;
+      color: rgba(255,255,255,0.6);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .coming-soon-notify:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="index.html" class="nav-logo">
+      <div class="jazz-bars">
+        <span></span><span></span><span></span><span></span>
+      </div>
+      <span class="nav-wordmark">2516 Technologies</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html#gain">What You Gain</a></li>
+      <li><a href="data-health-check.html">Data Health Check</a></li>
+      <li><a href="pharma.html">Pre-Commercial Pharma</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="blog.html" class="active">Writing</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+  </nav>
+
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="index.html#gain">What You Gain</a>
+    <a href="data-health-check.html">Data Health Check</a>
+    <a href="pharma.html">Pre-Commercial Pharma</a>
+    <a href="about.html">About</a>
+    <a href="blog.html" class="active">Writing</a>
+    <a href="contact.html">Contact</a>
+  </div>
+
+  <!-- HERO -->
+  <section class="page-hero">
+    <div class="page-hero-inner">
+      <h1>Perspectives on<br><em>Decision Intelligence</em></h1>
+      <p>On data strategy, AI readiness, and the discipline required to turn information into action.</p>
+      <div class="hero-divider"></div>
+    </div>
+  </section>
+
+  <!-- FILTER BAR -->
+  <div class="filter-bar">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="substack">Substack</button>
+    <button class="filter-btn" data-filter="linkedin">LinkedIn</button>
+    <button class="filter-btn" data-filter="external">Featured In</button>
+    <button class="filter-btn" data-filter="download">Downloads</button>
+    <button class="filter-btn" data-filter="guest">Guest Contributors</button>
+  </div>
+
+  <!-- ARTICLES -->
+
+  <!-- SUBSTACK CTA TOP -->
+  <div class="substack-cta" style="max-width:1140px; margin: 2rem auto 0; padding-left:2rem; padding-right:2rem;">
+    <div class="substack-cta-text">
+      <h3>Follow along on Substack</h3>
+      <p>New pieces on Decision Intelligence, AI strategy, and the data discipline that separates winners from noise.</p>
+    </div>
+    <a href="https://2516technologies.substack.com" target="_blank" rel="noopener" class="cta-btn">
+      Subscribe Free
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+
+  <!-- RESOURCES SECTION -->
+  <div data-source="download" style="max-width:1140px; margin: 1.5rem auto 0; padding: 0 2rem;">
+    <div style="font-size:0.7rem; font-weight:500; letter-spacing:0.12em; text-transform:uppercase; color:#C9A84C; margin-bottom:1rem; padding-bottom:0.5rem; border-bottom: 1px solid rgba(201,168,76,0.2);">Free Resources</div>
+    <div style="display:flex; flex-direction:column; gap:0.75rem;">
+    <a href="qlik-astrato-complete-guide.pdf" download
+       style="display:flex; align-items:center; justify-content:space-between; gap:1.5rem;
+              background: rgba(201,168,76,0.06); border: 1px solid rgba(201,168,76,0.2);
+              border-radius:2px; padding:1.1rem 1.6rem; text-decoration:none;
+              transition: background 0.2s, border-color 0.2s;">
+      <div style="display:flex; align-items:center; gap:1rem;">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5" style="flex-shrink:0;">
+          <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/>
+          <line x1="12" y1="18" x2="12" y2="12"/>
+          <polyline points="9 15 12 18 15 15"/>
+        </svg>
+        <div>
+          <div style="font-family:'Cormorant Garamond',serif; font-size:1.1rem; font-weight:500; color:#ffffff; line-height:1.2;">Migrating from Qlik Sense to Astrato &mdash; Complete Guide</div>
+          <div style="font-size:0.76rem; color:rgba(255,255,255,0.38); margin-top:3px; font-weight:300;">18-page practitioner reference &middot; QVD exports, semantic layer, Set Analysis, Variables, Master Items</div>
+        </div>
+      </div>
+      <span style="display:inline-flex; align-items:center; gap:5px; font-size:0.75rem; font-weight:500; letter-spacing:0.06em; text-transform:uppercase; color:#C9A84C; white-space:nowrap;">
+        Download <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </span>
+    </a>
+    <a href="2516_Agent_Architecture_OnePager.pdf" download
+       style="display:flex; align-items:center; justify-content:space-between; gap:1.5rem;
+              background: rgba(201,168,76,0.06); border: 1px solid rgba(201,168,76,0.2);
+              border-radius:2px; padding:1.1rem 1.6rem; text-decoration:none;
+              transition: background 0.2s, border-color 0.2s;">
+      <div style="display:flex; align-items:center; gap:1rem;">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5" style="flex-shrink:0;">
+          <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/>
+          <line x1="12" y1="18" x2="12" y2="12"/>
+          <polyline points="9 15 12 18 15 15"/>
+        </svg>
+        <div>
+          <div style="font-family:'Cormorant Garamond',serif; font-size:1.1rem; font-weight:500; color:#ffffff; line-height:1.2;">The 2-Step Agent Architecture That Keeps Token Costs Down</div>
+          <div style="font-size:0.76rem; color:rgba(255,255,255,0.38); margin-top:3px; font-weight:300;">How to isolate your data layer from your LLM &mdash; 60&ndash;80% reduction in token spend &middot; 1-page reference</div>
+        </div>
+      </div>
+      <span style="display:inline-flex; align-items:center; gap:5px; font-size:0.75rem; font-weight:500; letter-spacing:0.06em; text-transform:uppercase; color:#C9A84C; white-space:nowrap;">
+        Download <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </span>
+    </a>
+    <a href="2516-one-pagers.pdf" download
+       style="display:flex; align-items:center; justify-content:space-between; gap:1.5rem;
+              background: rgba(201,168,76,0.06); border: 1px solid rgba(201,168,76,0.2);
+              border-radius:2px; padding:1.1rem 1.6rem; text-decoration:none;
+              transition: background 0.2s, border-color 0.2s;">
+      <div style="display:flex; align-items:center; gap:1rem;">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5" style="flex-shrink:0;">
+          <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/>
+          <line x1="12" y1="18" x2="12" y2="12"/>
+          <polyline points="9 15 12 18 15 15"/>
+        </svg>
+        <div>
+          <div style="font-family:'Cormorant Garamond',serif; font-size:1.1rem; font-weight:500; color:#ffffff; line-height:1.2;">2516 Technologies &mdash; Service One-Pagers</div>
+          <div style="font-size:0.76rem; color:rgba(255,255,255,0.38); margin-top:3px; font-weight:300;">Data Infrastructure Modernization &middot; AI Readiness &middot; Compliance &amp; Audit Readiness &middot; Analytics Strategy</div>
+        </div>
+      </div>
+      <span style="display:inline-flex; align-items:center; gap:5px; font-size:0.75rem; font-weight:500; letter-spacing:0.06em; text-transform:uppercase; color:#C9A84C; white-space:nowrap;">
+        Download <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </span>
+    </a>
+    </div>
+  </div>
+
+  <main class="blog-section">
+    <div class="section-label" data-source="articles-label">Articles &amp; Essays</div>
+    <div class="articles-grid" id="articles-grid">
+
+      <!-- FEATURED: AI is Jazz (Substack) -->
+      <a href="https://2516technologies.substack.com" target="_blank" rel="noopener"
+         class="article-card featured" data-source="substack">
+        <div class="featured-accent"></div>
+        <div style="display:flex; flex-direction:column; flex:1;">
+          <div class="card-top">
+            <span class="featured-label">Latest</span>
+            <div class="card-meta">
+              <span class="source-badge substack">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z"/></svg>
+                Substack
+              </span>
+              <span class="card-date">May 2026</span>
+            </div>
+            <h2 class="card-title">AI is Jazz</h2>
+            <p class="card-excerpt">Data management evolved like rock and roll — structured, formulaic, predictable. AI evolved like jazz. Most people don't get it. Some people hate it. But to play jazz well, you have to understand the fundamentals. Otherwise it's just noise.</p>
+          </div>
+          <div class="card-bottom">
+            <span class="read-link">
+              Read on Substack
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </span>
+            <span class="card-tag">Decision Intelligence</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- SecureCHEK AI feature -->
+      <a href="https://www.securechek.ai/blogs/future-proof-life-science-commercial-data" target="_blank" rel="noopener"
+         class="article-card" data-source="external">
+        <div class="card-top">
+          <div class="card-meta">
+            <span class="source-badge external">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+              SecureCHEK AI
+            </span>
+            <span class="card-date">May 2026</span>
+          </div>
+          <h2 class="card-title">Future-Proof Your Life Science Commercial Data Before Launch</h2>
+          <p class="card-excerpt">Bad data strategy doesn't only create messy dashboards. It limits what the business can build, automate, govern, and trust later. A conversation on what pre-commercial pharma teams get wrong — and how to pressure-test the foundation while decisions are still flexible.</p>
+        </div>
+        <div class="card-bottom">
+          <span class="read-link">
+            Read Article
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </span>
+          <span class="card-tag">Life Sciences</span>
+        </div>
+      </a>
+
+
+
+      <a href="https://www.linkedin.com/pulse/how-build-email-agent-classifies-summarizes-routes-step-mark-henning-jpsjf" target="_blank" rel="noopener" class="article-card" data-source="linkedin">
+        <img class="card-image" src="article_images/emailagent.png" alt="" loading="lazy">
+        <div class="card-top">
+          <div class="card-meta">
+            <span class="source-badge linkedin"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg> LinkedIn</span>
+            <span class="card-date">May 4, 2026</span>
+          </div>
+          <h2 class="card-title">How to Build an Email Agent That Classifies, Summarizes &amp; Routes — Step by Step</h2>
+          <p class="card-excerpt">One of the most common early AI agent use cases isn't flashy — it's email. Classify, summarize, route. It sounds simple. The implementation has more moving parts than most expect. Here's exactly how to build it: trigger, classify, extract, summarize, deliver.</p>
+        </div>
+        <div class="card-bottom">
+          <span class="read-link">Read on LinkedIn <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+          <span class="card-tag">AI / Automation</span>
+        </div>
+      </a>
+
+      <a href="https://www.linkedin.com/pulse/die-hard-ai-mark-henning-kll1e" target="_blank" rel="noopener" class="article-card" data-source="linkedin">
+        <img class="card-image" src="article_images/diehard.png" alt="" loading="lazy">
+        <div class="card-top">
+          <div class="card-meta">
+            <span class="source-badge linkedin"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg> LinkedIn</span>
+            <span class="card-date">Apr 28, 2026</span>
+          </div>
+          <h2 class="card-title">Die Hard AI</h2>
+          <p class="card-excerpt">Hans Gruber's plan was precise. McClane's intervention produced a dozen bodies and millions in damage. Nobody did the math. The AI hero narrative creates a social cost for skepticism. The technology stops being assessed and starts being defended. In Nakatomi Plaza it cost lives. In AI it's costing something harder to count.</p>
+        </div>
+        <div class="card-bottom">
+          <span class="read-link">Read on LinkedIn <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+          <span class="card-tag">AI</span>
+        </div>
+      </a>
+
+      <a href="https://www.linkedin.com/pulse/why-your-claude-cowork-sessions-get-more-expensive-over-mark-henning-ku3be" target="_blank" rel="noopener" class="article-card" data-source="linkedin">
+        <img class="card-image" src="article_images/cowork.png" alt="" loading="lazy">
+        <div class="card-top">
+          <div class="card-meta">
+            <span class="source-badge linkedin"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg> LinkedIn</span>
+            <span class="card-date">Apr 22, 2026</span>
+          </div>
+          <h2 class="card-title">Why Your Claude Cowork Sessions Get More Expensive Over Time</h2>
+          <p class="card-excerpt">Every time you send a message, Claude re-reads the entire conversation from the beginning. A 30-message session costs significantly more at turn 30 than at turn 5. Context rot is real — a bloated session doesn't just cost more, it produces worse results.</p>
+        </div>
+        <div class="card-bottom">
+          <span class="read-link">Read on LinkedIn <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+          <span class="card-tag">AI Economics</span>
+        </div>
+      </a>
+
+      <a href="https://www.linkedin.com/pulse/everything-i-need-know-ai-economics-learned-from-sopranos-henning-wvwxe" target="_blank" rel="noopener" class="article-card" data-source="linkedin">
+        <img class="card-image" src="article_images/sopranos.png" alt="" loading="lazy">
+        <div class="card-top">
+          <div class="card-meta">
+            <span class="source-badge linkedin"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg> LinkedIn</span>
+            <span class="card-date">Apr 16, 2026</span>
+          </div>
+          <h2 class="card-title">Everything I Need to Know About AI Economics I Learned from The Sopranos</h2>
+          <p class="card-excerpt">You're only as good as your last envelope. When we automate out a layer of the organization, the work doesn't disappear — it migrates up to the most expensive people. The delegation layer we eliminated was load bearing. Christopher didn't need AI. He needed a project manager.</p>
+        </div>
+        <div class="card-bottom">
+          <span class="read-link">Read on LinkedIn <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+          <span class="card-tag">AI Economics</span>
+        </div>
+      </a>
+
+      <a href="https://www.linkedin.com/pulse/ai-welcome-back-humanity-mark-henning-y8sne" target="_blank" rel="noopener" class="article-card" data-source="linkedin">
+        <img class="card-image" src="article_images/humanity.png" alt="" loading="lazy">
+        <div class="card-top">
+          <div class="card-meta">
+            <span class="source-badge linkedin"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg> LinkedIn</span>
+            <span class="card-date">Apr 15, 2026</span>
+          </div>
+          <h2 class="card-title">AI: Welcome Back, Humanity</h2>
+          <p class="card-excerpt">Coding saved me after a PTSD diagnosis — a place where the noise of the world couldn't reach. But medicine has a dosage. AI didn't take anything from coders. It just removed the hiding place. And for a lot of us, that's exactly what we needed.</p>
+        </div>
+        <div class="card-bottom">
+          <span class="read-link">Read on LinkedIn <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+          <span class="card-tag">AI &amp; Society</span>
+        </div>
+      </a>
+
+      <a href="https://www.linkedin.com/pulse/every-hand-worth-shaking-mark-henning-7kkie" target="_blank" rel="noopener" class="article-card" data-source="linkedin">
+        <img class="card-image" src="article_images/handshake.png" alt="" loading="lazy">
+        <div class="card-top">
+          <div class="card-meta">
+            <span class="source-badge linkedin"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg> LinkedIn</span>
+            <span class="card-date">Apr 14, 2026</span>
+          </div>
+          <h2 class="card-title">Every Hand Worth Shaking</h2>
+          <p class="card-excerpt">At an AI conference in San Francisco, every vendor wanted the pharma meeting. Most had no idea what they were actually being asked to do. The ones who lead with buzzwords tell you they haven't done the work. The pitch is the audition. Most are failing it before they open their mouths.</p>
+        </div>
+        <div class="card-bottom">
+          <span class="read-link">Read on LinkedIn <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+          <span class="card-tag">Business</span>
+        </div>
+      </a>
+
+      <a href="https://www.linkedin.com/pulse/case-waiting-mark-henning-hzkve" target="_blank" rel="noopener" class="article-card" data-source="linkedin">
+        <img class="card-image" src="article_images/waiting.png" alt="" loading="lazy">
+        <div class="card-top">
+          <div class="card-meta">
+            <span class="source-badge linkedin"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg> LinkedIn</span>
+            <span class="card-date">Apr 13, 2026</span>
+          </div>
+          <h2 class="card-title">The Case for Waiting</h2>
+          <p class="card-excerpt">In pharma, if you're not first you're last. Except in AI, where first might mean you pay for everyone else's mistakes. There are no established best practices for AI in regulated industries. The AI companies knocking on your door need this engagement more than you do.</p>
+        </div>
+        <div class="card-bottom">
+          <span class="read-link">Read on LinkedIn <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+          <span class="card-tag">Strategy</span>
+        </div>
+      </a>
+
+      <a href="https://www.linkedin.com/pulse/vibe-coding-isnt-risk-shipping-mark-henning-8uz6e" target="_blank" rel="noopener" class="article-card" data-source="linkedin">
+        <div class="card-top">
+          <div class="card-meta">
+            <span class="source-badge linkedin"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg> LinkedIn</span>
+            <span class="card-date">Apr 10, 2026</span>
+          </div>
+          <h2 class="card-title">Vibe Coding Isn&#39;t the Risk. Shipping Is.</h2>
+          <p class="card-excerpt">Vibe coding is like a good first date. It looks great, it works, and it'll tell you it's ready for production. It's not. Flat JSON files, no rate limiting, no auth isolation. Don't walk it down the aisle before you know what you're dealing with.</p>
+        </div>
+        <div class="card-bottom">
+          <span class="read-link">Read on LinkedIn <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+          <span class="card-tag">Engineering</span>
+        </div>
+      </a>
+
+      <a href="https://www.linkedin.com/pulse/bottleneck-isnt-building-anymore-its-deciding-mark-henning-blrne" target="_blank" rel="noopener" class="article-card" data-source="linkedin">
+        <div class="card-top">
+          <div class="card-meta">
+            <span class="source-badge linkedin"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg> LinkedIn</span>
+            <span class="card-date">Apr 9, 2026</span>
+          </div>
+          <h2 class="card-title">The Bottleneck Isn&#39;t Building Anymore. It&#39;s Deciding.</h2>
+          <p class="card-excerpt">For most of product development history, the hardest part wasn't ideas — it was validation. AI lowers the cost of being wrong. You can now stress-test an idea without assembling a full team. The bottleneck was never building. It was always deciding.</p>
+        </div>
+        <div class="card-bottom">
+          <span class="read-link">Read on LinkedIn <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+          <span class="card-tag">Decision Intelligence</span>
+        </div>
+      </a>
+
+      <a href="https://www.linkedin.com/pulse/what-happens-when-scarcity-longer-driver-economy-mark-henning-0z4ee" target="_blank" rel="noopener" class="article-card" data-source="linkedin">
+        <div class="card-top">
+          <div class="card-meta">
+            <span class="source-badge linkedin"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg> LinkedIn</span>
+            <span class="card-date">Apr 8, 2026</span>
+          </div>
+          <h2 class="card-title">What Happens When Scarcity Is No Longer the Driver of the Economy?</h2>
+          <p class="card-excerpt">Economics is built around scarcity. AI is introducing artificial abundance in domains previously defined by natural scarcity. When the floor of competence rises across every knowledge domain simultaneously, value shifts toward something that can't be replicated at scale: judgment.</p>
+        </div>
+        <div class="card-bottom">
+          <span class="read-link">Read on LinkedIn <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+          <span class="card-tag">Economics</span>
+        </div>
+      </a>
+
+      <a href="https://www.linkedin.com/pulse/solo-economy-introducing-c2c-mark-henning-tmfje" target="_blank" rel="noopener" class="article-card" data-source="linkedin">
+        <div class="card-top">
+          <div class="card-meta">
+            <span class="source-badge linkedin"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg> LinkedIn</span>
+            <span class="card-date">Apr 7, 2026</span>
+          </div>
+          <h2 class="card-title">The Solo Economy: Introducing C2C</h2>
+          <p class="card-excerpt">AI is removing the constraints that defined who could create. Skill gaps narrow. Time becomes less binding. Scale no longer requires capital. The question is no longer what company you work for. It's what you've built that works without you.</p>
+        </div>
+        <div class="card-bottom">
+          <span class="read-link">Read on LinkedIn <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+          <span class="card-tag">Future of Work</span>
+        </div>
+      </a>
+
+      <a href="https://www.linkedin.com/pulse/go-home-sql-where-clauses-youre-drunk-mark-henning-cjo2e" target="_blank" rel="noopener" class="article-card" data-source="linkedin">
+        <img class="card-image" src="article_images/sql.png" alt="" loading="lazy">
+        <div class="card-top">
+          <div class="card-meta">
+            <span class="source-badge linkedin"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg> LinkedIn</span>
+            <span class="card-date">Apr 6, 2026</span>
+          </div>
+          <h2 class="card-title">Go Home, SQL WHERE Clauses. You&#39;re Drunk.</h2>
+          <p class="card-excerpt">15+ years of SQL and the first instinct never changes: add a WHERE clause. It's fast, it works, and it's technical debt with good syntax. One well-designed lookup table fixes what a hundred WHERE clauses can't — and the next developer will actually understand your work.</p>
+        </div>
+        <div class="card-bottom">
+          <span class="read-link">Read on LinkedIn <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+          <span class="card-tag">Data Engineering</span>
+        </div>
+      </a>
+
+      <a href="https://www.linkedin.com/pulse/craftsman-machine-mark-henning-talhe" target="_blank" rel="noopener" class="article-card" data-source="linkedin">
+        <img class="card-image" src="article_images/craftsman.png" alt="" loading="lazy">
+        <div class="card-top">
+          <div class="card-meta">
+            <span class="source-badge linkedin"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg> LinkedIn</span>
+            <span class="card-date">Apr 3, 2026</span>
+          </div>
+          <h2 class="card-title">The Craftsman &amp; the Machine</h2>
+          <p class="card-excerpt">Coders are like craftsmen — they insert their personality into their work. AI hasn't changed that. What it changed is how the craft is delivered. The blacksmith who picked up the power tool became more valuable than ever. The one who panicked was replaced.</p>
+        </div>
+        <div class="card-bottom">
+          <span class="read-link">Read on LinkedIn <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+          <span class="card-tag">AI &amp; Work</span>
+        </div>
+      </a>
+
+    </div><!-- /articles-grid -->
+
+    <!-- LINKEDIN POSTS SECTION -->
+    <div class="section-label" data-source="linkedin" style="margin-top:3rem;">LinkedIn Posts</div>
+    <div class="posts-grid" id="posts-grid">
+
+
+      <div class="post-card" data-source="linkedin">
+        <div class="post-card-header">
+          <span class="source-badge linkedin"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg> LinkedIn</span>
+          <span class="card-date">Apr 2026</span>
+        </div>
+        <iframe class="post-embed" src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7452078800315699200?collapsed=1" height="538" frameborder="0" allowfullscreen="" title="Solving the Cascading Variable Loop in Astrato"></iframe>
+      </div>
+
+      <div class="post-card" data-source="linkedin">
+        <div class="post-card-header">
+          <span class="source-badge linkedin"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg> LinkedIn</span>
+          <span class="card-date">Apr 2026</span>
+        </div>
+        <div style="padding: 1.4rem 1.6rem;">
+          <p style="font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: rgba(255,255,255,0.85); line-height: 1.65; margin-bottom: 1rem;">We started 2516 Technologies because we kept seeing the same problem. Pharma companies. Defense contractors. Financial institutions. All sitting on years of valuable data — and none of it ready for what AI actually requires.</p>
+          <p style="font-size: 0.85rem; color: rgba(255,255,255,0.45); line-height: 1.6; margin-bottom: 1.2rem;">The models aren&#39;t the hard part. The foundation is. That&#39;s what we do.</p>
+          <a href="https://www.linkedin.com/company/2516-technologies" target="_blank" rel="noopener"
+             style="font-size: 0.78rem; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; color: var(--gold); text-decoration: none; display: inline-flex; align-items: center; gap: 5px;">
+            Follow on LinkedIn <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="post-card" data-source="linkedin">
+        <div class="post-card-header">
+          <span class="source-badge linkedin"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg> LinkedIn</span>
+          <span class="card-date">May 21, 2026</span>
+        </div>
+        <iframe class="post-embed" src="https://www.linkedin.com/embed/feed/update/urn:li:share:7463255689281593345?collapsed=1" height="459" frameborder="0" allowfullscreen="" title="LinkedIn post"></iframe>
+      </div>
+
+      <div class="post-card" data-source="linkedin">
+        <div class="post-card-header">
+          <span class="source-badge linkedin"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg> LinkedIn</span>
+          <span class="card-date">May 20, 2026</span>
+        </div>
+        <iframe class="post-embed" src="https://www.linkedin.com/embed/feed/update/urn:li:share:7462604502421057537?collapsed=1" height="459" frameborder="0" allowfullscreen="" title="LinkedIn post"></iframe>
+      </div>
+
+      <div class="post-card" data-source="linkedin">
+        <div class="post-card-header">
+          <span class="source-badge linkedin"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg> LinkedIn</span>
+          <span class="card-date">May 7, 2026</span>
+        </div>
+        <iframe class="post-embed" src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7457083883075895296?collapsed=1" height="611" frameborder="0" allowfullscreen="" title="LinkedIn post"></iframe>
+      </div>
+
+      <div class="post-card" data-source="linkedin">
+        <div class="post-card-header">
+          <span class="source-badge linkedin"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg> LinkedIn</span>
+          <span class="card-date">May 7, 2026</span>
+        </div>
+        <iframe class="post-embed" src="https://www.linkedin.com/embed/feed/update/urn:li:share:7457500942171828224?collapsed=1" height="459" frameborder="0" allowfullscreen="" title="LinkedIn post"></iframe>
+      </div>
+
+    </div><!-- /posts-grid -->
+  <!-- GUEST CONTRIBUTORS COMING SOON -->
+  <div class="coming-soon" id="coming-soon-guest">
+    <div class="coming-soon-inner">
+      <div class="coming-soon-badge">Coming Soon</div>
+      <h2>Voices worth<br><em>listening to</em></h2>
+      <p>We&#39;re curating a set of guest contributors — practitioners, operators, and domain experts who think carefully about data, AI, and the decisions that matter in regulated industries.</p>
+      <div class="coming-soon-divider">
+        <div class="coming-soon-bars">
+          <span></span><span></span><span></span><span></span>
+        </div>
+      </div>
+      <a href="mailto:mark@2516technologies.com?subject=Guest Contributor Inquiry" class="coming-soon-notify">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></svg>
+        Interested in contributing?
+      </a>
+    </div>
+  </div>
+
+
+  </main>
+
+  <script>
+    // Hamburger
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      mobileMenu.classList.toggle('open');
+    });
+
+    // Filter
+    const guestScreen = document.getElementById('coming-soon-guest');
+
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.dataset.filter;
+        const cards = document.querySelectorAll('[data-source]');
+
+        if (filter === 'guest') {
+          cards.forEach(el => el.classList.add('hidden'));
+          guestScreen.style.display = 'block';
+          return;
+        }
+
+        guestScreen.style.display = 'none';
+
+        cards.forEach(el => {
+          const src = el.dataset.source;
+
+          // Articles label: show on 'all', 'substack', 'linkedin', 'external'
+          if (src === 'articles-label') {
+            el.classList.toggle('hidden', !['all','substack','linkedin','external'].includes(filter));
+            return;
+          }
+          // LinkedIn Posts label: show on 'all' and 'linkedin' only
+          if (src === 'linkedin' && el.classList.contains('section-label')) {
+            el.classList.toggle('hidden', !['all','linkedin'].includes(filter));
+            return;
+          }
+
+          // Everything else: normal filter
+          el.classList.toggle('hidden', filter !== 'all' && src !== filter);
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>
