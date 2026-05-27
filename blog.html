@@ -7,7 +7,19 @@
   <meta name="description" content="Perspectives on Decision Intelligence, data strategy, and the future of AI in regulated industries." />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
-    :root{--bg:#0A1628;--bg-card:#0F2144;--bg-card2:#0D1C3A;--accent:#4A7FFF;--accent-gold:#C9A84C;--text:#E8EEF8;--text-muted:#8A9BBC;--text-dim:#4A5A78;--border:rgba(74,127,255,0.12);--border-mid:rgba(74,127,255,0.26);--white:#FFFFFF}
+    :root {
+      --navy: #1e3a8a;
+      --blue: #3b82f6;
+      --gold: #C9A84C;
+      --gold-light: #e8c97a;
+      --dark: #0f1a2e;
+      --darker: #080f1c;
+      --text: #1a2540;
+      --muted: #6b7a99;
+      --border: #e2e8f0;
+      --bg: #fafaf8;
+      --white: #ffffff;
+    }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -21,41 +33,120 @@
       line-height: 1.6;
     }
 
+    /* NAV */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      background: var(--darker);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
 
-    /* NAV — matches index.html */
-    .nav{position:fixed;top:0;left:0;right:0;z-index:200;display:grid;grid-template-columns:auto 1fr auto;align-items:center;padding:1.1rem 3.5rem;background:rgba(10,22,40,0.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
-    .nav-brand{display:flex;align-items:center;gap:.9rem;text-decoration:none}
-    .nav-wordmark{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:400;letter-spacing:.18em;text-transform:uppercase;color:var(--text)}
-    .nav-links{display:flex;gap:0;list-style:none;justify-content:center}
-    .nav-links a{display:block;padding:.45rem 1rem;font-size:.76rem;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);text-decoration:none;transition:color .2s}
-    .nav-links a:hover{color:var(--text)} .nav-links a.active{color:var(--accent-gold)}
-    .nav-cta{background:var(--accent-gold);color:#0A1628;padding:.58rem 1.35rem;border-radius:3px;font-size:.74rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;transition:opacity .2s,transform .15s;white-space:nowrap}
-    .nav-cta:hover{opacity:.84;transform:translateY(-1px)}
-    .hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:8px}
-    .hamburger-line{width:22px;height:2px;background:var(--text);border-radius:2px;transition:all 0.3s}
-    .hamburger.active .hamburger-line:nth-child(1){transform:rotate(45deg) translate(7px,7px)}
-    .hamburger.active .hamburger-line:nth-child(2){opacity:0}
-    .hamburger.active .hamburger-line:nth-child(3){transform:rotate(-45deg) translate(7px,-7px)}
-    .mobile-menu{display:none;position:fixed;top:60px;left:0;right:0;background:rgba(10,22,40,0.98);border-bottom:1px solid var(--border);padding:1.5rem;flex-direction:column;gap:0;z-index:199}
-    .mobile-menu.open{display:flex}
-    .mobile-menu a{display:block;padding:0.9rem 0;font-size:0.82rem;font-weight:400;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);text-decoration:none;border-bottom:1px solid var(--border);transition:color .2s}
-    .mobile-menu a:last-child{border-bottom:none}
-    .mobile-menu a:hover{color:var(--text)}
-    .mobile-menu a.active{color:var(--accent-gold)}
-    .mobile-menu .nav-cta{background:var(--accent-gold);color:#0A1628;padding:0.7rem 1.2rem;border-radius:3px;text-align:center;margin-top:0.8rem;font-weight:600;border-bottom:none}
-    @media(max-width:768px){.hamburger{display:flex}.nav-links{display:none}.nav{display:flex;justify-content:space-between;padding:1rem 1.5rem}}
-    /* Jazz bars (small nav version) */
-    .jazz-bars{display:flex;align-items:flex-end;gap:3px;height:28px}
-    .bar{width:5px;border-radius:2px 2px 0 0;transform-origin:bottom}
-    .bar1{height:16px;background:#1e3a8a;animation:b1 1.8s ease-in-out infinite}
-    .bar2{height:28px;background:#3b82f6;animation:b2 1.8s ease-in-out infinite .2s}
-    .bar3{height:20px;background:#1e3a8a;animation:b3 1.8s ease-in-out infinite .4s}
-    .bar4{height:24px;background:#3b82f6;animation:b4 1.8s ease-in-out infinite .1s}
-    @keyframes b1{0%,100%{height:16px}50%{height:9px}}
-    @keyframes b2{0%,100%{height:28px}50%{height:14px}}
-    @keyframes b3{0%,100%{height:20px}50%{height:28px}}
-    @keyframes b4{0%,100%{height:24px}50%{height:11px}}
-        /* HERO */
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .jazz-bars {
+      display: flex;
+      gap: 3px;
+      align-items: flex-end;
+      height: 22px;
+    }
+
+    .jazz-bars span {
+      display: block;
+      width: 4px;
+      border-radius: 2px;
+      background: var(--white);
+    }
+    .jazz-bars span:nth-child(1) { height: 10px; }
+    .jazz-bars span:nth-child(2) { height: 18px; background: var(--blue); }
+    .jazz-bars span:nth-child(3) { height: 14px; }
+    .jazz-bars span:nth-child(4) { height: 22px; background: var(--blue); }
+
+    .nav-wordmark {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: var(--white);
+      letter-spacing: 0.02em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.85rem;
+      font-weight: 400;
+      color: rgba(255,255,255,0.55);
+      text-decoration: none;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active { color: var(--white); }
+
+
+    /* hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--white);
+      border-radius: 2px;
+      transition: transform 0.3s, opacity 0.3s;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 64px;
+      left: 0; right: 0;
+      background: var(--darker);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      z-index: 199;
+      padding: 1.5rem 2rem;
+      flex-direction: column;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.65);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 0.85rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      transition: color 0.2s;
+    }
+    .mobile-menu a:last-child { border-bottom: none; }
+    .mobile-menu a:hover, .mobile-menu a.active { color: var(--white); }
+
+    /* HERO */
     .page-hero {
       background: var(--dark);
       padding: 5rem 2rem 4rem;
@@ -558,39 +649,33 @@
 </head>
 <body>
 
-<nav class="nav">
-  <a href="index.html" class="nav-brand">
-    <div class="jazz-bars">
-      <div class="bar bar1"></div>
-      <div class="bar bar2"></div>
-      <div class="bar bar3"></div>
-      <div class="bar bar4"></div>
-    </div>
-    <span class="nav-wordmark">2516 Technologies</span>
-  </a>
-  <ul class="nav-links">
-    <li><a href="index.html#gain">What You Gain</a></li>
-    <li><a href="data-health-check.html">Data Health Check</a></li>
-    <li><a href="pharma.html">Pre-Commercial Pharma</a></li>
-    <li><a href="about.html">About</a></li>
-    <li><a href="blog.html" class="active">Blog</a></li>
-    <li><a href="contact.html">Contact</a></li>
-  </ul>
-  <button class="hamburger" id="hamburger" aria-label="Toggle menu">
-    <span class="hamburger-line"></span>
-    <span class="hamburger-line"></span>
-    <span class="hamburger-line"></span>
-  </button>
-</nav>
-<div class="mobile-menu" id="mobile-menu">
-  <a href="index.html#gain">What You Gain</a>
-  <a href="data-health-check.html">Data Health Check</a>
-  <a href="pharma.html">Pre-Commercial Pharma</a>
-  <a href="about.html">About</a>
-  <a href="blog.html" class="active">Blog</a>
-  <a href="contact.html">Contact</a>
-  <a href="contact.html" class="nav-cta">Book a Call</a>
-</div>
+  <!-- NAV -->
+  <nav>
+    <a href="index.html" class="nav-logo">
+      <div class="jazz-bars">
+        <span></span><span></span><span></span><span></span>
+      </div>
+      <span class="nav-wordmark">2516 Technologies</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html#gain">What You Gain</a></li>
+      <li><a href="data-health-check.html">Data Health Check</a></li>
+      <li><a href="pharma.html">Pre-Commercial Pharma</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="blog.html" class="active">Writing</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+  </nav>
+
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="index.html#gain">What You Gain</a>
+    <a href="data-health-check.html">Data Health Check</a>
+    <a href="pharma.html">Pre-Commercial Pharma</a>
+    <a href="about.html">About</a>
+    <a href="blog.html" class="active">Writing</a>
+    <a href="contact.html">Contact</a>
+  </div>
 
   <!-- HERO -->
   <section class="page-hero">
@@ -1106,12 +1191,10 @@
     // Hamburger
     const hamburger = document.getElementById('hamburger');
     const mobileMenu = document.getElementById('mobile-menu');
-    if (hamburger && mobileMenu) {
-      hamburger.addEventListener('click', () => {
-        hamburger.classList.toggle('active');
-        mobileMenu.classList.toggle('open');
-      });
-    }
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      mobileMenu.classList.toggle('open');
+    });
 
     // Filter
     const guestScreen = document.getElementById('coming-soon-guest');
