@@ -428,6 +428,44 @@
       .filter-select-wrap { display: none; }
     }
 
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 1.8rem;
+      margin-bottom: 3rem;
+    }
+    .project-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 2px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+    }
+    .project-card:hover {
+      transform: translateY(-3px);
+      background: rgba(255,255,255,0.07);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.4);
+    }
+    .project-screenshot {
+      height: 200px;
+      overflow: hidden;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .project-body {
+      padding: 1.6rem 1.6rem 0;
+    }
+    .project-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+    }
+
     /* HIDDEN for filter */
     .article-card.hidden { display: none; }
 
@@ -637,6 +675,7 @@
     <button class="filter-btn" data-filter="linkedin">LinkedIn</button>
     <button class="filter-btn" data-filter="external">Featured In</button>
     <button class="filter-btn" data-filter="download">Downloads</button>
+    <button class="filter-btn" data-filter="project">Projects</button>
     <button class="filter-btn" data-filter="guest">Guest Contributors</button>
   </div>
 
@@ -650,6 +689,7 @@
       <option value="linkedin">LinkedIn</option>
       <option value="external">Featured In</option>
       <option value="download">Downloads</option>
+      <option value="project">Projects</option>
       <option value="guest">Guest Contributors</option>
     </select>
   </div>
@@ -1125,6 +1165,35 @@
       </div>
 
     </div><!-- /posts-grid -->
+
+  <!-- PROJECTS SECTION -->
+  <div class="section-label" data-source="project" style="margin-top:3rem;">Built by 2516</div>
+  <div class="projects-grid" data-source="project">
+    <a href="swatchd.html" target="_blank" rel="noopener" class="project-card">
+      <div class="project-screenshot">
+        <img src="article_images/swatchd.png" alt="Swatchd" style="width:100%;height:100%;object-fit:cover;border-radius:2px 2px 0 0;">
+      </div>
+      <div class="project-body">
+        <div class="project-meta">
+          <span class="source-badge" style="background:rgba(201,168,76,0.12);color:var(--gold);font-size:0.68rem;font-weight:500;letter-spacing:0.07em;text-transform:uppercase;padding:3px 10px;border-radius:2px;">Built with Claude API</span>
+          <span class="card-date">2026</span>
+        </div>
+        <h2 class="card-title" style="font-size:1.6rem;margin:0.75rem 0 0.5rem;">Swatchd</h2>
+        <p style="font-size:0.85rem;color:rgba(255,255,255,0.5);font-style:italic;margin-bottom:0.75rem;">A color tool built for colorblind developers — in 20 minutes, on a phone.</p>
+        <p class="card-excerpt">Swatchd helps colorblind coders identify colors, preview how they appear across different types of colorblindness, and generate complementary palettes they can actually use. Built with Claude. Free, no signup, works on desktop and mobile.</p>
+        <div style="margin-top:1.2rem;display:flex;flex-wrap:wrap;gap:0.5rem;">
+          <span style="font-size:0.72rem;padding:3px 10px;border-radius:2px;background:rgba(59,130,246,0.15);color:#60a5fa;font-weight:500;">Claude API</span>
+          <span style="font-size:0.72rem;padding:3px 10px;border-radius:2px;background:rgba(59,130,246,0.15);color:#60a5fa;font-weight:500;">JavaScript</span>
+          <span style="font-size:0.72rem;padding:3px 10px;border-radius:2px;background:rgba(59,130,246,0.15);color:#60a5fa;font-weight:500;">Mobile-first</span>
+        </div>
+      </div>
+      <div class="card-bottom" style="border-top:1px solid rgba(255,255,255,0.08);padding:1.2rem 1.6rem;display:flex;align-items:center;justify-content:space-between;">
+        <span class="read-link">View Project <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+        <span class="card-tag">Free · No Signup</span>
+      </div>
+    </a>
+  </div>
+
   <!-- GUEST CONTRIBUTORS COMING SOON -->
   <div class="coming-soon" id="coming-soon-guest">
     <div class="coming-soon-inner">
