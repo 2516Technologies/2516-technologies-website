@@ -643,7 +643,7 @@
   <!-- ARTICLES -->
 
   <!-- SUBSTACK CTA TOP -->
-  <div class="substack-cta" style="max-width:1140px; margin: 2rem auto 0; padding-left:2rem; padding-right:2rem;">
+  <div data-source="substack-cta" style="max-width:1140px; margin: 2rem auto 0; padding-left:2rem; padding-right:2rem;">
     <div class="substack-cta-text">
       <h3>Follow along on Substack</h3>
       <p>New pieces on Decision Intelligence, AI strategy, and the data discipline that separates winners from noise.</p>
@@ -1199,6 +1199,7 @@
         btn.classList.add('active');
         const filter = btn.dataset.filter;
         const cards = document.querySelectorAll('[data-source]');
+        const substackCta = document.querySelector('[data-source="substack-cta"]');
 
         if (filter === 'guest') {
           cards.forEach(el => el.classList.add('hidden'));
@@ -1207,6 +1208,7 @@
         }
 
         guestScreen.style.display = 'none';
+        if (substackCta) substackCta.style.display = filter === 'all' ? '' : 'none';
 
         cards.forEach(el => {
           const src = el.dataset.source;
