@@ -1010,25 +1010,15 @@
  </div>
 
  <div id="s-question" class="screen">
- <div class="screen-inner" id="questionInner">
- <div class="progress-bar">
- <div class="progress-fill" id="progressFill" style="width: 10%;"></div>
- </div>
- <div class="question-header">
- <span class="question-counter" id="questionCounter">Question 1 of 10</span>
- <span class="question-pct" id="questionPct">10%</span>
- </div>
- <span class="question-category" id="questionCategory"></span>
- <h2 class="question-text" id="questionText"></h2>
- <div class="scale-labels">
- <span>Not at all</span>
- <span>Strongly agree</span>
- </div>
- <div class="scale-buttons" id="scaleContainer"></div>
- <div class="question-nav">
- <button class="btn btn-ghost" id="prevBtn" onclick="prevQuestion()" style="visibility: hidden;">&larr; Back</button>
- <button class="btn btn-primary disabled" id="nextBtn" onclick="nextQuestion()">Next &rarr;</button>
- </div>
+ <div class="screen-inner" style="max-width:760px; text-align:left;">
+   <span class="eyebrow" style="text-align:center; display:block;">Data Health Check</span>
+   <h2 style="text-align:center; margin-bottom:8px;">Rate each statement <em>1&ndash;5</em></h2>
+   <p class="muted" style="text-align:center; margin-bottom:48px;">1 = Not at all &nbsp;&middot;&nbsp; 5 = Strongly agree</p>
+   <div id="allQuestionsContainer"></div>
+   <div style="text-align:center; margin-top:48px;">
+     <div class="form-error" id="questionsError" style="margin-bottom:16px;">Please answer all 10 questions before continuing.</div>
+     <button class="btn btn-primary" id="submitAllBtn" onclick="submitAllQuestions()">See My Results &rarr;</button>
+   </div>
  </div>
  </div>
 
@@ -1318,9 +1308,9 @@
  window.SupabaseConnector.trackEvent('form_start', 'Assessment Form');
  }
  
- // Show questions (don't submit yet!)
- currentQuestion = 0;
- renderQuestion();
+ // Show all questions on one page
+ answers = new Array(questions.length).fill(null);
+ renderAllQuestions();
  show('s-question');
  return false;
  }
@@ -1330,65 +1320,72 @@
  return handleAssessmentSubmit(e);
  }
 
- function renderQuestion() {
- var q = questions[currentQuestion];
- var pct = Math.round((currentQuestion + 1) / questions.length * 100);
- document.getElementById('questionCounter').textContent = 'Question ' + (currentQuestion + 1) + ' of ' + questions.length;
- document.getElementById('questionPct').textContent = pct + '%';
- document.getElementById('questionCategory').textContent = q.theme;
- document.getElementById('questionText').textContent = q.text;
- document.getElementById('progressFill').style.width = pct + '%';
-
- var container = document.getElementById('scaleContainer');
- container.innerHTML = '';
- for (var i = 1; i <= 5; i++) {
- var btn = document.createElement('button');
- btn.className = 'scale-btn' + (answers[currentQuestion] === i ? ' selected' : '');
- btn.textContent = i;
- btn.onclick = (function(val) { return function() { selectScale(val); }; })(i);
- container.appendChild(btn);
+ function renderAllQuestions() {
+   var container = document.getElementById('allQuestionsContainer');
+   container.innerHTML = '';
+   var currentTheme = '';
+   questions.forEach(function(q, i) {
+     if (q.theme !== currentTheme) {
+       currentTheme = q.theme;
+       var themeLabel = document.createElement('p');
+       themeLabel.style.cssText = 'font-family:"DM Sans",sans-serif;font-size:11px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin:36px 0 16px;';
+       themeLabel.textContent = q.theme;
+       container.appendChild(themeLabel);
+     }
+     var block = document.createElement('div');
+     block.style.cssText = 'background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:24px 28px;margin-bottom:16px;';
+     block.id = 'qblock-' + i;
+     var label = document.createElement('p');
+     label.style.cssText = 'font-family:"Cormorant Garamond",serif;font-size:clamp(16px,3vw,20px);font-weight:400;line-height:1.45;margin-bottom:20px;color:var(--text);';
+     label.textContent = (i + 1) + '. ' + q.text;
+     block.appendChild(label);
+     var btnRow = document.createElement('div');
+     btnRow.style.cssText = 'display:flex;gap:10px;align-items:center;flex-wrap:wrap;';
+     var scaleWrap = document.createElement('div');
+     scaleWrap.style.cssText = 'display:flex;gap:10px;';
+     for (var v = 1; v <= 5; v++) {
+       var btn = document.createElement('button');
+       btn.className = 'scale-btn' + (answers[i] === v ? ' selected' : '');
+       btn.textContent = v;
+       btn.dataset.qindex = i;
+       btn.dataset.val = v;
+       btn.onclick = (function(qi, val) {
+         return function() { selectAnswerAll(qi, val); };
+       })(i, v);
+       scaleWrap.appendChild(btn);
+     }
+     btnRow.appendChild(scaleWrap);
+     block.appendChild(btnRow);
+     container.appendChild(block);
+   });
  }
 
- document.getElementById('prevBtn').style.visibility = currentQuestion === 0 ? 'hidden' : 'visible';
-
- var nextBtn = document.getElementById('nextBtn');
- if (answers[currentQuestion] !== null) {
- nextBtn.classList.remove('disabled');
- } else {
- nextBtn.classList.add('disabled');
- }
- nextBtn.innerHTML = currentQuestion === questions.length - 1 ? 'See My Results &rarr;' : 'Next &rarr;';
+ function selectAnswerAll(qIndex, val) {
+   answers[qIndex] = val;
+   var block = document.getElementById('qblock-' + qIndex);
+   block.querySelectorAll('.scale-btn').forEach(function(b) {
+     b.classList.toggle('selected', parseInt(b.dataset.val) === val);
+   });
+   block.style.borderColor = 'rgba(201,168,76,0.4)';
  }
 
- function selectScale(val) {
- answers[currentQuestion] = val;
- var btns = document.querySelectorAll('.scale-btn');
- btns.forEach(function(b) {
- b.classList.toggle('selected', parseInt(b.textContent) === val);
- });
- document.getElementById('nextBtn').classList.remove('disabled');
+ function submitAllQuestions() {
+   var unanswered = answers.indexOf(null);
+   if (unanswered !== -1) {
+     document.getElementById('questionsError').classList.add('visible');
+     var firstBlock = document.getElementById('qblock-' + unanswered);
+     if (firstBlock) firstBlock.scrollIntoView({ behavior: 'smooth', block: 'center' });
+     firstBlock.style.borderColor = '#E05555';
+     return;
+   }
+   document.getElementById('questionsError').classList.remove('visible');
+   showResults();
  }
 
- function nextQuestion() {
- if (answers[currentQuestion] === null) return;
- if (currentQuestion < questions.length - 1) {
- currentQuestion++;
- renderQuestion();
- var inner = document.getElementById('questionInner');
- inner.style.animation = 'none';
- inner.offsetHeight;
- inner.style.animation = 'fadeInUp 0.4s ease-out forwards';
- } else {
- showResults();
- }
- }
-
- function prevQuestion() {
- if (currentQuestion > 0) {
- currentQuestion--;
- renderQuestion();
- }
- }
+ // stubs — kept for any legacy references
+ function renderQuestion() {}
+ function nextQuestion() {}
+ function prevQuestion() {}
 
  function showResults() {
  var totalScore = 0;
