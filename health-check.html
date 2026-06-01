@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Health Check — 2516 Technologies</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#0A1628;--bg-card:#0F2144;--bg-card2:#0D1C3A;
+  --accent:#4A7FFF;--gold:#C9A84C;--gold-light:#E4CC7A;
+  --text:#E8EEF8;--muted:#8A9BBC;--dim:#4A5A78;
+  --border:rgba(74,127,255,0.12);--border-mid:rgba(74,127,255,0.26);
+  --red:#E05555;--amber:#D97706;--green:#059669;
+  --red-bg:rgba(224,85,85,0.10);--amber-bg:rgba(217,119,6,0.10);--green-bg:rgba(5,150,105,0.10);
+}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6;}
+a{color:var(--gold);text-decoration:none;}
+
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1rem 2.5rem;background:rgba(10,22,40,0.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);}
+.nav-brand{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:400;letter-spacing:.18em;text-transform:uppercase;color:var(--text);text-decoration:none;}
+.nav-tag{font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);}
+
+/* LAYOUT */
+.main{max-width:820px;margin:0 auto;padding:100px 24px 80px;}
+
+/* HEADER */
+.header{text-align:center;margin-bottom:3rem;}
+.eyebrow{font-size:.7rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:14px;}
+.header h1{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,5vw,48px);font-weight:300;line-height:1.2;margin-bottom:16px;}
+.header h1 em{font-style:italic;color:var(--gold);}
+.header p{font-size:.9rem;color:var(--muted);max-width:500px;margin:0 auto 28px;line-height:1.8;}
+.company-row{display:flex;align-items:center;gap:10px;justify-content:center;flex-wrap:wrap;}
+.company-row label{font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);}
+.company-input{background:var(--bg-card);border:1px solid var(--border-mid);border-radius:4px;padding:8px 14px;font-family:'DM Sans',sans-serif;font-size:.85rem;color:var(--text);width:220px;outline:none;transition:border-color .2s;}
+.company-input:focus{border-color:var(--gold);}
+
+/* TABS */
+.tabs{display:flex;gap:0;border-bottom:1px solid var(--border);margin-bottom:2rem;}
+.tab-btn{font-family:'DM Sans',sans-serif;font-size:.75rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;padding:.75rem 1.5rem;background:none;border:none;border-bottom:2px solid transparent;color:var(--muted);cursor:pointer;transition:all .2s;margin-bottom:-1px;}
+.tab-btn:hover{color:var(--text);}
+.tab-btn.active{color:var(--gold);border-bottom-color:var(--gold);}
+
+/* PHASE */
+.phase{display:none;}
+.phase.active{display:block;}
+
+/* QUESTION CARDS */
+.theme-label{font-size:.65rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin:2rem 0 .75rem;display:block;}
+.theme-label:first-child{margin-top:0;}
+.q-card{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:1.25rem 1.5rem;margin-bottom:10px;transition:border-color .2s;}
+.q-card.answered{border-color:rgba(201,168,76,0.25);}
+.q-row{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;}
+.q-text{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:400;line-height:1.5;flex:1;}
+.q-chip{font-size:.65rem;font-weight:500;letter-spacing:.08em;padding:3px 9px;border-radius:10px;white-space:nowrap;margin-top:3px;flex-shrink:0;}
+.chip-na{background:rgba(138,155,188,0.12);color:var(--muted);}
+.chip-low{background:var(--red-bg);color:var(--red);}
+.chip-mid{background:var(--amber-bg);color:var(--amber);}
+.chip-high{background:var(--green-bg);color:var(--green);}
+.scale-row{display:flex;gap:6px;margin-top:14px;}
+.s-btn{width:40px;height:40px;border-radius:6px;border:1px solid var(--border);background:var(--bg);color:var(--muted);font-family:'DM Sans',sans-serif;font-size:.85rem;font-weight:500;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center;}
+.s-btn:hover{border-color:var(--gold);color:var(--gold);}
+.s-btn.sel-low{background:var(--red-bg);border-color:var(--red);color:var(--red);}
+.s-btn.sel-mid{background:var(--amber-bg);border-color:var(--amber);color:var(--amber);}
+.s-btn.sel-high{background:var(--green-bg);border-color:var(--green);color:var(--green);}
+.scale-hint{display:flex;justify-content:space-between;max-width:216px;margin-top:6px;}
+.scale-hint span{font-size:.65rem;color:var(--dim);}
+
+/* ACTIONS ROW */
+.actions-row{display:flex;justify-content:space-between;align-items:center;margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border);}
+.btn{font-family:'DM Sans',sans-serif;font-size:.75rem;font-weight:500;letter-spacing:.08em;padding:10px 24px;border-radius:4px;cursor:pointer;border:none;transition:all .2s;text-transform:uppercase;}
+.btn-ghost{background:transparent;border:1px solid var(--border-mid);color:var(--muted);}
+.btn-ghost:hover{border-color:var(--muted);color:var(--text);}
+.btn-primary{background:var(--gold);color:#0A1628;}
+.btn-primary:hover{background:var(--gold-light);}
+
+/* RESULTS */
+.metrics-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:2rem;}
+.metric-card{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:1rem;text-align:center;}
+.metric-val{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;line-height:1;}
+.metric-label{font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:6px;}
+.section-title{font-size:.65rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin:2rem 0 .75rem;}
+.result-card{border-radius:8px;border-left:3px solid;padding:1.25rem 1.5rem;margin-bottom:10px;background:var(--bg-card);border-top:1px solid var(--border);border-right:1px solid var(--border);border-bottom:1px solid var(--border);}
+.result-card.rc-low{border-left-color:var(--red);}
+.result-card.rc-mid{border-left-color:var(--amber);}
+.result-card.rc-high{border-left-color:var(--green);}
+.rc-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.rc-theme{font-size:.65rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;}
+.rc-low .rc-theme{color:var(--red);}
+.rc-mid .rc-theme{color:var(--amber);}
+.rc-high .rc-theme{color:var(--green);}
+.rc-score{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--muted);}
+.rc-insight{font-size:.88rem;color:var(--text);line-height:1.65;margin-bottom:12px;}
+.rc-findings{background:rgba(10,22,40,0.5);border-radius:4px;padding:10px 14px;margin-bottom:12px;}
+.rc-findings-label{font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+.rc-finding-item{font-size:.8rem;color:var(--muted);padding:4px 0;border-bottom:1px solid var(--border);line-height:1.5;}
+.rc-finding-item:last-child{border-bottom:none;}
+.rc-finding-item .finding-label{color:var(--text);font-weight:500;}
+.gate-note{font-size:.78rem;color:var(--dim);font-style:italic;margin-top:8px;}
+.stake-row{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px;}
+.stake-pill{font-size:.68rem;padding:3px 9px;border-radius:10px;background:rgba(74,127,255,0.10);color:#7AAAF8;border:1px solid rgba(74,127,255,0.2);}
+
+/* 30/60/90 */
+.plan-intro{font-size:.85rem;color:var(--muted);margin-bottom:1.5rem;line-height:1.7;}
+.plan-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:2rem;}
+.plan-col{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:1.25rem;}
+.plan-period{font-size:.65rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;margin-bottom:4px;}
+.p30 .plan-period{color:var(--red);}
+.p60 .plan-period{color:var(--amber);}
+.p90 .plan-period{color:var(--green);}
+.plan-subtitle{font-size:.72rem;color:var(--dim);margin-bottom:1rem;}
+.plan-item{padding:8px 0;border-bottom:1px solid var(--border);font-size:.82rem;color:var(--text);line-height:1.5;}
+.plan-item:last-child{border-bottom:none;}
+.plan-item .pi-owner{font-size:.72rem;color:var(--muted);display:block;margin-top:3px;}
+.plan-item .pi-gated{font-size:.72rem;color:var(--dim);font-style:italic;display:block;margin-top:3px;}
+.plan-gated-block{background:rgba(201,168,76,0.05);border:1px solid rgba(201,168,76,0.15);border-radius:4px;padding:8px 12px;font-size:.78rem;color:var(--dim);font-style:italic;margin-top:4px;}
+
+/* AUDIT CTA */
+.audit-cta{background:var(--bg-card2);border:1px solid rgba(201,168,76,0.25);border-radius:8px;padding:2rem;margin-top:2rem;text-align:center;}
+.audit-cta .eyebrow{margin-bottom:10px;}
+.audit-cta h2{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:300;margin-bottom:12px;}
+.audit-cta p{font-size:.85rem;color:var(--muted);max-width:480px;margin:0 auto 1.5rem;line-height:1.75;}
+.audit-features{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:1.5rem;}
+.audit-feature{font-size:.72rem;padding:5px 12px;border-radius:10px;background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.18);color:var(--gold);}
+.audit-cta-btn{display:inline-block;background:var(--gold);color:#0A1628;font-family:'DM Sans',sans-serif;font-size:.75rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;padding:12px 32px;border-radius:4px;text-decoration:none;transition:background .2s;}
+.audit-cta-btn:hover{background:var(--gold-light);}
+.audit-divider{width:40px;height:1px;background:rgba(201,168,76,0.25);margin:1.25rem auto;}
+
+/* EMPTY */
+.empty-state{text-align:center;padding:3rem;color:var(--muted);font-size:.9rem;}
+
+/* FOOTER */
+.footer{text-align:center;padding:2rem;border-top:1px solid var(--border);margin-top:3rem;}
+.footer p{font-size:.72rem;color:var(--dim);letter-spacing:.06em;}
+
+/* MOBILE */
+@media(max-width:600px){
+  .nav{padding:.8rem 1.25rem;}
+  .main{padding:80px 16px 60px;}
+  .metrics-row{grid-template-columns:repeat(2,1fr);}
+  .plan-cols{grid-template-columns:1fr;}
+  .tab-btn{padding:.65rem .9rem;font-size:.68rem;}
+  .s-btn{width:48px;height:44px;flex:1;}
+  .scale-row{width:100%;}
+  .audit-cta{padding:1.5rem 1rem;}
+}
+/* DOWNLOAD BUTTON */
+.dl-btn{position:fixed;bottom:24px;right:24px;z-index:200;background:var(--gold);color:#0A1628;font-family:'DM Sans',sans-serif;font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:10px 20px;border-radius:4px;border:none;cursor:pointer;box-shadow:0 4px 20px rgba(0,0,0,0.3);transition:background .2s;}
+.dl-btn:hover{background:var(--gold-light);}
+@media(max-width:600px){.dl-btn{bottom:16px;right:16px;padding:9px 16px;font-size:.68rem;}}
+/* PRINT */
+@media print{
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  body{background:#fff!important;color:#111!important;}
+  .nav,.tabs,.actions-row,.dl-btn,.audit-cta,.footer{display:none!important;}
+  .main{padding:0!important;max-width:100%!important;}
+  .phase{display:block!important;}
+  .print-section{page-break-before:always;}
+  .print-section:first-child{page-break-before:avoid;}
+  .print-header{margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:2px solid #C9A84C;}
+  .print-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:400;color:#0A1628;margin-bottom:2px;}
+  .print-co{font-size:13px;color:#666;letter-spacing:.06em;text-transform:uppercase;}
+  .print-date{font-size:11px;color:#999;margin-top:2px;}
+  .theme-label{color:#C9A84C!important;font-size:9px!important;margin:1.2rem 0 .4rem!important;}
+  .q-card{background:#f8f9fb!important;border:1px solid #dde!important;border-radius:4px!important;padding:.75rem 1rem!important;margin-bottom:6px!important;break-inside:avoid;}
+  .q-card.answered{border-color:#C9A84C!important;}
+  .q-text{font-size:.85rem!important;color:#111!important;}
+  .scale-row,.scale-hint,.s-btn{display:none!important;}
+  .q-print-answer{display:block!important;font-size:.72rem;color:#555;margin-top:5px;}
+  .q-chip{display:inline-block!important;}
+  .chip-low{background:#fde8e8!important;color:#c0392b!important;}
+  .chip-mid{background:#fef3cd!important;color:#856404!important;}
+  .chip-high{background:#d4edda!important;color:#155724!important;}
+  .chip-na{background:#eee!important;color:#999!important;}
+  .metrics-row{grid-template-columns:repeat(4,1fr)!important;}
+  .metric-card{background:#f8f9fb!important;border:1px solid #dde!important;}
+  .metric-val{color:#0A1628!important;font-size:1.6rem!important;}
+  .metric-label{color:#666!important;}
+  .section-title{color:#888!important;}
+  .result-card{background:#f8f9fb!important;border-color:#dde!important;break-inside:avoid;}
+  .result-card.rc-low{border-left-color:#c0392b!important;}
+  .result-card.rc-mid{border-left-color:#856404!important;}
+  .result-card.rc-high{border-left-color:#155724!important;}
+  .rc-low .rc-theme{color:#c0392b!important;}
+  .rc-mid .rc-theme{color:#856404!important;}
+  .rc-high .rc-theme{color:#155724!important;}
+  .rc-score,.rc-insight{color:#222!important;}
+  .rc-findings{background:#eef0f4!important;}
+  .rc-findings-label{color:#555!important;}
+  .rc-finding-item{color:#333!important;border-color:#ccc!important;}
+  .gate-note{color:#888!important;}
+  .stake-pill{background:#e8eef8!important;color:#1a3a7a!important;border-color:#b0c4e8!important;}
+  .plan-cols{grid-template-columns:repeat(3,1fr)!important;}
+  .plan-col{background:#f8f9fb!important;border:1px solid #dde!important;break-inside:avoid;}
+  .p30 .plan-period{color:#c0392b!important;}
+  .p60 .plan-period{color:#856404!important;}
+  .p90 .plan-period{color:#155724!important;}
+  .plan-subtitle,.plan-intro{color:#666!important;}
+  .plan-item{color:#222!important;border-color:#ccc!important;}
+  .pi-owner{color:#555!important;}
+  .pi-gated{color:#aaa!important;}
+  .plan-gated-block{background:#fafafa!important;border-color:#ddd!important;color:#999!important;}
+  .empty-state{display:none!important;}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="https://2516technologies.com" class="nav-brand">2516 Technologies</a>
+  <span class="nav-tag">Data Health Check</span>
+</nav>
+<button class="dl-btn" onclick="printReport()">&#8595; Download Report</button>
+
+<main class="main">
+
+  <div class="header">
+    <span class="eyebrow">Pharma Commercial · Facilitated Assessment</span>
+    <h1>Is Your Data Infrastructure<br><em>Ready to Scale?</em></h1>
+    <p>A structured triage across five dimensions of commercial data readiness. Score each statement 1–5 with your prospect to surface where to focus first.</p>
+    <div class="company-row">
+      <label for="companyInput">Company</label>
+      <input class="company-input" id="companyInput" placeholder="Enter company name..." />
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('assess')">Assessment</button>
+    <button class="tab-btn" onclick="switchTab('results')">Findings</button>
+    <button class="tab-btn" onclick="switchTab('plan')">30/60/90</button>
+  </div>
+
+  <div id="phase-assess" class="phase active"></div>
+  <div id="phase-results" class="phase"></div>
+  <div id="phase-plan" class="phase"></div>
+
+</main>
+
+<footer class="footer">
+  <p>2516 Technologies · Decision Intelligence · 2516technologies.com</p>
+</footer>
+
+<script>
+const THEMES = [
+  {
+    id:'commercial', name:'Commercial Readiness',
+    questions:[
+      'Our leadership team makes key decisions based on current data, not intuition or last quarter\'s report.',
+      'We can clearly connect operational data to revenue, margin, or growth outcomes.'
+    ],
+    signal:{ key:'commercial_signal', text:'Leadership can access real-time data without sending a request to analytics?', noFlag:'Analytics team is a bottleneck for leadership data access — self-service gap identified.' },
+    stakeholders:['Chief Commercial Officer','VP Commercial Operations','Head of Market Access','Medical Director'],
+    insights:{
+      low:'Commercial data is reactive — decisions are lagging indicators. Field teams and medical affairs are likely operating from different versions of the truth, creating material alignment risk ahead of any launch or indication expansion.',
+      mid:'Commercial data infrastructure exists but isn\'t fully operationalized. There\'s a gap between what the data shows and how it influences real-time decisions at the field level.',
+      high:'Strong commercial data posture. The focus shifts to optimization — connecting leading indicators to forward-looking decisions and ensuring field teams have the right data at the right cadence.'
+    },
+    findings:{
+      low:['Commercial reporting stack likely contains redundant or conflicting sources','Field-to-leadership data alignment requires investigation','Decision latency risk identified across commercial workflows'],
+      mid:['CRM and dashboard data layers may not be fully reconciled','KPI ownership across commercial and medical is ambiguous','Ad hoc reporting requests are creating shadow data'],
+      high:['Foundation is strong — audit scope narrows to optimization','Predictive modeling viability should be assessed','Field data cadence and territory-level granularity to be evaluated']
+    },
+    gatedNote:'Full findings — including data source map and field alignment risk score — delivered in audit.'
+  },
+  {
+    id:'datatrust', name:'Data Trust',
+    questions:[
+      'When two people pull the same report, they get the same number.',
+      'We can trace any reported metric back to its source in under an hour.'
+    ],
+    signal:{ key:'datatrust_signal', text:'Data quality questions do not come up during meetings?', noFlag:'Data quality is surfacing in meetings — trust in reported numbers is actively in question.' },
+    stakeholders:['Head of Data & Analytics','VP Regulatory Affairs','Medical Affairs Lead','IT / Data Engineering'],
+    insights:{
+      low:'Single source of truth does not exist. In pharma, inconsistent numbers across regulatory submissions, commercial reports, and medical affairs briefings create audit exposure and erode executive trust in data — often invisibly until a crisis surfaces it.',
+      mid:'Data trust is inconsistent across teams. Core metrics are probably reliable but edge cases — new products, new geographies, ad hoc requests — produce conflicting outputs that no one fully owns.',
+      high:'Strong data trust foundation. The audit scope focuses on governance documentation and lineage capture for regulatory readiness, not operational reliability.'
+    },
+    findings:{
+      low:['Metric definitions are likely undocumented or inconsistent across teams','Data lineage from source to report is untraceable — audit exposure is high','No single governed pipeline for commercial and medical reporting'],
+      mid:['Lineage exists informally but isn\'t documented or enforced','Edge-case reporting produces conflicting outputs','Report metadata (source, refresh date) is missing or inconsistent'],
+      high:['Lineage documentation should be automated into pipeline','Self-service catalog opportunity identified','Audit-readiness of existing lineage to be formally assessed']
+    },
+    gatedNote:'Metric-by-metric trust audit and lineage documentation delivered as part of full engagement.'
+  },
+  {
+    id:'compliance', name:'Compliance & Governance',
+    questions:[
+      'Our data handling practices are audit-ready without emergency preparation.',
+      'We have documented data governance policies that are actively enforced.'
+    ],
+    signal:{ key:'compliance_signal', text:'I can pull a self-service report of who changed data and when?', noFlag:'No self-service audit log — data change history is not accessible without IT involvement.' },
+    stakeholders:['VP Regulatory Affairs','Chief Compliance Officer','Head of Medical Affairs','Legal Counsel'],
+    insights:{
+      low:'Compliance posture is reactive — audits require fire drills. In a regulated pharma environment this is a material risk. Governance policies may exist on paper but are not operationalized in how data actually flows day to day.',
+      mid:'Compliance infrastructure is in place but governance enforcement is inconsistent. The gap between policy and practice is the exposure — particularly in how medical and commercial data are handled under 21 CFR Part 11 or equivalent frameworks.',
+      high:'Audit-ready posture is a competitive advantage in due diligence and regulatory submissions. Audit scope focuses on packaging governance as a transferable, documented asset.'
+    },
+    findings:{
+      low:['Data handling practices are not audit-ready — remediation required before next regulatory cycle','Governance policies exist on paper but enforcement is inconsistent','Access controls and retention policies require formal documentation'],
+      mid:['Regulatory-scope data assets are not clearly separated from commercial use data','Data stewardship is informal — ownership is unclear across domains','Policy-to-practice gap identified — enforcement mechanisms are missing'],
+      high:['Governance framework is strong — documentation packaging opportunity identified','Continuous compliance monitoring should replace point-in-time audits','Due diligence readiness assessment included in full audit scope']
+    },
+    gatedNote:'Full compliance gap report with 21 CFR Part 11 mapping and remediation priority list delivered in audit.'
+  },
+  {
+    id:'techstrategy', name:'Technology Strategy',
+    questions:[
+      'We have a clear view of what tools we use, what they cost, and whether they\'re earning their keep.',
+      'Our data infrastructure could support a new reporting requirement without a major project.'
+    ],
+    signal:{ key:'techstrategy_signal', text:'If my CEO asked about our AI strategy today, I could answer without hesitation?', noFlag:'No defined AI strategy — organization is vulnerable to reactive, poorly-scoped AI investments.' },
+    stakeholders:['CTO / Head of IT','VP Commercial Operations','CFO / Finance Lead','Data Engineering Lead'],
+    insights:{
+      low:'Tech stack is fragmented — likely a mix of point solutions accumulated over product launches with no governing architecture. In pharma this typically manifests as Veeva, an IQVIA or Symphony feed, a BI tool, and several spreadsheets operating as a de facto data warehouse.',
+      mid:'Core infrastructure exists but isn\'t flexible. New requirements — a new indication, a new data vendor, a new regulatory ask — require significant project work rather than configuration.',
+      high:'Technology foundation is strong. Audit scope focuses on rationalization and forward-compatibility — ensuring the stack can absorb AI and ML workloads without a full rearchitecture.'
+    },
+    findings:{
+      low:['No governing architecture — tools were acquired reactively across launches','Vendor cost-per-value analysis has not been performed','New reporting requirements require major project work — no modular flexibility'],
+      mid:['CRM and BI layers may not be extendable without vendor dependency','Contract renewal cycles are not tied to a rationalization framework','Stack has not been evaluated against AI-readiness criteria'],
+      high:['Stack rationalization opportunity exists — cost reduction potential identified','AI/ML readiness assessment included in full audit scope','Analytics modernization path (Redshift/Snowflake + BI layer) to be evaluated']
+    },
+    gatedNote:'Full tech stack audit including vendor cost analysis, contract timeline, and modernization roadmap delivered in engagement.'
+  },
+  {
+    id:'orgreadiness', name:'Organizational Readiness',
+    questions:[
+      'There is a person or team with clear ownership over data quality and reporting accuracy.',
+      'When a data problem surfaces, we fix the root cause — not just the number.'
+    ],
+    signal:{ key:'orgreadiness_signal', text:'My team can access the data they need in real time from any company device?', noFlag:'Data access is device- or location-dependent — field teams and remote staff have a different experience than HQ.' },
+    stakeholders:['Chief Data Officer / Head of Analytics','CHRO / People Operations','VP Medical Affairs','Executive Sponsor'],
+    insights:{
+      low:'Data ownership is diffuse — everyone owns data, which means no one does. Root cause fixes are not happening because no team is empowered to make them. This is typically a change management problem masquerading as a technical one, and it is the most expensive gap to ignore.',
+      mid:'Ownership exists informally but is not institutionalized. When the person who knows the data leaves, the knowledge leaves with them. The organization is one departure away from a data crisis.',
+      high:'Strong organizational data culture. Audit scope focuses on scaling it — documenting institutional knowledge, building succession into data roles, and connecting ownership to performance accountability.'
+    },
+    findings:{
+      low:['No formal RACI for critical data assets — ownership is ambiguous across teams','Root cause remediation is not occurring — firefighting is the default mode','Change management risk is the primary constraint on any infrastructure investment'],
+      mid:['Institutional data knowledge is undocumented — key-person dependency risk is high','Data quality metrics are not tied to team OKRs or performance accountability','Data escalation path is informal or nonexistent'],
+      high:['Data champions program opportunity identified','Formal data literacy curriculum for commercial and medical teams to be scoped','Succession planning for data roles included in full audit scope']
+    },
+    gatedNote:'Organizational readiness report including RACI template, escalation design, and change management framework delivered in audit.'
+  },
+  {
+    id:'crm', name:'CRM & Field Data',
+    questions:[
+      'When my team updates the CRM, we trust that information will appear correctly in reports, on the right timeline, and actually reflects what\'s happening in the field.',
+      'Our reps log CRM activity because it helps them — not just because they\'re required to.'
+    ],
+    signal:null,
+    stakeholders:['VP Commercial Operations','Head of Sales Operations','Field Medical / MSL Lead','CRM Administrator / Veeva Owner'],
+    insights:{
+      low:'CRM is a compliance checkbox, not a system of record. Field activity data is incomplete, latency is unknown, and the gap between what reps log and what leadership sees in reports is wide enough to distort territory performance, HCP targeting, and launch readiness decisions.',
+      mid:'CRM data is partially reliable but adoption is uneven. Some reps log thoroughly, others don\'t — which means any aggregate view of field activity has unknown gaps baked into it. Reports look complete but aren\'t.',
+      high:'CRM is functioning as a genuine system of record. Field data flows into reporting on a known timeline and reps see value in logging activity. The audit scope focuses on data model integrity and downstream analytics quality.'
+    },
+    findings:{
+      low:['CRM data latency is unknown — reports may be showing stale field activity','Rep adoption is compliance-driven — dark activity (unlogged calls, samples, interactions) is likely significant','No documented SLA between CRM update and report availability','Field-to-report data integrity has not been formally validated'],
+      mid:['Adoption is inconsistent across territories or teams — aggregate data has uneven coverage','CRM-to-BI pipeline may not be validated against source records','Data latency is understood informally but not documented or enforced'],
+      high:['CRM data model should be audited for downstream analytics compatibility','Rep adoption metrics should be tracked and tied to data quality outcomes','Latency SLA should be formalized and monitored automatically']
+    },
+    gatedNote:'Full CRM data integrity audit — including latency mapping, adoption analysis, and field-to-report validation — delivered in engagement.'
+  }
+];
+
+const CM_QUESTION = 'When we\'ve rolled out new tools or processes in the past, adoption happened quickly and stuck.';
+const CM_SIGNAL_QUESTION = 'I know which workflows in our data operations are sequential, concurrent, and parallel?';
+const CM_KEY = 'cm_0';
+const CM_SIGNAL_KEY = 'cm_signal';
+
+let scores = {};
+
+function getCMScore() { return scores[CM_KEY] !== undefined ? scores[CM_KEY] : null; }
+function cmIsLow() { const s = getCMScore(); return s !== null && s <= 2; }
+function cmIsMid() { const s = getCMScore(); return s !== null && s === 3; }
+
+function switchTab(tab) {
+  document.querySelectorAll('.tab-btn').forEach((b,i) => b.classList.toggle('active', ['assess','results','plan'][i] === tab));
+  document.querySelectorAll('.phase').forEach(p => p.classList.remove('active'));
+  document.getElementById('phase-' + tab).classList.add('active');
+  if (tab === 'results') renderResults();
+  if (tab === 'plan') renderPlan();
+}
+
+function getLevel(score) {
+  if (score === null || score === undefined) return 'na';
+  if (score <= 2) return 'low';
+  if (score <= 3) return 'mid';
+  return 'high';
+}
+
+function getLevelLabel(level) {
+  return {low:'Gap identified',mid:'Developing',high:'Strong',na:'—'}[level];
+}
+
+function getThemeAvg(theme) {
+  const vals = theme.questions.map((_,qi) => scores[theme.id+'_'+qi]).filter(v => v !== undefined && v !== null);
+  if (!vals.length) return null;
+  return Math.round(vals.reduce((a,b) => a+b,0) / vals.length * 10) / 10;
+}
+
+function buildAssessment() {
+  let html = '';
+  let qi = 0;
+  THEMES.forEach(theme => {
+    html += `<span class="theme-label">${theme.name}</span>`;
+    theme.questions.forEach((q, tqi) => {
+      const key = theme.id + '_' + tqi;
+      html += `<div class="q-card" id="qcard_${key}">
+        <div class="q-row">
+          <div class="q-text">${qi+1}. ${q}</div>
+          <span class="q-chip chip-na" id="chip_${key}">—</span>
+        </div>
+        <div class="scale-row" id="sr_${key}">
+          ${[1,2,3,4,5].map(v => `<button class="s-btn" onclick="setScore('${key}',${v})">${v}</button>`).join('')}
+        </div>
+        <div class="scale-hint"><span>Not at all</span><span>Strongly agree</span></div>
+      </div>`;
+      qi++;
+    });
+    if (theme.signal) {
+      const sk = theme.signal.key;
+      html += `<div class="q-card" id="qcard_${sk}" style="border-style:dashed;opacity:0.92;">
+        <div style="font-size:.65rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin-bottom:8px;">Signal check · Yes / No</div>
+        <div class="q-row" style="align-items:center;">
+          <div class="q-text" style="font-size:.9rem;">${theme.signal.text}</div>
+          <span class="q-chip chip-na" id="chip_${sk}">—</span>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:12px;">
+          <button class="s-btn" style="width:64px;font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;" onclick="setSignal('${sk}',true)">Yes</button>
+          <button class="s-btn" style="width:64px;font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;" onclick="setSignal('${sk}',false)">No</button>
+        </div>
+      </div>`;
+    }
+  });
+
+  html += `<span class="theme-label" style="margin-top:2.5rem;padding-top:1.5rem;border-top:1px solid var(--border);display:flex;align-items:center;gap:10px;">
+    Change Management
+    <span style="font-size:.65rem;font-weight:400;letter-spacing:.06em;text-transform:none;color:var(--dim);font-family:'DM Sans',sans-serif;">The hidden cost of every system improvement</span>
+  </span>
+  <div class="q-card" id="qcard_${CM_KEY}" style="border-color:rgba(201,168,76,0.2);">
+    <div class="q-row">
+      <div class="q-text">${qi+1}. ${CM_QUESTION}</div>
+      <span class="q-chip chip-na" id="chip_${CM_KEY}">—</span>
+    </div>
+    <div class="scale-row" id="sr_${CM_KEY}">
+      ${[1,2,3,4,5].map(v => `<button class="s-btn" onclick="setScore('${CM_KEY}',${v})">${v}</button>`).join('')}
+    </div>
+    <div class="scale-hint"><span>Not at all</span><span>Strongly agree</span></div>
+    <p style="font-size:.75rem;color:var(--dim);margin-top:10px;line-height:1.6;font-style:italic;">Change management is the most expensive line item that never appears on the P&L. Technical fixes without adoption are just expensive shelf-ware.</p>
+  </div>
+  <div class="q-card" id="qcard_${CM_SIGNAL_KEY}" style="border-color:rgba(201,168,76,0.2);border-style:dashed;">
+    <div style="font-size:.65rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin-bottom:8px;">Signal check · Yes / No</div>
+    <div class="q-row" style="align-items:center;">
+      <div class="q-text" style="font-size:.9rem;">${CM_SIGNAL_QUESTION}</div>
+      <span class="q-chip chip-na" id="chip_${CM_SIGNAL_KEY}">—</span>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:12px;">
+      <button class="s-btn" style="width:64px;font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;" onclick="setSignal('${CM_SIGNAL_KEY}',true)">Yes</button>
+      <button class="s-btn" style="width:64px;font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;" onclick="setSignal('${CM_SIGNAL_KEY}',false)">No</button>
+    </div>
+  </div>`;
+
+  html += `<div class="actions-row">
+    <button class="btn btn-ghost" onclick="resetAll()">Reset</button>
+    <button class="btn btn-primary" onclick="switchTab('results')">View Findings →</button>
+  </div>`;
+  document.getElementById('phase-assess').innerHTML = html;
+}
+
+function setScore(key, val) {
+  scores[key] = val;
+  const level = getLevel(val);
+  const selClass = level === 'low' ? 'sel-low' : level === 'mid' ? 'sel-mid' : 'sel-high';
+  document.querySelectorAll(`#sr_${key} .s-btn`).forEach(b => {
+    b.className = 's-btn';
+    if (parseInt(b.textContent) === val) b.classList.add(selClass);
+  });
+  const chipEl = document.getElementById('chip_' + key);
+  const chipClass = level === 'low' ? 'chip-low' : level === 'mid' ? 'chip-mid' : 'chip-high';
+  chipEl.className = `q-chip ${chipClass}`;
+  chipEl.textContent = getLevelLabel(level);
+  document.getElementById('qcard_' + key).classList.add('answered');
+}
+
+function setSignal(key, val) {
+  scores[key] = val;
+  const cardEl = document.getElementById('qcard_' + key);
+  const chipEl = document.getElementById('chip_' + key);
+  if (val) {
+    chipEl.className = 'q-chip chip-high';
+    chipEl.textContent = 'Yes';
+    cardEl.querySelectorAll('.s-btn').forEach(b => { b.className = 's-btn'; if (b.textContent === 'Yes') b.classList.add('sel-high'); });
+  } else {
+    chipEl.className = 'q-chip chip-low';
+    chipEl.textContent = 'No';
+    cardEl.querySelectorAll('.s-btn').forEach(b => { b.className = 's-btn'; if (b.textContent === 'No') b.classList.add('sel-low'); });
+  }
+  cardEl.classList.add('answered');
+}
+
+function resetAll() {
+  scores = {};
+  function printReport() {
+  const company = document.getElementById('companyInput').value || 'Untitled';
+  const date = new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+
+  // Inject print-only answer labels into each scored q-card
+  document.querySelectorAll('.q-card').forEach(card => {
+    card.querySelectorAll('.q-print-answer').forEach(el => el.remove());
+    const chipEl = card.querySelector('.q-chip');
+    if (!chipEl || chipEl.textContent === '—') return;
+    const isSignal = card.querySelector('.s-btn[style*="64px"]') !== null;
+    const scoreEl = card.querySelector('.scale-row .s-btn.sel-low, .scale-row .s-btn.sel-mid, .scale-row .s-btn.sel-high');
+    let answerText = '';
+    if (isSignal) {
+      answerText = 'Signal: ' + chipEl.textContent;
+    } else if (scoreEl) {
+      answerText = 'Score: ' + scoreEl.textContent + '/5 · ' + chipEl.textContent;
+    }
+    if (answerText) {
+      const span = document.createElement('span');
+      span.className = 'q-print-answer';
+      span.textContent = answerText;
+      card.appendChild(span);
+    }
+  });
+
+  // Force render all three phases and wrap in print sections
+  ['results','plan'].forEach(tab => {
+    if (tab === 'results') renderResults();
+    if (tab === 'plan') renderPlan();
+  });
+
+  // Add print headers to each section
+  ['assess','results','plan'].forEach((id, i) => {
+    const phase = document.getElementById('phase-' + id);
+    phase.querySelectorAll('.print-header').forEach(el => el.remove());
+    const labels = ['Assessment','Findings','30/60/90 Plan'];
+    const hdr = document.createElement('div');
+    hdr.className = 'print-header';
+    hdr.innerHTML = '<div class="print-title">2516 Technologies — Data Health Check</div>'
+      + '<div class="print-co">' + company + ' · ' + labels[i] + '</div>'
+      + '<div class="print-date">' + date + '</div>';
+    phase.insertBefore(hdr, phase.firstChild);
+    phase.classList.add('print-section');
+    phase.classList.add('active');
+  });
+
+  window.print();
+
+  // Restore state after print
+  setTimeout(() => {
+    document.querySelectorAll('.q-print-answer').forEach(el => el.remove());
+    document.querySelectorAll('.print-header').forEach(el => el.remove());
+    document.querySelectorAll('.phase').forEach(p => {
+      p.classList.remove('active');
+      p.classList.remove('print-section');
+    });
+    const activeId = 'phase-' + (document.querySelector('.tab-btn.active')?.textContent.toLowerCase().trim().replace('/','').replace(' ','') || 'assess');
+    const mapping = {'assessment':'assess','findings':'results','3060plan':'plan','3060/90plan':'plan'};
+    const tabText = document.querySelector('.tab-btn.active')?.textContent.trim().toLowerCase() || 'assessment';
+    const activePhase = tabText.includes('find') ? 'results' : tabText.includes('plan') ? 'plan' : 'assess';
+    document.getElementById('phase-' + activePhase)?.classList.add('active');
+  }, 1000);
+}
+
+buildAssessment();
+}
+
+function cmWarning() {
+  if (getCMScore() === null) return '';
+  if (cmIsLow()) return `<div style="background:rgba(224,85,85,0.08);border:1px solid rgba(224,85,85,0.2);border-radius:6px;padding:10px 14px;margin-top:10px;font-size:.78rem;color:#E88;line-height:1.6;"><strong style="color:var(--red);">⚠ Change readiness risk:</strong> A low adoption score means technical remediation alone will not close these gaps. Without internal champions and an active change management workstream, any infrastructure investment is at risk of stalling after deployment. This must be scoped into the engagement.</div>`;
+  if (cmIsMid()) return `<div style="background:rgba(217,119,6,0.08);border:1px solid rgba(217,119,6,0.2);border-radius:6px;padding:10px 14px;margin-top:10px;font-size:.78rem;color:#CA8;line-height:1.6;"><strong style="color:var(--amber);">Change readiness note:</strong> Adoption has been inconsistent historically. A structured change management workstream should run parallel to any technical remediation — not follow it.</div>`;
+  return '';
+}
+
+function renderResults() {
+  const company = document.getElementById('companyInput').value || 'This organization';
+  const scored = THEMES.filter(t => getThemeAvg(t) !== null);
+  const allAvgs = scored.map(t => getThemeAvg(t));
+  const overall = allAvgs.length ? (allAvgs.reduce((a,b) => a+b,0) / allAvgs.length).toFixed(1) : null;
+  const gaps = THEMES.filter(t => getThemeAvg(t) !== null && getLevel(getThemeAvg(t)) === 'low');
+  const developing = THEMES.filter(t => getThemeAvg(t) !== null && getLevel(getThemeAvg(t)) === 'mid');
+  const strong = THEMES.filter(t => getThemeAvg(t) !== null && getLevel(getThemeAvg(t)) === 'high');
+  const cmScore = getCMScore();
+  const cmLevel = getLevel(cmScore);
+
+  if (!scored.length && cmScore === null) {
+    document.getElementById('phase-results').innerHTML = `<div class="empty-state">Complete the assessment first — score at least one question to see findings.</div>`;
+    return;
+  }
+
+  let html = `<div class="metrics-row">
+    <div class="metric-card"><div class="metric-val">${overall || '—'}<span style="font-size:1rem;color:var(--muted)">${overall ? '/5' : ''}</span></div><div class="metric-label">Overall score</div></div>
+    <div class="metric-card"><div class="metric-val" style="color:var(--red)">${gaps.length}</div><div class="metric-label">Critical gaps</div></div>
+    <div class="metric-card"><div class="metric-val" style="color:var(--amber)">${developing.length}</div><div class="metric-label">Developing</div></div>
+    <div class="metric-card"><div class="metric-val" style="color:var(--green)">${strong.length}</div><div class="metric-label">Strengths</div></div>
+  </div>`;
+
+  if (cmScore !== null) {
+    const cmBg = cmLevel === 'low' ? 'var(--red-bg)' : cmLevel === 'mid' ? 'var(--amber-bg)' : 'var(--green-bg)';
+    const cmColor = cmLevel === 'low' ? 'var(--red)' : cmLevel === 'mid' ? 'var(--amber)' : 'var(--green)';
+    const cmText = cmLevel === 'low'
+      ? 'Low change readiness is a multiplier on every technical gap identified below. The most expensive line item in any system improvement never appears on the P&L — it\'s the six months of people working around the new system instead of in it. This must be addressed as a parallel workstream, not an afterthought.'
+      : cmLevel === 'mid'
+      ? 'Change readiness is inconsistent. Past rollouts have had uneven adoption, suggesting the organization has the will but not yet the structure to drive sustained behavior change. A change management workstream should be scoped alongside any technical remediation.'
+      : 'Strong change readiness. Past rollouts have stuck — this organization has the internal culture and mechanisms to adopt new systems effectively. This is a competitive advantage that should be preserved and documented.';
+    const cmSignalVal = scores[CM_SIGNAL_KEY];
+    const cmSignalBlock = cmSignalVal === false
+      ? `<div style="display:flex;align-items:flex-start;gap:8px;background:rgba(224,85,85,0.07);border:1px solid rgba(224,85,85,0.18);border-radius:6px;padding:8px 12px;margin-top:10px;"><span style="font-size:.7rem;font-weight:600;color:var(--red);white-space:nowrap;margin-top:1px;">✗ No</span><span style="font-size:.78rem;color:var(--muted);line-height:1.55;">Workflow sequencing is unclear — parallel and concurrent workstreams are likely being run sequentially, adding weeks of unnecessary delay to any infrastructure project.</span></div>`
+      : cmSignalVal === true
+      ? `<div style="display:flex;align-items:flex-start;gap:8px;background:rgba(5,150,105,0.07);border:1px solid rgba(5,150,105,0.18);border-radius:6px;padding:8px 12px;margin-top:10px;"><span style="font-size:.7rem;font-weight:600;color:var(--green);white-space:nowrap;margin-top:1px;">✓ Yes</span><span style="font-size:.78rem;color:var(--muted);line-height:1.55;">Workflow sequencing is understood — this team can run parallel workstreams effectively.</span></div>`
+      : '';
+    html += `<div class="section-title">Change management signal</div>
+    <div class="result-card" style="border-left:3px solid ${cmColor};background:var(--bg-card);border-top:1px solid var(--border);border-right:1px solid var(--border);border-bottom:1px solid var(--border);">
+      <div class="rc-header">
+        <span class="rc-theme" style="color:${cmColor};">Change Readiness</span>
+        <span class="rc-score">${cmScore} / 5</span>
+      </div>
+      <p class="rc-insight">${cmText}</p>
+      ${cmSignalBlock}
+      <div class="stake-row"><span class="stake-pill">Executive Sponsor</span><span class="stake-pill">CHRO / People Ops</span><span class="stake-pill">Change Champions</span><span class="stake-pill">Dept Leads</span></div>
+    </div>`;
+  }
+
+  const renderCard = (t) => {
+    const avg = getThemeAvg(t);
+    const level = getLevel(avg);
+    const findings = t.findings[level];
+    const showCMWarn = (level === 'low' || level === 'mid') && (cmIsLow() || cmIsMid());
+    const signalVal = t.signal ? scores[t.signal.key] : undefined;
+    const signalBlock = (t.signal && signalVal === false)
+      ? `<div style="display:flex;align-items:flex-start;gap:8px;background:rgba(224,85,85,0.07);border:1px solid rgba(224,85,85,0.18);border-radius:6px;padding:8px 12px;margin-top:10px;">
+          <span style="font-size:.7rem;font-weight:600;color:var(--red);white-space:nowrap;margin-top:1px;">✗ No</span>
+          <span style="font-size:.78rem;color:var(--muted);line-height:1.55;">${t.signal.noFlag}</span>
+        </div>`
+      : (t.signal && signalVal === true)
+      ? `<div style="display:flex;align-items:flex-start;gap:8px;background:rgba(5,150,105,0.07);border:1px solid rgba(5,150,105,0.18);border-radius:6px;padding:8px 12px;margin-top:10px;">
+          <span style="font-size:.7rem;font-weight:600;color:var(--green);white-space:nowrap;margin-top:1px;">✓ Yes</span>
+          <span style="font-size:.78rem;color:var(--muted);line-height:1.55;">${t.signal.text}</span>
+        </div>`
+      : '';
+    return `<div class="result-card rc-${level}">
+      <div class="rc-header">
+        <span class="rc-theme">${t.name}</span>
+        <span class="rc-score">${avg} / 5</span>
+      </div>
+      <p class="rc-insight">${t.insights[level]}</p>
+      ${signalBlock}
+      ${showCMWarn ? cmWarning() : ''}
+      <div class="rc-findings" style="margin-top:10px;">
+        <div class="rc-findings-label">Priority areas identified</div>
+        ${findings.map(f => `<div class="rc-finding-item">→ ${f}</div>`).join('')}
+      </div>
+      <p class="gate-note">${t.gatedNote}</p>
+      <div class="stake-row">${t.stakeholders.map(s => `<span class="stake-pill">${s}</span>`).join('')}</div>
+    </div>`;
+  };
+
+  if (gaps.length) {
+    html += `<div class="section-title">Critical gaps — address first</div>`;
+    gaps.forEach(t => { html += renderCard(t); });
+  }
+  if (developing.length) {
+    html += `<div class="section-title">Developing areas</div>`;
+    developing.forEach(t => { html += renderCard(t); });
+  }
+  if (strong.length) {
+    html += `<div class="section-title">Where ${company} is succeeding</div>`;
+    strong.forEach(t => { html += renderCard(t); });
+  }
+
+  html += auditCTA(company);
+  document.getElementById('phase-results').innerHTML = html;
+}
+
+function renderPlan() {
+  const company = document.getElementById('companyInput').value || 'Client';
+  const scored = THEMES.filter(t => getThemeAvg(t) !== null);
+  const cmScore = getCMScore();
+
+  if (!scored.length && cmScore === null) {
+    document.getElementById('phase-plan').innerHTML = `<div class="empty-state">Complete the assessment to generate a 30/60/90 plan.</div>`;
+    return;
+  }
+
+  const gaps = THEMES.filter(t => getThemeAvg(t) !== null && getLevel(getThemeAvg(t)) === 'low');
+  const developing = THEMES.filter(t => getThemeAvg(t) !== null && getLevel(getThemeAvg(t)) === 'mid');
+
+  const d30 = [], d60 = [], d90 = [];
+
+  d30.push({ text: 'Map internal stakeholders — identify change champions and executive sponsor before any infrastructure work begins', owner: 'Internal + 2516 Technologies', gated: false });
+
+  if (cmIsLow()) {
+    d30.push({ text: 'Change readiness assessment — document past rollout failures, identify adoption blockers by team', owner: '2516 Technologies', gated: false });
+    d60.push({ text: 'Design change management workstream — champions program, communication plan, adoption metrics', owner: '2516 Technologies', gated: true });
+    d90.push({ text: 'Adoption measurement and course-correction against defined change management milestones', owner: '2516 + Executive Sponsor', gated: true });
+  } else if (cmIsMid()) {
+    d30.push({ text: 'Document past rollout patterns — identify what drove inconsistent adoption and what conditions produced success', owner: 'Internal + 2516', gated: false });
+    d60.push({ text: 'Structured adoption framework scoped alongside technical remediation — not sequentially', owner: '2516 Technologies', gated: true });
+  }
+
+  gaps.forEach(t => {
+    d30.push({ text: `Baseline audit: document current state of ${t.name.toLowerCase()} infrastructure`, owner: '2516 Technologies', gated: false });
+    d60.push({ text: `Remediation design for ${t.name.toLowerCase()} gaps — scoped and prioritized`, owner: '2516 Technologies', gated: true });
+    d90.push({ text: `Implement governed framework for ${t.name.toLowerCase()}`, owner: `2516 + ${t.stakeholders[1] || t.stakeholders[0]}`, gated: true });
+  });
+
+  developing.forEach(t => {
+    d60.push({ text: `Close ${t.name.toLowerCase()} gaps — defined in full audit`, owner: `Internal: ${t.stakeholders[0]}`, gated: true });
+    d90.push({ text: `Formalize and document ${t.name.toLowerCase()} improvements for audit-readiness`, owner: '2516 advisory', gated: true });
+  });
+
+  if (d30.length === 1) d30.push({ text: 'Conduct stakeholder alignment session — map data ownership across all commercial and medical teams', owner: '2516 Technologies + Executive Sponsor', gated: false });
+  if (!d60.length) d60.push({ text: 'Deliver governed data layer for top commercial KPIs — scope defined in audit', owner: '2516 Technologies', gated: true });
+  if (!d90.length) d90.push({ text: 'AI readiness assessment — evaluate infrastructure for ML workloads', owner: '2516 Technologies', gated: true });
+
+  const renderItems = items => items.map(i => `<div class="plan-item">${i.text}
+    ${i.gated
+      ? `<span class="pi-gated">Scoped in full audit engagement</span>`
+      : `<span class="pi-owner">${i.owner}</span>`
+    }
+  </div>`).join('');
+
+  let html = `<p class="plan-intro">This is a directional plan based on the triage. The full 30/60/90 — with defined scope, deliverables, and effort estimates — is built during the audit engagement. Change management is treated as a parallel workstream, not a phase that follows technical delivery.</p>
+  <div class="plan-cols">
+    <div class="plan-col p30">
+      <div class="plan-period">Days 1–30</div>
+      <div class="plan-subtitle">Foundation & discovery</div>
+      ${renderItems(d30)}
+    </div>
+    <div class="plan-col p60">
+      <div class="plan-period">Days 31–60</div>
+      <div class="plan-subtitle">Remediation design</div>
+      ${renderItems(d60)}
+      ${d60.some(i => i.gated) ? `<div class="plan-gated-block">Full scope, deliverables, and ownership defined in audit engagement.</div>` : ''}
+    </div>
+    <div class="plan-col p90">
+      <div class="plan-period">Days 61–90</div>
+      <div class="plan-subtitle">Implementation & governance</div>
+      ${renderItems(d90)}
+      ${d90.some(i => i.gated) ? `<div class="plan-gated-block">Implementation roadmap and governance framework delivered as audit output.</div>` : ''}
+    </div>
+  </div>`;
+
+  html += auditCTA(company);
+  document.getElementById('phase-plan').innerHTML = html;
+}
+
+function auditCTA(company) {
+  const co = company && company !== 'This organization' && company !== 'Client' ? ` for ${company}` : '';
+  return `<div class="audit-cta">
+    <span class="eyebrow">Next Step</span>
+    <h2>This triage identifies where to look.<br>The audit tells you what you're dealing with.</h2>
+    <div class="audit-divider"></div>
+    <p>A 2516 Technologies Data & AI Readiness Audit delivers a full diagnostic report, metric-level findings, a remediation roadmap, and a scoped 30/60/90 engagement plan${co} — built on your actual infrastructure, not a questionnaire. Change management is scoped as a parallel workstream, not an afterthought.</p>
+    <div class="audit-features">
+      <span class="audit-feature">Infrastructure audit</span>
+      <span class="audit-feature">Metric-level findings</span>
+      <span class="audit-feature">Stakeholder interviews</span>
+      <span class="audit-feature">Change management scoping</span>
+      <span class="audit-feature">Remediation roadmap</span>
+      <span class="audit-feature">Scoped 30/60/90 plan</span>
+      <span class="audit-feature">Executive summary</span>
+    </div>
+    <a class="audit-cta-btn" href="https://2516technologies.com/contact.html">Schedule the Audit →</a>
+    <p style="margin-top:14px;font-size:.75rem;color:var(--dim);">2516technologies.com &nbsp;·&nbsp; mark@2516technologies.com</p>
+  </div>`;
+}
+
+buildAssessment();
+</script>
+</body>
+</html>
