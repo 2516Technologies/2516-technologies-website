@@ -1333,7 +1333,7 @@
        container.appendChild(themeLabel);
      }
      var block = document.createElement('div');
-     block.style.cssText = 'background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:24px 28px;margin-bottom:16px;';
+     block.style.cssText = 'background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:20px 16px;margin-bottom:16px;';
      block.id = 'qblock-' + i;
      var label = document.createElement('p');
      label.style.cssText = 'font-family:"Cormorant Garamond",serif;font-size:clamp(16px,3vw,20px);font-weight:400;line-height:1.45;margin-bottom:20px;color:var(--text);';
@@ -1342,13 +1342,14 @@
      var btnRow = document.createElement('div');
      btnRow.style.cssText = 'display:flex;gap:10px;align-items:center;flex-wrap:wrap;';
      var scaleWrap = document.createElement('div');
-     scaleWrap.style.cssText = 'display:flex;gap:10px;';
+     scaleWrap.style.cssText = 'display:flex;gap:8px;width:100%;';
      for (var v = 1; v <= 5; v++) {
        var btn = document.createElement('button');
        btn.className = 'scale-btn' + (answers[i] === v ? ' selected' : '');
        btn.textContent = v;
        btn.dataset.qindex = i;
        btn.dataset.val = v;
+       btn.style.cssText = 'flex:1;min-width:0;width:auto;height:48px;font-size:16px;';
        btn.onclick = (function(qi, val) {
          return function() { selectAnswerAll(qi, val); };
        })(i, v);
