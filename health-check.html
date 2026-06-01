@@ -207,6 +207,7 @@ a{color:var(--gold);text-decoration:none;}
   .empty-state{display:none!important;}
 }
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
 <body>
 
@@ -510,64 +511,112 @@ function resetAll() {
   const company = document.getElementById('companyInput').value || 'Untitled';
   const date = new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
 
-  // Inject print-only answer labels into each scored q-card
-  document.querySelectorAll('.q-card').forEach(card => {
-    card.querySelectorAll('.q-print-answer').forEach(el => el.remove());
-    const chipEl = card.querySelector('.q-chip');
-    if (!chipEl || chipEl.textContent === '—') return;
-    const isSignal = card.querySelector('.s-btn[style*="64px"]') !== null;
-    const scoreEl = card.querySelector('.scale-row .s-btn.sel-low, .scale-row .s-btn.sel-mid, .scale-row .s-btn.sel-high');
-    let answerText = '';
-    if (isSignal) {
-      answerText = 'Signal: ' + chipEl.textContent;
-    } else if (scoreEl) {
-      answerText = 'Score: ' + scoreEl.textContent + '/5 · ' + chipEl.textContent;
-    }
-    if (answerText) {
-      const span = document.createElement('span');
-      span.className = 'q-print-answer';
-      span.textContent = answerText;
-      card.appendChild(span);
-    }
-  });
+  // Force render findings and plan
+  renderResults();
+  renderPlan();
 
-  // Force render all three phases and wrap in print sections
-  ['results','plan'].forEach(tab => {
-    if (tab === 'results') renderResults();
-    if (tab === 'plan') renderPlan();
-  });
+  // Build a clean off-screen container for PDF
+  const wrap = document.createElement('div');
+  wrap.style.cssText = 'position:absolute;left:-9999px;top:0;width:800px;font-family:sans-serif;color:#111;background:#fff;padding:32px;';
 
-  // Add print headers to each section
-  ['assess','results','plan'].forEach((id, i) => {
-    const phase = document.getElementById('phase-' + id);
-    phase.querySelectorAll('.print-header').forEach(el => el.remove());
-    const labels = ['Assessment','Findings','30/60/90 Plan'];
+  const sections = [
+    { id:'phase-assess', label:'Assessment' },
+    { id:'phase-results', label:'Findings' },
+    { id:'phase-plan', label:'30/60/90 Plan' }
+  ];
+
+  sections.forEach((s, i) => {
+    const src = document.getElementById(s.id);
+    if (!src) return;
+
+    // Section header
     const hdr = document.createElement('div');
-    hdr.className = 'print-header';
-    hdr.innerHTML = '<div class="print-title">2516 Technologies — Data Health Check</div>'
-      + '<div class="print-co">' + company + ' · ' + labels[i] + '</div>'
-      + '<div class="print-date">' + date + '</div>';
-    phase.insertBefore(hdr, phase.firstChild);
-    phase.classList.add('print-section');
-    phase.classList.add('active');
+    hdr.style.cssText = 'margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid #C9A84C;' + (i > 0 ? 'margin-top:40px;' : '');
+    hdr.innerHTML = '<div style="font-size:18px;font-weight:400;color:#0A1628;margin-bottom:2px;">2516 Technologies — Data Health Check</div>'
+      + '<div style="font-size:12px;color:#666;text-transform:uppercase;letter-spacing:.06em;">' + company + ' · ' + s.label + '</div>'
+      + '<div style="font-size:10px;color:#999;margin-top:2px;">' + date + '</div>';
+    wrap.appendChild(hdr);
+
+    // Clone the section
+    const clone = src.cloneNode(true);
+    clone.style.cssText = 'display:block;background:#fff;color:#111;';
+
+    // Hide interactive elements
+    clone.querySelectorAll('.scale-row,.scale-hint,.actions-row,.audit-cta,.dl-btn,.empty-state').forEach(el => el.style.display='none');
+
+    // Inject answer labels
+    clone.querySelectorAll('.q-card').forEach(card => {
+      const chipEl = card.querySelector('.q-chip');
+      if (!chipEl || chipEl.textContent === '—') return;
+      const isSignal = card.querySelector('button[style*="64px"]') !== null;
+      const scoreEl = card.querySelector('.s-btn.sel-low,.s-btn.sel-mid,.s-btn.sel-high');
+      let answerText = '';
+      if (isSignal) {
+        answerText = 'Signal: ' + chipEl.textContent;
+      } else if (scoreEl) {
+        answerText = 'Score: ' + scoreEl.textContent + '/5 · ' + chipEl.textContent;
+      }
+      if (answerText) {
+        const span = document.createElement('div');
+        span.style.cssText = 'font-size:11px;color:#555;margin-top:5px;';
+        span.textContent = answerText;
+        card.appendChild(span);
+      }
+      // Hide scale buttons
+      const sr = card.querySelector('.scale-row');
+      const sh = card.querySelector('.scale-hint');
+      if (sr) sr.style.display = 'none';
+      if (sh) sh.style.display = 'none';
+    });
+
+    // Fix colors for white background
+    clone.querySelectorAll('.theme-label').forEach(el => { el.style.color='#C9A84C'; el.style.fontSize='10px'; });
+    clone.querySelectorAll('.q-card').forEach(el => { el.style.background='#f8f9fb'; el.style.border='1px solid #dde'; el.style.borderRadius='4px'; el.style.marginBottom='6px'; });
+    clone.querySelectorAll('.q-text').forEach(el => { el.style.color='#111'; el.style.fontSize='13px'; });
+    clone.querySelectorAll('.metric-card').forEach(el => { el.style.background='#f8f9fb'; el.style.border='1px solid #dde'; });
+    clone.querySelectorAll('.metric-val').forEach(el => { el.style.color='#0A1628'; });
+    clone.querySelectorAll('.metric-label').forEach(el => { el.style.color='#666'; });
+    clone.querySelectorAll('.result-card').forEach(el => { el.style.background='#f8f9fb'; el.style.borderTopColor='#dde'; el.style.borderRightColor='#dde'; el.style.borderBottomColor='#dde'; });
+    clone.querySelectorAll('.rc-insight').forEach(el => { el.style.color='#222'; });
+    clone.querySelectorAll('.rc-findings').forEach(el => { el.style.background='#eef0f4'; });
+    clone.querySelectorAll('.rc-finding-item').forEach(el => { el.style.color='#333'; el.style.borderColor='#ccc'; });
+    clone.querySelectorAll('.gate-note').forEach(el => { el.style.color='#888'; });
+    clone.querySelectorAll('.stake-pill').forEach(el => { el.style.background='#e8eef8'; el.style.color='#1a3a7a'; el.style.borderColor='#b0c4e8'; });
+    clone.querySelectorAll('.plan-col').forEach(el => { el.style.background='#f8f9fb'; el.style.border='1px solid #dde'; });
+    clone.querySelectorAll('.plan-item').forEach(el => { el.style.color='#222'; el.style.borderColor='#ccc'; });
+    clone.querySelectorAll('.pi-owner').forEach(el => { el.style.color='#555'; });
+    clone.querySelectorAll('.pi-gated').forEach(el => { el.style.color='#aaa'; });
+    clone.querySelectorAll('.plan-intro').forEach(el => { el.style.color='#555'; });
+    clone.querySelectorAll('.plan-subtitle').forEach(el => { el.style.color='#888'; });
+    clone.querySelectorAll('.section-title').forEach(el => { el.style.color='#888'; });
+    clone.querySelectorAll('.chip-low').forEach(el => { el.style.background='#fde8e8'; el.style.color='#c0392b'; });
+    clone.querySelectorAll('.chip-mid').forEach(el => { el.style.background='#fef3cd'; el.style.color='#856404'; });
+    clone.querySelectorAll('.chip-high').forEach(el => { el.style.background='#d4edda'; el.style.color='#155724'; });
+    clone.querySelectorAll('.rc-low .rc-theme').forEach(el => { el.style.color='#c0392b'; });
+    clone.querySelectorAll('.rc-mid .rc-theme').forEach(el => { el.style.color='#856404'; });
+    clone.querySelectorAll('.rc-high .rc-theme').forEach(el => { el.style.color='#155724'; });
+    clone.querySelectorAll('.rc-score').forEach(el => { el.style.color='#555'; });
+    clone.querySelectorAll('.p30 .plan-period').forEach(el => { el.style.color='#c0392b'; });
+    clone.querySelectorAll('.p60 .plan-period').forEach(el => { el.style.color='#856404'; });
+    clone.querySelectorAll('.p90 .plan-period').forEach(el => { el.style.color='#155724'; });
+
+    wrap.appendChild(clone);
   });
 
-  window.print();
+  document.body.appendChild(wrap);
 
-  // Restore state after print
-  setTimeout(() => {
-    document.querySelectorAll('.q-print-answer').forEach(el => el.remove());
-    document.querySelectorAll('.print-header').forEach(el => el.remove());
-    document.querySelectorAll('.phase').forEach(p => {
-      p.classList.remove('active');
-      p.classList.remove('print-section');
-    });
-    const activeId = 'phase-' + (document.querySelector('.tab-btn.active')?.textContent.toLowerCase().trim().replace('/','').replace(' ','') || 'assess');
-    const mapping = {'assessment':'assess','findings':'results','3060plan':'plan','3060/90plan':'plan'};
-    const tabText = document.querySelector('.tab-btn.active')?.textContent.trim().toLowerCase() || 'assessment';
-    const activePhase = tabText.includes('find') ? 'results' : tabText.includes('plan') ? 'plan' : 'assess';
-    document.getElementById('phase-' + activePhase)?.classList.add('active');
-  }, 1000);
+  const filename = (company !== 'Untitled' ? company.replace(/[^a-z0-9]/gi,'_') + '_' : '') + 'DataHealthCheck_' + new Date().toISOString().slice(0,10) + '.pdf';
+
+  html2pdf().set({
+    margin: [12, 12, 12, 12],
+    filename: filename,
+    image: { type:'jpeg', quality:0.95 },
+    html2canvas: { scale:2, useCORS:true, backgroundColor:'#ffffff' },
+    jsPDF: { unit:'mm', format:'a4', orientation:'portrait' },
+    pagebreak: { mode:['avoid-all','css'] }
+  }).from(wrap).save().then(() => {
+    document.body.removeChild(wrap);
+  });
 }
 
 buildAssessment();
