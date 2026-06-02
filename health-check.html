@@ -215,7 +215,7 @@ a{color:var(--gold);text-decoration:none;}
   <a href="https://2516technologies.com" class="nav-brand"><img src="2516_logo_horizontal_dark_web (1).png" alt="2516 Technologies" style="height:32px;width:auto;"></a>
   <span class="nav-tag">Data Health Check</span>
 </nav>
-<button class="dl-btn" onclick="printReport()">&#8595; Download Report</button>
+<button class="dl-btn" id="dlBtn" onclick="printReport()">&#8595; Download Report</button>
 
 <main class="main">
 
@@ -607,6 +607,19 @@ function resetAll() {
 
   const filename = (company !== 'Untitled' ? company.replace(/[^a-z0-9]/gi,'_') + '_' : '') + 'DataHealthCheck_' + new Date().toISOString().slice(0,10) + '.pdf';
 
+  // Check if html2pdf loaded
+  if (typeof html2pdf === 'undefined') {
+    alert('PDF library failed to load. Using browser print instead — use Save as PDF in the print dialog.');
+    document.body.removeChild(wrap);
+    window.print();
+    return;
+  }
+
+  const btn = document.getElementById('dlBtn');
+  btn.textContent = 'Generating...';
+  btn.style.opacity = '0.7';
+  btn.disabled = true;
+
   html2pdf().set({
     margin: [12, 12, 12, 12],
     filename: filename,
@@ -616,6 +629,15 @@ function resetAll() {
     pagebreak: { mode:['avoid-all','css'] }
   }).from(wrap).save().then(() => {
     document.body.removeChild(wrap);
+    btn.textContent = '↓ Download Report';
+    btn.style.opacity = '1';
+    btn.disabled = false;
+  }).catch(err => {
+    document.body.removeChild(wrap);
+    btn.textContent = '↓ Download Report';
+    btn.style.opacity = '1';
+    btn.disabled = false;
+    alert('PDF generation failed: ' + err.message + '\n\nTry using File > Print > Save as PDF instead.');
   });
 }
 
