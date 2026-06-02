@@ -211,10 +211,10 @@ a{color:var(--gold);text-decoration:none;}
 <body>
 
 <nav class="nav">
-  <a href="https://2516technologies.com" class="nav-brand"><img src="2516_logo_horizontal_dark_web (1).png" alt="2516 Technologies" style="height:32px;width:auto;"></a>
+  <a href="https://2516technologies.com" class="nav-brand">2516 Technologies</a>
   <span class="nav-tag">Data Health Check</span>
 </nav>
-<button class="dl-btn" id="dlBtn" onclick="(function(){try{printReport();}catch(e){alert('Error: '+e.message);}})()">&#8595; Save as PDF</button>
+<button class="dl-btn" onclick="printReport()">&#8595; Download Report</button>
 
 <main class="main">
 
@@ -506,131 +506,68 @@ function setSignal(key, val) {
 
 function resetAll() {
   scores = {};
-  buildAssessment();
-}
-
-function printReport() {
+  function printReport() {
   const company = document.getElementById('companyInput').value || 'Untitled';
   const date = new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
 
-  renderResults();
-  renderPlan();
-
-  function getAnswerLabel(card) {
+  // Inject print-only answer labels into each scored q-card
+  document.querySelectorAll('.q-card').forEach(card => {
+    card.querySelectorAll('.q-print-answer').forEach(el => el.remove());
     const chipEl = card.querySelector('.q-chip');
-    if (!chipEl || chipEl.textContent === '—') return '';
-    const isSignal = Array.from(card.querySelectorAll('button')).some(b => b.textContent === 'Yes' || b.textContent === 'No');
-    const scoreEl = card.querySelector('.s-btn.sel-low,.s-btn.sel-mid,.s-btn.sel-high');
-    if (isSignal) return 'Signal: ' + chipEl.textContent;
-    if (scoreEl) return 'Score: ' + scoreEl.textContent + '/5 · ' + chipEl.textContent;
-    return '';
-  }
+    if (!chipEl || chipEl.textContent === '—') return;
+    const isSignal = card.querySelector('.s-btn[style*="64px"]') !== null;
+    const scoreEl = card.querySelector('.scale-row .s-btn.sel-low, .scale-row .s-btn.sel-mid, .scale-row .s-btn.sel-high');
+    let answerText = '';
+    if (isSignal) {
+      answerText = 'Signal: ' + chipEl.textContent;
+    } else if (scoreEl) {
+      answerText = 'Score: ' + scoreEl.textContent + '/5 · ' + chipEl.textContent;
+    }
+    if (answerText) {
+      const span = document.createElement('span');
+      span.className = 'q-print-answer';
+      span.textContent = answerText;
+      card.appendChild(span);
+    }
+  });
 
-  function sectionHTML(id, label) {
-    const src = document.getElementById(id);
-    if (!src) return '';
-    const clone = src.cloneNode(true);
+  // Force render all three phases and wrap in print sections
+  ['results','plan'].forEach(tab => {
+    if (tab === 'results') renderResults();
+    if (tab === 'plan') renderPlan();
+  });
 
-    // Remove interactive/decorative elements
-    clone.querySelectorAll('.scale-row,.scale-hint,.actions-row,.audit-cta,.dl-btn,.empty-state,.s-btn').forEach(el => el.remove());
+  // Add print headers to each section
+  ['assess','results','plan'].forEach((id, i) => {
+    const phase = document.getElementById('phase-' + id);
+    phase.querySelectorAll('.print-header').forEach(el => el.remove());
+    const labels = ['Assessment','Findings','30/60/90 Plan'];
+    const hdr = document.createElement('div');
+    hdr.className = 'print-header';
+    hdr.innerHTML = '<div class="print-title">2516 Technologies — Data Health Check</div>'
+      + '<div class="print-co">' + company + ' · ' + labels[i] + '</div>'
+      + '<div class="print-date">' + date + '</div>';
+    phase.insertBefore(hdr, phase.firstChild);
+    phase.classList.add('print-section');
+    phase.classList.add('active');
+  });
 
-    // Inject answer labels
-    clone.querySelectorAll('.q-card').forEach((card, i) => {
-      const origCard = src.querySelectorAll('.q-card')[i];
-      const label = origCard ? getAnswerLabel(origCard) : '';
-      if (label) {
-        const d = document.createElement('div');
-        d.className = 'ans-label';
-        d.textContent = label;
-        card.appendChild(d);
-      }
+  window.print();
+
+  // Restore state after print
+  setTimeout(() => {
+    document.querySelectorAll('.q-print-answer').forEach(el => el.remove());
+    document.querySelectorAll('.print-header').forEach(el => el.remove());
+    document.querySelectorAll('.phase').forEach(p => {
+      p.classList.remove('active');
+      p.classList.remove('print-section');
     });
-
-    return '<div class="section-wrap">'
-      + '<div class="doc-header"><div class="doc-title">2516 Technologies — Data Health Check</div>'
-      + '<div class="doc-sub">' + company + ' &nbsp;·&nbsp; ' + label + ' &nbsp;·&nbsp; ' + date + '</div></div>'
-      + clone.innerHTML
-      + '</div>';
-  }
-
-  const html = `<!DOCTYPE html><html><head><meta charset="UTF-8">
-<title>Data Health Check — ${company}</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-*{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'DM Sans',sans-serif;font-size:13px;color:#111;background:#fff;padding:32px;max-width:900px;margin:0 auto;}
-.section-wrap{margin-bottom:48px;page-break-before:always;}
-.section-wrap:first-child{page-break-before:avoid;}
-.doc-header{margin-bottom:20px;padding-bottom:12px;border-bottom:2px solid #C9A84C;}
-.doc-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:400;color:#0A1628;margin-bottom:3px;}
-.doc-sub{font-size:11px;color:#666;letter-spacing:.06em;text-transform:uppercase;}
-.theme-label{font-size:9px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:#C9A84C;margin:20px 0 6px;display:block;}
-.q-card{background:#f8f9fb;border:1px solid #dde;border-radius:4px;padding:10px 14px;margin-bottom:6px;page-break-inside:avoid;}
-.q-card.answered{border-color:#C9A84C;}
-.q-row{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;}
-.q-text{font-family:'Cormorant Garamond',serif;font-size:14px;color:#111;line-height:1.45;flex:1;}
-.q-chip{font-size:9px;font-weight:600;padding:2px 8px;border-radius:8px;white-space:nowrap;flex-shrink:0;}
-.chip-low{background:#fde8e8;color:#c0392b;}
-.chip-mid{background:#fef3cd;color:#856404;}
-.chip-high{background:#d4edda;color:#155724;}
-.chip-na{background:#eee;color:#999;}
-.ans-label{font-size:11px;color:#555;margin-top:5px;}
-.metrics-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:20px;}
-.metric-card{background:#f8f9fb;border:1px solid #dde;border-radius:4px;padding:10px;text-align:center;}
-.metric-val{font-family:'Cormorant Garamond',serif;font-size:24px;color:#0A1628;}
-.metric-label{font-size:9px;text-transform:uppercase;letter-spacing:.08em;color:#666;margin-top:3px;}
-.section-title{font-size:9px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#888;margin:20px 0 8px;}
-.result-card{border-radius:4px;border-left:3px solid #dde;padding:12px 14px;margin-bottom:8px;background:#f8f9fb;border-top:1px solid #dde;border-right:1px solid #dde;border-bottom:1px solid #dde;page-break-inside:avoid;}
-.result-card.rc-low{border-left-color:#c0392b;}
-.result-card.rc-mid{border-left-color:#856404;}
-.result-card.rc-high{border-left-color:#155724;}
-.rc-header{display:flex;justify-content:space-between;margin-bottom:6px;}
-.rc-theme{font-size:9px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;}
-.rc-low .rc-theme{color:#c0392b;}
-.rc-mid .rc-theme{color:#856404;}
-.rc-high .rc-theme{color:#155724;}
-.rc-score{font-size:12px;color:#555;}
-.rc-insight{font-size:12px;color:#222;line-height:1.55;margin-bottom:8px;}
-.rc-findings{background:#eef0f4;border-radius:3px;padding:8px 10px;margin-bottom:6px;}
-.rc-findings-label{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#555;margin-bottom:4px;}
-.rc-finding-item{font-size:11px;color:#333;padding:3px 0;border-bottom:1px solid #ccc;line-height:1.4;}
-.rc-finding-item:last-child{border-bottom:none;}
-.gate-note{font-size:10px;color:#888;font-style:italic;margin-top:6px;}
-.stake-row{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px;}
-.stake-pill{font-size:9px;padding:2px 7px;border-radius:8px;background:#e8eef8;color:#1a3a7a;border:1px solid #b0c4e8;}
-.plan-intro{font-size:12px;color:#555;margin-bottom:16px;line-height:1.6;}
-.plan-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
-.plan-col{background:#f8f9fb;border:1px solid #dde;border-radius:4px;padding:12px;page-break-inside:avoid;}
-.plan-period{font-size:9px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;margin-bottom:2px;}
-.p30 .plan-period{color:#c0392b;}
-.p60 .plan-period{color:#856404;}
-.p90 .plan-period{color:#155724;}
-.plan-subtitle{font-size:10px;color:#888;margin-bottom:10px;}
-.plan-item{font-size:11px;color:#222;padding:5px 0;border-bottom:1px solid #dde;line-height:1.4;}
-.plan-item:last-child{border-bottom:none;}
-.pi-owner{font-size:10px;color:#555;display:block;margin-top:2px;}
-.pi-gated{font-size:10px;color:#aaa;font-style:italic;display:block;margin-top:2px;}
-.plan-gated-block{background:#fafafa;border:1px solid #ddd;border-radius:3px;padding:6px 8px;font-size:10px;color:#999;font-style:italic;margin-top:6px;}
-@media print{
-  body{padding:0;}
-  .section-wrap{page-break-before:always;}
-  .section-wrap:first-child{page-break-before:avoid;}
-}
-</style>
-</head><body>
-${sectionHTML('phase-assess','Assessment')}
-${sectionHTML('phase-results','Findings')}
-${sectionHTML('phase-plan','30/60/90 Plan')}
-<script>window.onload=function(){window.print();}<\/script>
-</body></html>`;
-
-  const win = window.open('', '_blank');
-  if (!win) {
-    alert('Pop-up blocked. Please allow pop-ups for this site and try again.');
-    return;
-  }
-  win.document.write(html);
-  win.document.close();
+    const activeId = 'phase-' + (document.querySelector('.tab-btn.active')?.textContent.toLowerCase().trim().replace('/','').replace(' ','') || 'assess');
+    const mapping = {'assessment':'assess','findings':'results','3060plan':'plan','3060/90plan':'plan'};
+    const tabText = document.querySelector('.tab-btn.active')?.textContent.trim().toLowerCase() || 'assessment';
+    const activePhase = tabText.includes('find') ? 'results' : tabText.includes('plan') ? 'plan' : 'assess';
+    document.getElementById('phase-' + activePhase)?.classList.add('active');
+  }, 1000);
 }
 
 buildAssessment();
