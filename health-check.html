@@ -506,7 +506,10 @@ function setSignal(key, val) {
 
 function resetAll() {
   scores = {};
-  function printReport() {
+  buildAssessment();
+}
+
+function printReport() {
   const company = document.getElementById('companyInput').value || 'Untitled';
   const date = new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
 
