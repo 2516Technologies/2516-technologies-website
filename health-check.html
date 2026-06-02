@@ -214,7 +214,7 @@ a{color:var(--gold);text-decoration:none;}
   <a href="https://2516technologies.com" class="nav-brand"><img src="2516_logo_horizontal_dark_web (1).png" alt="2516 Technologies" style="height:32px;width:auto;"></a>
   <span class="nav-tag">Data Health Check</span>
 </nav>
-<button class="dl-btn" id="dlBtn" onclick="printReport()">&#8595; Save as PDF</button>
+<button class="dl-btn" id="dlBtn" onclick="(function(){try{printReport();}catch(e){alert('Error: '+e.message);}})()">&#8595; Save as PDF</button>
 
 <main class="main">
 
