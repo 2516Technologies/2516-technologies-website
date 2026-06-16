@@ -590,6 +590,7 @@ var selectedObjectives = new Set();
 var scores = {};
 var signals = {};
 var notes = {};
+var extras = {};
 
 var THEMES = [
   {
@@ -651,6 +652,23 @@ var THEMES = [
       'We have a consistent way of defining and measuring metrics across teams.',
       'Data is treated as a real organizational asset with ownership and accountability.'
     ]
+  },
+  {
+    id: 'ai',
+    title: 'AI Readiness & Initiatives',
+    question: 'How intentional is your organization about AI?',
+    signals: [
+      'Active AI initiatives or pilots underway.',
+      'Our data is clean, accessible, and structured enough to support AI or ML use cases.',
+      'There is a clear owner or team responsible for AI strategy and implementation.',
+      'We have clearly defined success metrics for our AI initiatives.'
+    ],
+    scaleAnchors: ['No initiatives', 'AI embedded with clear ROI'],
+    scaleLabels: { 1: '1 - No initiatives, no strategy', 2: '2 - Exploring, nothing deployed', 3: '3 - Pilots underway, no clear ownership', 4: '4 - Active initiatives, some measurable results', 5: '5 - AI is embedded in operations with clear ROI' },
+    extraFields: [
+      { id: 'ai-tools', label: 'What AI tools, platforms, or vendors are you currently using or piloting?', placeholder: 'e.g. ChatGPT, Microsoft Copilot, custom ML models, automation tools...' },
+      { id: 'ai-roi', label: 'Have you seen measurable ROI from any AI initiative? If so, which department or function?', placeholder: 'e.g. Yes -- operations reduced manual processing time by 30%. Or: Not yet, still in early pilots.' }
+    ]
   }
 ];
 
@@ -671,12 +689,23 @@ function buildThemes() {
       return '<button class="scale-btn" id="sc-' + t.id + '-' + n + '" onclick="setScore(\'' + t.id + '\',' + n + ')">' + n + '</button>';
     }).join('');
 
+    var extraHTML = '';
+    if (t.extraFields) {
+      extraHTML = t.extraFields.map(function(f) {
+        return '<div style="margin-top:14px;">'
+          + '<div style="font-size:12px;font-weight:500;color:var(--text);margin-bottom:7px;">' + f.label + '</div>'
+          + '<textarea class="notes-field" id="extra-' + f.id + '" placeholder="' + f.placeholder + '" oninput="setExtra(\'' + f.id + '\', this.value)"></textarea>'
+          + '</div>';
+      }).join('');
+    }
+
+    var numStr = idx < 9 ? '0' + (idx + 1) : '' + (idx + 1);
     var card = document.createElement('div');
     card.className = 'theme-card';
     card.id = 'card-' + t.id;
     card.innerHTML = '<div class="theme-header">'
       + '<div class="theme-title-wrap">'
-      + '<span class="theme-num">0' + (idx + 1) + '</span>'
+      + '<span class="theme-num">' + numStr + '</span>'
       + '<span class="theme-title">' + t.title + '</span>'
       + '</div>'
       + '<span class="theme-badge" id="badge-' + t.id + '">Not rated</span>'
@@ -685,10 +714,11 @@ function buildThemes() {
       + '<p class="theme-question">' + t.question + '</p>'
       + '<div class="scale-wrap">'
       + '<div class="scale-row">' + scaleHTML + '</div>'
-      + '<div class="scale-anchors"><span>Major gaps</span><span>Working well</span></div>'
+      + '<div class="scale-anchors"><span>' + (t.scaleAnchors ? t.scaleAnchors[0] : 'Major gaps') + '</span><span>' + (t.scaleAnchors ? t.scaleAnchors[1] : 'Working well') + '</span></div>'
       + '</div>'
       + '<div class="signal-section-label">A few specifics</div>'
       + signalHTML
+      + extraHTML
       + '<textarea class="notes-field" placeholder="Anything else worth noting here..." oninput="setNote(\'' + t.id + '\', this.value)"></textarea>'
       + '</div>';
     container.appendChild(card);
@@ -723,6 +753,7 @@ function setSignal(themeId, idx, val) {
 }
 
 function setNote(id, val) { notes[id] = val; }
+function setExtra(id, val) { extras[id] = val; }
 
 function toggleChip(el, val) {
   if (selectedObjectives.has(val)) {
@@ -734,12 +765,10 @@ function toggleChip(el, val) {
   }
 }
 
-// ── EMAILJS CONFIG ── swap these three values after setting up EmailJS ──
-var EMAILJS_PUBLIC_KEY  = 'YOUR_PUBLIC_KEY';
-var EMAILJS_SERVICE_ID  = 'YOUR_SERVICE_ID';
-var EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';
-
-emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+// EmailJS config
+var EMAILJS_PUBLIC_KEY  = 't8NTZqtGQ8HDt3eiH';
+var EMAILJS_SERVICE_ID  = 'service_b1v0j2i';
+var EMAILJS_TEMPLATE_ID = 'template_tufzwtf';
 
 var HORIZON_LABELS = {
   'lt12': 'Less than 12 months',
@@ -786,6 +815,12 @@ var SIGNAL_LABELS = {
     'Operational leaders use data independently',
     'Consistent metric definitions across teams',
     'Data treated as an organizational asset with accountability'
+  ],
+  'ai': [
+    'Active AI initiatives or pilots underway',
+    'Data is clean and structured enough to support AI/ML',
+    'Clear owner or team responsible for AI strategy',
+    'Clearly defined success metrics for AI initiatives'
   ]
 };
 
@@ -794,16 +829,25 @@ var SCORE_LABELS = { 1: '1 - Major gaps', 2: '2 - Significant gaps', 3: '3 - Par
 function buildScoreSummary() {
   return THEMES.map(function(t) {
     var s = scores[t.id];
-    var scoreStr = s ? SCORE_LABELS[s] : 'Not rated';
+    var labelSet = t.scaleLabels || SCORE_LABELS;
+    var scoreStr = s ? labelSet[s] : 'Not rated';
     var sigs = signals[t.id] || {};
     var sigLines = SIGNAL_LABELS[t.id].map(function(label, i) {
       var ans = sigs[i] ? sigs[i].toUpperCase() : 'No answer';
       return '  [' + ans + '] ' + label;
     }).join('\n');
+    var extraLines = '';
+    if (t.extraFields) {
+      extraLines = '\n' + t.extraFields.map(function(f) {
+        var val = extras[f.id] || '(not provided)';
+        return '  ' + f.label + '\n  -> ' + val;
+      }).join('\n');
+    }
     var note = notes[t.id] ? '\n  Notes: ' + notes[t.id] : '';
     return '=== ' + t.title + ' ===\n'
       + 'Score: ' + scoreStr + '\n\n'
       + sigLines
+      + extraLines
       + note;
   }).join('\n\n');
 }
@@ -815,19 +859,19 @@ function handleSubmit() {
   btn.disabled = true;
   btn.textContent = 'Sending...';
 
-  var orgName     = document.getElementById('org-name').value.trim() || '(not provided)';
-  var contactName = document.getElementById('contact-name').value.trim() || '(not provided)';
-  var contactRole = document.getElementById('contact-role').value.trim() || '(not provided)';
-  var contactEmail= document.getElementById('contact-email').value.trim() || '(not provided)';
-  var horizonVal  = document.getElementById('horizon').value;
-  var peVal       = document.getElementById('pe-status').value;
-  var events      = document.getElementById('events').value.trim() || 'None noted';
-  var pain        = document.getElementById('pain').value.trim() || '(not provided)';
+  var orgName      = document.getElementById('org-name').value.trim() || '(not provided)';
+  var contactName  = document.getElementById('contact-name').value.trim() || '(not provided)';
+  var contactRole  = document.getElementById('contact-role').value.trim() || '(not provided)';
+  var contactEmail = document.getElementById('contact-email').value.trim() || '(not provided)';
+  var horizonVal   = document.getElementById('horizon').value;
+  var peVal        = document.getElementById('pe-status').value;
+  var events       = document.getElementById('events').value.trim() || 'None noted';
+  var pain         = document.getElementById('pain').value.trim() || '(not provided)';
   var objectivesStr = Array.from(selectedObjectives).join(', ') || 'None selected';
-  var horizonStr  = HORIZON_LABELS[horizonVal] || '(not selected)';
-  var peStr       = PE_LABELS[peVal] || '(not selected)';
+  var horizonStr   = HORIZON_LABELS[horizonVal] || '(not selected)';
+  var peStr        = PE_LABELS[peVal] || '(not selected)';
   var scoreSummary = buildScoreSummary();
-  var submittedAt = new Date().toLocaleString('en-US', { timeZone: 'America/New_York', dateStyle: 'full', timeStyle: 'short' });
+  var submittedAt  = new Date().toLocaleString('en-US', { timeZone: 'America/New_York', dateStyle: 'full', timeStyle: 'short' });
 
   var templateParams = {
     org_name:      orgName,
@@ -843,7 +887,7 @@ function handleSubmit() {
     submitted_at:  submittedAt
   };
 
-  emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
+  emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams, EMAILJS_PUBLIC_KEY)
     .then(function() {
       btn.textContent = 'Submitted';
       confirmation.classList.add('show');
@@ -857,7 +901,9 @@ function handleSubmit() {
     });
 }
 
-buildThemes();
+window.addEventListener('DOMContentLoaded', function() {
+  buildThemes();
+});
 </script>
 </body>
 </html>
