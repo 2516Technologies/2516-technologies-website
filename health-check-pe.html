@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Infrastructure Health Check — 2516 Technologies</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<style>
+  :root {
+    --bg: #0a0e1a;
+    --surface: #111827;
+    --surface2: #1a2235;
+    --border: #1e2d45;
+    --text: #e8eaf0;
+    --dim: #6b7a99;
+    --gold: #C9A84C;
+    --gold-light: #d4a843;
+    --gold-dim: rgba(201,168,76,0.15);
+    --blue: #3b82f6;
+    --navy: #1e3a8a;
+    --red: #ef4444;
+    --green: #22c55e;
+    --amber: #f59e0b;
+    --muted: #6b7a99;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* NAV */
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 32px;
+    height: 64px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav-logo img { height: 32px; width: auto; }
+  .nav-links { display: flex; align-items: center; gap: 28px; }
+  .nav-link {
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: .06em;
+    text-decoration: none;
+    transition: color .2s;
+  }
+  .nav-link:hover { color: var(--gold); }
+  .nav-cta {
+    background: var(--gold);
+    border: none;
+    border-radius: 8px;
+    color: #0a0e1a;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .06em;
+    padding: 9px 20px;
+    text-decoration: none;
+    transition: background .2s;
+  }
+  .nav-cta:hover { background: var(--gold-light); }
+
+  /* HERO */
+  .hero {
+    border-bottom: 1px solid var(--border);
+    padding: 64px 32px 56px;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+  .eyebrow {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 14px;
+  }
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(32px, 5vw, 48px);
+    font-weight: 300;
+    line-height: 1.15;
+    margin-bottom: 16px;
+  }
+  .hero h1 em { font-style: italic; color: var(--gold); }
+  .hero p {
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.75;
+    max-width: 560px;
+  }
+
+  /* CONTAINER */
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 48px 32px 100px;
+  }
+
+  /* SECTION HEADERS */
+  .section-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 6px;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    font-weight: 400;
+    margin-bottom: 6px;
+  }
+  .section-desc {
+    color: var(--muted);
+    font-size: 13px;
+    margin-bottom: 24px;
+    line-height: 1.6;
+  }
+  .section-divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 40px 0;
+  }
+
+  /* INTAKE FIELDS */
+  .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+  .field-grid.single { grid-template-columns: 1fr; }
+  .field { display: flex; flex-direction: column; gap: 7px; }
+  .field.full { grid-column: 1 / -1; }
+  .field label {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: .04em;
+    color: var(--text);
+  }
+  .field label .hint {
+    font-weight: 400;
+    color: var(--muted);
+    margin-left: 6px;
+  }
+  .field input,
+  .field select,
+  .field textarea {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    padding: 11px 14px;
+    width: 100%;
+    transition: border-color .2s;
+  }
+  .field input:focus,
+  .field select:focus,
+  .field textarea:focus {
+    outline: none;
+    border-color: var(--gold);
+  }
+  .field input::placeholder,
+  .field textarea::placeholder { color: var(--muted); }
+  .field select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b7a99' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; }
+  .field select option { background: var(--surface2); }
+  .field textarea { resize: vertical; min-height: 80px; }
+
+  /* CHIPS */
+  .chip-label { font-size: 12px; font-weight: 500; color: var(--text); margin-bottom: 10px; }
+  .chip-hint { font-weight: 400; color: var(--muted); margin-left: 6px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+  .chip {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    color: var(--muted);
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 6px 16px;
+    transition: all .15s;
+    user-select: none;
+  }
+  .chip:hover { border-color: var(--gold); color: var(--text); }
+  .chip.active { background: var(--gold-dim); border-color: var(--gold); color: var(--gold); }
+
+  /* THEME CARDS */
+  .theme-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    transition: border-color .2s;
+  }
+  .theme-card.scored { border-color: rgba(201,168,76,.3); }
+  .theme-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px 16px;
+  }
+  .theme-num {
+    font-size: 11px;
+    color: var(--muted);
+    font-weight: 500;
+    min-width: 22px;
+  }
+  .theme-title-wrap { display: flex; align-items: baseline; gap: 14px; }
+  .theme-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 21px;
+    font-weight: 400;
+  }
+  .theme-badge {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+    background: var(--surface2);
+    color: var(--muted);
+    white-space: nowrap;
+    transition: all .2s;
+  }
+  .theme-badge.scored { background: var(--gold-dim); color: var(--gold); }
+  .theme-body {
+    padding: 0 24px 22px;
+    border-top: 1px solid var(--border);
+  }
+  .theme-question {
+    font-size: 14px;
+    color: var(--text);
+    margin: 18px 0 16px;
+    line-height: 1.55;
+  }
+
+  /* SCALE */
+  .scale-wrap { margin-bottom: 6px; }
+  .scale-row { display: flex; gap: 8px; margin-bottom: 6px; }
+  .scale-btn {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--muted);
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    height: 50px;
+    width: 50px;
+    transition: all .15s;
+  }
+  .scale-btn:hover { border-color: var(--gold); color: var(--text); }
+  .scale-btn.active { background: var(--gold); border-color: var(--gold); color: #0a0e1a; }
+  .scale-anchors {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: .06em;
+    width: 274px;
+    margin-bottom: 20px;
+  }
+
+  /* SIGNAL CHECKS */
+  .signal-section-label {
+    font-size: 11px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+  .signal-item {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 10px 0;
+    border-top: 1px solid var(--border);
+  }
+  .signal-q { font-size: 13px; color: var(--text); flex: 1; line-height: 1.5; }
+  .signal-btns { display: flex; gap: 6px; flex-shrink: 0; }
+  .signal-btn {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .06em;
+    padding: 5px 13px;
+    transition: all .15s;
+  }
+  .signal-btn:hover { border-color: var(--blue); color: var(--text); }
+  .signal-btn.yes.active { background: rgba(34,197,94,.12); border-color: var(--green); color: var(--green); }
+  .signal-btn.no.active { background: rgba(239,68,68,.1); border-color: var(--red); color: var(--red); }
+
+  /* NOTES */
+  .notes-field {
+    width: 100%;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    margin-top: 16px;
+    padding: 10px 14px;
+    resize: vertical;
+    min-height: 60px;
+    transition: border-color .2s;
+  }
+  .notes-field:focus { outline: none; border-color: var(--border); }
+  .notes-field::placeholder { color: var(--muted); }
+
+  /* SUBMIT */
+  .submit-area { margin-top: 40px; text-align: center; }
+  .submit-note {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 20px;
+    line-height: 1.6;
+  }
+  .btn-submit {
+    background: var(--gold);
+    border: none;
+    border-radius: 8px;
+    color: #0a0e1a;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: .04em;
+    padding: 16px 48px;
+    transition: all .2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .btn-submit:hover { background: var(--gold-light); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(0,0,0,.25); }
+  .btn-submit:disabled { opacity: .5; cursor: default; transform: none; box-shadow: none; }
+
+  /* CONFIRMATION */
+  .confirmation {
+    display: none;
+    background: var(--surface);
+    border: 1px solid rgba(201,168,76,.35);
+    border-radius: 12px;
+    padding: 40px 36px;
+    text-align: center;
+    margin-top: 32px;
+  }
+  .confirmation.show { display: block; animation: fadeUp .4s ease; }
+  .confirm-icon { font-size: 32px; margin-bottom: 16px; }
+  .confirmation h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 300;
+    margin-bottom: 10px;
+  }
+  .confirmation p { color: var(--muted); font-size: 14px; line-height: 1.7; max-width: 400px; margin: 0 auto 20px; }
+  .ticker-wrap {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 6px 16px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .ticker-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--gold);
+    animation: pulse 1.8s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: .4; transform: scale(.8); }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .footer-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    font-weight: 300;
+    color: var(--muted);
+  }
+  .footer-links { display: flex; gap: 24px; }
+  .footer-link {
+    font-size: 12px;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color .2s;
+  }
+  .footer-link:hover { color: var(--gold); }
+
+  /* RESPONSIVE */
+  @media (max-width: 640px) {
+    nav { padding: 0 16px; }
+    .nav-links { display: none; }
+    .hero { padding: 40px 16px 36px; }
+    .container { padding: 32px 16px 80px; }
+    .field-grid { grid-template-columns: 1fr; }
+    .scale-btn { width: 44px; height: 44px; font-size: 17px; }
+    .scale-anchors { width: 240px; }
+    footer { flex-direction: column; gap: 16px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="https://2516technologies.com" class="nav-logo">
+    <img src="2516_logo_horizontal_dark_web (1).png" alt="2516 Technologies">
+  </a>
+  <div class="nav-links">
+    <a href="https://2516technologies.com/about.html" class="nav-link">About</a>
+    <a href="https://2516technologies.com/services.html" class="nav-link">Services</a>
+    <a href="https://2516technologies.com/contact.html" class="nav-cta">Get in Touch</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="eyebrow">2516 Technologies &nbsp;·&nbsp; Data Infrastructure</div>
+  <h1>How well is your data<br><em>working for you?</em></h1>
+  <p>This short assessment helps us understand where your data infrastructure stands today — what's working, where there's friction, and what your organization needs to get where it's going. Takes about five minutes.</p>
+</div>
+
+<!-- FORM -->
+<div class="container">
+
+  <!-- ABOUT YOU -->
+  <div class="section-label">Before we begin</div>
+  <div class="section-title">Tell us about your situation</div>
+  <div class="section-desc">No technical knowledge required. Answer in whatever terms feel natural.</div>
+
+  <div class="field-grid">
+    <div class="field">
+      <label>Organization name</label>
+      <input type="text" id="org-name" placeholder="Your company">
+    </div>
+    <div class="field">
+      <label>Your name</label>
+      <input type="text" id="contact-name" placeholder="First and last name">
+    </div>
+    <div class="field">
+      <label>Your role</label>
+      <input type="text" id="contact-role" placeholder="e.g. CEO, CFO, Head of Operations">
+    </div>
+    <div class="field">
+      <label>Email <span class="hint">— we'll send your summary here</span></label>
+      <input type="email" id="contact-email" placeholder="you@company.com">
+    </div>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- GOALS -->
+  <div class="section-label">Your goals</div>
+  <div class="section-title">What are you trying to accomplish?</div>
+  <div class="section-desc">Select everything that applies — these help us frame your results.</div>
+
+  <div class="chip-label">Business objectives <span class="chip-hint">(select all that apply)</span></div>
+  <div class="chips" id="objective-chips">
+    <span class="chip" onclick="toggleChip(this,'exit-sale')">Exit / Sale</span>
+    <span class="chip" onclick="toggleChip(this,'scale-ops')">Scale Operations</span>
+    <span class="chip" onclick="toggleChip(this,'acquisition')">Acquire / Integrate</span>
+    <span class="chip" onclick="toggleChip(this,'investor-reporting')">Investor Reporting</span>
+    <span class="chip" onclick="toggleChip(this,'product-expansion')">Product Expansion</span>
+    <span class="chip" onclick="toggleChip(this,'pe-compliance')">PE / Compliance Readiness</span>
+    <span class="chip" onclick="toggleChip(this,'reduce-headcount')">Reduce Headcount</span>
+    <span class="chip" onclick="toggleChip(this,'automate-ops')">Automate Operations</span>
+    <span class="chip" onclick="toggleChip(this,'cost-reduction')">Cost Reduction</span>
+    <span class="chip" onclick="toggleChip(this,'migration')">System / Platform Migration</span>
+    <span class="chip" onclick="toggleChip(this,'due-diligence')">Due Diligence Prep</span>
+    <span class="chip" onclick="toggleChip(this,'data-monetization')">Data Monetization</span>
+    <span class="chip" onclick="toggleChip(this,'ai-readiness')">AI Readiness</span>
+    <span class="chip" onclick="toggleChip(this,'other')">Other</span>
+  </div>
+
+  <div class="field-grid">
+    <div class="field">
+      <label>Time horizon for these goals</label>
+      <select id="horizon">
+        <option value="" disabled selected>Select a timeframe</option>
+        <option value="lt12">Less than 12 months</option>
+        <option value="12-24">12 – 24 months</option>
+        <option value="24-36">24 – 36 months</option>
+        <option value="gt36">36+ months</option>
+        <option value="unknown">Not sure yet</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Investor situation</label>
+      <select id="pe-status">
+        <option value="" disabled selected>Select one</option>
+        <option value="pe-backed">PE-backed — active oversight</option>
+        <option value="pe-exploring">Exploring PE / currently raising</option>
+        <option value="founder-led">Founder-led, no outside investors</option>
+        <option value="pre-exit">PE-owned, approaching exit</option>
+      </select>
+    </div>
+    <div class="field full">
+      <label>Any major events or deadlines coming up?</label>
+      <input type="text" id="events" placeholder="e.g. investor audit in Q3, acquisition target under review, board reporting restructure">
+    </div>
+    <div class="field full">
+      <label>In your own words — what's the biggest data or reporting challenge you're dealing with right now?</label>
+      <textarea id="pain" placeholder="No need to be technical. Just describe what's frustrating or unclear..."></textarea>
+    </div>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- ASSESSMENT -->
+  <div class="section-label">The assessment</div>
+  <div class="section-title">Rate each area of your data infrastructure</div>
+  <div class="section-desc">1 means major gaps or no visibility. 5 means it's working well and you're confident in it. There are no wrong answers — honest responses give you the most useful results.</div>
+
+  <div id="themes-container"></div>
+
+  <!-- SUBMIT -->
+  <div class="submit-area">
+    <p class="submit-note">Your responses are confidential and used only to prepare your assessment.<br>We'll review your answers and follow up within one business day.</p>
+    <button class="btn-submit" id="submit-btn" onclick="handleSubmit()">
+      Submit Assessment &rarr;
+    </button>
+  </div>
+
+  <!-- CONFIRMATION -->
+  <div class="confirmation" id="confirmation">
+    <div class="confirm-icon">✓</div>
+    <h3>We've received your assessment.</h3>
+    <p>Thank you for taking the time. We'll review your responses and be in touch within one business day with your findings and next steps.</p>
+    <div class="ticker-wrap">
+      <div class="ticker-dot"></div>
+      <span>2516 Technologies will be in touch shortly</span>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-brand">2516 Technologies</span>
+  <div class="footer-links">
+    <a href="https://2516technologies.com" class="footer-link">Home</a>
+    <a href="https://2516technologies.com/services.html" class="footer-link">Services</a>
+    <a href="https://2516technologies.com/contact.html" class="footer-link">Contact</a>
+    <a href="mailto:mark@2516technologies.com" class="footer-link">mark@2516technologies.com</a>
+  </div>
+</footer>
+
+<script>
+var selectedObjectives = new Set();
+var scores = {};
+var signals = {};
+var notes = {};
+
+var THEMES = [
+  {
+    id: 'infra',
+    title: 'Data Infrastructure & Architecture',
+    question: 'How well do you know where your data lives, how it moves between systems, and which source you would trust if the numbers did not match?',
+    signals: [
+      'We have a documented map of our data systems and how they connect.',
+      'Everyone knows which system is the source of truth for key numbers.',
+      'We have monitoring in place — we know when something breaks before it causes problems.'
+    ]
+  },
+  {
+    id: 'reporting',
+    title: 'Reporting & Decision Readiness',
+    question: 'How easily can your leadership team get the numbers they need -- without chasing someone down or waiting on a custom report?',
+    signals: [
+      'Leadership can pull key metrics without requesting a report from someone else.',
+      'Our investor or board reporting is produced without significant manual effort.',
+      'Different teams use the same numbers when reporting on the same metric.'
+    ]
+  },
+  {
+    id: 'trust',
+    title: 'Data Trust & Quality',
+    question: 'When someone puts a number in front of your team, do people trust it -- or does someone always want to double-check it first?',
+    signals: [
+      'When a report is presented, the numbers are generally accepted without question.',
+      'We do not rely on parallel spreadsheets or shadow data to validate official reports.',
+      'We have never had a decision reversed because the underlying data turned out to be wrong.'
+    ]
+  },
+  {
+    id: 'tech',
+    title: 'Technology Stack Coherence',
+    question: 'Are your tools working together, or are people spending time bridging gaps that software should be handling automatically?',
+    signals: [
+      'Every tool in our stack has a clear owner and a defined purpose.',
+      'Our core systems are integrated -- data does not need to be moved manually between them.',
+      'Our current stack supports the reporting and operational needs of the business.'
+    ]
+  },
+  {
+    id: 'governance',
+    title: 'Governance & Access Control',
+    question: 'If an investor or auditor asked you today who owns your data and who can access what -- how confident are you in that answer?',
+    signals: [
+      'Every critical data set or system has a defined owner.',
+      'Access to sensitive data (financial, HR, operational) is controlled and auditable.',
+      'We could produce a data access audit trail if asked by an investor or regulator.'
+    ]
+  },
+  {
+    id: 'maturity',
+    title: 'Organizational Data Maturity',
+    question: 'Can your team access and use data on their own -- or does everything flow through one or two people who know where to look?',
+    signals: [
+      'Our operational leaders use data independently -- they do not rely on analysts to pull numbers.',
+      'We have a consistent way of defining and measuring metrics across teams.',
+      'Data is treated as a real organizational asset with ownership and accountability.'
+    ]
+  }
+];
+
+function buildThemes() {
+  var container = document.getElementById('themes-container');
+  container.innerHTML = '';
+  THEMES.forEach(function(t, idx) {
+    var signalHTML = t.signals.map(function(q, si) {
+      return '<div class="signal-item">'
+        + '<span class="signal-q">' + q + '</span>'
+        + '<div class="signal-btns">'
+        + '<button class="signal-btn yes" id="sig-' + t.id + '-' + si + '-yes" onclick="setSignal(\'' + t.id + '\',' + si + ',\'yes\')">YES</button>'
+        + '<button class="signal-btn no" id="sig-' + t.id + '-' + si + '-no" onclick="setSignal(\'' + t.id + '\',' + si + ',\'no\')">NO</button>'
+        + '</div></div>';
+    }).join('');
+
+    var scaleHTML = [1,2,3,4,5].map(function(n) {
+      return '<button class="scale-btn" id="sc-' + t.id + '-' + n + '" onclick="setScore(\'' + t.id + '\',' + n + ')">' + n + '</button>';
+    }).join('');
+
+    var card = document.createElement('div');
+    card.className = 'theme-card';
+    card.id = 'card-' + t.id;
+    card.innerHTML = '<div class="theme-header">'
+      + '<div class="theme-title-wrap">'
+      + '<span class="theme-num">0' + (idx + 1) + '</span>'
+      + '<span class="theme-title">' + t.title + '</span>'
+      + '</div>'
+      + '<span class="theme-badge" id="badge-' + t.id + '">Not rated</span>'
+      + '</div>'
+      + '<div class="theme-body">'
+      + '<p class="theme-question">' + t.question + '</p>'
+      + '<div class="scale-wrap">'
+      + '<div class="scale-row">' + scaleHTML + '</div>'
+      + '<div class="scale-anchors"><span>Major gaps</span><span>Working well</span></div>'
+      + '</div>'
+      + '<div class="signal-section-label">A few specifics</div>'
+      + signalHTML
+      + '<textarea class="notes-field" placeholder="Anything else worth noting here..." oninput="setNote(\'' + t.id + '\', this.value)"></textarea>'
+      + '</div>';
+    container.appendChild(card);
+  });
+}
+
+function setScore(id, val) {
+  scores[id] = val;
+  for (var n = 1; n <= 5; n++) {
+    var btn = document.getElementById('sc-' + id + '-' + n);
+    if (btn) btn.classList.toggle('active', n === val);
+  }
+  var badge = document.getElementById('badge-' + id);
+  if (badge) {
+    badge.textContent = val + ' / 5';
+    badge.classList.add('scored');
+  }
+  var card = document.getElementById('card-' + id);
+  if (card) card.classList.add('scored');
+}
+
+function setSignal(themeId, idx, val) {
+  if (!signals[themeId]) signals[themeId] = {};
+  signals[themeId][idx] = val;
+  ['yes','no'].forEach(function(v) {
+    var btn = document.getElementById('sig-' + themeId + '-' + idx + '-' + v);
+    if (!btn) return;
+    btn.classList.toggle('active', v === val);
+    if (v === val) btn.classList.add(v);
+    else btn.classList.remove(v);
+  });
+}
+
+function setNote(id, val) { notes[id] = val; }
+
+function toggleChip(el, val) {
+  if (selectedObjectives.has(val)) {
+    selectedObjectives.delete(val);
+    el.classList.remove('active');
+  } else {
+    selectedObjectives.add(val);
+    el.classList.add('active');
+  }
+}
+
+// ── EMAILJS CONFIG ── swap these three values after setting up EmailJS ──
+var EMAILJS_PUBLIC_KEY  = 't8NTZqtGQ8HDt3eiH';
+var EMAILJS_SERVICE_ID  = 'service_b1v0j2i';
+var EMAILJS_TEMPLATE_ID = 'template_x3hs60c';
+
+emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+
+var HORIZON_LABELS = {
+  'lt12': 'Less than 12 months',
+  '12-24': '12 - 24 months',
+  '24-36': '24 - 36 months',
+  'gt36': '36+ months',
+  'unknown': 'Not sure yet'
+};
+
+var PE_LABELS = {
+  'pe-backed': 'PE-backed, active oversight',
+  'pe-exploring': 'Exploring PE / currently raising',
+  'founder-led': 'Founder-led, no outside investors',
+  'pre-exit': 'PE-owned, approaching exit'
+};
+
+var SIGNAL_LABELS = {
+  'infra': [
+    'Documented map of data systems',
+    'Clear source of truth for key numbers',
+    'Monitoring in place when something breaks'
+  ],
+  'reporting': [
+    'Leadership can pull metrics without requesting a report',
+    'Investor/board reporting produced without manual effort',
+    'Teams use the same numbers for the same metric'
+  ],
+  'trust': [
+    'Numbers accepted without question when presented',
+    'No reliance on parallel spreadsheets to validate reports',
+    'No decision ever reversed due to bad data'
+  ],
+  'tech': [
+    'Every tool has a clear owner and defined purpose',
+    'Core systems are integrated, no manual data movement',
+    'Stack supports reporting and operational needs'
+  ],
+  'governance': [
+    'Every critical data set has a defined owner',
+    'Access to sensitive data is controlled and auditable',
+    'Can produce a data access audit trail if asked'
+  ],
+  'maturity': [
+    'Operational leaders use data independently',
+    'Consistent metric definitions across teams',
+    'Data treated as an organizational asset with accountability'
+  ]
+};
+
+var SCORE_LABELS = { 1: '1 - Major gaps', 2: '2 - Significant gaps', 3: '3 - Partial', 4: '4 - Mostly solid', 5: '5 - Working well' };
+
+function buildScoreSummary() {
+  return THEMES.map(function(t) {
+    var s = scores[t.id];
+    var scoreStr = s ? SCORE_LABELS[s] : 'Not rated';
+    var sigs = signals[t.id] || {};
+    var sigLines = SIGNAL_LABELS[t.id].map(function(label, i) {
+      var ans = sigs[i] ? sigs[i].toUpperCase() : 'No answer';
+      return '  [' + ans + '] ' + label;
+    }).join('\n');
+    var note = notes[t.id] ? '\n  Notes: ' + notes[t.id] : '';
+    return '=== ' + t.title + ' ===\n'
+      + 'Score: ' + scoreStr + '\n\n'
+      + sigLines
+      + note;
+  }).join('\n\n');
+}
+
+function handleSubmit() {
+  var btn = document.getElementById('submit-btn');
+  var confirmation = document.getElementById('confirmation');
+
+  btn.disabled = true;
+  btn.textContent = 'Sending...';
+
+  var orgName     = document.getElementById('org-name').value.trim() || '(not provided)';
+  var contactName = document.getElementById('contact-name').value.trim() || '(not provided)';
+  var contactRole = document.getElementById('contact-role').value.trim() || '(not provided)';
+  var contactEmail= document.getElementById('contact-email').value.trim() || '(not provided)';
+  var horizonVal  = document.getElementById('horizon').value;
+  var peVal       = document.getElementById('pe-status').value;
+  var events      = document.getElementById('events').value.trim() || 'None noted';
+  var pain        = document.getElementById('pain').value.trim() || '(not provided)';
+  var objectivesStr = Array.from(selectedObjectives).join(', ') || 'None selected';
+  var horizonStr  = HORIZON_LABELS[horizonVal] || '(not selected)';
+  var peStr       = PE_LABELS[peVal] || '(not selected)';
+  var scoreSummary = buildScoreSummary();
+  var submittedAt = new Date().toLocaleString('en-US', { timeZone: 'America/New_York', dateStyle: 'full', timeStyle: 'short' });
+
+  var templateParams = {
+    org_name:      orgName,
+    contact_name:  contactName,
+    contact_role:  contactRole,
+    contact_email: contactEmail,
+    objectives:    objectivesStr,
+    horizon:       horizonStr,
+    pe_status:     peStr,
+    events:        events,
+    pain:          pain,
+    score_summary: scoreSummary,
+    submitted_at:  submittedAt
+  };
+
+  emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
+    .then(function() {
+      btn.textContent = 'Submitted';
+      confirmation.classList.add('show');
+      confirmation.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    })
+    .catch(function(err) {
+      console.error('EmailJS error:', err);
+      btn.disabled = false;
+      btn.textContent = 'Submit Assessment \u2192';
+      alert('Something went wrong sending your assessment. Please try again or email mark@2516technologies.com directly.');
+    });
+}
+
+buildThemes();
+</script>
+</body>
+</html>
