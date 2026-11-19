@@ -36,9 +36,16 @@ html, body {
 .desktop-tool { display: flex; flex-direction: column; align-items: center; padding: 2rem; gap: 1.6rem; min-height: 100vh; }
 .mobile-tool  { display: none; flex-direction: column; height: 100dvh; overflow: hidden; }
 
-@media (max-width: 768px) {
+/* Phone layout for narrow screens OR any touch-first device (phones/tablets in landscape have no EyeDropper) */
+@media (max-width: 768px), (hover: none) and (pointer: coarse) {
   .desktop-tool { display: none !important; }
   .mobile-tool  { display: flex !important; }
+}
+/* Short landscape screens: camera on the left, results on the right */
+@media ((max-width: 768px) or ((hover: none) and (pointer: coarse))) and (orientation: landscape) and (max-height: 500px) {
+  .mobile-tool { display: grid !important; grid-template-columns: 1fr 1fr; grid-template-rows: auto 1fr; }
+  .m-header { grid-column: 1 / -1; padding-top: 0.5rem; padding-bottom: 0.5rem; }
+  .results { height: auto !important; min-height: 0; }
 }
 
 /* ============================================================
@@ -353,7 +360,7 @@ canvas { display: none; }
 </head>
 <body>
 <div class="browser-warning" id="browserWarning" style="display:none">
-  📷 Camera blocked by LinkedIn — open in your browser for the full experience.
+  📷 The camera may be blocked in this in-app browser — open in Chrome or Safari.
   <a href="https://2516technologies.com/swatchd.html" target="_blank">Open</a>
 </div>
 <script>
@@ -365,7 +372,7 @@ canvas { display: none; }
   const isMobile = /iPhone|iPad|iPod|Android/i.test(ua);
   const isChrome = /CriOS|Chrome/i.test(ua);
   const isSafari = /Safari/i.test(ua) && !/Chrome/i.test(ua);
-  const isWebView = isMobile && !isChrome && !isSafari;
+  const isWebView = isMobile && (/; wv\)/.test(ua) || (!isChrome && !isSafari));
   if (isLinkedIn || isFacebook || isInstagram || isWebView) {
     document.getElementById('browserWarning').style.display = 'flex';
   }
@@ -482,9 +489,9 @@ canvas { display: none; }
     <div class="ripple" id="ripple"></div>
     <div class="cam-error hidden" id="camError">
       <div class="cam-error-icon">📷</div>
-      <div class="cam-error-title">Camera access needed</div>
-      <div class="cam-error-msg">Swatchd uses your camera to sample real-world colors.<br>Please allow camera access and reload.</div>
-      <button class="retry-btn" onclick="startCamera()">Try Again</button>
+      <div class="cam-error-title" id="camErrTitle">Camera access needed</div>
+      <div class="cam-error-msg" id="camErrMsg">Swatchd uses your camera to sample real-world colors.<br>Please allow camera access and reload.</div>
+      <button class="retry-btn" id="retryBtn" onclick="startCamera()">Try Again</button>
     </div>
   </div>
 
@@ -754,38 +761,94 @@ function copyAllHex(){
 let stream=null,samplingActive=false,pinchDist=null,zoomLevel=1;
 let lastH,lastS,lastL,paletteStyle='modern';
 
+const CAM_ERRORS={
+  denied:  ['Camera is blocked','Tap the lock icon in your address bar, open Permissions, set Camera to Allow, then reload.','Reload'],
+  insecure:['Needs a secure connection','The camera only works on https:// pages. Open the https link in Chrome or Safari.',null],
+  nocamera:['No camera found','This device doesn\'t seem to have a usable camera.',null],
+  busy:    ['Camera is in use','Close any other app or tab using the camera, then try again.','Try Again'],
+  other:   ['Couldn\'t start the camera','If you opened this inside another app (email, Slack, LinkedIn), open it in Chrome or Safari instead.','Try Again']
+};
+function showCamError(kind){
+  const [t,m,b]=CAM_ERRORS[kind]||CAM_ERRORS.other;
+  document.getElementById('camErrTitle').textContent=t;
+  document.getElementById('camErrMsg').textContent=m;
+  const btn=document.getElementById('retryBtn');
+  btn.style.display=b?'':'none';
+  if(b){btn.textContent=b;btn.onclick=kind==='denied'?()=>location.reload():startCamera;}
+  document.getElementById('camError').classList.remove('hidden');
+}
+
 async function startCamera(){
   document.getElementById('camError').classList.add('hidden');
+  if(!window.isSecureContext||!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){showCamError('insecure');return;}
   try{
-    stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment',width:{ideal:1920},height:{ideal:1080}},audio:false});
+    try{
+      stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'},width:{ideal:1280},height:{ideal:720}},audio:false});
+    }catch(e){
+      if(e.name==='NotAllowedError'||e.name==='SecurityError')throw e;
+      stream=await navigator.mediaDevices.getUserMedia({video:true,audio:false}); // retry with any camera
+    }
     const vid=document.getElementById('video');vid.srcObject=stream;await vid.play();
     samplingActive=true;requestAnimationFrame(sampleLoop);
-  }catch(e){document.getElementById('camError').classList.remove('hidden');}
+  }catch(e){
+    const n=e&&e.name;
+    showCamError(n==='NotAllowedError'||n==='SecurityError'?'denied':n==='NotFoundError'||n==='OverconstrainedError'?'nocamera':n==='NotReadableError'||n==='AbortError'?'busy':'other');
+  }
+}
+
+// Sampling: read only a small patch around the center of the frame (not the whole frame),
+// average it, and smooth over the last few readings so tapped colors are stable.
+const PATCH=24, SMOOTH=4, FRAME_MS=50;
+let patchCtx=null, recent=[], lastFrameT=0;
+function readPatch(){
+  const vid=document.getElementById('video');
+  if(vid.readyState<2||!vid.videoWidth)return null;
+  if(!patchCtx){
+    const c=document.getElementById('canvas');c.width=c.height=PATCH;
+    patchCtx=c.getContext('2d',{willReadFrequently:true});
+  }
+  patchCtx.drawImage(vid,Math.round(vid.videoWidth/2-PATCH/2),Math.round(vid.videoHeight/2-PATCH/2),PATCH,PATCH,0,0,PATCH,PATCH);
+  const d=patchCtx.getImageData(0,0,PATCH,PATCH).data;
+  let r=0,g=0,b=0,n=d.length/4;
+  for(let i=0;i<d.length;i+=4){r+=d[i];g+=d[i+1];b+=d[i+2];}
+  return[r/n,g/n,b/n];
+}
+function smoothedColor(){
+  if(!recent.length)return null;
+  const s=recent.reduce((a,c)=>[a[0]+c[0],a[1]+c[1],a[2]+c[2]],[0,0,0]);
+  return s.map(v=>Math.round(v/recent.length));
 }
 
 function sampleLoop(){
   if(!samplingActive)return;
-  const vid=document.getElementById('video');
-  if(vid.readyState<2){requestAnimationFrame(sampleLoop);return;}
-  const c=document.getElementById('canvas');
-  c.width=vid.videoWidth;c.height=vid.videoHeight;
-  const ctx=c.getContext('2d');ctx.drawImage(vid,0,0);
-  const cx=Math.round(vid.videoWidth/2),cy=Math.round(vid.videoHeight/2);
-  const px=ctx.getImageData(cx,cy,1,1).data;
-  document.getElementById('dot').style.background='#'+[px[0],px[1],px[2]].map(v=>v.toString(16).padStart(2,'0')).join('').toUpperCase();
+  const now=performance.now();
+  if(now-lastFrameT<FRAME_MS){requestAnimationFrame(sampleLoop);return;}
+  lastFrameT=now;
+  const p=readPatch();
+  if(p){
+    recent.push(p);if(recent.length>SMOOTH)recent.shift();
+    const [r,g,b]=smoothedColor();
+    document.getElementById('dot').style.background='#'+[r,g,b].map(v=>v.toString(16).padStart(2,'0')).join('').toUpperCase();
+  }
   requestAnimationFrame(sampleLoop);
 }
+
+// Save battery: pause when the tab is hidden, resume (or restart the camera) when it returns
+document.addEventListener('visibilitychange',()=>{
+  if(document.hidden){samplingActive=false;return;}
+  if(!stream)return;
+  if(stream.getVideoTracks().some(t=>t.readyState==='live')){samplingActive=true;requestAnimationFrame(sampleLoop);}
+  else startCamera();
+});
 
 document.addEventListener('DOMContentLoaded',()=>{
   const vf=document.getElementById('viewfinder');
   if(!vf)return;
   vf.addEventListener('click',e=>{
     if(!samplingActive)return;
-    const vid=document.getElementById('video');if(vid.readyState<2)return;
-    const c=document.getElementById('canvas');
-    const ctx=c.getContext('2d');
-    const px=ctx.getImageData(Math.round(vid.videoWidth/2),Math.round(vid.videoHeight/2),1,1).data;
-    captureColor(px[0],px[1],px[2],e.clientX,e.clientY);
+    const fresh=readPatch();if(fresh){recent.push(fresh);if(recent.length>SMOOTH)recent.shift();}
+    const c=smoothedColor();if(!c)return;
+    captureColor(c[0],c[1],c[2],e.clientX,e.clientY);
   });
   vf.addEventListener('touchstart',e=>{if(e.touches.length===2)pinchDist=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);},{passive:true});
   vf.addEventListener('touchmove',e=>{
@@ -909,7 +972,7 @@ function copyAllCss(){
   }).catch(()=>prompt('Copy CSS:',css));
 }
 
-if(window.innerWidth<=768)startCamera();
+if(window.matchMedia("(max-width: 768px), (hover: none) and (pointer: coarse)").matches)startCamera();
 </script>
 </body>
 </html>
